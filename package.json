@@ -1,0 +1,8 @@
+{
+  "name": "in-clinic",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tools/test.mjs && node tools/gen-library.mjs --check && node tools/version-sw.mjs --check"
+  }
+}

@@ -1,0 +1,10 @@
+<resources>
+    <style name="Theme.Clinic" parent="android:Theme.DeviceDefault.NoActionBar">
+        <item name="android:windowBackground">#FF0B0D10</item>
+        <item name="android:colorBackground">#FF0B0D10</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:colorAccent">#FF5B9CF5</item>
+    </style>
+</resources>

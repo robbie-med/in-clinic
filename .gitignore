@@ -1,0 +1,8 @@
+.gradle/
+.kotlin/
+build/
+local.properties
+*.apk
+!apk/in-clinic.apk
+node_modules/
+.DS_Store

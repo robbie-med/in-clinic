@@ -46,98 +46,134 @@
   "exam": [
     {
       "name": "General",
-      "normal": "NAD",
+      "normal": "No acute distress, pleasant, conversant, well-groomed",
       "abnormal": [
+        "in mild distress",
         "ill-appearing",
-        "in distress",
         "diaphoretic",
-        "lethargic"
+        "lethargic",
+        "obese",
+        "in wheelchair"
       ]
     },
     {
-      "name": "HEENT",
-      "normal": "NCAT, MMM, oropharynx clear",
+      "name": "Eyes",
+      "normal": "Normal conjunctiva, anicteric, round symmetric pupils",
       "abnormal": [
+        "conjunctival injection",
+        "scleral icterus",
+        "discharge",
+        "periorbital edema"
+      ]
+    },
+    {
+      "name": "ENT",
+      "normal": "Hearing grossly intact, no nasal discharge",
+      "abnormal": [
+        "TM erythema / effusion",
+        "nasal congestion",
         "pharyngeal erythema",
         "tonsillar exudate",
-        "TM erythema / effusion",
         "sinus tenderness",
-        "conjunctival injection",
-        "cervical lymphadenopathy"
+        "dry mucous membranes"
       ]
     },
     {
-      "name": "Neuro",
-      "normal": "A&O x3, no focal deficits",
+      "name": "Neck",
+      "normal": "Neck is supple. No masses or thyromegaly",
       "abnormal": [
-        "confused",
-        "somnolent",
-        "not following commands",
-        "new focal deficit",
-        "asterixis",
-        "agitated"
+        "cervical lymphadenopathy",
+        "thyromegaly",
+        "thyroid nodule",
+        "JVD"
+      ]
+    },
+    {
+      "name": "Respiratory",
+      "normal": "Respirations are non-labored, no wheezing",
+      "abnormal": [
+        "increased work of breathing",
+        "wheezes",
+        "crackles",
+        "diminished bases",
+        "rhonchi",
+        "tachypneic"
       ]
     },
     {
       "name": "CV",
-      "normal": "RRR, no m/r/g",
+      "normal": "No lower extremity edema",
       "abnormal": [
+        "lower extremity edema",
+        "irregularly irregular",
+        "murmur",
         "tachycardic",
         "bradycardic",
-        "irregularly irregular",
-        "new murmur",
-        "JVD",
         "delayed cap refill"
       ]
     },
     {
-      "name": "Resp",
-      "normal": "CTAB, unlabored",
-      "abnormal": [
-        "tachypneic",
-        "increased work of breathing",
-        "crackles",
-        "wheezes",
-        "diminished bases",
-        "stridor"
-      ]
-    },
-    {
       "name": "Abd",
-      "normal": "soft, NT/ND",
+      "normal": "Soft, non-tender, non-distended",
       "abnormal": [
         "tender",
         "distended",
         "guarding / rebound",
-        "absent bowel sounds"
+        "hepatosplenomegaly"
+      ],
+      "optional": true
+    },
+    {
+      "name": "URO/GYNE",
+      "normal": "Normal external genitalia",
+      "abnormal": [
+        "Foley in place",
+        "hematuria in bag",
+        "labial maceration",
+        "suprapubic tenderness"
+      ],
+      "optional": true
+    },
+    {
+      "name": "MSK",
+      "normal": "Normal ambulation, no clubbing or cyanosis",
+      "abnormal": [
+        "antalgic gait",
+        "joint swelling",
+        "decreased ROM",
+        "paraspinal tenderness",
+        "myofascial trigger points",
+        "amputation"
       ]
     },
     {
-      "name": "Ext",
-      "normal": "warm, no edema",
+      "name": "Neuro",
+      "normal": "Sensation and CN II-XII grossly normal",
       "abnormal": [
-        "edema",
-        "cool / mottled",
-        "calf tenderness",
-        "unilateral swelling"
+        "focal weakness",
+        "decreased sensation",
+        "tremor",
+        "abnormal gait",
+        "confused"
       ]
     },
     {
       "name": "Skin",
-      "normal": "intact, no rash",
+      "normal": "Warm, no rashes or ulcers",
       "abnormal": [
         "rash",
+        "ulcer",
         "pallor",
-        "bleeding at site",
-        "wound concern"
+        "wound",
+        "cellulitis"
       ]
     },
     {
       "name": "Psych",
-      "normal": "normal mood and affect",
+      "normal": "Alert and oriented, mood \"good\", cooperative, affect wnL, judgment nL",
       "abnormal": [
-        "depressed mood",
         "anxious",
+        "depressed mood",
         "flat affect",
         "tearful",
         "pressured speech"

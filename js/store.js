@@ -48,6 +48,10 @@ export const Store = {
     },
     forget(key, kind, text) { write(`learn.${kind}.${key}`, this.learned(key, kind).filter(x => x !== text)); },
 
+    // ---- settings (signature block printed above the attestation)
+    setting(key, fallback = '') { return read('set.' + key, fallback); },
+    setSetting(key, value) { return write('set.' + key, value); },
+
     /** Free-typed problem names, offered in the problem picker next time. */
     customProblems() { return this.learned('names', 'problem'); },
 

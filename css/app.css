@@ -140,3 +140,29 @@ textarea { resize: vertical; min-height: 3em; }
     transition: opacity .2s, transform .2s; pointer-events: none;
 }
 #toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* note sections: each one copies on its own into the EMR's matching section */
+.secs { display: flex; flex-direction: column; gap: 10px; }
+.sec .row { margin: 0 2px 6px; }
+.sectitle { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); font-weight: 600; }
+.chip.done { background: var(--surface); color: var(--accent); }
+.bar .chip { padding: 11px 8px; }
+
+/* billing */
+.chip.badge { background: var(--surface); color: var(--accent); font-variant-numeric: tabular-nums; }
+.code { color: var(--accent); font-weight: 600; font-size: 14px; font-variant-numeric: tabular-nums; }
+.billing { background: var(--surface); border-radius: 16px; padding: 12px 14px; }
+.bcode { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-bottom: 8px; }
+.bcode b { font-size: 28px; color: var(--accent); font-variant-numeric: tabular-nums; }
+.bcode .faint { flex-basis: 100%; }
+.brow { display: flex; align-items: baseline; gap: 10px; padding: 5px 0; border-top: 1px solid var(--raised); }
+.bname { width: 72px; flex: none; color: var(--dim); font-size: 14px; }
+.blvl { width: 136px; flex: none; font-size: 14px; }
+.blvl.l3, .blvl.l4 { color: var(--accent); }
+.counter { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
+.counter .chip.sq { width: 36px; height: 36px; font-size: 18px; }
+.num { width: 26px; text-align: center; font-variant-numeric: tabular-nums; }
+select.cx {
+    display: block; width: 100%; margin-top: 8px; background: var(--raised); color: var(--dim); border: 0; border-radius: 10px;
+    padding: 8px 10px; font: inherit; font-size: 14px;
+}

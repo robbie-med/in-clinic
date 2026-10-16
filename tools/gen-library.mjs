@@ -35,7 +35,7 @@ internal object LibraryData {
     val fuGeneric = ${list(lib.fuGeneric)}
     val vitals = ${list(lib.vitals)}
     val exam = listOf(
-${lib.exam.map(x => `        ExamSystem(${q(x.name)}, ${q(x.normal)}, ${list(x.abnormal)}),`).join('\n')}
+${lib.exam.map(x => `        ExamSystem(${q(x.name)}, ${q(x.normal)}, ${list(x.abnormal)}${x.optional ? ', optional = true' : ''}),`).join('\n')}
     )
     val problems = listOf(
 ${problems}

@@ -18,6 +18,8 @@ data class Problem(
     val trend: String = "",
     /** No status lines at all (Health maintenance). */
     val noStatus: Boolean = false,
+    /** MDM complexity picked by hand (a [Billing.cx] key; "" = from the status pills). */
+    val cx: String = "",
     val notes: List<String> = emptyList(),
     val ddx: List<Ddx> = emptyList(),
     val plan: List<String> = emptyList(),
@@ -55,8 +57,20 @@ data class Visit(
     /** Exam system name → [Exam.NL] or the abnormal findings picked / typed. */
     val exam: Map<String, List<String>> = emptyMap(),
     val problems: List<Problem> = emptyList(),
+    /** "Dr. Richard" → "F/u w Dr. Richard …". */
+    val fuWith: String = "",
     val fuWhen: String = "",
     val fuWhy: List<String> = emptyList(),
+    /** MDM data counters (billing). */
+    val data: BillData = BillData(),
+    /** Risk set by hand ("" = from the plan), [Billing.risks]. */
+    val risk: String = "",
+    /** Social determinants of health significantly limit diagnosis or treatment (moderate risk). */
+    val sdoh: Boolean = false,
+    /** E/M code set by hand ("" = calculated). */
+    val code: String = "",
+    /** Section key → the text last copied, so a section shows when it changed since. */
+    val copied: Map<String, String> = emptyMap(),
     val copiedAt: Long = 0,
 ) {
     fun problem(id: String) = problems.firstOrNull { it.id == id }
@@ -65,6 +79,16 @@ data class Visit(
     fun withVital(k: String, value: String) = copy(vitals = if (value.isBlank()) vitals - k else vitals + (k to value.trim()))
 }
 
+/** MDM data element. [ordered] null = counted from the plan lines. */
+data class BillData(
+    val ordered: Int? = null,
+    val reviewed: Int = 0,
+    val external: Int = 0,
+    val historian: Boolean = false,
+    val interp: Boolean = false,
+    val discuss: Boolean = false,
+)
+
 object Json {
     private fun strs(a: JSONArray?) = if (a == null) emptyList() else (0 until a.length()).map { a.getString(it) }
 
@@ -72,10 +96,16 @@ object Json {
         put("id", v.id); put("created", v.created); put("slot", v.slot); put("age", v.age); put("sex", v.sex)
         put("relation", v.relation); put("type", v.type); put("cc", v.cc); put("oneLiner", v.oneLiner)
         put("hpi", JSONArray(v.hpi)); put("vitals", JSONObject(v.vitals as Map<*, *>))
-        put("exam", JSONObject().apply { v.exam.forEach { (k, l) -> put(k, JSONArray(l)) } }); put("fuWhen", v.fuWhen); put("fuWhy", JSONArray(v.fuWhy)); put("copiedAt", v.copiedAt)
+        put("exam", JSONObject().apply { v.exam.forEach { (k, l) -> put(k, JSONArray(l)) } }); put("fuWith", v.fuWith); put("fuWhen", v.fuWhen); put("fuWhy", JSONArray(v.fuWhy)); put("copiedAt", v.copiedAt)
+        put("data", JSONObject().apply {
+            v.data.ordered?.let { put("ordered", it) }
+            put("reviewed", v.data.reviewed); put("external", v.data.external)
+            put("historian", v.data.historian); put("interp", v.data.interp); put("discuss", v.data.discuss)
+        })
+        put("risk", v.risk); put("sdoh", v.sdoh); put("code", v.code); put("copied", JSONObject(v.copied as Map<*, *>))
         put("problems", JSONArray(v.problems.map { p ->
             JSONObject().put("id", p.id).put("name", p.name).put("lib", p.lib).put("novelty", p.novelty).put("course", p.course)
-                .put("trend", p.trend).put("noStatus", p.noStatus).put("notes", JSONArray(p.notes)).put("plan", JSONArray(p.plan))
+                .put("trend", p.trend).put("noStatus", p.noStatus).put("cx", p.cx).put("notes", JSONArray(p.notes)).put("plan", JSONArray(p.plan))
                 .put("ddx", JSONArray(p.ddx.map { JSONObject().put("label", it.label).put("items", JSONArray(it.items)) }))
         }))
     }
@@ -88,13 +118,19 @@ object Json {
             oneLiner = o.optString("oneLiner"), hpi = strs(o.optJSONArray("hpi")),
             vitals = o.optJSONObject("vitals")?.let { j -> j.keys().asSequence().associateWith { j.optString(it) } }.orEmpty(),
             exam = o.optJSONObject("exam")?.let { j -> j.keys().asSequence().associateWith { strs(j.optJSONArray(it)) } }.orEmpty(),
-            fuWhen = o.optString("fuWhen"),
+            fuWith = o.optString("fuWith"), fuWhen = o.optString("fuWhen"),
+            data = o.optJSONObject("data")?.let { d ->
+                BillData(if (d.has("ordered")) d.optInt("ordered") else null, d.optInt("reviewed"), d.optInt("external"),
+                    d.optBoolean("historian"), d.optBoolean("interp"), d.optBoolean("discuss"))
+            } ?: BillData(),
+            risk = o.optString("risk"), sdoh = o.optBoolean("sdoh"), code = o.optString("code"),
+            copied = o.optJSONObject("copied")?.let { j -> j.keys().asSequence().associateWith { j.optString(it) } }.orEmpty(),
             fuWhy = strs(o.optJSONArray("fuWhy")), copiedAt = o.optLong("copiedAt"),
             problems = (0 until ps.length()).map { i ->
                 val p = ps.getJSONObject(i); val dd = p.optJSONArray("ddx") ?: JSONArray()
                 Problem(
                     id = p.getString("id"), name = p.getString("name"), lib = p.optString("lib"), novelty = p.optString("novelty"),
-                    course = p.optString("course"), trend = p.optString("trend"), noStatus = p.optBoolean("noStatus"),
+                    course = p.optString("course"), trend = p.optString("trend"), noStatus = p.optBoolean("noStatus"), cx = p.optString("cx"),
                     notes = strs(p.optJSONArray("notes")), plan = strs(p.optJSONArray("plan")),
                     ddx = (0 until dd.length()).map { j -> dd.getJSONObject(j).let { Ddx(it.optString("label"), strs(it.optJSONArray("items"))) } },
                 )

@@ -9,15 +9,18 @@ internal object LibraryData {
     val fuGeneric = listOf("review labs", "reassess symptoms", "medication titration", "chronic disease management", "annual exam")
     val vitals = listOf("BP", "HR", "RR", "SpO2", "T", "Wt", "FSG")
     val exam = listOf(
-        ExamSystem("General", "NAD", listOf("ill-appearing", "in distress", "diaphoretic", "lethargic")),
-        ExamSystem("HEENT", "NCAT, MMM, oropharynx clear", listOf("pharyngeal erythema", "tonsillar exudate", "TM erythema / effusion", "sinus tenderness", "conjunctival injection", "cervical lymphadenopathy")),
-        ExamSystem("Neuro", "A&O x3, no focal deficits", listOf("confused", "somnolent", "not following commands", "new focal deficit", "asterixis", "agitated")),
-        ExamSystem("CV", "RRR, no m/r/g", listOf("tachycardic", "bradycardic", "irregularly irregular", "new murmur", "JVD", "delayed cap refill")),
-        ExamSystem("Resp", "CTAB, unlabored", listOf("tachypneic", "increased work of breathing", "crackles", "wheezes", "diminished bases", "stridor")),
-        ExamSystem("Abd", "soft, NT/ND", listOf("tender", "distended", "guarding / rebound", "absent bowel sounds")),
-        ExamSystem("Ext", "warm, no edema", listOf("edema", "cool / mottled", "calf tenderness", "unilateral swelling")),
-        ExamSystem("Skin", "intact, no rash", listOf("rash", "pallor", "bleeding at site", "wound concern")),
-        ExamSystem("Psych", "normal mood and affect", listOf("depressed mood", "anxious", "flat affect", "tearful", "pressured speech")),
+        ExamSystem("General", "No acute distress, pleasant, conversant, well-groomed", listOf("in mild distress", "ill-appearing", "diaphoretic", "lethargic", "obese", "in wheelchair")),
+        ExamSystem("Eyes", "Normal conjunctiva, anicteric, round symmetric pupils", listOf("conjunctival injection", "scleral icterus", "discharge", "periorbital edema")),
+        ExamSystem("ENT", "Hearing grossly intact, no nasal discharge", listOf("TM erythema / effusion", "nasal congestion", "pharyngeal erythema", "tonsillar exudate", "sinus tenderness", "dry mucous membranes")),
+        ExamSystem("Neck", "Neck is supple. No masses or thyromegaly", listOf("cervical lymphadenopathy", "thyromegaly", "thyroid nodule", "JVD")),
+        ExamSystem("Respiratory", "Respirations are non-labored, no wheezing", listOf("increased work of breathing", "wheezes", "crackles", "diminished bases", "rhonchi", "tachypneic")),
+        ExamSystem("CV", "No lower extremity edema", listOf("lower extremity edema", "irregularly irregular", "murmur", "tachycardic", "bradycardic", "delayed cap refill")),
+        ExamSystem("Abd", "Soft, non-tender, non-distended", listOf("tender", "distended", "guarding / rebound", "hepatosplenomegaly"), optional = true),
+        ExamSystem("URO/GYNE", "Normal external genitalia", listOf("Foley in place", "hematuria in bag", "labial maceration", "suprapubic tenderness"), optional = true),
+        ExamSystem("MSK", "Normal ambulation, no clubbing or cyanosis", listOf("antalgic gait", "joint swelling", "decreased ROM", "paraspinal tenderness", "myofascial trigger points", "amputation")),
+        ExamSystem("Neuro", "Sensation and CN II-XII grossly normal", listOf("focal weakness", "decreased sensation", "tremor", "abnormal gait", "confused")),
+        ExamSystem("Skin", "Warm, no rashes or ulcers", listOf("rash", "ulcer", "pallor", "wound", "cellulitis")),
+        ExamSystem("Psych", "Alert and oriented, mood \"good\", cooperative, affect wnL, judgment nL", listOf("anxious", "depressed mood", "flat affect", "tearful", "pressured speech")),
     )
     val problems = listOf(
         Lib("htn", "HTN", aliases = listOf("hypertension", "high blood pressure", "bp"), novelty = "Known", course = "Chronic", hpi = listOf("Home BPs ***", "Adherent to antihypertensives; no side effects"), notes = listOf("BP today ***", "At goal <130/80", "Not at goal", "Home BP log reviewed: ***"), plan = listOf("CONT ***", "Home BP log; bring to next visit", "DASH diet, sodium <2 g/day, regular exercise", "BMP", "Urine albumin/creatinine ratio", "Lipid panel"), fu = listOf("BP recheck", "review home BP log"), ddx = listOf(Ddx("Secondary causes", listOf("OSA", "primary aldosteronism", "CKD", "renal artery stenosis", "NSAIDs / decongestants", "alcohol")))),

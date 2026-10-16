@@ -1,27 +1,24 @@
 package org.robbiemed.clinic
 
 /**
- * The note, in the user's format:
+ * The note, in the clinic's template (same rules as js/note.js). Each section is copied on its own into the EMR's
+ * matching section, so the section titles are not part of the text:
  *
- *   41F known to me here for follow-up of fatigue.
+ *   Chief Complaint            fatigue
+ *   History of Present Illness 52F known to me presents for follow-up of fatigue.
+ *                              <HPI lines>
+ *   Physical Exam              General: No acute distress, ...   (examined systems only)
+ *   Assessment/Plan            1. Fatigue
+ *                              New / Chronic / Worsening        (one per line; unpicked = ***)
+ *                              <supporting lines>
+ *                              DDx: ...
  *
- *   <HPI lines>
+ *                              - plan item
  *
- *   PLAN
+ *                              F/u w Dr. X in 2 wk to review labs
+ *   Signature                  <signature from settings> + the teaching-physician attestation for the billed level
  *
- *   #Fatigue
- *   New
- *   Chronic
- *   Worsening
- *   <supporting lines>
- *   DDx:
- *   >Non-hormonal: OSA, ...
- *
- *   - 8 AM serum cortisol ...
- *
- *   Follow-up: 2 wk to review labs and confirm sleep study scheduled.
- *
- * A status left unpicked prints `***` (Epic's wildcard: F2 jumps to it), so nothing is silently missing.
+ * The status lines also drive the billing level ([Billing]).
  */
 object Note {
     val novelty = listOf("New", "Known")
@@ -33,18 +30,21 @@ object Note {
     /** Visit type → (chip label, one-liner with a chief complaint, one-liner without). */
     class Type(val key: String, val label: String, val withCc: String, val bare: String)
     val types = listOf(
-        Type("follow-up", "Follow-up", "here for follow-up of %s", "here for follow-up"),
-        Type("acute", "Acute", "here with %s", "here for an acute visit"),
-        Type("hospital", "Hospital f/u", "here for hospital follow-up of %s", "here for hospital follow-up"),
-        Type("ed", "ED f/u", "here for ED follow-up of %s", "here for ED follow-up"),
-        Type("establish", "Establish care", "here to establish care and discuss %s", "here to establish care"),
-        Type("annual", "Annual", "here for annual exam and %s", "here for annual exam"),
-        Type("preop", "Pre-op", "here for pre-op evaluation before %s", "here for pre-op evaluation"),
-        Type("labs", "Lab review", "here to review labs for %s", "here to review labs"),
+        Type("follow-up", "Follow-up", "presents for follow-up of %s", "presents for follow-up"),
+        Type("acute", "Acute", "presents for %s", "presents for an acute visit"),
+        Type("hospital", "Hospital f/u", "presents for hospital follow-up of %s", "presents for hospital follow-up"),
+        Type("ed", "ED f/u", "presents for ED follow-up of %s", "presents for ED follow-up"),
+        Type("establish", "Establish care", "presents to establish care and discuss %s", "presents to establish care"),
+        Type("annual", "Annual", "presents for annual exam and %s", "presents for annual exam"),
+        Type("preop", "Pre-op", "presents for pre-op evaluation before %s", "presents for pre-op evaluation"),
+        Type("labs", "Lab review", "presents to review labs for %s", "presents to review labs"),
     )
     fun type(key: String) = types.firstOrNull { it.key == key }
 
-    /** "41F known to me here for follow-up of fatigue." */
+    /** "New to me" prints this line under the one-liner instead of the words "new to me". */
+    const val RECORDS = "This was my first time seeing this patient, but records were available for review and the patient is well-known to our clinic."
+
+    /** "41F known to me presents for follow-up of fatigue." */
     fun oneLiner(v: Visit): String {
         if (v.oneLiner.isNotBlank()) return v.oneLiner.trim()
         val who = (v.age.trim() + v.sex.trim()).ifEmpty { "***" }
@@ -55,11 +55,13 @@ object Note {
             cc.isEmpty() -> t.bare
             else -> t.withCc.format(cc)
         }
-        return listOf(who, v.relation.trim(), here).filter { it.isNotEmpty() }.joinToString(" ") + "."
+        val rel = v.relation.trim().let { if (it == "new to me") "" else it }
+        return listOf(who, rel, here).filter { it.isNotEmpty() }.joinToString(" ") + "."
     }
 
-    fun problem(p: Problem): List<String> {
-        val out = mutableListOf("#" + p.name.trim())
+    /** "1. Fatigue", status lines (unpicked = ***), supporting lines, DDx, then a blank line and the "- " plan items. [n] is 1-based. */
+    fun problem(p: Problem, n: Int = 1): List<String> {
+        val out = mutableListOf("$n. " + p.name.trim())
         if (!p.noStatus) for (s in listOf(p.novelty, p.course, p.trend)) out += s.ifEmpty { "***" }
         out += p.notes.map { it.trim() }.filter { it.isNotEmpty() }
         val groups = p.ddx.filter { it.items.isNotEmpty() }
@@ -69,31 +71,51 @@ object Note {
             for (g in groups) out += ">" + (if (g.label.isEmpty()) "" else "${g.label}: ") + g.items.joinToString(", ")
         }
         val plan = p.plan.map { it.trim() }.filter { it.isNotEmpty() }
-        if (plan.isNotEmpty()) { out += ""; out += plan.map { "- $it" } }
+        if (plan.isNotEmpty()) { if (out.size > 1) out += ""; out += plan.map { "- $it" } }
         return out
     }
 
-    /** "2 wk to review labs and confirm sleep study scheduled". */
+    // A typed reason that already starts with its own connector ("after OSU visit") doesn't get "to" in front.
+    private val connector = Regex("^(to|after|for|before|once|when|if|in|at|with|w/|re:?|;)(\\s|$)", RegexOption.IGNORE_CASE)
+
+    /** "F/u w Dr. Richard in 2 mo to review labs and reassess symptoms". Nothing picked at all → "F/u ***". */
     fun followUp(v: Visit): String {
         val why = v.fuWhy.map { it.trim().trimEnd('.') }.filter { it.isNotEmpty() }
-        val whenTxt = v.fuWhen.trim().ifEmpty { "***" }
-        return if (why.isEmpty()) whenTxt else "$whenTxt to ${join(why)}"
+        val who = v.fuWith.trim(); val whenTxt = v.fuWhen.trim()
+        val out = mutableListOf("F/u")
+        if (who.isNotEmpty()) out += "w $who"
+        if (whenTxt.isNotEmpty()) out += if (whenTxt.equals("PRN", true) || whenTxt.equals("as needed", true)) "PRN" else "in $whenTxt"
+        if (why.isNotEmpty()) out += (if (connector.containsMatchIn(why[0])) "" else "to ") + join(why)
+        if (out.size == 1) out += "***"
+        return out.joinToString(" ")
     }
 
-    fun render(v: Visit): String {
-        val out = mutableListOf(oneLiner(v), "")
-        val hpi = v.hpi.map { it.trim() }.filter { it.isNotEmpty() }
-        if (hpi.isNotEmpty()) { out += hpi; out += "" }
+    class Section(val key: String, val title: String, val short: String, val text: String)
+
+    val sectionTitles = listOf(
+        Triple("cc", "Chief Complaint", "CC"), Triple("hpi", "History of Present Illness", "HPI"), Triple("exam", "Physical Exam", "Exam"),
+        Triple("ap", "Assessment/Plan", "A/P"), Triple("sign", "Signature", "Sign"),
+    )
+
+    /** The note as separately copyable sections. Empty CC / exam are left out. */
+    fun sections(v: Visit, signature: String = ""): List<Section> {
+        val text = mutableMapOf<String, String>()
+        if (v.cc.isNotBlank()) text["cc"] = v.cc.trim().trimEnd('.')
+        text["hpi"] = (listOf(oneLiner(v)) + (if (v.relation == "new to me") listOf(RECORDS) else emptyList()) +
+            v.hpi.map { it.trim() }.filter { it.isNotEmpty() }).joinToString("\n")
         val vit = Exam.vitalsText(v); val exam = Exam.lines(v)
-        if (vit.isNotEmpty()) out += "Vitals: $vit"
-        if (exam.isNotEmpty()) { out += "Exam:"; out += exam }
-        if (vit.isNotEmpty() || exam.isNotEmpty()) out += ""
-        out += "PLAN"
-        for (p in v.problems) { out += ""; out += problem(p) }
-        out += ""
-        out += "Follow-up: ${followUp(v)}."
-        return plain(out.joinToString("\n"))
+        if (vit.isNotEmpty() || exam.isNotEmpty()) text["exam"] = ((if (vit.isNotEmpty()) listOf("Vitals: $vit") else emptyList()) + exam).joinToString("\n")
+        val ap = mutableListOf<String>()
+        v.problems.forEachIndexed { i, p -> if (i > 0) ap += ""; ap += problem(p, i + 1) }
+        if (ap.isNotEmpty()) ap += ""
+        ap += followUp(v)
+        text["ap"] = ap.joinToString("\n")
+        text["sign"] = listOf(signature.trim(), Billing.attestation(v)).filter { it.isNotEmpty() }.joinToString("\n\n")
+        return sectionTitles.mapNotNull { (k, t, s) -> text[k]?.let { Section(k, t, s, plain(it)) } }
     }
+
+    /** The whole note with section titles (for Share). */
+    fun render(v: Visit, signature: String = "") = sections(v, signature).joinToString("\n\n") { "${it.title}\n${it.text}" }
 
     /** "a", "a and b", "a, b and c". */
     fun join(xs: List<String>) = when (xs.size) { 0 -> ""; 1 -> xs[0]; else -> xs.dropLast(1).joinToString(", ") + " and " + xs.last() }
@@ -107,6 +129,8 @@ object Note {
 
     private val header = Regex("^(PLAN|A/?P|ASSESSMENT( AND|/| & )PLAN)\\s*:?$", RegexOption.IGNORE_CASE)
     private val who = Regex("^(\\d{1,3})\\s?([FM])\\b")
+    private val numbered = Regex("^\\d{1,2}[.)]\\s+(\\S.*)$")
+    private val signed = Regex("^By the addition of|^[A-Z][A-Za-z.' -]+, (MD|DO|NP|PA|PA-C|APRN|FNP)\\b")
 
     /** Splits on commas outside parentheses: "topiramate effect (fatigue, mood change), OSA" → 2 items. */
     fun split(s: String): List<String> {
@@ -126,13 +150,12 @@ object Note {
     private fun word(s: String, set: List<String>) = set.firstOrNull { it.equals(s.trim(), ignoreCase = true) }
 
     /**
-     * Reads a previous note written in this format: every "#Problem" block (status words, supporting lines, DDx, "- " items).
-     * Stops a block at the next "#", a "Follow-up:" line, or the end.
+     * Reads a previous note: every "1. Problem" (or older "#Problem") block after the Assessment/Plan header
+     * (supporting lines, DDx, "- " items). A block ends at the next problem, an "F/u" / "Follow-up" line, or the signature.
      */
     fun parse(text: String): Parsed {
         val lines = text.replace("\r", "").lines().map { it.trimEnd() }
-        val first = lines.firstOrNull { it.isNotBlank() }?.trim().orEmpty()
-        val m = who.find(first)
+        val m = lines.firstNotNullOfOrNull { who.find(it.trim()) }
         val start = lines.indexOfFirst { header.matches(it.trim()) }.let { if (it < 0) 0 else it + 1 }
         val problems = mutableListOf<Problem>()
         var p: Problem? = null
@@ -140,8 +163,11 @@ object Note {
         fun close() { p?.let { problems += it }; p = null; ddxOpen = false }
         for (raw in lines.drop(start)) {
             val s = raw.trim()
+            if (signed.containsMatchIn(s)) break
             if (s.startsWith("#") && s.length > 1) { close(); p = Problem(name = s.drop(1).trim()); continue }
-            if (s.startsWith("Follow-up", ignoreCase = true) || s.startsWith("F/U:", ignoreCase = true)) { close(); continue }
+            val num = numbered.find(s)
+            if (num != null) { close(); p = Problem(name = num.groupValues[1].trim()); continue }
+            if (s.startsWith("Follow-up", ignoreCase = true) || Regex("^f/u\\b", RegexOption.IGNORE_CASE).containsMatchIn(s)) { close(); continue }
             val cur = p ?: continue
             if (s.isEmpty() || s == "***") continue
             when {

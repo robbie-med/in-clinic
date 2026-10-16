@@ -69,6 +69,10 @@ object Store {
     fun forget(c: Context, key: String, kind: String, text: String) =
         p(c).edit().putString(lk(key, kind), JSONArray(learned(c, key, kind).filter { it != text }).toString()).apply()
 
+    // ---- settings (signature block printed above the attestation)
+    fun setting(c: Context, key: String) = p(c).getString("set.$key", "").orEmpty()
+    fun setSetting(c: Context, key: String, value: String) = p(c).edit().putString("set.$key", value).apply()
+
     /** Free-typed problem names, offered in the problem picker next time. */
     fun customProblems(c: Context) = learned(c, "names", "problem")
     fun addCustomProblem(c: Context, name: String) { if (Library.match(name) == null) learn(c, "names", "problem", name) }

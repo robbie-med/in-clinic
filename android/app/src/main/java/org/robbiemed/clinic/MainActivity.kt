@@ -31,7 +31,8 @@ import android.window.OnBackInvokedDispatcher
 
 /**
  * Two screens: the day's panel, and one visit's editor. The editor builds the note live as you tap
- * (one-liner, HPI lines, #problems with status / notes / DDx / plan, follow-up); "Copy note" puts it on the clipboard.
+ * (one-liner, HPI lines, exam, problems with status / notes / DDx / plan, follow-up) and the E/M level with it.
+ * Each note section (HPI, Exam, A/P, Signature) is copied on its own into the EMR's matching section.
  */
 class MainActivity : Activity() {
     private lateinit var frame: FrameLayout
@@ -45,7 +46,11 @@ class MainActivity : Activity() {
     private lateinit var scroll: ScrollView
     private lateinit var titleT: TextView
     private lateinit var oneLinerT: TextView
-    private lateinit var notePv: TextView
+    private lateinit var secBox: LinearLayout
+    private lateinit var copyBar: LinearLayout
+    private lateinit var badgeT: TextView
+    private lateinit var billingBox: LinearLayout
+    private val cxLabels = mutableMapOf<String, TextView>()
     private lateinit var problemsBox: LinearLayout
     private lateinit var hpiLines: Lines
     private lateinit var fuLines: Lines
@@ -144,7 +149,7 @@ class MainActivity : Activity() {
 
         val visits = Store.panel(this)
         val copied = visits.count { it.copiedAt > 0 }
-        root.addView(header("${visits.size} visits · $copied notes copied"))
+        root.addView(header("${visits.size} visits · $copied copied"))
         root.addView(chip("+  New visit", BG, ACCENT) { newVisit() }.apply {
             textSize = 17f; gravity = Gravity.CENTER; setPadding(dp(14), dp(14), dp(14), dp(14))
             layoutParams = LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(10) }
@@ -168,6 +173,7 @@ class MainActivity : Activity() {
         top.addView(label(x.slot.ifEmpty { "----" }, 18f, INK, true))
         val what = listOf((x.age + x.sex), Note.type(x.type)?.label.orEmpty(), x.cc).filter { it.isNotBlank() }.joinToString(" · ")
         top.addView(label("   $what", 16f, INK), LinearLayout.LayoutParams(0, -2, 1f))
+        top.addView(label(Billing.bill(x).code, 14f, ACCENT, true))
         c.addView(top)
         if (x.problems.isNotEmpty()) c.addView(label(x.problems.joinToString("  ") { "#" + it.name }, 14f, DIM).apply { setPadding(0, dp(4), 0, 0) })
         c.addView(label(if (x.copiedAt > 0) "✓ copied ${hm(x.copiedAt)}" else "not copied yet", 13f, if (x.copiedAt > 0) ACCENT else FAINT)
@@ -183,17 +189,14 @@ class MainActivity : Activity() {
 
     private fun visitMenu(x: Visit) {
         AlertDialog.Builder(this).setTitle("${x.slot.ifEmpty { "Visit" }} ${x.age}${x.sex}")
-            .setItems(arrayOf("Copy note", "Delete visit")) { _, w ->
-                when (w) {
-                    0 -> copyNote(x)
-                    1 -> AlertDialog.Builder(this).setTitle("Delete this visit?")
-                        .setPositiveButton("Delete") { _, _ -> Store.delete(this, x.id); showPanel() }.setNegativeButton("Cancel", null).show()
-                }
+            .setItems(arrayOf("Delete visit")) { _, _ ->
+                AlertDialog.Builder(this).setTitle("Delete this visit?")
+                    .setPositiveButton("Delete") { _, _ -> Store.delete(this, x.id); showPanel() }.setNegativeButton("Cancel", null).show()
             }.show()
     }
 
     private fun panelMenu() {
-        val items = arrayOf("Import schedule…", "Clear panel (end of clinic)…", "Copy learned chips (backup)")
+        val items = arrayOf("Import schedule…", "Clear panel (end of clinic)…", "Copy learned chips (backup)", "Signature…")
         AlertDialog.Builder(this).setItems(items) { _, w ->
             when (w) {
                 0 -> importSchedule("")
@@ -204,8 +207,22 @@ class MainActivity : Activity() {
                         .setPositiveButton("Clear") { _, _ -> Store.clear(this); showPanel() }.setNegativeButton("Cancel", null).show()
                 }
                 2 -> copyText("learned", Store.learnedDump(this), "Learned chips copied")
+                3 -> editSignature {}
             }
         }.show()
+    }
+
+    private fun signature() = Store.setting(this, "signature")
+
+    private fun editSignature(after: () -> Unit) {
+        val e = EditText(this).apply {
+            setText(signature()); hint = "Name, MD\nPGY-2, Program\nPhone"; setTextColor(INK); setHintTextColor(FAINT); minLines = 3; gravity = Gravity.TOP
+            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE or InputType.TYPE_TEXT_FLAG_CAP_WORDS
+        }
+        AlertDialog.Builder(this).setTitle("Signature").setView(e)
+            .setMessage("Printed above the attestation in the Signature section. Stored on this phone only.")
+            .setPositiveButton("Save") { _, _ -> Store.setSetting(this, "signature", e.text.toString().trim()); after() }
+            .setNegativeButton("Cancel", null).show().also { keyboard(e) }
     }
 
     private fun importSchedule(prefill: String) {
@@ -242,9 +259,38 @@ class MainActivity : Activity() {
     }
 
     private fun refresh() {
-        notePv.text = Note.render(v)
+        val secs = Note.sections(v, signature())
+        secBox.removeAllViews()
+        for (s in secs) secBox.addView(sectionCard(s))
+        copyBar.removeAllViews()
+        for (s in secs) copyBar.addView(chip(s.short, if (copiedNow(s)) ACCENT else INK, if (copiedNow(s)) SURFACE else RAISED) { copySection(s) }.apply {
+            gravity = Gravity.CENTER; setPadding(dp(4), dp(12), dp(4), dp(12))
+        }, LinearLayout.LayoutParams(0, -2, 1f).apply { marginEnd = dp(6) })
         oneLinerT.text = Note.oneLiner(v)
         titleT.text = listOf(v.slot, v.age + v.sex).filter { it.isNotBlank() }.joinToString(" · ").ifEmpty { "New visit" }
+        val b = Billing.bill(v)
+        badgeT.text = b.code
+        drawBilling(b)
+        for ((id, t) in cxLabels) v.problem(id)?.let { t.text = cxText(it) }
+    }
+
+    /** Copied, and unchanged since. */
+    private fun copiedNow(s: Note.Section) = v.copied[s.key] == s.text
+
+    private fun sectionCard(s: Note.Section): View {
+        val done = copiedNow(s); val stale = !done && s.key in v.copied
+        val c = vertical().apply { layoutParams = LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(10) } }
+        val head = horizontal().apply { setPadding(dp(2), 0, 0, dp(6)) }
+        head.addView(label(s.title.uppercase(), 12f, DIM, true).apply { letterSpacing = 0.1f }, LinearLayout.LayoutParams(0, -2, 1f))
+        if (s.key == "sign") head.addView(small(chip(if (signature().isEmpty()) "Set signature" else "Edit signature", ACCENT, BG) { editSignature { refresh() } }))
+        head.addView(small(chip(if (done) "Copied ✓" else if (stale) "Copy again" else "Copy", if (done) ACCENT else BG, if (done) SURFACE else ACCENT) {
+            copySection(s)
+        }).apply { (layoutParams as LinearLayout.LayoutParams).marginEnd = 0 })
+        c.addView(head)
+        c.addView(label(s.text, 13f, INK).apply {
+            typeface = Typeface.MONOSPACE; setPadding(dp(12), dp(10), dp(12), dp(10)); background = rounded(SURFACE, 12); setTextIsSelectable(true)
+        })
+        return c
     }
 
     private fun openVisit(id: String) {
@@ -257,18 +303,21 @@ class MainActivity : Activity() {
         top.addView(chip("‹") { closeVisit() })
         titleT = label("", 19f, INK, true)
         top.addView(titleT, LinearLayout.LayoutParams(0, -2, 1f))
+        badgeT = chip("") { hideKeyboard(); scroll.post { scroll.smoothScrollTo(0, billingBox.top) } }.apply { setTextColor(ACCENT); background = rounded(SURFACE, 18) }
+        top.addView(badgeT)
         top.addView(chip("Paste last note") { pasteLast() })
+        top.addView(chip("Share") { share() }.apply { (layoutParams as LinearLayout.LayoutParams).marginEnd = 0 })
         root.addView(top)
 
         val body = vertical().apply { setPadding(0, 0, 0, dp(24)) }
         scroll = scroller(body)
         root.addView(scroll, fill())
 
+        // Bottom bar: copy one section at a time (a section copied and unchanged since shows dimmed)
         val bar = horizontal().apply { setPadding(0, dp(8), 0, 0) }
-        bar.addView(chip("Copy note", BG, ACCENT) { copyNote(v) }.apply { textSize = 17f; gravity = Gravity.CENTER; setPadding(dp(14), dp(12), dp(14), dp(12)) },
-            LinearLayout.LayoutParams(0, -2, 1f).apply { marginEnd = dp(8) })
-        bar.addView(chip("Note ↓") { hideKeyboard(); scroll.post { scroll.smoothScrollTo(0, notePv.top) } })
-        bar.addView(chip("Share") { share() })
+        copyBar = horizontal()
+        bar.addView(copyBar, LinearLayout.LayoutParams(0, -2, 1f))
+        bar.addView(chip("↓") { hideKeyboard(); scroll.post { scroll.smoothScrollTo(0, secBox.top) } }.apply { (layoutParams as LinearLayout.LayoutParams).marginEnd = 0 })
         root.addView(bar)
 
         // ---- visit
@@ -313,7 +362,7 @@ class MainActivity : Activity() {
                 val picked = v.exam[sys.name].orEmpty()
                 examBox.addView(sub(sys.name))
                 examBox.addView(Flow(this, dp(6)).apply {
-                    addView(small(pill("nL · ${sys.normal}", picked == listOf(Exam.NL)) { update { Exam.toggle(it, sys, Exam.NL) }; drawExam() }))
+                    addView(small(pill("nL · ${sys.normal}", Exam.NL in picked) { update { Exam.toggle(it, sys, Exam.NL) }; drawExam() }))
                     for (a in sys.abnormal + picked.filter { it != Exam.NL && it !in sys.abnormal })
                         addView(small(pill(a, a in picked) { update { Exam.toggle(it, sys, a) }; drawExam() }))
                     addView(small(chip("+ other", ACCENT, SURFACE) {
@@ -347,28 +396,122 @@ class MainActivity : Activity() {
 
         // ---- follow-up
         body.addView(header("Follow-up"))
-        body.addView(choice(Library.fuWhen.map { it to it }, { v.fuWhen }) { s -> update { it.copy(fuWhen = s) } })
+        body.addView(fuWithView())
+        body.addView(choice(Library.fuWhen.map { it to it }, { v.fuWhen }) { s -> update { it.copy(fuWhen = s) } }.apply { setPadding(0, dp(8), 0, 0) })
         fuLines = Lines({ v.fuWhy }, { l -> update { it.copy(fuWhy = l) } }, { Library.fuGeneric + libs().flatMap { it.fu } },
             learnKey = { "fu" }, kind = "fu", hint = "to… e.g. confirm sleep study scheduled")
         body.addView(fuLines.view)
 
-        // ---- note
+        // ---- billing (recalculated on every change)
+        body.addView(header("Billing"))
+        billingBox = vertical().apply { setPadding(dp(14), dp(10), dp(14), dp(12)); background = rounded(SURFACE, 16) }
+        body.addView(billingBox)
+
+        // ---- note, one copyable section at a time
         body.addView(header("Note"))
-        notePv = label("", 13f, INK).apply {
-            typeface = Typeface.MONOSPACE; setPadding(dp(12), dp(10), dp(12), dp(10)); background = rounded(SURFACE, 12); setTextIsSelectable(true)
-        }
-        body.addView(notePv)
+        secBox = vertical()
+        body.addView(secBox)
 
         frame.removeAllViews(); frame.addView(root)
         drawProblems()
         refresh()
     }
 
+    /** F/u with: typed, or a remembered name (hold to forget). */
+    private fun fuWithView(): View {
+        val box = vertical()
+        val names = Flow(this, dp(6)).apply { setPadding(0, dp(6), 0, 0) }
+        val f = field("With… e.g. Dr. Richard", v.fuWith, InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS) { s -> update { it.copy(fuWith = s) } }
+        fun draw() {
+            names.removeAllViews()
+            for (n in Store.learned(this, "fu", "with")) names.addView(small(pill(n, v.fuWith.trim() == n) {
+                val nv = if (v.fuWith.trim() == n) "" else n
+                f.setText(nv); f.setSelection(nv.length); draw()
+            }).apply {
+                setOnLongClickListener {
+                    AlertDialog.Builder(this@MainActivity).setMessage("Forget \"$n\"?")
+                        .setPositiveButton("Forget") { _, _ -> Store.forget(this@MainActivity, "fu", "with", n); draw() }
+                        .setNegativeButton("Cancel", null).show(); true
+                }
+            })
+        }
+        f.setOnFocusChangeListener { _, has -> if (!has && f.text.isNotBlank()) { Store.learn(this, "fu", "with", f.text.toString()); draw() } }
+        box.addView(f); box.addView(names)
+        draw()
+        return box
+    }
+
+    private fun cxText(p: Problem) = "MDM: " + if (p.cx.isEmpty() || Billing.cx(p.cx) == null) "auto · " + Billing.cx(Billing.autoCx(p))!!.label
+        else Billing.cx(p.cx)!!.label
+
+    private fun pickCx(id: String) {
+        val p = v.problem(id) ?: return
+        val items = listOf("Auto · " + Billing.cx(Billing.autoCx(p))!!.label) + Billing.cxs.map { it.label }
+        val checked = if (p.cx.isEmpty()) 0 else Billing.cxs.indexOfFirst { it.key == p.cx } + 1
+        AlertDialog.Builder(this).setTitle("MDM: #${p.name}").setSingleChoiceItems(items.toTypedArray(), checked) { d, w ->
+            update { it.withProblem(p.copy(cx = if (w == 0) "" else Billing.cxs[w - 1].key)) }; d.dismiss()
+        }.setNegativeButton("Cancel", null).show()
+    }
+
+    /** Billing: the E/M level and why, the data counters, risk and code overrides. Redrawn by [refresh]. */
+    private fun drawBilling(b: Billing.Bill) {
+        val box = billingBox
+        box.removeAllViews()
+        fun setData(f: (BillData) -> BillData) = update { it.copy(data = f(it.data)) }
+        val head = horizontal()
+        head.addView(label(b.code, 28f, ACCENT, true).apply { setPadding(0, 0, dp(12), 0) })
+        head.addView(label("${Billing.levels[b.mdm]} MDM · ${if (b.kind == "new") "new" else "established"} patient" +
+            if (b.overridden) " · set by hand (calc ${b.auto})" else "", 15f, INK), LinearLayout.LayoutParams(0, -2, 1f))
+        box.addView(head)
+        box.addView(label(if (b.pce) "Attestation: primary care exception" else "Attestation: teaching physician present", 12f, FAINT))
+        for ((name, lvl, why) in listOf(Triple("Problems", b.problems.lvl, b.problems.why), Triple("Data", b.data.lvl, b.data.why), Triple("Risk", b.risk.lvl, b.risk.why))) {
+            val r = horizontal().apply { setPadding(0, dp(6), 0, 0); gravity = Gravity.TOP }
+            r.addView(label(name, 14f, DIM), LinearLayout.LayoutParams(dp(72), -2))
+            r.addView(label(Billing.levels[lvl], 14f, if (lvl >= 3) ACCENT else INK, true), LinearLayout.LayoutParams(dp(118), -2))
+            r.addView(label(why.joinToString("; "), 13f, DIM), LinearLayout.LayoutParams(0, -2, 1f))
+            box.addView(r)
+        }
+        fun counter(name: String, value: Int, note: String, set: (Int) -> Unit, reset: (() -> Unit)? = null) {
+            val r = horizontal().apply { setPadding(0, dp(4), 0, 0) }
+            r.addView(label(name + if (note.isEmpty()) "" else "  ·  $note", 14f, INK), LinearLayout.LayoutParams(0, -2, 1f))
+            if (reset != null) r.addView(small(chip("auto", ACCENT, SURFACE) { reset() }))
+            r.addView(chip("−") { set(maxOf(0, value - 1)) })
+            r.addView(label("$value", 16f, INK, true).apply { gravity = Gravity.CENTER }, LinearLayout.LayoutParams(dp(28), -2).apply { marginEnd = dp(8) })
+            r.addView(chip("+") { set(value + 1) }.apply { (layoutParams as LinearLayout.LayoutParams).marginEnd = 0 })
+            box.addView(r)
+        }
+        val d = v.data
+        box.addView(sub("Data"))
+        counter("Tests ordered", b.data.ordered, if (d.ordered == null) "auto" else "", { n -> setData { it.copy(ordered = n) } },
+            if (d.ordered == null) null else ({ setData { it.copy(ordered = null) } }))
+        counter("Results reviewed", d.reviewed, "not ones ordered today", { n -> setData { it.copy(reviewed = n) } })
+        counter("External notes", d.external, "per unique source", { n -> setData { it.copy(external = n) } })
+        box.addView(Flow(this, dp(6)).apply {
+            setPadding(0, dp(6), 0, 0)
+            addView(small(pill("Independent historian", d.historian) { setData { it.copy(historian = !it.historian) } }))
+            addView(small(pill("Independent interpretation", d.interp) { setData { it.copy(interp = !it.interp) } }))
+            addView(small(pill("Discussed w/ external MD", d.discuss) { setData { it.copy(discuss = !it.discuss) } }))
+        })
+        box.addView(sub("Risk"))
+        box.addView(Flow(this, dp(6)).apply {
+            addView(small(pill("Auto", v.risk.isEmpty()) { update { it.copy(risk = "") } }))
+            for (r in Billing.risks) addView(small(pill(r.replaceFirstChar { it.uppercase() }, v.risk == r) { update { it.copy(risk = if (it.risk == r) "" else r) } }))
+            addView(small(pill("SDOH limits dx/tx", v.sdoh) { update { it.copy(sdoh = !it.sdoh) } }))
+        })
+        box.addView(sub("Bill as"))
+        box.addView(Flow(this, dp(6)).apply {
+            addView(small(pill("Auto · ${b.auto}", !b.overridden) { update { it.copy(code = "") } }))
+            for (c in Billing.codes.getValue(b.kind)) addView(small(pill(c, b.overridden && b.code == c) { update { it.copy(code = if (it.code == c) "" else c) } }))
+        })
+        box.addView(label("Teaching physician not physically present → bill 99213 / 99203 or lower (primary care exception). " +
+            "Suggestion only; you pick the code.", 12f, FAINT).apply { setPadding(0, dp(8), 0, 0) })
+    }
+
     private fun libs() = v.problems.mapNotNull { Library.get(it.lib) }
 
     /** Problems change the HPI / follow-up suggestions too. */
     private fun drawProblems() {
-        problemsBox.removeAllViews()
+        problemsBox.removeAllViews(); cxLabels.clear()
         if (v.problems.isEmpty()) problemsBox.addView(label("No problems yet. + Problem, or Paste last note to carry the old plan forward.", 14f, DIM)
             .apply { setPadding(dp(4), 0, 0, dp(8)) })
         for (p in v.problems) problemsBox.addView(problemCard(p.id))
@@ -397,6 +540,11 @@ class MainActivity : Activity() {
             card.addView(choice(Note.course.map { it to it }, { cur()?.course.orEmpty() }) { s -> upd { it.copy(course = s) } }.apply { setPadding(0, dp(6), 0, 0) })
             card.addView(choice(Note.trend.map { it to it }, { cur()?.trend.orEmpty() }) { s -> upd { it.copy(trend = s) } }.apply { setPadding(0, dp(6), 0, 0) })
         }
+        val cxT = label(cxText(p0), 14f, DIM).apply {
+            setPadding(dp(10), dp(8), dp(10), dp(8)); background = rounded(RAISED, 10); setOnClickListener { pickCx(id) }
+        }
+        cxLabels[id] = cxT
+        card.addView(cxT, LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(8) })
 
         if (!open) {
             val rest = Note.problem(p0).drop(if (p0.noStatus) 1 else 4).joinToString("\n").trim()
@@ -572,7 +720,7 @@ class MainActivity : Activity() {
     private fun pasteLast() {
         hideKeyboard()
         val e = EditText(this).apply {
-            hint = "Paste the previous note (the PLAN with #problems)"; setTextColor(INK); setHintTextColor(FAINT); minLines = 6; gravity = Gravity.TOP
+            hint = "Paste the previous note (its Assessment/Plan with numbered problems)"; setTextColor(INK); setHintTextColor(FAINT); minLines = 6; gravity = Gravity.TOP
             inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
         }
         AlertDialog.Builder(this).setTitle("Carry forward").setView(scroller(e))
@@ -583,7 +731,7 @@ class MainActivity : Activity() {
                 val add = Note.carryForward(parsed.problems).filter { it.name.lowercase() !in have }
                 update { it.copy(problems = it.problems + add, age = it.age.ifEmpty { parsed.age }, sex = it.sex.ifEmpty { parsed.sex }) }
                 openVisit(v.id)   // age/sex fields too
-                toast(if (add.isEmpty()) "No #problems found" else "Added ${add.size} problems")
+                toast(if (add.isEmpty()) "No problems found" else "Added ${add.size} problems")
             }.setNegativeButton("Cancel", null).show()
     }
 
@@ -596,15 +744,15 @@ class MainActivity : Activity() {
         toast(toast)
     }
 
-    private fun copyNote(x: Visit) {
-        copyText("note", Note.render(x), "Note copied")
-        val now = System.currentTimeMillis()
-        if (x.id == v.id && openId == v.id) update { it.copy(copiedAt = now) } else { Store.put(this, x.copy(copiedAt = now)); showPanel() }
+    /** Copies one section and remembers its text, so the button shows when it changed since. */
+    private fun copySection(s: Note.Section) {
+        copyText(s.key, s.text, "${s.title} copied")
+        update { it.copy(copied = it.copied + (s.key to s.text), copiedAt = System.currentTimeMillis()) }
         window.decorView.performHapticFeedback(HapticFeedbackConstants.CONFIRM)
     }
 
     private fun share() {
-        val i = Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, Note.render(v))
+        val i = Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, Note.render(v, signature()))
         startActivity(Intent.createChooser(i, "Send note"))
     }
 

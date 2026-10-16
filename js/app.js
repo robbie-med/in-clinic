@@ -4,6 +4,7 @@ import { Library } from './library.js';
 import { Store } from './store.js';
 import { extract } from './schedule.js';
 import * as N from './note.js';
+import * as B from './billing.js';
 
 const app = document.getElementById('app');
 
@@ -112,7 +113,7 @@ function showPanel() {
         'No visits yet. Tap + New visit in the room, or Import a pasted schedule tonight to pre-chart (only times, age, sex and visit type are kept).')];
     app.replaceChildren(h('div', { class: 'panel' },
         h('header', { class: 'top' }, h('h1', {}, 'In-Clinic'), chip('Import', () => importSchedule('')), chip('⋯', panelMenu)),
-        header(`${visits.length} visits · ${copied} notes copied`),
+        header(`${visits.length} visits · ${copied} copied`),
         chip('+  New visit', () => { const v = N.newVisit(); Store.put(v); go('#/v/' + v.id); }, 'primary big'),
         h('div', { class: 'cards' }, list)));
 }
@@ -120,7 +121,7 @@ function showPanel() {
 function visitCard(x) {
     const what = [x.age + x.sex, N.type(x.type)?.label, x.cc].filter(s => s && s.trim()).join(' · ');
     const card = h('div', { class: 'card visit', tabIndex: 0, onclick: () => go('#/v/' + x.id), onkeydown: e => { if (e.key === 'Enter') go('#/v/' + x.id); } },
-        h('div', { class: 'row' }, h('b', { class: 'slot' }, x.slot || '----'), h('span', {}, what)),
+        h('div', { class: 'row' }, h('b', { class: 'slot' }, x.slot || '----'), h('span', { class: 'grow' }, what), h('span', { class: 'code' }, B.bill(x).code)),
         x.problems.length ? h('div', { class: 'dim' }, x.problems.map(p => '#' + p.name).join('  ')) : null,
         h('div', { class: x.copiedAt ? 'ok' : 'faint' }, x.copiedAt ? `✓ copied ${hm(x.copiedAt)}` : 'not copied yet'));
     return onHold(card, () => visitMenu(x));
@@ -130,7 +131,6 @@ function visitMenu(x) {
     modal({
         title: `${x.slot || 'Visit'} ${x.age}${x.sex}`, body: h('div'),
         actions: [
-            { label: 'Copy note', onClick: () => { copyNote(x); } },
             { label: 'Delete visit', cls: 'danger', onClick: () => { if (confirm('Delete this visit?')) { Store.remove(x.id); showPanel(); } } },
         ],
     });
@@ -145,10 +145,20 @@ function panelMenu() {
                 const n = Store.visits().length; const un = Store.visits().filter(v => !v.copiedAt).length;
                 if (confirm(`Clear all ${n} visits?` + (un ? `\n\n${un} notes were never copied.` : '') + '\n\nLearned chips are kept.')) { Store.clear(); m.close(); showPanel(); }
             }, 'danger'),
+            chip('Signature…', () => { m.close(); editSignature(); }),
             chip('Copy learned chips (backup)', () => copyText(JSON.stringify(Store.learnedDump()), 'Learned chips copied')),
             chip('Restore learned chips…', () => { m.close(); restoreLearned(); }),
             h('p', { class: 'faint small' }, 'Everything stays on this device (browser storage). Visits are removed after 3 days or when you clear the panel.')),
     });
+}
+
+const signature = () => Store.setting('signature', '');
+
+function editSignature(after) {
+    const t = h('textarea', { rows: 4, value: signature(), placeholder: 'Name, MD\nPGY-2, Program\nPhone' });
+    modal({ title: 'Signature', body: h('div', {}, t, h('p', { class: 'faint small' },
+        'Printed above the attestation in the Signature section. Stored on this device only.')),
+    onOpen: () => t.focus(), actions: [{ label: 'Save', cls: 'primary', onClick: () => { Store.setSetting('signature', t.value.trim()); after?.(); } }] });
 }
 
 function restoreLearned() {
@@ -188,9 +198,31 @@ function update(f) {
 }
 
 function refresh() {
-    R.note.textContent = N.render(v);
+    const secs = N.sections(v, signature());
+    R.note.replaceChildren(...secs.map(sectionCard));
+    R.copyBar.replaceChildren(...secs.map(s => chip(s.short, () => copySection(s), 'grow' + (copiedNow(s) ? ' done' : ''))));
     R.oneLiner.textContent = N.oneLiner(v);
     R.title.textContent = [v.slot, v.age + v.sex].filter(s => s.trim()).join(' · ') || 'New visit';
+    const b = B.bill(v);
+    R.badge.textContent = b.code;
+    R.drawBilling(b);
+    for (const sel of R.problems.querySelectorAll('select.cx')) {
+        const p = v.problems.find(x => x.id === sel.dataset.id);
+        if (p) sel.options[0].text = 'MDM: auto · ' + B.cx(B.autoCx(p)).label;
+    }
+}
+
+/** Copied, and unchanged since. */
+const copiedNow = s => (v.copied || {})[s.key] === s.text;
+
+function sectionCard(s) {
+    const done = copiedNow(s); const stale = !done && (v.copied || {})[s.key] !== undefined;
+    return h('section', { class: 'sec' },
+        h('div', { class: 'row gap' },
+            h('span', { class: 'sectitle grow' }, s.title),
+            s.key === 'sign' ? chip(signature() ? 'Edit signature' : 'Set signature', () => editSignature(refresh), 'small link') : null,
+            chip(done ? 'Copied ✓' : stale ? 'Copy again' : 'Copy', () => copySection(s), 'small ' + (done ? 'done' : 'primary'))),
+        h('pre', { class: 'note' }, s.text));
 }
 
 const libs = () => v.problems.map(p => Library.get(p.lib)).filter(Boolean);
@@ -208,7 +240,9 @@ function showVisit(id) {
 
     R.title = h('b', { class: 'title' });
     R.oneLiner = h('button', { type: 'button', class: 'oneliner', onclick: editOneLiner });
-    R.note = h('pre', { class: 'note' });
+    R.note = h('div', { class: 'secs' });
+    R.copyBar = h('div', { class: 'row gap grow' });
+    R.badge = chip('', () => R.billing.scrollIntoView({ behavior: 'smooth', block: 'start' }), 'badge');
     R.problems = h('div', { class: 'problems' });
 
     const lib = Library.data;
@@ -243,26 +277,27 @@ function showVisit(id) {
         chip('+ Problem', addProblem, 'ghost'),
 
         header('Follow-up'),
+        fuWithView(),
         choice(lib.fuWhen.map(w => [w, w]), () => v.fuWhen, s => update(x => ({ ...x, fuWhen: s }))),
         R.fu.el,
+
+        billingView(),
         h('div', { class: 'narrow-only' }, header('Note')),
     );
     // One live note element: under the editor on narrow screens, in the side column on wide ones (iPad landscape)
     const below = editor.lastElementChild;
     const sideNote = h('div', { class: 'side-note' });
-    const side = h('aside', { class: 'side' },
-        h('div', { class: 'row gap' }, chip('Copy note', () => copyNote(v), 'primary big grow'), chip('Share', share)), sideNote);
+    const side = h('aside', { class: 'side' }, sideNote);
     const wideQ = matchMedia('(min-width: 900px)');
     const placeNote = () => (wideQ.matches ? sideNote : below).append(R.note);
 
     app.replaceChildren(h('div', { class: 'visit-view' },
         h('header', { class: 'top' },
-            chip('‹', () => go('#/'), 'back'), R.title, h('span', { class: 'grow' }), chip('Paste last note', pasteLast)),
+            chip('‹', () => go('#/'), 'back'), R.title, h('span', { class: 'grow' }), R.badge, chip('Paste last note', pasteLast), chip('Share', share)),
         h('div', { class: 'layout' }, editor, side),
         h('footer', { class: 'bar' },
-            chip('Copy note', () => copyNote(v), 'primary big grow'),
-            chip('Note ↓', () => R.note.scrollIntoView({ behavior: 'smooth', block: 'start' })),
-            chip('Share', share))));
+            h('span', { class: 'faint small' }, 'Copy'), R.copyBar,
+            chip('↓', () => R.note.scrollIntoView({ behavior: 'smooth', block: 'start' })))));
     placeNote();
     wideQ.onchange = () => { if (R.note.isConnected) placeNote(); };
 
@@ -332,6 +367,11 @@ function problemCard(id) {
         choice(N.NOVELTY.map(s => [s, s]), () => cur()?.novelty || '', s => upd(p => ({ ...p, novelty: s }))),
         choice(N.COURSE.map(s => [s, s]), () => cur()?.course || '', s => upd(p => ({ ...p, course: s }))),
         choice(N.TREND.map(s => [s, s]), () => cur()?.trend || '', s => upd(p => ({ ...p, trend: s }))));
+    const sel = h('select', { class: 'cx', 'aria-label': 'MDM complexity', onchange: () => upd(p => ({ ...p, cx: sel.value })) },
+        h('option', { value: '' }, 'MDM: auto · ' + B.cx(B.autoCx(p0)).label),
+        B.CX.map(c => h('option', { value: c.key }, 'MDM: ' + c.label)));
+    sel.dataset.id = id; sel.value = p0.cx || '';
+    card.append(sel);
 
     if (!open) {
         const rest = N.problemLines(p0).slice(p0.noStatus ? 1 : 4).join('\n').trim();
@@ -474,7 +514,7 @@ function editOneLiner() {
 
 /** Paste the last note → its problems come back as Known, trend cleared, plan and notes kept. */
 function pasteLast() {
-    const t = h('textarea', { rows: 10, placeholder: 'Paste the previous note (the PLAN with #problems)' });
+    const t = h('textarea', { rows: 10, placeholder: 'Paste the previous note (its Assessment/Plan with numbered problems)' });
     modal({
         title: 'Carry forward',
         body: h('div', {}, h('p', { class: 'dim small' }, 'Problems become Known; trend is cleared for today. Plan, notes and DDx are kept to edit.'), t),
@@ -485,20 +525,83 @@ function pasteLast() {
             const add = N.carryForward(parsed.problems).filter(p => !have.has(p.name.toLowerCase()));
             update(x => ({ ...x, problems: [...x.problems, ...add], age: x.age || parsed.age, sex: x.sex || parsed.sex }));
             showVisit(v.id);   // age/sex fields too
-            toast(add.length ? `Added ${add.length} problems` : 'No #problems found');
+            toast(add.length ? `Added ${add.length} problems` : 'No problems found');
         } }],
     });
 }
 
-function copyNote(x) {
-    copyText(N.render(x), 'Note copied');
-    const now = Date.now();
-    if (openId === x.id && v && location.hash === '#/v/' + x.id) update(y => ({ ...y, copiedAt: now }));
-    else { Store.put({ ...x, copiedAt: now }); showPanel(); }
+/** Copies one section and remembers its text, so the button shows when it changed since. */
+function copySection(s) {
+    copyText(s.text, s.title + ' copied');
+    update(y => ({ ...y, copied: { ...(y.copied || {}), [s.key]: s.text }, copiedAt: Date.now() }));
+}
+
+/** F/u with: typed, or a remembered name (hold to forget). */
+function fuWithView() {
+    const input = field('With… e.g. Dr. Richard', v.fuWith || '', s => update(x => ({ ...x, fuWith: s })), { class: 'wide' });
+    const box = h('div', { class: 'flow' });
+    const draw = () => box.replaceChildren(...Store.learned('fu', 'with').map(n => {
+        const el = pill(n, (v.fuWith || '').trim() === n, () => {
+            const nv = (v.fuWith || '').trim() === n ? '' : n;
+            input.value = nv; update(x => ({ ...x, fuWith: nv })); draw();
+        }, 'small learned');
+        return onHold(el, () => { if (confirm(`Forget "${n}"?`)) { Store.forget('fu', 'with', n); draw(); } });
+    }));
+    input.addEventListener('change', () => { if (input.value.trim()) Store.learn('fu', 'with', input.value.trim()); draw(); });
+    draw();
+    return h('div', {}, input, box);
+}
+
+/**
+ * Billing: the E/M level, recalculated on every change (billing.js). Problems come from the status pills
+ * (or each problem's MDM menu), risk from the plan, data from the counters here.
+ */
+function billingView() {
+    const box = h('div', { class: 'billing' });
+    R.billing = h('div', {}, header('Billing'), box);
+    const setData = f => update(x => ({ ...x, data: f({ ...B.emptyData(), ...(x.data || {}) }) }));
+    const counter = (label, value, set, note, reset) => h('div', { class: 'counter' },
+        h('span', { class: 'grow' }, label, note ? h('span', { class: 'faint small' }, '  ' + note) : null),
+        reset ? chip('auto', reset, 'small link') : null,
+        chip('−', () => set(Math.max(0, value - 1)), 'small sq'),
+        h('b', { class: 'num' }, String(value)),
+        chip('+', () => set(value + 1), 'small sq'));
+    const row = (name, part) => h('div', { class: 'brow' },
+        h('span', { class: 'bname' }, name), h('b', { class: 'blvl l' + part.lvl }, B.LEVELS[part.lvl]), h('span', { class: 'dim small grow' }, part.why.join('; ')));
+    R.drawBilling = b => {
+        const d = { ...B.emptyData(), ...(v.data || {}) };
+        const auto = d.ordered === null || d.ordered === undefined;
+        box.replaceChildren(
+            h('div', { class: 'bcode' }, h('b', {}, b.code), h('span', {}, `${B.LEVELS[b.mdm]} MDM · ${b.kind === 'new' ? 'new' : 'established'} patient`
+                + (b.overridden ? ` · set by hand (calc ${b.auto})` : '')),
+            h('span', { class: 'faint small' }, b.pce ? 'Attestation: primary care exception' : 'Attestation: teaching physician present')),
+            row('Problems', b.problems), row('Data', b.data), row('Risk', b.risk),
+            sub('Data'),
+            counter('Tests ordered', b.data.ordered, n => setData(x => ({ ...x, ordered: n })), auto ? (b.data.auto.length ? 'auto from plan' : 'auto') : '',
+                auto ? null : () => setData(x => ({ ...x, ordered: null }))),
+            counter('Results reviewed', d.reviewed, n => setData(x => ({ ...x, reviewed: n })), 'not ones ordered today'),
+            counter('External notes', d.external, n => setData(x => ({ ...x, external: n })), 'per unique source'),
+            h('div', { class: 'flow' },
+                pill('Independent historian', d.historian, () => setData(x => ({ ...x, historian: !x.historian })), 'small'),
+                pill('Independent interpretation', d.interp, () => setData(x => ({ ...x, interp: !x.interp })), 'small'),
+                pill('Discussed w/ external MD', d.discuss, () => setData(x => ({ ...x, discuss: !x.discuss })), 'small')),
+            sub('Risk'),
+            h('div', { class: 'flow' },
+                pill('Auto', !v.risk, () => update(x => ({ ...x, risk: '' })), 'small'),
+                B.RISKS.map(r => pill(r[0].toUpperCase() + r.slice(1), v.risk === r, () => update(x => ({ ...x, risk: x.risk === r ? '' : r })), 'small')),
+                pill('SDOH limits dx/tx', !!v.sdoh, () => update(x => ({ ...x, sdoh: !x.sdoh })), 'small')),
+            sub('Bill as'),
+            h('div', { class: 'flow' },
+                pill('Auto · ' + b.auto, !b.overridden, () => update(x => ({ ...x, code: '' })), 'small'),
+                B.CODES[b.kind].map(c => pill(c, b.overridden && b.code === c, () => update(x => ({ ...x, code: x.code === c ? '' : c })), 'small'))),
+            h('p', { class: 'faint small' }, 'Teaching physician not physically present → bill 99213 / 99203 or lower (primary care exception). ' +
+                'Suggestion only; you pick the code.'));
+    };
+    return R.billing;
 }
 
 async function share() {
-    const text = N.render(v);
+    const text = N.render(v, signature());
     if (navigator.share) { try { await navigator.share({ text }); } catch { /* cancelled */ } } else copyText(text, 'Note copied');
 }
 

@@ -6,6 +6,7 @@ import assert from 'node:assert/strict';
 import { fileURLToPath } from 'node:url';
 import { Library } from '../js/library.js';
 import * as Note from '../js/note.js';
+import * as Billing from '../js/billing.js';
 import { extract } from '../js/schedule.js';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -51,16 +52,14 @@ const sample = Note.newVisit({
     fuWhen: '2 wk', fuWhy: ['review labs', 'confirm sleep study scheduled'],
 });
 
-const expected = `52F known to me here for follow-up of fatigue.
-
+const expected = {
+    cc: 'fatigue',
+    hpi: `52F known to me presents for follow-up of fatigue.
 Complains of fatigue, poor sleep and low mood for several months
 Recently moved; new commute
 Denies significant stress; does not explain all symptoms
-LMP 2 wk ago
-
-PLAN
-
-#Fatigue
+LMP 2 wk ago`,
+    ap: `1. Fatigue
 New
 Chronic
 Worsening
@@ -76,7 +75,7 @@ DDx:
 - CBC, CMP, A1C, ferritin, iron panel
 - Sleep study ordered
 
-#Left hand tingling
+2. Left hand tingling
 New
 Acute
 Stable
@@ -85,32 +84,58 @@ Neurology recommends continuing current meds
 
 - Continue current meds; defer changes for now
 
-#HTN
+3. HTN
 Known
 Chronic
 Stable
 
 - CONT amlodipine 5 mg PO daily
 
-Follow-up: 2 wk to review labs and confirm sleep study scheduled.`;
+F/u in 2 wk to review labs and confirm sleep study scheduled`,
+};
+const text = (v, sig = '') => Object.fromEntries(Note.sections(v, sig).map(s => [s.key, s.text]));
 
 // ---- note
-test('renders the user\'s format', () => assert.equal(Note.render(sample), expected));
-test('blanks become Epic wildcards', () => assert.equal(Note.render(Note.newVisit({ problems: [P({ name: 'Cough' })] })),
-    '*** known to me here for follow-up.\n\nPLAN\n\n#Cough\n***\n***\n***\n\nFollow-up: ***.'));
-test('health maintenance has no status lines', () => {
+test('renders the clinic template, one section at a time', () => {
+    const t = text(sample);
+    assert.deepEqual(Object.keys(t), ['cc', 'hpi', 'ap', 'sign']);
+    for (const k of ['cc', 'hpi', 'ap']) assert.equal(t[k], expected[k], k);
+    assert.equal(t.sign, Billing.ATTEST_PRESENT);
+});
+test('signature goes above the attestation', () =>
+    assert.equal(text(sample, 'A. Doc, MD\nPGY-2').sign, 'A. Doc, MD\nPGY-2\n\n' + Billing.ATTEST_PRESENT));
+test('empty visit', () => {
+    const t = text(Note.newVisit({ problems: [P({ name: 'Cough' })] }));
+    assert.deepEqual(Object.keys(t), ['hpi', 'ap', 'sign']);
+    assert.equal(t.hpi, '*** known to me presents for follow-up.');
+    assert.equal(t.ap, '1. Cough\n***\n***\n***\n\nF/u ***');
+});
+test('status lines print (unpicked = ***); health maintenance has none', () => {
     const l = Library.get('hm');
-    assert.deepEqual(Note.problemLines(P({ name: l.name, lib: l.key, noStatus: !!l.noStatus, plan: ['Tdap'] })), ['#Health maintenance', '', '- Tdap']);
+    assert.deepEqual(Note.problemLines(P({ name: l.name, lib: l.key, noStatus: true, plan: ['Tdap'] }), 4), ['4. Health maintenance', '- Tdap']);
+    assert.deepEqual(Note.problemLines(P({ name: 'HTN', novelty: 'Known', course: 'Chronic', trend: 'Stable', notes: ['At goal'], plan: ['CONT x'] })),
+        ['1. HTN', 'Known', 'Chronic', 'Stable', 'At goal', '', '- CONT x']);
 });
 test('unlabelled DDx is one line', () =>
     assert.ok(Note.problemLines(P({ name: 'Cough', ddx: [{ label: '', items: ['viral URI', 'GERD'] }] })).includes('DDx: viral URI, GERD')));
 test('one-liner variants', () => {
-    assert.equal(Note.oneLiner(Note.newVisit({ age: '63', sex: 'M', relation: 'new to me', type: 'establish' })), '63M new to me here to establish care.');
-    assert.equal(Note.oneLiner(Note.newVisit({ age: '28', sex: 'F', type: 'acute', cc: 'cough x5 days' })), '28F known to me here with cough x5 days.');
+    assert.equal(Note.oneLiner(Note.newVisit({ age: '63', sex: 'M', relation: 'new to clinic', type: 'establish' })), '63M new to clinic presents to establish care.');
+    assert.equal(Note.oneLiner(Note.newVisit({ age: '28', sex: 'F', type: 'acute', cc: 'cough x5 days' })), '28F known to me presents for cough x5 days.');
     assert.equal(Note.oneLiner(Note.newVisit({ oneLiner: 'Typed by hand.' })), 'Typed by hand.');
 });
+test('new to me: records line instead of the words', () => {
+    const t = text(Note.newVisit({ age: '30', sex: 'F', relation: 'new to me', type: 'establish', hpi: ['Moved here 7 yr ago'] }));
+    assert.equal(t.hpi, `30F presents to establish care.\n${Note.RECORDS}\nMoved here 7 yr ago`);
+});
+test('follow-up line', () => {
+    const fu = f => Note.followUp(Note.newVisit(f));
+    assert.equal(fu({ fuWith: 'Dr. Richard', fuWhen: '2 mo', fuWhy: ['prenatal care'] }), 'F/u w Dr. Richard in 2 mo to prenatal care');
+    assert.equal(fu({ fuWith: 'Dr. Owen', fuWhy: ['after specialist visit', 'ED precautions reviewed'] }), 'F/u w Dr. Owen after specialist visit and ED precautions reviewed');
+    assert.equal(fu({ fuWhen: 'PRN' }), 'F/u PRN');
+    assert.equal(fu({}), 'F/u ***');
+});
 test('parse round-trips', () => {
-    const r = Note.parse(expected);
+    const r = Note.parse('History of Present Illness\n' + expected.hpi + '\n\nAssessment/Plan\n' + expected.ap);
     assert.equal(r.age, '52'); assert.equal(r.sex, 'F');
     assert.deepEqual(r.problems.map(p => p.name), sample.problems.map(p => p.name));
     sample.problems.forEach((a, i) => {
@@ -118,38 +143,147 @@ test('parse round-trips', () => {
         for (const k of ['novelty', 'course', 'trend', 'notes', 'ddx', 'plan']) assert.deepEqual(b[k], a[k], `${a.name}.${k}`);
     });
 });
-test('parses the user\'s paste with its stray spacing', () => {
-    const ps = Note.parse(expected.replace('Stable\n', 'Stable \n\n').replace('\n#HTN', '\n\n#HTN')).problems;
-    assert.equal(ps.length, 3); assert.equal(ps[1].trend, 'Stable');
-    assert.deepEqual(ps[1].notes, ['Seen by neurology; workup ongoing', 'Neurology recommends continuing current meds']);
-    assert.deepEqual(ps[2].plan, ['CONT amlodipine 5 mg PO daily']);
+// Synthetic note in the shape the EMR pastes back (leading spaces, stray blanks, signature + attestation after)
+const pasted = `Chief Complaint
+
+DM
+
+History of Present Illness
+
+70F known to me presents for leg swelling
+
+ Swelling x 2 wk
+
+Assessment/Plan
+
+1. Leg swelling
+Likely venous insufficiency
+ No calf tenderness
+ - Compression stockings
+ - BMP
+
+2. Type 2 diabetes mellitus without complication
+TIR improving
+ - CONT metformin 500 mg BID
+ - f/u in 2-3 weeks
+
+F/u w Dr. Smith in 3 mo
+
+Jane Doe, MD
+ PGY-2, Program
+ 555-0100
+
+By the addition of their electronic signature, the teaching physician certifies that ...`;
+test('parses an EMR paste and stops at the signature', () => {
+    const r = Note.parse(pasted);
+    assert.equal(r.age, '70'); assert.equal(r.sex, 'F');
+    assert.deepEqual(r.problems.map(p => p.name), ['Leg swelling', 'Type 2 diabetes mellitus without complication']);
+    assert.deepEqual(r.problems[0].notes, ['Likely venous insufficiency', 'No calf tenderness']);
+    assert.deepEqual(r.problems[1].plan, ['CONT metformin 500 mg BID', 'f/u in 2-3 weeks']);
+});
+test('still reads the old #problem format', () => {
+    const r = Note.parse('52F known to me.\n\nPLAN\n\n#HTN\nKnown\nChronic\nStable\n\n- CONT amlodipine\n\nFollow-up: 2 wk.');
+    assert.equal(r.problems[0].name, 'HTN'); assert.equal(r.problems[0].trend, 'Stable'); assert.deepEqual(r.problems[0].plan, ['CONT amlodipine']);
 });
 test('carry forward: Known, trend cleared, library reattached', () => {
-    const ps = Note.carryForward(Note.parse(expected).problems);
+    const ps = Note.carryForward(Note.parse('Assessment/Plan\n' + expected.ap).problems);
     assert.ok(ps.every(p => p.novelty === 'Known' && p.trend === ''));
     assert.equal(ps[2].lib, 'htn'); assert.equal(ps[0].lib, 'fatigue');
 });
-test('exam goes between HPI and plan', () => {
+test('exam is its own section', () => {
     let v = Note.newVisit({ age: '60', sex: 'M', hpi: ['Cough x2 wk'], vitals: { BP: '128/82', SpO2: '97%' } });
-    v = Note.examToggle(Note.examToggle(v, 'Resp', 'crackles'), 'Resp', 'diminished bases');
+    v = Note.examToggle(Note.examToggle(v, 'Respiratory', 'crackles'), 'Respiratory', 'diminished bases');
     v = Note.examToggle(v, 'General', Note.NL);
-    assert.equal(Note.render(v), '60M known to me here for follow-up.\n\nCough x2 wk\n\nVitals: BP 128/82, SpO2 97%\nExam:\nGeneral: NAD\n' +
-        'Resp: crackles and diminished bases\n\nPLAN\n\nFollow-up: ***.');
+    assert.equal(text(v).exam, 'Vitals: BP 128/82, SpO2 97%\nGeneral: No acute distress, pleasant, conversant, well-groomed\nRespiratory: crackles and diminished bases');
 });
-test('exam nL and findings exclude each other', () => {
-    let v = Note.examToggle(Note.newVisit(), 'CV', 'new murmur');
-    v = Note.examToggle(v, 'CV', Note.NL); assert.deepEqual(v.exam.CV, [Note.NL]);
-    v = Note.examToggle(v, 'CV', 'JVD'); assert.deepEqual(v.exam.CV, ['JVD']);
-    v = Note.examToggle(v, 'CV', 'JVD'); assert.ok(!('CV' in v.exam));
-    assert.ok(Note.render(Note.examAllNormal(Note.newVisit())).includes('Exam:\nGeneral: NAD\nHEENT: '));
+test('exam nL plus a finding appends it', () => {
+    let v = Note.examToggle(Note.newVisit(), 'MSK', Note.NL);
+    v = Note.examToggle(v, 'MSK', 'myofascial trigger points');
+    assert.deepEqual(Note.examLines(v), ['MSK: Normal ambulation, no clubbing or cyanosis, myofascial trigger points']);
+    v = Note.examToggle(v, 'MSK', Note.NL); assert.deepEqual(Note.examLines(v), ['MSK: myofascial trigger points']);
+    v = Note.examToggle(v, 'MSK', 'myofascial trigger points'); assert.ok(!('MSK' in v.exam));
 });
-test('old saved visits without exam still render', () => {
-    const old = Note.newVisit(); delete old.exam; delete old.vitals;
-    assert.equal(Note.render(old), '*** known to me here for follow-up.\n\nPLAN\n\nFollow-up: ***.');
+test('all untouched -> nL skips optional systems', () => {
+    const l = Note.examLines(Note.examAllNormal(Note.newVisit()));
+    assert.deepEqual(l.map(x => x.split(':')[0]), ['General', 'Eyes', 'ENT', 'Neck', 'Respiratory', 'CV', 'MSK', 'Neuro', 'Skin', 'Psych']);
+});
+test('old saved visits still render', () => {
+    const old = Note.newVisit(); for (const k of ['exam', 'vitals', 'fuWith', 'data', 'risk', 'code', 'copied']) delete old[k];
+    assert.equal(text(old).ap, 'F/u ***');
+    assert.equal(Billing.bill(old).code, '99212');
 });
 test('exam is ASCII', () => Library.data.exam.forEach(s => [s.name, s.normal, ...s.abnormal].forEach(x => assert.ok(/^[\x00-\x7f]*$/.test(x), x))));
 test('split keeps parentheses', () =>
     assert.deepEqual(Note.split('OSA, medication effect (fatigue, mood change), IDA'), ['OSA', 'medication effect (fatigue, mood change)', 'IDA']));
+
+// ---- billing
+const V = f => Note.newVisit(f);
+const chronic = (name, trend = 'Stable', plan = []) => P({ name, novelty: 'Known', course: 'Chronic', trend, plan });
+test('sample bills 99214: worsening chronic, 3+ tests, Rx', () => {
+    const b = Billing.bill(sample);
+    assert.deepEqual([b.problems.lvl, b.data.lvl, b.risk.lvl, b.code, b.pce], [3, 3, 3, '99214', false]);
+    assert.ok(b.data.auto.includes('cortisol') && b.data.auto.includes('sleep study') && b.data.auto.includes('LH'));
+});
+test('1 stable chronic, plan without Rx -> 99213 with the primary care exception attestation', () => {
+    const v = V({ problems: [chronic('HTN', 'Stable', ['Home BP log'])] });
+    const b = Billing.bill(v);
+    assert.deepEqual([b.problems.lvl, b.data.lvl, b.risk.lvl, b.code, b.pce], [2, 1, 2, '99213', true]);
+    assert.equal(Billing.attestation(v), Billing.ATTEST_PCE);
+});
+test('2 stable chronic + Rx -> 99214; new to clinic -> 99204', () => {
+    const ps = [chronic('HTN', 'Stable', ['CONT lisinopril 10 mg']), chronic('HLD')];
+    assert.equal(Billing.bill(V({ problems: ps })).code, '99214');
+    assert.equal(Billing.bill(V({ problems: ps, relation: 'new to clinic' })).code, '99204');
+    assert.equal(Billing.bill(V({ problems: ps, relation: 'new to me' })).code, '99214');
+});
+test('MDM is the middle of the three', () => {
+    // high problem, minimal data, low risk -> low
+    const v = V({ problems: [P({ name: 'Chest pain', cx: 'threat', plan: ['ice'] })] });
+    assert.equal(Billing.bill(v).mdm, 2);
+    assert.equal(Billing.bill({ ...v, risk: 'high' }).code, '99215');
+});
+test('problem complexity from status pills', () => {
+    assert.equal(Billing.autoCx(chronic('x', 'Worsening')), 'chronicx');
+    assert.equal(Billing.autoCx(chronic('x', 'Improving')), 'stable');
+    assert.equal(Billing.autoCx(P({ name: 'x', novelty: 'New', course: 'Acute' })), 'acute');
+    assert.equal(Billing.autoCx(P({ name: 'x', trend: 'Resolved', course: 'Chronic' })), 'minor');
+    assert.equal(Billing.autoCx(P({ name: 'HM', noStatus: true })), 'none');
+    assert.equal(Billing.problemCx(P({ name: 'x', course: 'Acute', cx: 'undx' })), 'undx');
+});
+test('two acute uncomplicated problems stay low', () =>
+    assert.equal(Billing.bill(V({ problems: [P({ name: 'a', course: 'Acute' }), P({ name: 'b', course: 'Acute' })] })).problems.lvl, 2));
+test('data levels', () => {
+    const lvl = data => Billing.bill(V({ data })).data.lvl;
+    assert.equal(lvl({ reviewed: 1 }), 1);
+    assert.equal(lvl({ reviewed: 1, external: 1 }), 2);
+    assert.equal(lvl({ historian: true }), 2);
+    assert.equal(lvl({ reviewed: 2, historian: true }), 3);
+    assert.equal(lvl({ discuss: true }), 3);
+    assert.equal(lvl({ discuss: true, interp: true }), 4);
+    assert.equal(lvl({ reviewed: 3, discuss: true }), 4);
+    assert.equal(lvl({ ordered: 0 }), 1);
+});
+test('tests ordered come from plan lines that read as orders', () => {
+    const v = V({ problems: [P({ name: 'x', plan: ['CBC, CMP', 'Reviewed TSH: normal', 'US abdomen', 'Consider MRI', 'chest x-ray'] })] });
+    assert.deepEqual(Billing.testsOrdered(v), ['CBC', 'CMP', 'chest x-ray', 'US']);
+    assert.deepEqual(Billing.testsOrdered(V({ problems: [P({ name: 'x', plan: ['Discussed results with us', 'flu shot today'] })] })), []);
+});
+test('risk from the plan', () => {
+    const r = plan => Billing.bill(V({ problems: [P({ name: 'x', plan })] })).risk.lvl;
+    assert.equal(r([]), 1);
+    assert.equal(r(['Continue prenatal vitamin']), 2);
+    assert.equal(r(['STOP ibuprofen']), 3);
+    assert.equal(r(['No opioids prescribed today']), 3);
+    assert.equal(r(['Direct admit to hospital']), 4);
+    assert.equal(Billing.bill(V({ sdoh: true, problems: [P({ name: 'x', plan: ['labs'] })] })).risk.lvl, 3);
+});
+test('code set by hand picks the attestation', () => {
+    const v = { ...sample, code: '99213' };
+    const b = Billing.bill(v);
+    assert.deepEqual([b.code, b.auto, b.overridden, b.pce], ['99213', '99214', true, true]);
+    assert.equal(text(v).sign, Billing.ATTEST_PCE);
+    assert.equal(Billing.bill({ ...sample, code: '99203' }).code, '99214');   // wrong patient kind is ignored
+});
 
 // ---- schedule
 test('one line per patient', () => {

@@ -137,6 +137,26 @@ class NoteTest {
         assertEquals(listOf("CONT amlodipine 5 mg PO daily"), ps[2].plan)
     }
 
+    @Test fun examGoesBetweenHpiAndPlan() {
+        var v = Visit(age = "60", sex = "M", hpi = listOf("Cough x2 wk"), vitals = mapOf("BP" to "128/82", "SpO2" to "97%"))
+        val resp = Exam.systems.first { it.name == "Resp" }
+        v = Exam.toggle(v, resp, "crackles"); v = Exam.toggle(v, resp, "diminished bases")
+        v = Exam.allNormal(v.copy(exam = v.exam + ("General" to listOf(Exam.NL)))).let { all ->
+            all.copy(exam = all.exam.filterKeys { it == "General" || it == "Resp" })
+        }
+        assertEquals("60M known to me here for follow-up.\n\nCough x2 wk\n\nVitals: BP 128/82, SpO2 97%\nExam:\nGeneral: NAD\n" +
+            "Resp: crackles and diminished bases\n\nPLAN\n\nFollow-up: ***.", Note.render(v))
+    }
+
+    @Test fun examNormalAndFindingsExcludeEachOther() {
+        val cv = Exam.systems.first { it.name == "CV" }
+        var v = Exam.toggle(Visit(), cv, "new murmur")
+        v = Exam.toggle(v, cv, Exam.NL); assertEquals(listOf(Exam.NL), v.exam["CV"])
+        v = Exam.toggle(v, cv, "JVD"); assertEquals(listOf("JVD"), v.exam["CV"])
+        v = Exam.toggle(v, cv, "JVD"); assertTrue("CV" !in v.exam)
+        assertTrue(Note.render(Exam.allNormal(Visit())).contains("Exam:\nGeneral: NAD\nHEENT: "))
+    }
+
     @Test fun splitKeepsParentheses() =
         assertEquals(listOf("OSA", "medication effect (fatigue, mood change)", "IDA"), Note.split("OSA, medication effect (fatigue, mood change), IDA"))
 }

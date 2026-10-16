@@ -236,6 +236,8 @@ function showVisit(id) {
 
         header('HPI'), R.hpi.el,
 
+        header('Exam'), examView(),
+
         h('div', { class: 'row' }, header('Plan'), h('span', { class: 'grow' }), chip('+ Problem', addProblem, 'primary')),
         R.problems,
         chip('+ Problem', addProblem, 'ghost'),
@@ -267,6 +269,44 @@ function showVisit(id) {
     drawProblems();
     refresh();
     window.scrollTo(0, 0);
+}
+
+/** Physical exam (from the On-Call app): vitals fields, then per system nL in one tap or abnL findings. */
+function examView() {
+    const box = h('div', { class: 'exam' });
+    const vitals = h('div', { class: 'vitals' }, Library.data.vitals.map(k => {
+        const el = h('input', { type: 'text', placeholder: k, value: (v.vitals || {})[k] || '', autocomplete: 'off', 'aria-label': k });
+        el.addEventListener('input', () => update(x => N.withVital(x, k, el.value)));
+        return el;
+    }));
+    const systems = h('div');
+    const addOther = s => {
+        const t = h('input', { type: 'text', placeholder: 'Finding' });
+        modal({ title: s.name, body: t, onOpen: () => t.focus(), actions: [{ label: 'Add', cls: 'primary', onClick: () => {
+            const f = t.value.trim();
+            if (f && !((v.exam || {})[s.name] || []).includes(f)) { update(x => N.examToggle(x, s.name, f)); draw(); }
+        } }] });
+    };
+    function draw() {
+        systems.replaceChildren(...Library.data.exam.map(s => {
+            const picked = (v.exam || {})[s.name] || [];
+            const nl = picked.length === 1 && picked[0] === N.NL;
+            const extras = picked.filter(x => x !== N.NL && !s.abnormal.includes(x));
+            return h('div', { class: 'sys' },
+                h('div', { class: 'sysname' }, s.name),
+                h('div', { class: 'flow' },
+                    pill('nL · ' + s.normal, nl, () => { update(x => N.examToggle(x, s.name, N.NL)); draw(); }, 'small'),
+                    [...s.abnormal, ...extras].map(a => pill(a, picked.includes(a), () => { update(x => N.examToggle(x, s.name, a)); draw(); }, 'small')),
+                    chip('+ other', () => addOther(s), 'small link')));
+        }));
+    }
+    draw();
+    box.append(vitals,
+        h('div', { class: 'flow' },
+            chip('All untouched → nL', () => { update(N.examAllNormal); draw(); }, 'primary'),
+            chip('Clear exam', () => { update(x => ({ ...x, exam: {} })); draw(); })),
+        systems);
+    return box;
 }
 
 function drawProblems() {

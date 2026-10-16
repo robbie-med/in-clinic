@@ -40,7 +40,7 @@ export const uid = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().t
 export function newVisit(fields = {}) {
     return {
         id: uid(), created: Date.now(), slot: '', age: '', sex: '', relation: 'known to me', type: 'follow-up', cc: '',
-        oneLiner: '', hpi: [], problems: [], fuWhen: '', fuWhy: [], copiedAt: 0, ...fields,
+        oneLiner: '', hpi: [], vitals: {}, exam: {}, problems: [], fuWhen: '', fuWhy: [], copiedAt: 0, ...fields,
     };
 }
 
@@ -107,11 +107,53 @@ export function render(v) {
     const out = [oneLiner(v), ''];
     const hpi = v.hpi.map(s => s.trim()).filter(Boolean);
     if (hpi.length) out.push(...hpi, '');
+    const vit = vitalsText(v); const exam = examLines(v);
+    if (vit) out.push('Vitals: ' + vit);
+    if (exam.length) out.push('Exam:', ...exam);
+    if (vit || exam.length) out.push('');
     out.push('PLAN');
     for (const p of v.problems) out.push('', ...problemLines(p));
     out.push('', `Follow-up: ${followUp(v)}.`);
     return plain(out.join('\n'));
 }
+
+// ------------------------------------------------------------ physical exam (from the On-Call app)
+// Vitals fields, then per system nL (one tap) or abnL findings. Systems / findings live in library.json.
+
+export const NL = 'nL';
+
+const setExam = (v, system, picks) => {
+    const exam = { ...(v.exam || {}) };
+    if (picks.length) exam[system] = picks; else delete exam[system];
+    return { ...v, exam };
+};
+
+/** nL clears the findings and vice versa; findings toggle in tap order (typed "other" findings too). */
+export function examToggle(v, system, item) {
+    const cur = (v.exam || {})[system] || [];
+    let next;
+    if (item === NL) next = cur.includes(NL) ? [] : [NL];
+    else if (cur.includes(item)) next = cur.filter(x => x !== item);
+    else next = [...cur.filter(x => x !== NL), item];
+    return setExam(v, system, next);
+}
+
+/** Every system not yet examined → nL. */
+export const examAllNormal = v => Library.data.exam.reduce((acc, s) => ((acc.exam || {})[s.name]?.length ? acc : setExam(acc, s.name, [NL])), v);
+
+export const examLines = v => Library.data.exam.flatMap(s => {
+    const p = (v.exam || {})[s.name] || [];
+    if (!p.length) return [];
+    return [`${s.name}: ` + (p.length === 1 && p[0] === NL ? s.normal : join(p.filter(x => x !== NL)))];
+});
+
+export const vitalsText = v => Library.data.vitals.map(k => [k, ((v.vitals || {})[k] || '').trim()]).filter(([, x]) => x).map(([k, x]) => `${k} ${x}`).join(', ');
+
+export const withVital = (v, k, value) => {
+    const vitals = { ...(v.vitals || {}) };
+    if (value.trim()) vitals[k] = value.trim(); else delete vitals[k];
+    return { ...v, vitals };
+};
 
 // ------------------------------------------------------------ carry forward
 

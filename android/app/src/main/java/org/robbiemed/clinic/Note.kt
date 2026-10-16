@@ -84,6 +84,10 @@ object Note {
         val out = mutableListOf(oneLiner(v), "")
         val hpi = v.hpi.map { it.trim() }.filter { it.isNotEmpty() }
         if (hpi.isNotEmpty()) { out += hpi; out += "" }
+        val vit = Exam.vitalsText(v); val exam = Exam.lines(v)
+        if (vit.isNotEmpty()) out += "Vitals: $vit"
+        if (exam.isNotEmpty()) { out += "Exam:"; out += exam }
+        if (vit.isNotEmpty() || exam.isNotEmpty()) out += ""
         out += "PLAN"
         for (p in v.problems) { out += ""; out += problem(p) }
         out += ""

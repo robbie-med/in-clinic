@@ -296,6 +296,44 @@ class MainActivity : Activity() {
             learnKey = { null }, kind = "hpi", hint = "Complains of… (type or dictate, Enter adds)")
         body.addView(hpiLines.view)
 
+        // ---- exam (from the On-Call app): vitals, then per system nL or abnL findings
+        body.addView(header("Exam"))
+        body.addView(Flow(this, dp(8)).apply {
+            for (k in Exam.vitals) addView(EditText(this@MainActivity).apply {
+                hint = k; setText(v.vitals[k].orEmpty()); setTextColor(INK); setHintTextColor(FAINT); textSize = 15f; minEms = 4
+                inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+                setPadding(dp(10), dp(6), dp(10), dp(6)); background = rounded(SURFACE, 10)
+                addTextChangedListener(watch { s -> update { it.withVital(k, s) } })
+            })
+        })
+        val examBox = vertical()
+        fun drawExam() {
+            examBox.removeAllViews()
+            for (sys in Exam.systems) {
+                val picked = v.exam[sys.name].orEmpty()
+                examBox.addView(sub(sys.name))
+                examBox.addView(Flow(this, dp(6)).apply {
+                    addView(small(pill("nL · ${sys.normal}", picked == listOf(Exam.NL)) { update { Exam.toggle(it, sys, Exam.NL) }; drawExam() }))
+                    for (a in sys.abnormal + picked.filter { it != Exam.NL && it !in sys.abnormal })
+                        addView(small(pill(a, a in picked) { update { Exam.toggle(it, sys, a) }; drawExam() }))
+                    addView(small(chip("+ other", ACCENT, SURFACE) {
+                        val e = EditText(this@MainActivity).apply { hint = "Finding"; setTextColor(INK); setHintTextColor(FAINT) }
+                        AlertDialog.Builder(this@MainActivity).setTitle(sys.name).setView(e).setPositiveButton("Add") { _, _ ->
+                            val t = e.text.toString().trim()
+                            if (t.isNotEmpty() && t !in v.exam[sys.name].orEmpty()) { update { Exam.toggle(it, sys, t) }; drawExam() }
+                        }.setNegativeButton("Cancel", null).show().also { keyboard(e) }
+                    }))
+                })
+            }
+        }
+        body.addView(Flow(this, dp(8)).apply {
+            setPadding(0, dp(10), 0, 0)
+            addView(chip("All untouched → nL", BG, ACCENT) { update { Exam.allNormal(it) }; drawExam() })
+            addView(chip("Clear exam") { update { it.copy(exam = emptyMap()) }; drawExam() })
+        })
+        drawExam()
+        body.addView(examBox)
+
         // ---- plan
         val ph = horizontal()
         ph.addView(header("Plan"), LinearLayout.LayoutParams(0, -2, 1f))

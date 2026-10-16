@@ -22,6 +22,11 @@ Landscape puts the live note beside the editor. Portrait puts it below, with a C
 
 <HPI lines>
 
+Vitals: BP 128/82, HR 76
+Exam:
+General: NAD
+Resp: crackles and diminished bases
+
 PLAN
 
 #Fatigue
@@ -45,6 +50,8 @@ An unpicked status or follow-up prints `***` (Epic F2 jumps to it).
 - **In the room:**
   - Age, F/M, known/new, visit type and chief complaint build the one-liner. Tap the one-liner to override it.
   - HPI lines: type or dictate, then press Enter.
+  - **Exam** (from the On-Call app): type the vitals, then for each system tap nL or the abnormal findings ("+ other" for your own).
+    **All untouched → nL** fills the rest. Only examined systems print.
   - **+ Problem:** type a few letters, then Enter. Then tap the status, DDx chips (hold one to annotate) and plan chips, or use CONT/START/… to type a med.
   - Follow-up: pick an interval and a reason, then **Copy note**.
 - A chip with `***` drops into the field with the blank selected, so you type over it.

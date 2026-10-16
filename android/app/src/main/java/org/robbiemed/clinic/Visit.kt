@@ -50,6 +50,10 @@ data class Visit(
     /** Typed one-liner that replaces the generated one ("" = generate). */
     val oneLiner: String = "",
     val hpi: List<String> = emptyList(),
+    /** Vital label ("BP") → value ("128/82"). */
+    val vitals: Map<String, String> = emptyMap(),
+    /** Exam system name → [Exam.NL] or the abnormal findings picked / typed. */
+    val exam: Map<String, List<String>> = emptyMap(),
     val problems: List<Problem> = emptyList(),
     val fuWhen: String = "",
     val fuWhy: List<String> = emptyList(),
@@ -57,6 +61,8 @@ data class Visit(
 ) {
     fun problem(id: String) = problems.firstOrNull { it.id == id }
     fun withProblem(p: Problem) = copy(problems = problems.map { if (it.id == p.id) p else it })
+    fun withExam(system: String, picks: List<String>) = copy(exam = if (picks.isEmpty()) exam - system else exam + (system to picks))
+    fun withVital(k: String, value: String) = copy(vitals = if (value.isBlank()) vitals - k else vitals + (k to value.trim()))
 }
 
 object Json {
@@ -65,7 +71,8 @@ object Json {
     fun encode(v: Visit): JSONObject = JSONObject().apply {
         put("id", v.id); put("created", v.created); put("slot", v.slot); put("age", v.age); put("sex", v.sex)
         put("relation", v.relation); put("type", v.type); put("cc", v.cc); put("oneLiner", v.oneLiner)
-        put("hpi", JSONArray(v.hpi)); put("fuWhen", v.fuWhen); put("fuWhy", JSONArray(v.fuWhy)); put("copiedAt", v.copiedAt)
+        put("hpi", JSONArray(v.hpi)); put("vitals", JSONObject(v.vitals as Map<*, *>))
+        put("exam", JSONObject().apply { v.exam.forEach { (k, l) -> put(k, JSONArray(l)) } }); put("fuWhen", v.fuWhen); put("fuWhy", JSONArray(v.fuWhy)); put("copiedAt", v.copiedAt)
         put("problems", JSONArray(v.problems.map { p ->
             JSONObject().put("id", p.id).put("name", p.name).put("lib", p.lib).put("novelty", p.novelty).put("course", p.course)
                 .put("trend", p.trend).put("noStatus", p.noStatus).put("notes", JSONArray(p.notes)).put("plan", JSONArray(p.plan))
@@ -78,7 +85,10 @@ object Json {
         return Visit(
             id = o.getString("id"), created = o.optLong("created"), slot = o.optString("slot"), age = o.optString("age"),
             sex = o.optString("sex"), relation = o.optString("relation"), type = o.optString("type"), cc = o.optString("cc"),
-            oneLiner = o.optString("oneLiner"), hpi = strs(o.optJSONArray("hpi")), fuWhen = o.optString("fuWhen"),
+            oneLiner = o.optString("oneLiner"), hpi = strs(o.optJSONArray("hpi")),
+            vitals = o.optJSONObject("vitals")?.let { j -> j.keys().asSequence().associateWith { j.optString(it) } }.orEmpty(),
+            exam = o.optJSONObject("exam")?.let { j -> j.keys().asSequence().associateWith { strs(j.optJSONArray(it)) } }.orEmpty(),
+            fuWhen = o.optString("fuWhen"),
             fuWhy = strs(o.optJSONArray("fuWhy")), copiedAt = o.optLong("copiedAt"),
             problems = (0 until ps.length()).map { i ->
                 val p = ps.getJSONObject(i); val dd = p.optJSONArray("ddx") ?: JSONArray()

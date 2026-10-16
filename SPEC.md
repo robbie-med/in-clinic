@@ -37,6 +37,8 @@ An unpicked status or follow-up interval prints `***` (Epic F2). Health maintena
 - **Visit:** time, age, F/M, relation, visit type and chief complaint build the one-liner (tap it to override). The HPI is a line list.
   `+ Problem` searches the library (`Library.kt`, ~40 primary-care problems) or adds a free problem. Each problem has status pills,
   Notes, DDx (grouped chips; hold one to annotate, e.g. "(PHQ-9 negative)") and Plan (chips, plus med verbs CONT/START/INCREASE/DECREASE/STOP/REFILL).
+  **Exam** (ported from On-Call: same systems, normals and findings, plus HEENT, Psych and Wt): vitals fields, then nL or abnL per
+  system, "+ other" for a typed finding, "All untouched → nL". It prints between the HPI and PLAN as `Vitals:` and `Exam:` lines (examined systems only).
   A chip containing `***` drops into the field with the blank selected. Follow-up has interval and purpose chips.
 - **Paste last note:** parses a prior note in this format. Its problems come back as Known with the trend cleared; plan, notes and DDx are kept.
 
@@ -48,4 +50,4 @@ names are offered in the picker. HPI and notes are **not** learned, since they'r
 Credential-encrypted SharedPreferences, `allowBackup=false`, and copies are marked clipboard-sensitive. The app stores no names, but notes can contain dates.
 
 ## Later
-Exam/vitals section, MDM summary from statuses, editable library, voice capture.
+MDM summary from statuses, editable library, voice capture.

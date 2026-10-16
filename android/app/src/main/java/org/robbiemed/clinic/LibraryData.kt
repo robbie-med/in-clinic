@@ -7,6 +7,18 @@ internal object LibraryData {
     val hpiGeneric = listOf("Adherent to medications; no side effects", "No ED visits or hospitalizations since last visit", "Denies chest pain, dyspnea, palpitations", "Denies fevers, chills, night sweats, weight loss", "Onset ***; duration ***", "Denies ***")
     val fuWhen = listOf("1 wk", "2 wk", "3 wk", "4 wk", "6 wk", "2 mo", "3 mo", "6 mo", "1 yr", "PRN")
     val fuGeneric = listOf("review labs", "reassess symptoms", "medication titration", "chronic disease management", "annual exam")
+    val vitals = listOf("BP", "HR", "RR", "SpO2", "T", "Wt", "FSG")
+    val exam = listOf(
+        ExamSystem("General", "NAD", listOf("ill-appearing", "in distress", "diaphoretic", "lethargic")),
+        ExamSystem("HEENT", "NCAT, MMM, oropharynx clear", listOf("pharyngeal erythema", "tonsillar exudate", "TM erythema / effusion", "sinus tenderness", "conjunctival injection", "cervical lymphadenopathy")),
+        ExamSystem("Neuro", "A&O x3, no focal deficits", listOf("confused", "somnolent", "not following commands", "new focal deficit", "asterixis", "agitated")),
+        ExamSystem("CV", "RRR, no m/r/g", listOf("tachycardic", "bradycardic", "irregularly irregular", "new murmur", "JVD", "delayed cap refill")),
+        ExamSystem("Resp", "CTAB, unlabored", listOf("tachypneic", "increased work of breathing", "crackles", "wheezes", "diminished bases", "stridor")),
+        ExamSystem("Abd", "soft, NT/ND", listOf("tender", "distended", "guarding / rebound", "absent bowel sounds")),
+        ExamSystem("Ext", "warm, no edema", listOf("edema", "cool / mottled", "calf tenderness", "unilateral swelling")),
+        ExamSystem("Skin", "intact, no rash", listOf("rash", "pallor", "bleeding at site", "wound concern")),
+        ExamSystem("Psych", "normal mood and affect", listOf("depressed mood", "anxious", "flat affect", "tearful", "pressured speech")),
+    )
     val problems = listOf(
         Lib("htn", "HTN", aliases = listOf("hypertension", "high blood pressure", "bp"), novelty = "Known", course = "Chronic", hpi = listOf("Home BPs ***", "Adherent to antihypertensives; no side effects"), notes = listOf("BP today ***", "At goal <130/80", "Not at goal", "Home BP log reviewed: ***"), plan = listOf("CONT ***", "Home BP log; bring to next visit", "DASH diet, sodium <2 g/day, regular exercise", "BMP", "Urine albumin/creatinine ratio", "Lipid panel"), fu = listOf("BP recheck", "review home BP log"), ddx = listOf(Ddx("Secondary causes", listOf("OSA", "primary aldosteronism", "CKD", "renal artery stenosis", "NSAIDs / decongestants", "alcohol")))),
         Lib("dm2", "T2DM", aliases = listOf("diabetes", "type 2 diabetes", "dm", "diabetes mellitus"), novelty = "Known", course = "Chronic", hpi = listOf("Home glucose ***", "Denies hypoglycemia", "Denies polyuria, polydipsia"), notes = listOf("A1C *** (previously ***)", "At goal A1C <7", "Not at goal", "On statin", "Last eye exam ***"), plan = listOf("CONT ***", "A1C", "BMP", "Urine albumin/creatinine ratio", "Lipid panel", "Diabetic foot exam today", "Retinal exam referral", "Consider GLP-1 RA / SGLT2i", "Diabetes education / nutrition referral"), fu = listOf("review A1C", "medication titration")),

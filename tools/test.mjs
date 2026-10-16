@@ -129,6 +129,25 @@ test('carry forward: Known, trend cleared, library reattached', () => {
     assert.ok(ps.every(p => p.novelty === 'Known' && p.trend === ''));
     assert.equal(ps[2].lib, 'htn'); assert.equal(ps[0].lib, 'fatigue');
 });
+test('exam goes between HPI and plan', () => {
+    let v = Note.newVisit({ age: '60', sex: 'M', hpi: ['Cough x2 wk'], vitals: { BP: '128/82', SpO2: '97%' } });
+    v = Note.examToggle(Note.examToggle(v, 'Resp', 'crackles'), 'Resp', 'diminished bases');
+    v = Note.examToggle(v, 'General', Note.NL);
+    assert.equal(Note.render(v), '60M known to me here for follow-up.\n\nCough x2 wk\n\nVitals: BP 128/82, SpO2 97%\nExam:\nGeneral: NAD\n' +
+        'Resp: crackles and diminished bases\n\nPLAN\n\nFollow-up: ***.');
+});
+test('exam nL and findings exclude each other', () => {
+    let v = Note.examToggle(Note.newVisit(), 'CV', 'new murmur');
+    v = Note.examToggle(v, 'CV', Note.NL); assert.deepEqual(v.exam.CV, [Note.NL]);
+    v = Note.examToggle(v, 'CV', 'JVD'); assert.deepEqual(v.exam.CV, ['JVD']);
+    v = Note.examToggle(v, 'CV', 'JVD'); assert.ok(!('CV' in v.exam));
+    assert.ok(Note.render(Note.examAllNormal(Note.newVisit())).includes('Exam:\nGeneral: NAD\nHEENT: '));
+});
+test('old saved visits without exam still render', () => {
+    const old = Note.newVisit(); delete old.exam; delete old.vitals;
+    assert.equal(Note.render(old), '*** known to me here for follow-up.\n\nPLAN\n\nFollow-up: ***.');
+});
+test('exam is ASCII', () => Library.data.exam.forEach(s => [s.name, s.normal, ...s.abnormal].forEach(x => assert.ok(/^[\x00-\x7f]*$/.test(x), x))));
 test('split keeps parentheses', () =>
     assert.deepEqual(Note.split('OSA, medication effect (fatigue, mood change), IDA'), ['OSA', 'medication effect (fatigue, mood change)', 'IDA']));
 

@@ -1,285 +1,1317 @@
 {
-  "medVerbs": ["CONT ", "START ", "INCREASE ", "DECREASE ", "STOP ", "REFILL "],
-  "hpiGeneric": ["Adherent to medications; no side effects", "No ED visits or hospitalizations since last visit", "Denies chest pain, dyspnea, palpitations", "Denies fevers, chills, night sweats, weight loss", "Onset ***; duration ***", "Denies ***"],
-  "fuWhen": ["1 wk", "2 wk", "3 wk", "4 wk", "6 wk", "2 mo", "3 mo", "6 mo", "1 yr", "PRN"],
-  "fuGeneric": ["review labs", "reassess symptoms", "medication titration", "chronic disease management", "annual exam"],
+  "medVerbs": [
+    "CONT ",
+    "START ",
+    "INCREASE ",
+    "DECREASE ",
+    "STOP ",
+    "REFILL "
+  ],
+  "hpiGeneric": [
+    "Adherent to medications; no side effects",
+    "No ED visits or hospitalizations since last visit",
+    "Denies chest pain, dyspnea, palpitations",
+    "Denies fevers, chills, night sweats, weight loss",
+    "Onset ***; duration ***",
+    "Denies ***"
+  ],
+  "fuWhen": [
+    "1 wk",
+    "2 wk",
+    "3 wk",
+    "4 wk",
+    "6 wk",
+    "2 mo",
+    "3 mo",
+    "6 mo",
+    "1 yr",
+    "PRN"
+  ],
+  "fuGeneric": [
+    "review labs",
+    "reassess symptoms",
+    "medication titration",
+    "chronic disease management",
+    "annual exam"
+  ],
+  "vitals": [
+    "BP",
+    "HR",
+    "RR",
+    "SpO2",
+    "T",
+    "Wt",
+    "FSG"
+  ],
+  "exam": [
+    {
+      "name": "General",
+      "normal": "NAD",
+      "abnormal": [
+        "ill-appearing",
+        "in distress",
+        "diaphoretic",
+        "lethargic"
+      ]
+    },
+    {
+      "name": "HEENT",
+      "normal": "NCAT, MMM, oropharynx clear",
+      "abnormal": [
+        "pharyngeal erythema",
+        "tonsillar exudate",
+        "TM erythema / effusion",
+        "sinus tenderness",
+        "conjunctival injection",
+        "cervical lymphadenopathy"
+      ]
+    },
+    {
+      "name": "Neuro",
+      "normal": "A&O x3, no focal deficits",
+      "abnormal": [
+        "confused",
+        "somnolent",
+        "not following commands",
+        "new focal deficit",
+        "asterixis",
+        "agitated"
+      ]
+    },
+    {
+      "name": "CV",
+      "normal": "RRR, no m/r/g",
+      "abnormal": [
+        "tachycardic",
+        "bradycardic",
+        "irregularly irregular",
+        "new murmur",
+        "JVD",
+        "delayed cap refill"
+      ]
+    },
+    {
+      "name": "Resp",
+      "normal": "CTAB, unlabored",
+      "abnormal": [
+        "tachypneic",
+        "increased work of breathing",
+        "crackles",
+        "wheezes",
+        "diminished bases",
+        "stridor"
+      ]
+    },
+    {
+      "name": "Abd",
+      "normal": "soft, NT/ND",
+      "abnormal": [
+        "tender",
+        "distended",
+        "guarding / rebound",
+        "absent bowel sounds"
+      ]
+    },
+    {
+      "name": "Ext",
+      "normal": "warm, no edema",
+      "abnormal": [
+        "edema",
+        "cool / mottled",
+        "calf tenderness",
+        "unilateral swelling"
+      ]
+    },
+    {
+      "name": "Skin",
+      "normal": "intact, no rash",
+      "abnormal": [
+        "rash",
+        "pallor",
+        "bleeding at site",
+        "wound concern"
+      ]
+    },
+    {
+      "name": "Psych",
+      "normal": "normal mood and affect",
+      "abnormal": [
+        "depressed mood",
+        "anxious",
+        "flat affect",
+        "tearful",
+        "pressured speech"
+      ]
+    }
+  ],
   "problems": [
-    {"key": "htn",
-     "name": "HTN",
-     "aliases": ["hypertension", "high blood pressure", "bp"],
-     "novelty": "Known",
-     "course": "Chronic",
-     "hpi": ["Home BPs ***", "Adherent to antihypertensives; no side effects"],
-     "notes": ["BP today ***", "At goal <130/80", "Not at goal", "Home BP log reviewed: ***"],
-     "ddx": [{"label": "Secondary causes", "items": ["OSA", "primary aldosteronism", "CKD", "renal artery stenosis", "NSAIDs / decongestants", "alcohol"]}],
-     "plan": ["CONT ***", "Home BP log; bring to next visit", "DASH diet, sodium <2 g/day, regular exercise", "BMP", "Urine albumin/creatinine ratio", "Lipid panel"],
-     "fu": ["BP recheck", "review home BP log"]},
-    {"key": "dm2",
-     "name": "T2DM",
-     "aliases": ["diabetes", "type 2 diabetes", "dm", "diabetes mellitus"],
-     "novelty": "Known",
-     "course": "Chronic",
-     "hpi": ["Home glucose ***", "Denies hypoglycemia", "Denies polyuria, polydipsia"],
-     "notes": ["A1C *** (previously ***)", "At goal A1C <7", "Not at goal", "On statin", "Last eye exam ***"],
-     "plan": ["CONT ***", "A1C", "BMP", "Urine albumin/creatinine ratio", "Lipid panel", "Diabetic foot exam today", "Retinal exam referral", "Consider GLP-1 RA / SGLT2i", "Diabetes education / nutrition referral"],
-     "fu": ["review A1C", "medication titration"]},
-    {"key": "prediabetes",
-     "name": "Prediabetes",
-     "aliases": ["pre-diabetes", "impaired fasting glucose"],
-     "novelty": "Known",
-     "course": "Chronic",
-     "notes": ["A1C ***"],
-     "plan": ["Diet, 150 min/wk exercise, 5-7% weight loss", "A1C in 1 yr", "Diabetes prevention program referral", "Consider metformin"]},
-    {"key": "hld",
-     "name": "HLD",
-     "aliases": ["hyperlipidemia", "dyslipidemia", "high cholesterol", "cholesterol"],
-     "novelty": "Known",
-     "course": "Chronic",
-     "notes": ["LDL *** (date ***)", "ASCVD 10-yr risk ***%", "Tolerating statin"],
-     "plan": ["CONT ***", "Lipid panel", "CMP", "START atorvastatin *** mg PO daily", "Heart-healthy diet, exercise"]},
-    {"key": "hypothyroid",
-     "name": "Hypothyroidism",
-     "aliases": ["hypothyroid", "thyroid"],
-     "novelty": "Known",
-     "course": "Chronic",
-     "notes": ["TSH *** (date ***)", "Clinically euthyroid"],
-     "plan": ["CONT levothyroxine *** mcg PO daily", "TSH in 6-8 wk", "Take on empty stomach, apart from calcium / iron"],
-     "fu": ["review TSH"]},
-    {"key": "ckd",
-     "name": "CKD",
-     "aliases": ["chronic kidney disease", "kidney"],
-     "novelty": "Known",
-     "course": "Chronic",
-     "notes": ["eGFR ***, UACR ***", "Stage ***"],
-     "plan": ["BMP", "Urine albumin/creatinine ratio", "CBC", "Avoid NSAIDs", "Renally dose medications", "CONT ACEi/ARB", "SGLT2i", "Nephrology referral"]},
-    {"key": "obesity",
-     "name": "Obesity",
-     "aliases": ["overweight", "weight"],
-     "novelty": "Known",
-     "course": "Chronic",
-     "notes": ["BMI ***", "Weight *** (previously ***)"],
-     "plan": ["Nutrition referral", "Exercise goal 150 min/wk", "Consider GLP-1 RA", "A1C, lipid panel", "Weight management referral"]},
-    {"key": "gerd",
-     "name": "GERD",
-     "aliases": ["reflux", "heartburn"],
-     "novelty": "Known",
-     "course": "Chronic",
-     "notes": ["No alarm features (dysphagia, weight loss, GI bleeding, anemia)"],
-     "plan": ["CONT ***", "PPI trial 8 wk", "Avoid late meals, elevate head of bed, weight loss", "EGD referral"]},
-    {"key": "asthma",
-     "name": "Asthma",
-     "novelty": "Known",
-     "course": "Chronic",
-     "notes": ["Rescue inhaler use ***/wk", "Night symptoms ***/mo", "Well controlled", "Not well controlled"],
-     "plan": ["CONT ***", "Albuterol PRN", "ICS-formoterol", "Spirometry", "Inhaler technique reviewed", "Asthma action plan"]},
-    {"key": "copd",
-     "name": "COPD",
-     "aliases": ["emphysema", "chronic bronchitis"],
-     "novelty": "Known",
-     "course": "Chronic",
-     "notes": ["Exacerbations in past year: ***", "FEV1 ***% predicted"],
-     "plan": ["CONT ***", "Albuterol PRN", "Spirometry", "Pulmonary rehab referral", "Smoking cessation counseling", "Vaccines: influenza, pneumococcal, RSV, COVID"]},
-    {"key": "hf",
-     "name": "HFrEF",
-     "aliases": ["chf", "heart failure", "hfpef", "cardiomyopathy"],
-     "novelty": "Known",
-     "course": "Chronic",
-     "notes": ["EF *** (date ***)", "NYHA class ***", "Weight ***; euvolemic on exam", "Volume overloaded on exam"],
-     "plan": ["CONT ***", "Daily weights; call if up >2 lb/day or 5 lb/wk", "Sodium <2 g/day", "BMP", "BNP", "Echo", "Cardiology follow-up"]},
-    {"key": "afib",
-     "name": "AFib",
-     "aliases": ["atrial fibrillation", "a fib", "af"],
-     "novelty": "Known",
-     "course": "Chronic",
-     "notes": ["Rate controlled", "CHA2DS2-VASc ***", "On anticoagulation: ***"],
-     "plan": ["CONT ***", "EKG", "TSH", "CBC, BMP", "Echo", "Cardiology referral"]},
-    {"key": "cad",
-     "name": "CAD",
-     "aliases": ["coronary artery disease", "angina"],
-     "novelty": "Known",
-     "course": "Chronic",
-     "notes": ["No angina", "Last stress test / cath ***"],
-     "plan": ["CONT aspirin 81 mg PO daily", "CONT high-intensity statin", "Lipid panel", "Cardiology follow-up"]},
-    {"key": "depression",
-     "name": "Depression",
-     "aliases": ["mdd", "major depressive disorder", "low mood"],
-     "novelty": "Known",
-     "course": "Chronic",
-     "notes": ["PHQ-9 ***", "Denies SI/HI"],
-     "ddx": [{"label": "Also consider", "items": ["bipolar disorder", "hypothyroidism", "substance use", "medication effect"]}],
-     "plan": ["CONT ***", "START sertraline *** mg PO daily", "Therapy referral", "Crisis resources reviewed (988)", "PHQ-9 at next visit"],
-     "fu": ["reassess mood"]},
-    {"key": "anxiety",
-     "name": "Anxiety",
-     "aliases": ["gad", "generalized anxiety disorder", "panic"],
-     "novelty": "Known",
-     "course": "Chronic",
-     "notes": ["GAD-7 ***", "Denies SI/HI"],
-     "plan": ["CONT ***", "START SSRI ***", "Therapy referral", "Sleep hygiene, limit caffeine", "GAD-7 at next visit"]},
-    {"key": "insomnia",
-     "name": "Insomnia",
-     "aliases": ["sleep", "poor sleep"],
-     "course": "Chronic",
-     "ddx": [{"label": "", "items": ["OSA", "depression / anxiety", "restless legs", "circadian rhythm disorder", "caffeine / alcohol / medications"]}],
-     "plan": ["Sleep hygiene", "CBT-I referral", "Sleep study"]},
-    {"key": "osa",
-     "name": "OSA",
-     "aliases": ["sleep apnea", "obstructive sleep apnea"],
-     "novelty": "Known",
-     "course": "Chronic",
-     "notes": ["Using CPAP ***", "STOP-BANG ***"],
-     "plan": ["CONT CPAP nightly", "Sleep study", "CPAP compliance download", "Weight loss"]},
-    {"key": "tobacco",
-     "name": "Tobacco use",
-     "aliases": ["smoking", "smoker", "nicotine", "tobacco"],
-     "novelty": "Known",
-     "course": "Chronic",
-     "notes": ["*** pack-years; *** cigarettes/day", "Ready to quit: ***"],
-     "plan": ["Cessation counseling >3 min", "Nicotine patch *** mg/day + gum/lozenge PRN", "Varenicline", "Quitline 1-800-QUIT-NOW", "Low-dose CT lung cancer screening"]},
-    {"key": "alcohol",
-     "name": "Alcohol use",
-     "aliases": ["etoh", "alcohol"],
-     "novelty": "Known",
-     "course": "Chronic",
-     "notes": ["AUDIT-C ***", "*** drinks/wk"],
-     "plan": ["Brief intervention", "CBC, CMP", "Naltrexone", "Thiamine", "Counseling / AA referral"]},
-    {"key": "migraine",
-     "name": "Migraine",
-     "novelty": "Known",
-     "course": "Chronic",
-     "notes": ["Headache days ***/mo"],
-     "plan": ["CONT ***", "Triptan PRN: ***", "Preventive: ***", "Limit acute meds <10 days/mo", "Headache diary"]},
-    {"key": "bph",
-     "name": "BPH",
-     "aliases": ["enlarged prostate", "luts"],
-     "novelty": "Known",
-     "course": "Chronic",
-     "notes": ["IPSS ***", "Nocturia ***x"],
-     "plan": ["CONT tamsulosin 0.4 mg PO daily", "UA", "PSA (shared decision)", "Urology referral"]},
-    {"key": "osteoporosis",
-     "name": "Osteoporosis",
-     "aliases": ["osteopenia"],
-     "novelty": "Known",
-     "course": "Chronic",
-     "notes": ["DEXA *** T-score ***"],
-     "plan": ["CONT alendronate 70 mg PO weekly", "Calcium 1200 mg/day + vitamin D", "DEXA", "25-OH vitamin D", "Fall prevention"]},
-    {"key": "gout",
-     "name": "Gout",
-     "novelty": "Known",
-     "course": "Chronic",
-     "notes": ["Flares in past year: ***", "Uric acid ***"],
-     "plan": ["CONT allopurinol *** mg PO daily", "Uric acid (goal <6)", "Colchicine PRN flare", "BMP"]},
-    {"key": "rhinitis",
-     "name": "Allergic rhinitis",
-     "aliases": ["allergies", "seasonal allergies"],
-     "novelty": "Known",
-     "course": "Chronic",
-     "plan": ["Intranasal steroid", "Oral 2nd-generation antihistamine", "Allergen avoidance"]},
-    {"key": "oa",
-     "name": "Osteoarthritis",
-     "aliases": ["oa", "arthritis", "knee pain"],
-     "novelty": "Known",
-     "course": "Chronic",
-     "plan": ["Acetaminophen PRN", "Topical diclofenac", "PT referral", "X-ray ***", "Steroid injection", "Weight loss, exercise"]},
-    {"key": "anemia",
-     "name": "Anemia",
-     "notes": ["Hgb *** (previously ***)", "MCV ***"],
-     "ddx": [{"label": "", "items": ["iron deficiency", "B12 / folate deficiency", "anemia of chronic disease", "CKD", "blood loss", "hemolysis"]}],
-     "plan": ["CBC with diff, reticulocyte count", "Ferritin, iron panel", "B12, folate", "Iron supplementation ***", "GI referral for EGD/colonoscopy"]},
-    {"key": "fatigue",
-     "name": "Fatigue",
-     "aliases": ["tired", "tiredness", "low energy"],
-     "ddx": [{"label": "Non-hormonal", "items": ["OSA", "depression/anxiety", "medication effect", "iron deficiency anemia", "B12 deficiency", "CKD"]}, {"label": "Hormonal", "items": ["hypothyroidism", "central adrenal insufficiency", "hyperprolactinemia", "diabetes", "perimenopause/estrogen insufficiency"]}],
-     "plan": ["CBC, CMP, A1C", "TSH, free T4", "Ferritin, iron panel", "B12", "8 AM serum cortisol", "PHQ-9", "Sleep study", "Pregnancy test"],
-     "fu": ["review labs"]},
-    {"key": "chestpain",
-     "name": "Chest pain",
-     "aliases": ["cp", "chest discomfort"],
-     "course": "Acute",
-     "notes": ["EKG today: ***", "HEART score ***", "Reproducible with palpation"],
-     "ddx": [{"label": "Cardiac", "items": ["stable angina", "ACS", "pericarditis"]}, {"label": "Pulmonary", "items": ["PE", "pneumonia", "pneumothorax"]}, {"label": "GI", "items": ["GERD", "esophageal spasm"]}, {"label": "Other", "items": ["costochondritis", "anxiety", "zoster"]}],
-     "plan": ["EKG today", "Lipid panel, A1C", "Stress test", "Cardiology referral", "ED precautions reviewed"]},
-    {"key": "dyspnea",
-     "name": "Dyspnea",
-     "aliases": ["sob", "shortness of breath"],
-     "ddx": [{"label": "Cardiac", "items": ["heart failure", "CAD", "arrhythmia"]}, {"label": "Pulmonary", "items": ["asthma", "COPD", "ILD", "PE"]}, {"label": "Other", "items": ["anemia", "deconditioning", "obesity"]}],
-     "plan": ["CXR", "EKG", "BNP", "CBC", "Spirometry", "Echo", "Ambulatory SpO2"]},
-    {"key": "cough",
-     "name": "Cough",
-     "course": "Acute",
-     "notes": ["Duration *** wk"],
-     "ddx": [{"label": "", "items": ["viral URI", "upper airway cough syndrome", "asthma", "GERD", "ACEi cough", "pneumonia", "pertussis"]}],
-     "plan": ["Supportive care", "CXR", "STOP ACEi; switch to ARB", "Intranasal steroid", "Return precautions reviewed"]},
-    {"key": "uri",
-     "name": "URI",
-     "aliases": ["cold", "sinusitis", "sore throat", "pharyngitis"],
-     "course": "Acute",
-     "ddx": [{"label": "", "items": ["viral URI", "acute bacterial sinusitis", "strep pharyngitis", "influenza", "COVID-19"]}],
-     "plan": ["Supportive care", "Rapid strep", "COVID/flu test", "Return precautions reviewed"]},
-    {"key": "abdpain",
-     "name": "Abdominal pain",
-     "aliases": ["abd pain", "stomach pain"],
-     "ddx": [{"label": "", "items": ["GERD/PUD", "gastritis", "biliary colic", "IBS", "constipation", "diverticulitis", "UTI", "pancreatitis"]}],
-     "plan": ["CBC, CMP, lipase", "UA", "Pregnancy test", "H. pylori stool antigen", "RUQ ultrasound", "CT abdomen/pelvis", "Return precautions reviewed"]},
-    {"key": "dizziness",
-     "name": "Dizziness",
-     "aliases": ["vertigo", "lightheaded", "lightheadedness"],
-     "ddx": [{"label": "Vertigo", "items": ["BPPV", "vestibular neuritis", "Meniere disease", "central cause (stroke, vestibular migraine)"]}, {"label": "Presyncope", "items": ["orthostatic hypotension", "arrhythmia", "medication effect", "dehydration", "anemia"]}],
-     "plan": ["Orthostatic vitals", "EKG", "CBC, BMP", "Epley maneuver", "Vestibular PT referral", "Medication review"]},
-    {"key": "headache",
-     "name": "Headache",
-     "aliases": ["ha", "headaches"],
-     "notes": ["No red flags (thunderclap, focal deficit, fever, new after 50, papilledema)"],
-     "ddx": [{"label": "", "items": ["tension-type", "migraine", "medication overuse headache", "cluster", "secondary headache"]}],
-     "plan": ["Headache diary", "Limit acute meds <10 days/mo", "Triptan PRN: ***", "Preventive: ***", "MRI brain", "Neurology referral"]},
-    {"key": "palpitations",
-     "name": "Palpitations",
-     "ddx": [{"label": "", "items": ["PACs/PVCs", "SVT", "AFib", "anxiety", "hyperthyroidism", "anemia", "caffeine / stimulants"]}],
-     "plan": ["EKG", "TSH", "CBC, BMP, Mg", "Holter / event monitor", "Echo"]},
-    {"key": "edema",
-     "name": "Edema",
-     "aliases": ["swelling", "leg swelling"],
-     "ddx": [{"label": "", "items": ["venous insufficiency", "medication (CCB)", "heart failure", "CKD / nephrotic syndrome", "cirrhosis", "hypothyroidism", "DVT"]}],
-     "plan": ["BMP, LFTs, albumin", "UA, urine protein/creatinine ratio", "BNP", "Echo", "Venous duplex", "Compression stockings, leg elevation"]},
-    {"key": "wtloss",
-     "name": "Unintentional weight loss",
-     "aliases": ["weight loss"],
-     "notes": ["Weight *** (*** lb over *** mo)"],
-     "ddx": [{"label": "", "items": ["malignancy", "hyperthyroidism", "diabetes", "depression", "malabsorption", "chronic infection", "medications", "dental / swallowing"]}],
-     "plan": ["CBC, CMP, TSH, A1C", "HIV, hepatitis C", "Age-appropriate cancer screening", "CXR", "Nutrition referral"]},
-    {"key": "jointpain",
-     "name": "Joint pain",
-     "aliases": ["arthralgia"],
-     "ddx": [{"label": "", "items": ["osteoarthritis", "gout", "rheumatoid arthritis", "bursitis / tendinopathy", "injury"]}],
-     "plan": ["X-ray ***", "ESR, CRP, RF, anti-CCP", "Uric acid", "Acetaminophen PRN", "Topical diclofenac", "PT referral"]},
-    {"key": "lbp",
-     "name": "Low back pain",
-     "aliases": ["back pain", "lbp"],
-     "course": "Acute",
-     "notes": ["No red flags (fever, weight loss, cancer history, saddle anesthesia, bowel/bladder change, progressive weakness)"],
-     "ddx": [{"label": "", "items": ["lumbar strain", "disc herniation / radiculopathy", "spinal stenosis", "compression fracture"]}],
-     "plan": ["NSAID ***", "Heat, activity as tolerated", "PT referral", "Muscle relaxant short course", "X-ray lumbar spine", "MRI if red flags or radiculopathy >6 wk"]},
-    {"key": "numbness",
-     "name": "Numbness",
-     "aliases": ["paresthesia", "tingling", "neuropathy"],
-     "ddx": [{"label": "", "items": ["peripheral neuropathy (diabetes, B12)", "radiculopathy", "carpal tunnel", "stroke/TIA", "MS", "medication effect"]}],
-     "plan": ["A1C, B12, TSH, CMP", "EMG/NCS", "MRI ***", "Neurology referral"]},
-    {"key": "uti",
-     "name": "Dysuria",
-     "aliases": ["uti", "urinary tract infection", "cystitis"],
-     "course": "Acute",
-     "ddx": [{"label": "", "items": ["cystitis", "pyelonephritis", "urethritis / STI", "vaginitis", "nephrolithiasis"]}],
-     "plan": ["UA, urine culture", "GC/CT NAAT", "Nitrofurantoin 100 mg PO BID x5 days", "Return precautions reviewed"]},
-    {"key": "rash",
-     "name": "Rash",
-     "course": "Acute",
-     "ddx": [{"label": "", "items": ["contact dermatitis", "eczema", "tinea", "psoriasis", "drug eruption", "viral exanthem"]}],
-     "plan": ["Topical steroid ***", "KOH prep", "Dermatology referral"]},
-    {"key": "hm",
-     "name": "Health maintenance",
-     "aliases": ["hcm", "preventive care", "screening", "vaccines", "annual"],
-     "noStatus": true,
-     "notes": ["Up to date on screening", "Declines ***"],
-     "plan": ["Colorectal cancer screening: ***", "Mammogram", "Cervical cancer screening", "Lipid panel", "A1C", "Hepatitis C screening", "HIV screening", "Influenza vaccine", "COVID vaccine", "Tdap", "Shingrix", "Pneumococcal vaccine", "RSV vaccine", "AAA ultrasound", "DEXA", "Low-dose CT lung cancer screening"]}
+    {
+      "key": "htn",
+      "name": "HTN",
+      "aliases": [
+        "hypertension",
+        "high blood pressure",
+        "bp"
+      ],
+      "novelty": "Known",
+      "course": "Chronic",
+      "hpi": [
+        "Home BPs ***",
+        "Adherent to antihypertensives; no side effects"
+      ],
+      "notes": [
+        "BP today ***",
+        "At goal <130/80",
+        "Not at goal",
+        "Home BP log reviewed: ***"
+      ],
+      "ddx": [
+        {
+          "label": "Secondary causes",
+          "items": [
+            "OSA",
+            "primary aldosteronism",
+            "CKD",
+            "renal artery stenosis",
+            "NSAIDs / decongestants",
+            "alcohol"
+          ]
+        }
+      ],
+      "plan": [
+        "CONT ***",
+        "Home BP log; bring to next visit",
+        "DASH diet, sodium <2 g/day, regular exercise",
+        "BMP",
+        "Urine albumin/creatinine ratio",
+        "Lipid panel"
+      ],
+      "fu": [
+        "BP recheck",
+        "review home BP log"
+      ]
+    },
+    {
+      "key": "dm2",
+      "name": "T2DM",
+      "aliases": [
+        "diabetes",
+        "type 2 diabetes",
+        "dm",
+        "diabetes mellitus"
+      ],
+      "novelty": "Known",
+      "course": "Chronic",
+      "hpi": [
+        "Home glucose ***",
+        "Denies hypoglycemia",
+        "Denies polyuria, polydipsia"
+      ],
+      "notes": [
+        "A1C *** (previously ***)",
+        "At goal A1C <7",
+        "Not at goal",
+        "On statin",
+        "Last eye exam ***"
+      ],
+      "plan": [
+        "CONT ***",
+        "A1C",
+        "BMP",
+        "Urine albumin/creatinine ratio",
+        "Lipid panel",
+        "Diabetic foot exam today",
+        "Retinal exam referral",
+        "Consider GLP-1 RA / SGLT2i",
+        "Diabetes education / nutrition referral"
+      ],
+      "fu": [
+        "review A1C",
+        "medication titration"
+      ]
+    },
+    {
+      "key": "prediabetes",
+      "name": "Prediabetes",
+      "aliases": [
+        "pre-diabetes",
+        "impaired fasting glucose"
+      ],
+      "novelty": "Known",
+      "course": "Chronic",
+      "notes": [
+        "A1C ***"
+      ],
+      "plan": [
+        "Diet, 150 min/wk exercise, 5-7% weight loss",
+        "A1C in 1 yr",
+        "Diabetes prevention program referral",
+        "Consider metformin"
+      ]
+    },
+    {
+      "key": "hld",
+      "name": "HLD",
+      "aliases": [
+        "hyperlipidemia",
+        "dyslipidemia",
+        "high cholesterol",
+        "cholesterol"
+      ],
+      "novelty": "Known",
+      "course": "Chronic",
+      "notes": [
+        "LDL *** (date ***)",
+        "ASCVD 10-yr risk ***%",
+        "Tolerating statin"
+      ],
+      "plan": [
+        "CONT ***",
+        "Lipid panel",
+        "CMP",
+        "START atorvastatin *** mg PO daily",
+        "Heart-healthy diet, exercise"
+      ]
+    },
+    {
+      "key": "hypothyroid",
+      "name": "Hypothyroidism",
+      "aliases": [
+        "hypothyroid",
+        "thyroid"
+      ],
+      "novelty": "Known",
+      "course": "Chronic",
+      "notes": [
+        "TSH *** (date ***)",
+        "Clinically euthyroid"
+      ],
+      "plan": [
+        "CONT levothyroxine *** mcg PO daily",
+        "TSH in 6-8 wk",
+        "Take on empty stomach, apart from calcium / iron"
+      ],
+      "fu": [
+        "review TSH"
+      ]
+    },
+    {
+      "key": "ckd",
+      "name": "CKD",
+      "aliases": [
+        "chronic kidney disease",
+        "kidney"
+      ],
+      "novelty": "Known",
+      "course": "Chronic",
+      "notes": [
+        "eGFR ***, UACR ***",
+        "Stage ***"
+      ],
+      "plan": [
+        "BMP",
+        "Urine albumin/creatinine ratio",
+        "CBC",
+        "Avoid NSAIDs",
+        "Renally dose medications",
+        "CONT ACEi/ARB",
+        "SGLT2i",
+        "Nephrology referral"
+      ]
+    },
+    {
+      "key": "obesity",
+      "name": "Obesity",
+      "aliases": [
+        "overweight",
+        "weight"
+      ],
+      "novelty": "Known",
+      "course": "Chronic",
+      "notes": [
+        "BMI ***",
+        "Weight *** (previously ***)"
+      ],
+      "plan": [
+        "Nutrition referral",
+        "Exercise goal 150 min/wk",
+        "Consider GLP-1 RA",
+        "A1C, lipid panel",
+        "Weight management referral"
+      ]
+    },
+    {
+      "key": "gerd",
+      "name": "GERD",
+      "aliases": [
+        "reflux",
+        "heartburn"
+      ],
+      "novelty": "Known",
+      "course": "Chronic",
+      "notes": [
+        "No alarm features (dysphagia, weight loss, GI bleeding, anemia)"
+      ],
+      "plan": [
+        "CONT ***",
+        "PPI trial 8 wk",
+        "Avoid late meals, elevate head of bed, weight loss",
+        "EGD referral"
+      ]
+    },
+    {
+      "key": "asthma",
+      "name": "Asthma",
+      "novelty": "Known",
+      "course": "Chronic",
+      "notes": [
+        "Rescue inhaler use ***/wk",
+        "Night symptoms ***/mo",
+        "Well controlled",
+        "Not well controlled"
+      ],
+      "plan": [
+        "CONT ***",
+        "Albuterol PRN",
+        "ICS-formoterol",
+        "Spirometry",
+        "Inhaler technique reviewed",
+        "Asthma action plan"
+      ]
+    },
+    {
+      "key": "copd",
+      "name": "COPD",
+      "aliases": [
+        "emphysema",
+        "chronic bronchitis"
+      ],
+      "novelty": "Known",
+      "course": "Chronic",
+      "notes": [
+        "Exacerbations in past year: ***",
+        "FEV1 ***% predicted"
+      ],
+      "plan": [
+        "CONT ***",
+        "Albuterol PRN",
+        "Spirometry",
+        "Pulmonary rehab referral",
+        "Smoking cessation counseling",
+        "Vaccines: influenza, pneumococcal, RSV, COVID"
+      ]
+    },
+    {
+      "key": "hf",
+      "name": "HFrEF",
+      "aliases": [
+        "chf",
+        "heart failure",
+        "hfpef",
+        "cardiomyopathy"
+      ],
+      "novelty": "Known",
+      "course": "Chronic",
+      "notes": [
+        "EF *** (date ***)",
+        "NYHA class ***",
+        "Weight ***; euvolemic on exam",
+        "Volume overloaded on exam"
+      ],
+      "plan": [
+        "CONT ***",
+        "Daily weights; call if up >2 lb/day or 5 lb/wk",
+        "Sodium <2 g/day",
+        "BMP",
+        "BNP",
+        "Echo",
+        "Cardiology follow-up"
+      ]
+    },
+    {
+      "key": "afib",
+      "name": "AFib",
+      "aliases": [
+        "atrial fibrillation",
+        "a fib",
+        "af"
+      ],
+      "novelty": "Known",
+      "course": "Chronic",
+      "notes": [
+        "Rate controlled",
+        "CHA2DS2-VASc ***",
+        "On anticoagulation: ***"
+      ],
+      "plan": [
+        "CONT ***",
+        "EKG",
+        "TSH",
+        "CBC, BMP",
+        "Echo",
+        "Cardiology referral"
+      ]
+    },
+    {
+      "key": "cad",
+      "name": "CAD",
+      "aliases": [
+        "coronary artery disease",
+        "angina"
+      ],
+      "novelty": "Known",
+      "course": "Chronic",
+      "notes": [
+        "No angina",
+        "Last stress test / cath ***"
+      ],
+      "plan": [
+        "CONT aspirin 81 mg PO daily",
+        "CONT high-intensity statin",
+        "Lipid panel",
+        "Cardiology follow-up"
+      ]
+    },
+    {
+      "key": "depression",
+      "name": "Depression",
+      "aliases": [
+        "mdd",
+        "major depressive disorder",
+        "low mood"
+      ],
+      "novelty": "Known",
+      "course": "Chronic",
+      "notes": [
+        "PHQ-9 ***",
+        "Denies SI/HI"
+      ],
+      "ddx": [
+        {
+          "label": "Also consider",
+          "items": [
+            "bipolar disorder",
+            "hypothyroidism",
+            "substance use",
+            "medication effect"
+          ]
+        }
+      ],
+      "plan": [
+        "CONT ***",
+        "START sertraline *** mg PO daily",
+        "Therapy referral",
+        "Crisis resources reviewed (988)",
+        "PHQ-9 at next visit"
+      ],
+      "fu": [
+        "reassess mood"
+      ]
+    },
+    {
+      "key": "anxiety",
+      "name": "Anxiety",
+      "aliases": [
+        "gad",
+        "generalized anxiety disorder",
+        "panic"
+      ],
+      "novelty": "Known",
+      "course": "Chronic",
+      "notes": [
+        "GAD-7 ***",
+        "Denies SI/HI"
+      ],
+      "plan": [
+        "CONT ***",
+        "START SSRI ***",
+        "Therapy referral",
+        "Sleep hygiene, limit caffeine",
+        "GAD-7 at next visit"
+      ]
+    },
+    {
+      "key": "insomnia",
+      "name": "Insomnia",
+      "aliases": [
+        "sleep",
+        "poor sleep"
+      ],
+      "course": "Chronic",
+      "ddx": [
+        {
+          "label": "",
+          "items": [
+            "OSA",
+            "depression / anxiety",
+            "restless legs",
+            "circadian rhythm disorder",
+            "caffeine / alcohol / medications"
+          ]
+        }
+      ],
+      "plan": [
+        "Sleep hygiene",
+        "CBT-I referral",
+        "Sleep study"
+      ]
+    },
+    {
+      "key": "osa",
+      "name": "OSA",
+      "aliases": [
+        "sleep apnea",
+        "obstructive sleep apnea"
+      ],
+      "novelty": "Known",
+      "course": "Chronic",
+      "notes": [
+        "Using CPAP ***",
+        "STOP-BANG ***"
+      ],
+      "plan": [
+        "CONT CPAP nightly",
+        "Sleep study",
+        "CPAP compliance download",
+        "Weight loss"
+      ]
+    },
+    {
+      "key": "tobacco",
+      "name": "Tobacco use",
+      "aliases": [
+        "smoking",
+        "smoker",
+        "nicotine",
+        "tobacco"
+      ],
+      "novelty": "Known",
+      "course": "Chronic",
+      "notes": [
+        "*** pack-years; *** cigarettes/day",
+        "Ready to quit: ***"
+      ],
+      "plan": [
+        "Cessation counseling >3 min",
+        "Nicotine patch *** mg/day + gum/lozenge PRN",
+        "Varenicline",
+        "Quitline 1-800-QUIT-NOW",
+        "Low-dose CT lung cancer screening"
+      ]
+    },
+    {
+      "key": "alcohol",
+      "name": "Alcohol use",
+      "aliases": [
+        "etoh",
+        "alcohol"
+      ],
+      "novelty": "Known",
+      "course": "Chronic",
+      "notes": [
+        "AUDIT-C ***",
+        "*** drinks/wk"
+      ],
+      "plan": [
+        "Brief intervention",
+        "CBC, CMP",
+        "Naltrexone",
+        "Thiamine",
+        "Counseling / AA referral"
+      ]
+    },
+    {
+      "key": "migraine",
+      "name": "Migraine",
+      "novelty": "Known",
+      "course": "Chronic",
+      "notes": [
+        "Headache days ***/mo"
+      ],
+      "plan": [
+        "CONT ***",
+        "Triptan PRN: ***",
+        "Preventive: ***",
+        "Limit acute meds <10 days/mo",
+        "Headache diary"
+      ]
+    },
+    {
+      "key": "bph",
+      "name": "BPH",
+      "aliases": [
+        "enlarged prostate",
+        "luts"
+      ],
+      "novelty": "Known",
+      "course": "Chronic",
+      "notes": [
+        "IPSS ***",
+        "Nocturia ***x"
+      ],
+      "plan": [
+        "CONT tamsulosin 0.4 mg PO daily",
+        "UA",
+        "PSA (shared decision)",
+        "Urology referral"
+      ]
+    },
+    {
+      "key": "osteoporosis",
+      "name": "Osteoporosis",
+      "aliases": [
+        "osteopenia"
+      ],
+      "novelty": "Known",
+      "course": "Chronic",
+      "notes": [
+        "DEXA *** T-score ***"
+      ],
+      "plan": [
+        "CONT alendronate 70 mg PO weekly",
+        "Calcium 1200 mg/day + vitamin D",
+        "DEXA",
+        "25-OH vitamin D",
+        "Fall prevention"
+      ]
+    },
+    {
+      "key": "gout",
+      "name": "Gout",
+      "novelty": "Known",
+      "course": "Chronic",
+      "notes": [
+        "Flares in past year: ***",
+        "Uric acid ***"
+      ],
+      "plan": [
+        "CONT allopurinol *** mg PO daily",
+        "Uric acid (goal <6)",
+        "Colchicine PRN flare",
+        "BMP"
+      ]
+    },
+    {
+      "key": "rhinitis",
+      "name": "Allergic rhinitis",
+      "aliases": [
+        "allergies",
+        "seasonal allergies"
+      ],
+      "novelty": "Known",
+      "course": "Chronic",
+      "plan": [
+        "Intranasal steroid",
+        "Oral 2nd-generation antihistamine",
+        "Allergen avoidance"
+      ]
+    },
+    {
+      "key": "oa",
+      "name": "Osteoarthritis",
+      "aliases": [
+        "oa",
+        "arthritis",
+        "knee pain"
+      ],
+      "novelty": "Known",
+      "course": "Chronic",
+      "plan": [
+        "Acetaminophen PRN",
+        "Topical diclofenac",
+        "PT referral",
+        "X-ray ***",
+        "Steroid injection",
+        "Weight loss, exercise"
+      ]
+    },
+    {
+      "key": "anemia",
+      "name": "Anemia",
+      "notes": [
+        "Hgb *** (previously ***)",
+        "MCV ***"
+      ],
+      "ddx": [
+        {
+          "label": "",
+          "items": [
+            "iron deficiency",
+            "B12 / folate deficiency",
+            "anemia of chronic disease",
+            "CKD",
+            "blood loss",
+            "hemolysis"
+          ]
+        }
+      ],
+      "plan": [
+        "CBC with diff, reticulocyte count",
+        "Ferritin, iron panel",
+        "B12, folate",
+        "Iron supplementation ***",
+        "GI referral for EGD/colonoscopy"
+      ]
+    },
+    {
+      "key": "fatigue",
+      "name": "Fatigue",
+      "aliases": [
+        "tired",
+        "tiredness",
+        "low energy"
+      ],
+      "ddx": [
+        {
+          "label": "Non-hormonal",
+          "items": [
+            "OSA",
+            "depression/anxiety",
+            "medication effect",
+            "iron deficiency anemia",
+            "B12 deficiency",
+            "CKD"
+          ]
+        },
+        {
+          "label": "Hormonal",
+          "items": [
+            "hypothyroidism",
+            "central adrenal insufficiency",
+            "hyperprolactinemia",
+            "diabetes",
+            "perimenopause/estrogen insufficiency"
+          ]
+        }
+      ],
+      "plan": [
+        "CBC, CMP, A1C",
+        "TSH, free T4",
+        "Ferritin, iron panel",
+        "B12",
+        "8 AM serum cortisol",
+        "PHQ-9",
+        "Sleep study",
+        "Pregnancy test"
+      ],
+      "fu": [
+        "review labs"
+      ]
+    },
+    {
+      "key": "chestpain",
+      "name": "Chest pain",
+      "aliases": [
+        "cp",
+        "chest discomfort"
+      ],
+      "course": "Acute",
+      "notes": [
+        "EKG today: ***",
+        "HEART score ***",
+        "Reproducible with palpation"
+      ],
+      "ddx": [
+        {
+          "label": "Cardiac",
+          "items": [
+            "stable angina",
+            "ACS",
+            "pericarditis"
+          ]
+        },
+        {
+          "label": "Pulmonary",
+          "items": [
+            "PE",
+            "pneumonia",
+            "pneumothorax"
+          ]
+        },
+        {
+          "label": "GI",
+          "items": [
+            "GERD",
+            "esophageal spasm"
+          ]
+        },
+        {
+          "label": "Other",
+          "items": [
+            "costochondritis",
+            "anxiety",
+            "zoster"
+          ]
+        }
+      ],
+      "plan": [
+        "EKG today",
+        "Lipid panel, A1C",
+        "Stress test",
+        "Cardiology referral",
+        "ED precautions reviewed"
+      ]
+    },
+    {
+      "key": "dyspnea",
+      "name": "Dyspnea",
+      "aliases": [
+        "sob",
+        "shortness of breath"
+      ],
+      "ddx": [
+        {
+          "label": "Cardiac",
+          "items": [
+            "heart failure",
+            "CAD",
+            "arrhythmia"
+          ]
+        },
+        {
+          "label": "Pulmonary",
+          "items": [
+            "asthma",
+            "COPD",
+            "ILD",
+            "PE"
+          ]
+        },
+        {
+          "label": "Other",
+          "items": [
+            "anemia",
+            "deconditioning",
+            "obesity"
+          ]
+        }
+      ],
+      "plan": [
+        "CXR",
+        "EKG",
+        "BNP",
+        "CBC",
+        "Spirometry",
+        "Echo",
+        "Ambulatory SpO2"
+      ]
+    },
+    {
+      "key": "cough",
+      "name": "Cough",
+      "course": "Acute",
+      "notes": [
+        "Duration *** wk"
+      ],
+      "ddx": [
+        {
+          "label": "",
+          "items": [
+            "viral URI",
+            "upper airway cough syndrome",
+            "asthma",
+            "GERD",
+            "ACEi cough",
+            "pneumonia",
+            "pertussis"
+          ]
+        }
+      ],
+      "plan": [
+        "Supportive care",
+        "CXR",
+        "STOP ACEi; switch to ARB",
+        "Intranasal steroid",
+        "Return precautions reviewed"
+      ]
+    },
+    {
+      "key": "uri",
+      "name": "URI",
+      "aliases": [
+        "cold",
+        "sinusitis",
+        "sore throat",
+        "pharyngitis"
+      ],
+      "course": "Acute",
+      "ddx": [
+        {
+          "label": "",
+          "items": [
+            "viral URI",
+            "acute bacterial sinusitis",
+            "strep pharyngitis",
+            "influenza",
+            "COVID-19"
+          ]
+        }
+      ],
+      "plan": [
+        "Supportive care",
+        "Rapid strep",
+        "COVID/flu test",
+        "Return precautions reviewed"
+      ]
+    },
+    {
+      "key": "abdpain",
+      "name": "Abdominal pain",
+      "aliases": [
+        "abd pain",
+        "stomach pain"
+      ],
+      "ddx": [
+        {
+          "label": "",
+          "items": [
+            "GERD/PUD",
+            "gastritis",
+            "biliary colic",
+            "IBS",
+            "constipation",
+            "diverticulitis",
+            "UTI",
+            "pancreatitis"
+          ]
+        }
+      ],
+      "plan": [
+        "CBC, CMP, lipase",
+        "UA",
+        "Pregnancy test",
+        "H. pylori stool antigen",
+        "RUQ ultrasound",
+        "CT abdomen/pelvis",
+        "Return precautions reviewed"
+      ]
+    },
+    {
+      "key": "dizziness",
+      "name": "Dizziness",
+      "aliases": [
+        "vertigo",
+        "lightheaded",
+        "lightheadedness"
+      ],
+      "ddx": [
+        {
+          "label": "Vertigo",
+          "items": [
+            "BPPV",
+            "vestibular neuritis",
+            "Meniere disease",
+            "central cause (stroke, vestibular migraine)"
+          ]
+        },
+        {
+          "label": "Presyncope",
+          "items": [
+            "orthostatic hypotension",
+            "arrhythmia",
+            "medication effect",
+            "dehydration",
+            "anemia"
+          ]
+        }
+      ],
+      "plan": [
+        "Orthostatic vitals",
+        "EKG",
+        "CBC, BMP",
+        "Epley maneuver",
+        "Vestibular PT referral",
+        "Medication review"
+      ]
+    },
+    {
+      "key": "headache",
+      "name": "Headache",
+      "aliases": [
+        "ha",
+        "headaches"
+      ],
+      "notes": [
+        "No red flags (thunderclap, focal deficit, fever, new after 50, papilledema)"
+      ],
+      "ddx": [
+        {
+          "label": "",
+          "items": [
+            "tension-type",
+            "migraine",
+            "medication overuse headache",
+            "cluster",
+            "secondary headache"
+          ]
+        }
+      ],
+      "plan": [
+        "Headache diary",
+        "Limit acute meds <10 days/mo",
+        "Triptan PRN: ***",
+        "Preventive: ***",
+        "MRI brain",
+        "Neurology referral"
+      ]
+    },
+    {
+      "key": "palpitations",
+      "name": "Palpitations",
+      "ddx": [
+        {
+          "label": "",
+          "items": [
+            "PACs/PVCs",
+            "SVT",
+            "AFib",
+            "anxiety",
+            "hyperthyroidism",
+            "anemia",
+            "caffeine / stimulants"
+          ]
+        }
+      ],
+      "plan": [
+        "EKG",
+        "TSH",
+        "CBC, BMP, Mg",
+        "Holter / event monitor",
+        "Echo"
+      ]
+    },
+    {
+      "key": "edema",
+      "name": "Edema",
+      "aliases": [
+        "swelling",
+        "leg swelling"
+      ],
+      "ddx": [
+        {
+          "label": "",
+          "items": [
+            "venous insufficiency",
+            "medication (CCB)",
+            "heart failure",
+            "CKD / nephrotic syndrome",
+            "cirrhosis",
+            "hypothyroidism",
+            "DVT"
+          ]
+        }
+      ],
+      "plan": [
+        "BMP, LFTs, albumin",
+        "UA, urine protein/creatinine ratio",
+        "BNP",
+        "Echo",
+        "Venous duplex",
+        "Compression stockings, leg elevation"
+      ]
+    },
+    {
+      "key": "wtloss",
+      "name": "Unintentional weight loss",
+      "aliases": [
+        "weight loss"
+      ],
+      "notes": [
+        "Weight *** (*** lb over *** mo)"
+      ],
+      "ddx": [
+        {
+          "label": "",
+          "items": [
+            "malignancy",
+            "hyperthyroidism",
+            "diabetes",
+            "depression",
+            "malabsorption",
+            "chronic infection",
+            "medications",
+            "dental / swallowing"
+          ]
+        }
+      ],
+      "plan": [
+        "CBC, CMP, TSH, A1C",
+        "HIV, hepatitis C",
+        "Age-appropriate cancer screening",
+        "CXR",
+        "Nutrition referral"
+      ]
+    },
+    {
+      "key": "jointpain",
+      "name": "Joint pain",
+      "aliases": [
+        "arthralgia"
+      ],
+      "ddx": [
+        {
+          "label": "",
+          "items": [
+            "osteoarthritis",
+            "gout",
+            "rheumatoid arthritis",
+            "bursitis / tendinopathy",
+            "injury"
+          ]
+        }
+      ],
+      "plan": [
+        "X-ray ***",
+        "ESR, CRP, RF, anti-CCP",
+        "Uric acid",
+        "Acetaminophen PRN",
+        "Topical diclofenac",
+        "PT referral"
+      ]
+    },
+    {
+      "key": "lbp",
+      "name": "Low back pain",
+      "aliases": [
+        "back pain",
+        "lbp"
+      ],
+      "course": "Acute",
+      "notes": [
+        "No red flags (fever, weight loss, cancer history, saddle anesthesia, bowel/bladder change, progressive weakness)"
+      ],
+      "ddx": [
+        {
+          "label": "",
+          "items": [
+            "lumbar strain",
+            "disc herniation / radiculopathy",
+            "spinal stenosis",
+            "compression fracture"
+          ]
+        }
+      ],
+      "plan": [
+        "NSAID ***",
+        "Heat, activity as tolerated",
+        "PT referral",
+        "Muscle relaxant short course",
+        "X-ray lumbar spine",
+        "MRI if red flags or radiculopathy >6 wk"
+      ]
+    },
+    {
+      "key": "numbness",
+      "name": "Numbness",
+      "aliases": [
+        "paresthesia",
+        "tingling",
+        "neuropathy"
+      ],
+      "ddx": [
+        {
+          "label": "",
+          "items": [
+            "peripheral neuropathy (diabetes, B12)",
+            "radiculopathy",
+            "carpal tunnel",
+            "stroke/TIA",
+            "MS",
+            "medication effect"
+          ]
+        }
+      ],
+      "plan": [
+        "A1C, B12, TSH, CMP",
+        "EMG/NCS",
+        "MRI ***",
+        "Neurology referral"
+      ]
+    },
+    {
+      "key": "uti",
+      "name": "Dysuria",
+      "aliases": [
+        "uti",
+        "urinary tract infection",
+        "cystitis"
+      ],
+      "course": "Acute",
+      "ddx": [
+        {
+          "label": "",
+          "items": [
+            "cystitis",
+            "pyelonephritis",
+            "urethritis / STI",
+            "vaginitis",
+            "nephrolithiasis"
+          ]
+        }
+      ],
+      "plan": [
+        "UA, urine culture",
+        "GC/CT NAAT",
+        "Nitrofurantoin 100 mg PO BID x5 days",
+        "Return precautions reviewed"
+      ]
+    },
+    {
+      "key": "rash",
+      "name": "Rash",
+      "course": "Acute",
+      "ddx": [
+        {
+          "label": "",
+          "items": [
+            "contact dermatitis",
+            "eczema",
+            "tinea",
+            "psoriasis",
+            "drug eruption",
+            "viral exanthem"
+          ]
+        }
+      ],
+      "plan": [
+        "Topical steroid ***",
+        "KOH prep",
+        "Dermatology referral"
+      ]
+    },
+    {
+      "key": "hm",
+      "name": "Health maintenance",
+      "aliases": [
+        "hcm",
+        "preventive care",
+        "screening",
+        "vaccines",
+        "annual"
+      ],
+      "noStatus": true,
+      "notes": [
+        "Up to date on screening",
+        "Declines ***"
+      ],
+      "plan": [
+        "Colorectal cancer screening: ***",
+        "Mammogram",
+        "Cervical cancer screening",
+        "Lipid panel",
+        "A1C",
+        "Hepatitis C screening",
+        "HIV screening",
+        "Influenza vaccine",
+        "COVID vaccine",
+        "Tdap",
+        "Shingrix",
+        "Pneumococcal vaccine",
+        "RSV vaccine",
+        "AAA ultrasound",
+        "DEXA",
+        "Low-dose CT lung cancer screening"
+      ]
+    }
   ]
 }

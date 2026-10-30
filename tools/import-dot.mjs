@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-// Copies the clinic problem blocks (#abbr) from the dotphrase library (~/Projects/dot) into dotphrases.json.
+// Copies the clinic problem blocks (#abbr) from the dotphrase library (~/Projects/dot) into dotphrases.json, plus the
+// named "#Problem" block in the Assessment and plan of the clinic visit notes ($wcc2m → "#Well child, 2 months"), so
+// preventive visits can be added as problems too. Those have no status pills (they aren't MDM problems).
 // Adding a problem fills it from the matching block: text lines become Notes, the ">item; reasoning" lines under
 // "DDx:" become DDx items, and "- " lines become Plan lines. Only the # problem blocks for clinic settings are copied; the rest
 // of the library (OB, inpatient, patient instructions, the Cerner dump) stays in ~/Projects/dot.
@@ -41,20 +43,48 @@ const md = fs.readFileSync(path.join(dot, 'dotphrases.md'), 'utf8');
 const index = new Map(csv(fs.readFileSync(path.join(dot, 'dotphrases_index.csv'), 'utf8')).map(r => [r.Abbreviation, r]));
 const byLib = Object.fromEntries(Object.entries(LIB).map(([k, a]) => [a, k]));
 
-const phrases = [];
-for (const m of md.matchAll(/^### (#\w+) : (.+?)\n\n[\s\S]*?\n```\n([\s\S]*?)\n```/gm)) {
-    const [, abbr, title, body] = m;
-    const setting = index.get(abbr)?.Setting || '';
-    if (!/^Clinic/.test(setting)) continue;
-    const lines = body.split('\n').map(s => s.trim()).filter(Boolean);
-    const name = (lines[0].startsWith('#') ? lines.shift() : '#' + title).slice(1).trim();
+/** Extra search words for visit-note blocks, by abbreviation prefix. */
+const ALIASES = { $wcc: ['wcc', 'well child', 'well child check', 'wcv', 'well visit', 'well baby', 'checkup', 'physical'] };
+
+/** Block lines → { notes, ddx, plan }: "- " lines are plan, ">" lines under "DDx:" are DDx items, the rest notes. */
+function split(lines) {
     const notes = []; const ddx = []; const plan = [];
     for (const l of lines) {
         if (l.startsWith('- ')) plan.push(l.slice(2).trim());
         else if (l.startsWith('>') && !l.startsWith('>>')) ddx.push(l.slice(1).trim());
         else if (!/^DDx:?$/i.test(l)) notes.push(l);
     }
-    phrases.push({ abbr, title, name, setting, ...(byLib[abbr] ? { lib: byLib[abbr] } : {}), notes, ddx, plan });
+    return { notes, ddx, plan };
+}
+
+const phrases = [];
+const blocks = [...md.matchAll(/^### ([#$]\w+) : (.+?)\n\n[\s\S]*?\n```\n([\s\S]*?)\n```/gm)];
+for (const [, abbr, title, body] of blocks.filter(m => m[1].startsWith('#'))) {
+    const setting = index.get(abbr)?.Setting || '';
+    if (!/^Clinic/.test(setting)) continue;
+    const lines = body.split('\n').map(s => s.trim()).filter(Boolean);
+    const name = (lines[0].startsWith('#') ? lines.shift() : '#' + title).slice(1).trim();
+    phrases.push({ abbr, title, name, setting, ...(byLib[abbr] ? { lib: byLib[abbr] } : {}), ...split(lines) });
+}
+
+// Visit notes: the first named block of the A&P, up to the next "#" header or the F/u line. Skipped: placeholders
+// ("#***"), empty blocks, and names a # block already has (e.g. $adhd's "#ADHD"). Two visit notes may share a name
+// ("Adolescent well visit, *** years" for 11-14 and 15-17); the picker adds the one you tap.
+const named = new Set(phrases.map(p => p.name.toLowerCase()));
+for (const [, abbr, title, body] of blocks.filter(m => m[1].startsWith('$'))) {
+    const setting = index.get(abbr)?.Setting || '';
+    if (!/^Clinic/.test(setting)) continue;
+    const lines = body.split('\n').map(s => s.trim());
+    const ap = lines.findIndex(l => /^(assessment and plan|a&p)\s*:?$/i.test(l));
+    const at = ap < 0 ? -1 : lines.findIndex((l, i) => i > ap && l.startsWith('#'));
+    if (at < 0) continue;
+    const name = lines[at].slice(1).trim();
+    if (!name || name.startsWith('***') || /^deferred/i.test(name) || named.has(name.toLowerCase())) continue;
+    const end = lines.findIndex((l, i) => i > at && (l.startsWith('#') || /^f\/u\b/i.test(l)));
+    const aliases = Object.entries(ALIASES).filter(([k]) => abbr.startsWith(k)).flatMap(([, a]) => a);
+    const parts = split(lines.slice(at + 1, end < 0 ? undefined : end).filter(Boolean));
+    if (!parts.notes.length && !parts.plan.length && !parts.ddx.length) continue;
+    phrases.push({ abbr, title, name, setting, noStatus: true, ...(aliases.length ? { aliases } : {}), ...parts });
 }
 
 const missing = Object.values(LIB).filter(a => !phrases.some(p => p.abbr === a));
@@ -63,4 +93,4 @@ if (missing.length) { console.error('Mapped in LIB but not found as clinic block
 fs.writeFileSync(path.join(root, 'dotphrases.json'), JSON.stringify({
     source: 'Projects/dot/dotphrases.md (# problem blocks, clinic settings)', phrases,
 }, null, 1) + '\n');
-console.log(`dotphrases.json: ${phrases.length} problem blocks, ${phrases.filter(p => p.lib).length} mapped to library problems`);
+console.log(`dotphrases.json: ${phrases.length} problem blocks (${phrases.filter(p => p.abbr.startsWith('$')).length} from visit notes), ${phrases.filter(p => p.lib).length} mapped to library problems`);

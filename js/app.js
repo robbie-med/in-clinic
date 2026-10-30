@@ -669,8 +669,8 @@ function addProblem() {
     const results = h('div', { class: 'results', role: 'listbox' });
     let first = null;
     let dlg = null;
-    const add = p0 => {
-        const p = Dot.fill(p0, Dot.find(p0.lib, p0.name));   // the problem's dotphrase fills its notes and plan
+    const add = (p0, block = Dot.find(p0.lib, p0.name)) => {
+        const p = Dot.fill(p0, block);   // the problem's dotphrase fills its notes, DDx and plan
         dlg.close();
         expanded.add(p.id);
         update(x => ({ ...x, problems: [...x.problems, p] }));
@@ -681,10 +681,15 @@ function addProblem() {
     const draw = () => {
         const s = q.value.trim();
         const rows = [];
+        // Show the alias the search matched ("annual" → Health maintenance · annual), else the first two
+        const lq = s.toLowerCase();
         for (const l of Library.search(s)) {
-            rows.push([l.name, [Dot.find(l.key)?.abbr, ...(l.aliases || []).slice(0, 2)].filter(Boolean).join(', '), () => add(fromLib(l))]);
+            const hit = lq && !l.name.toLowerCase().includes(lq) ? (l.aliases || []).filter(a => a.includes(lq)).slice(0, 1) : [];
+            rows.push([l.name, [Dot.find(l.key)?.abbr, ...(hit.length ? hit : (l.aliases || []).slice(0, 2))].filter(Boolean).join(', '), () => add(fromLib(l))]);
         }
-        for (const d of Dot.search(s)) rows.push([d.name, d.abbr + (d.title !== d.name ? ', ' + d.title : ''), () => add(N.newProblem({ name: d.name }))]);
+        for (const d of Dot.search(s)) {
+            rows.push([d.name, d.abbr + (d.title !== d.name ? ', ' + d.title : ''), () => add(N.newProblem({ name: d.name, noStatus: !!d.noStatus }), d)]);
+        }
         for (const n of Store.customProblems().filter(n => !s || n.toLowerCase().includes(s.toLowerCase()))) rows.push([n, 'yours', () => add(N.newProblem({ name: n }))]);
         if (s && !Library.match(s) && !Dot.find('', s) && !Store.customProblems().some(n => n.toLowerCase() === s.toLowerCase())) {
             // Enter takes the first row: a library / earlier match when there is one, else this new problem

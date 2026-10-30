@@ -1324,7 +1324,13 @@
         "preventive care",
         "screening",
         "vaccines",
-        "annual"
+        "annual",
+        "physical",
+        "annual physical",
+        "cpe",
+        "well visit",
+        "wellness",
+        "preventive"
       ],
       "noStatus": true,
       "notes": [

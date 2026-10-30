@@ -13,19 +13,21 @@ export const Dot = {
     /** The block for a library key, else an exact name / title / abbreviation match. */
     find(lib, name = '') {
         if (lib && this.byLib?.has(lib)) return this.byLib.get(lib);
-        const n = name.trim().toLowerCase().replace(/^#/, '');
+        const n = name.trim().toLowerCase().replace(/^[#$]/, '');
         if (!n) return null;
         return this.phrases.find(p => p.name.toLowerCase() === n || p.title.toLowerCase() === n || p.abbr.slice(1) === n) || null;
     },
 
-    /** Blocks without a library problem, matching the query by name, title or abbreviation (prefix matches first). */
+    /** Blocks without a library problem whose name, title, abbreviation or aliases contain every word of the query (prefix matches first). */
     search(q) {
-        const n = q.trim().toLowerCase().replace(/^#/, '');
+        const n = q.trim().toLowerCase().replace(/^[#$]/, '');
         const free = this.phrases.filter(p => !p.lib);
         if (!n) return [];
-        const hay = p => [p.name.toLowerCase(), p.title.toLowerCase(), p.abbr.slice(1)];
+        const hay = p => [p.name.toLowerCase(), p.title.toLowerCase(), p.abbr.slice(1), ...(p.aliases || [])];
+        const words = n.split(/[\s,]+/).filter(Boolean);   // every word somewhere: "well child 15" → Well child, 15 to 17 years
+        const hit = p => { const all = hay(p).join(' | '); return words.every(w => all.includes(w)); };
         const starts = p => hay(p).some(s => s.startsWith(n));
-        return free.filter(p => hay(p).some(s => s.includes(n))).sort((a, b) => (starts(a) ? 0 : 1) - (starts(b) ? 0 : 1));
+        return free.filter(hit).sort((a, b) => (starts(a) ? 0 : 1) - (starts(b) ? 0 : 1));
     },
 
     /** The problem with the block's lines added to its Notes, DDx (unlabelled group) and Plan; lines it already has are skipped. */

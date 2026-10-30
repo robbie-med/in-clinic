@@ -3816,6 +3816,537 @@
     "Age <30 days: SBI evaluation per local neonatal fever practice *** local",
     "D/c when SpO2 90% or more on room air, feeding adequately and caregiver able to suction"
    ]
+  },
+  {
+   "abbr": "$wcc",
+   "title": "Well child",
+   "name": "Well child, *** age",
+   "setting": "Clinic",
+   "noStatus": true,
+   "aliases": [
+    "wcc",
+    "well child",
+    "well child check",
+    "wcv",
+    "well visit",
+    "well baby",
+    "checkup",
+    "physical"
+   ],
+   "notes": [
+    "Healthy *** with *** growth and *** development."
+   ],
+   "ddx": [],
+   "plan": [
+    "Vaccines today: ***",
+    "Anticipatory guidance per Bright Futures for age: ***",
+    "Next well visit at ***"
+   ]
+  },
+  {
+   "abbr": "$wcc3d",
+   "title": "Well child, 3 to 5 days",
+   "name": "Well child, newborn",
+   "setting": "Clinic, pediatric",
+   "noStatus": true,
+   "aliases": [
+    "wcc",
+    "well child",
+    "well child check",
+    "wcv",
+    "well visit",
+    "well baby",
+    "checkup",
+    "physical"
+   ],
+   "notes": [
+    "Healthy *** day old with *** percent weight change, feeding ***, jaundice ***."
+   ],
+   "ddx": [],
+   "plan": [
+    "Vaccines: hepatitis B _given / due; RSV monoclonal antibody if <8 mo, born during or entering RSV season, and mother not vaccinated 14 or more days before birth ***",
+    "Anticipatory guidance reviewed verbally with ***, handout given: feeding and hunger cues, wet diapers, jaundice, safe sleep, rear-facing car seat, fever of 100.4 F or higher is an emergency",
+    "Next visit: weight check in *** days, 1-month visit"
+   ]
+  },
+  {
+   "abbr": "$wcc1m",
+   "title": "Well child, 1 month",
+   "name": "Well child, 1 month",
+   "setting": "Clinic, pediatric",
+   "noStatus": true,
+   "aliases": [
+    "wcc",
+    "well child",
+    "well child check",
+    "wcv",
+    "well visit",
+    "well baby",
+    "checkup",
+    "physical"
+   ],
+   "notes": [
+    "Healthy 1-month-old with *** growth and *** development."
+   ],
+   "ddx": [],
+   "plan": [
+    "Vaccines: hepatitis B _given / due; RSV monoclonal antibody if <8 mo, born during or entering RSV season, and mother not vaccinated 14 or more days before birth ***",
+    "Anticipatory guidance reviewed verbally with ***, handout given: caregiver well-being, crying and never shaking, safe sleep, rear-facing car seat, feeding, fever of 100.4 F or higher is an emergency",
+    "Next well visit at 2 mo"
+   ]
+  },
+  {
+   "abbr": "$wcc2m",
+   "title": "Well child, 2 months",
+   "name": "Well child, 2 months",
+   "setting": "Clinic, pediatric",
+   "noStatus": true,
+   "aliases": [
+    "wcc",
+    "well child",
+    "well child check",
+    "wcv",
+    "well visit",
+    "well baby",
+    "checkup",
+    "physical"
+   ],
+   "notes": [
+    "Healthy 2-month-old with *** growth and *** development."
+   ],
+   "ddx": [],
+   "plan": [
+    "Vaccines today: DTaP, IPV, Hib, PCV, rotavirus, hepatitis B as due ***; RSV monoclonal antibody if <8 mo, born during or entering RSV season, and mother not vaccinated 14 or more days before birth ***",
+    "Anticipatory guidance reviewed verbally with ***, handout given: caregiver well-being, crying and soothing, safe sleep, car seat, falls, feeding, no water or juice",
+    "Next well visit at 4 mo"
+   ]
+  },
+  {
+   "abbr": "$wcc4m",
+   "title": "Well child, 4 months",
+   "name": "Well child, 4 months",
+   "setting": "Clinic, pediatric",
+   "noStatus": true,
+   "aliases": [
+    "wcc",
+    "well child",
+    "well child check",
+    "wcv",
+    "well visit",
+    "well baby",
+    "checkup",
+    "physical"
+   ],
+   "notes": [
+    "Healthy 4-month-old with *** growth and *** development."
+   ],
+   "ddx": [],
+   "plan": [
+    "Vaccines today: DTaP, IPV, Hib, PCV, rotavirus ***; RSV monoclonal antibody if <8 mo, born during or entering RSV season, and mother not vaccinated 14 or more days before birth ***",
+    "Anticipatory guidance reviewed verbally with ***, handout given: family routines, starting solids around 6 mo, teething and oral health, rolling and falls, car seat, safe sleep",
+    "Next well visit at 6 mo"
+   ]
+  },
+  {
+   "abbr": "$wcc6m",
+   "title": "Well child, 6 months",
+   "name": "Well child, 6 months",
+   "setting": "Clinic, pediatric",
+   "noStatus": true,
+   "aliases": [
+    "wcc",
+    "well child",
+    "well child check",
+    "wcv",
+    "well visit",
+    "well baby",
+    "checkup",
+    "physical"
+   ],
+   "notes": [
+    "Healthy 6-month-old with *** growth and *** development."
+   ],
+   "ddx": [],
+   "plan": [
+    "Vaccines today: DTaP, PCV, rotavirus, Hib, IPV, hepatitis B as due; influenza in season ***; RSV monoclonal antibody if <8 mo, born during or entering RSV season, and mother not vaccinated 14 or more days before birth ***",
+    "Fluoride varnish applied ***",
+    "Anticipatory guidance reviewed verbally with ***, handout given: solids and choking hazards, cup practice, no juice, oral health, poisoning and burns, water safety, car seat, sleep routines",
+    "Next well visit at 9 mo"
+   ]
+  },
+  {
+   "abbr": "$wcc9m",
+   "title": "Well child, 9 months",
+   "name": "Well child, 9 months",
+   "setting": "Clinic, pediatric",
+   "noStatus": true,
+   "aliases": [
+    "wcc",
+    "well child",
+    "well child check",
+    "wcv",
+    "well visit",
+    "well baby",
+    "checkup",
+    "physical"
+   ],
+   "notes": [
+    "Healthy 9-month-old with *** growth and *** development."
+   ],
+   "ddx": [],
+   "plan": [
+    "Vaccines today: catch-up as due; influenza in season ***",
+    "Fluoride varnish applied ***",
+    "Anticipatory guidance reviewed verbally with ***, handout given: feeding routines and self-feeding, consistent limits, separation anxiety, falls and stairs, poisoning, water safety, car seat rear-facing",
+    "Next well visit at 12 mo"
+   ]
+  },
+  {
+   "abbr": "$wcc12m",
+   "title": "Well child, 12 months",
+   "name": "Well child, 12 months",
+   "setting": "Clinic, pediatric",
+   "noStatus": true,
+   "aliases": [
+    "wcc",
+    "well child",
+    "well child check",
+    "wcv",
+    "well visit",
+    "well baby",
+    "checkup",
+    "physical"
+   ],
+   "notes": [
+    "Healthy 12-month-old with *** growth and *** development."
+   ],
+   "ddx": [],
+   "plan": [
+    "Vaccines today: MMR, varicella, hepatitis A, PCV, Hib as due; influenza in season ***",
+    "Fluoride varnish applied ***",
+    "Anticipatory guidance reviewed verbally with ***, handout given: whole milk up to 16 to 24 oz, weaning the bottle, brushing with fluoride toothpaste, routines and limits, poisoning, falls, water safety, rear-facing car seat",
+    "Next well visit at 15 mo"
+   ]
+  },
+  {
+   "abbr": "$wcc15m",
+   "title": "Well child, 15 months",
+   "name": "Well child, 15 months",
+   "setting": "Clinic, pediatric",
+   "noStatus": true,
+   "aliases": [
+    "wcc",
+    "well child",
+    "well child check",
+    "wcv",
+    "well visit",
+    "well baby",
+    "checkup",
+    "physical"
+   ],
+   "notes": [
+    "Healthy 15-month-old with *** growth and *** development."
+   ],
+   "ddx": [],
+   "plan": [
+    "Vaccines today: DTaP, Hib, PCV, MMR, varicella, hepatitis A as due ***",
+    "Fluoride varnish applied ***",
+    "Anticipatory guidance reviewed verbally with ***, handout given: talking and reading, tantrums and consistent discipline, healthy eating, brushing teeth, car seat rear-facing, poisoning, falls and windows",
+    "Next well visit at 18 mo"
+   ]
+  },
+  {
+   "abbr": "$wcc18m",
+   "title": "Well child, 18 months",
+   "name": "Well child, 18 months",
+   "setting": "Clinic, pediatric",
+   "noStatus": true,
+   "aliases": [
+    "wcc",
+    "well child",
+    "well child check",
+    "wcv",
+    "well visit",
+    "well baby",
+    "checkup",
+    "physical"
+   ],
+   "notes": [
+    "Healthy 18-month-old with *** growth and *** development."
+   ],
+   "ddx": [],
+   "plan": [
+    "Vaccines today: catch-up as due; influenza in season ***",
+    "Fluoride varnish applied ***",
+    "Anticipatory guidance reviewed verbally with ***, handout given: toilet training readiness, language and reading, limits on screens, consistent discipline, car seat rear-facing, poisoning, water safety",
+    "Next well visit at 2 yr"
+   ]
+  },
+  {
+   "abbr": "$wcc24m",
+   "title": "Well child, 2 years",
+   "name": "Well child, 2 years",
+   "setting": "Clinic, pediatric",
+   "noStatus": true,
+   "aliases": [
+    "wcc",
+    "well child",
+    "well child check",
+    "wcv",
+    "well visit",
+    "well baby",
+    "checkup",
+    "physical"
+   ],
+   "notes": [
+    "Healthy 2-year-old with *** growth and *** development."
+   ],
+   "ddx": [],
+   "plan": [
+    "Vaccines today: hepatitis A and catch-up as due; influenza in season ***",
+    "Fluoride varnish applied ***",
+    "Anticipatory guidance reviewed verbally with ***, handout given: language and reading, toilet training, screen time <1 hr, healthy eating and active play, dental visit, car seat, outdoor and water safety",
+    "Next well visit at 30 mo"
+   ]
+  },
+  {
+   "abbr": "$wcc30m",
+   "title": "Well child, 30 months",
+   "name": "Well child, 30 months",
+   "setting": "Clinic, pediatric",
+   "noStatus": true,
+   "aliases": [
+    "wcc",
+    "well child",
+    "well child check",
+    "wcv",
+    "well visit",
+    "well baby",
+    "checkup",
+    "physical"
+   ],
+   "notes": [
+    "Healthy 30-month-old with *** growth and *** development."
+   ],
+   "ddx": [],
+   "plan": [
+    "Vaccines today: catch-up as due; influenza in season ***",
+    "Fluoride varnish applied ***",
+    "Anticipatory guidance reviewed verbally with ***, handout given: family routines, reading and talking, playing with others, toilet training, healthy eating, car seat, outdoor and water safety",
+    "Next well visit at 3 yr"
+   ]
+  },
+  {
+   "abbr": "$wcc3y",
+   "title": "Well child, 3 years",
+   "name": "Well child, 3 years",
+   "setting": "Clinic, pediatric",
+   "noStatus": true,
+   "aliases": [
+    "wcc",
+    "well child",
+    "well child check",
+    "wcv",
+    "well visit",
+    "well baby",
+    "checkup",
+    "physical"
+   ],
+   "notes": [
+    "Healthy 3-year-old with *** growth and *** development."
+   ],
+   "ddx": [],
+   "plan": [
+    "Vaccines today: catch-up as due; influenza in season ***",
+    "Fluoride varnish applied ***",
+    "Anticipatory guidance reviewed verbally with ***, handout given: reading together, playing with peers, healthy eating and active play throughout the day, about 3 hr, screen time <1 hr, car seat with harness, water and outdoor safety",
+    "Next well visit at 4 yr"
+   ]
+  },
+  {
+   "abbr": "$wcc4y",
+   "title": "Well child, 4 years",
+   "name": "Well child, 4 years",
+   "setting": "Clinic, pediatric",
+   "noStatus": true,
+   "aliases": [
+    "wcc",
+    "well child",
+    "well child check",
+    "wcv",
+    "well visit",
+    "well baby",
+    "checkup",
+    "physical"
+   ],
+   "notes": [
+    "Healthy 4-year-old with *** growth and *** development."
+   ],
+   "ddx": [],
+   "plan": [
+    "Vaccines today: DTaP, IPV, MMR, varicella as due; influenza in season ***",
+    "Fluoride varnish applied ***",
+    "Anticipatory guidance reviewed verbally with ***, handout given: school readiness, healthy eating and activity, screen time, car seat until outgrown then booster, water safety, strangers and body safety",
+    "Next well visit at 5 yr"
+   ]
+  },
+  {
+   "abbr": "$wcc5y",
+   "title": "Well child, 5 years",
+   "name": "Well child, 5 years",
+   "setting": "Clinic, pediatric",
+   "noStatus": true,
+   "aliases": [
+    "wcc",
+    "well child",
+    "well child check",
+    "wcv",
+    "well visit",
+    "well baby",
+    "checkup",
+    "physical"
+   ],
+   "notes": [
+    "Healthy 5-year-old with *** growth and *** development."
+   ],
+   "ddx": [],
+   "plan": [
+    "Vaccines today: DTaP, IPV, MMR, varicella if not given at 4; influenza in season ***",
+    "Fluoride varnish applied ***",
+    "Anticipatory guidance reviewed verbally with ***, handout given: school readiness, active play throughout the day, about 3 hr, healthy eating, dental visits, booster seat, bike helmet, water safety",
+    "Next well visit at 6 yr"
+   ]
+  },
+  {
+   "abbr": "$wcc6y",
+   "title": "Well child, 6 years",
+   "name": "Well child, 6 years",
+   "setting": "Clinic, pediatric",
+   "noStatus": true,
+   "aliases": [
+    "wcc",
+    "well child",
+    "well child check",
+    "wcv",
+    "well visit",
+    "well baby",
+    "checkup",
+    "physical"
+   ],
+   "notes": [
+    "Healthy 6-year-old with *** growth and *** development, school ***."
+   ],
+   "ddx": [],
+   "plan": [
+    "Vaccines today: catch-up as due; influenza in season ***",
+    "Fluoride varnish applied ***",
+    "Anticipatory guidance reviewed verbally with ***, handout given: school and friendships, 1 hr of daily activity, healthy eating, screen time, dental care, booster seat, bike helmet, water and pedestrian safety",
+    "Next well visit at 7 yr"
+   ]
+  },
+  {
+   "abbr": "$wcc710",
+   "title": "Well child, 7 to 10 years",
+   "name": "Well child, *** years",
+   "setting": "Clinic, pediatric",
+   "noStatus": true,
+   "aliases": [
+    "wcc",
+    "well child",
+    "well child check",
+    "wcv",
+    "well visit",
+    "well baby",
+    "checkup",
+    "physical"
+   ],
+   "notes": [
+    "Healthy ***-year-old with *** growth and *** development, school ***."
+   ],
+   "ddx": [],
+   "plan": [
+    "Vaccines today: catch-up as due; influenza in season ***",
+    "Anticipatory guidance reviewed verbally with ***, handout given: school and mental health, puberty preparation, 1 hr of daily activity, healthy eating, screen time, booster seat until 4 feet 9 inches, helmets, water safety, firearm safety",
+    "Next well visit in 1 yr"
+   ]
+  },
+  {
+   "abbr": "$wcc1114",
+   "title": "Well child, 11 to 14 years",
+   "name": "Adolescent well visit, *** years",
+   "setting": "Clinic, pediatric",
+   "noStatus": true,
+   "aliases": [
+    "wcc",
+    "well child",
+    "well child check",
+    "wcv",
+    "well visit",
+    "well baby",
+    "checkup",
+    "physical"
+   ],
+   "notes": [
+    "Healthy ***-year-old with *** growth and *** development."
+   ],
+   "ddx": [],
+   "plan": [
+    "Vaccines today: Tdap, HPV, MenACWY at 11 to 12 as due; influenza in season ***",
+    "Anticipatory guidance reviewed verbally with ***, handout given: mood and stress, substance and vaping avoidance, healthy relationships and consent, sexual health, sleep, activity and nutrition, seat belts and helmets, online and firearm safety",
+    "Next well visit in 1 yr"
+   ]
+  },
+  {
+   "abbr": "$wcc1517",
+   "title": "Well child, 15 to 17 years",
+   "name": "Adolescent well visit, *** years",
+   "setting": "Clinic, pediatric",
+   "noStatus": true,
+   "aliases": [
+    "wcc",
+    "well child",
+    "well child check",
+    "wcv",
+    "well visit",
+    "well baby",
+    "checkup",
+    "physical"
+   ],
+   "notes": [
+    "Healthy ***-year-old with *** growth and *** development."
+   ],
+   "ddx": [],
+   "plan": [
+    "Vaccines today: MenACWY booster at 16, MenB shared decision at 16 to 18, HPV and catch-up as due; influenza in season ***",
+    "Anticipatory guidance reviewed verbally with ***, handout given: mood and stress, substance and vaping avoidance, sexual health and contraception, healthy relationships, driving safety and no texting, seat belts, sleep, activity and nutrition, firearm safety",
+    "Next well visit in 1 yr"
+   ]
+  },
+  {
+   "abbr": "$wcc1821",
+   "title": "Well visit, 18 to 21 years",
+   "name": "Young adult well visit",
+   "setting": "Clinic, pediatric",
+   "noStatus": true,
+   "aliases": [
+    "wcc",
+    "well child",
+    "well child check",
+    "wcv",
+    "well visit",
+    "well baby",
+    "checkup",
+    "physical"
+   ],
+   "notes": [
+    "Healthy ***-year-old."
+   ],
+   "ddx": [],
+   "plan": [
+    "Vaccines today: MenB shared decision through 23, HPV through 26, catch-up as due; influenza in season ***",
+    "Anticipatory guidance reviewed verbally, handout given: mental health, substance use, sexual health and contraception, healthy relationships, driving safety, sleep, activity and nutrition, transition to adult primary care",
+    "Next well visit in 1 yr"
+   ]
   }
  ]
 }

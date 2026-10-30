@@ -376,6 +376,13 @@ test('dotphrase blocks fill a new problem; pick lists parse', () => {
     assert.equal(Dot.find('', 'polycystic ovary syndrome')?.abbr, '#pcos');
     assert.equal(Dot.find('', 'no such thing'), null);
     assert.equal(Dot.search('pcos')[0].abbr, '#pcos');
+    // well child visits come from the $wcc visit notes' A&P block, without status pills
+    const wcc = Dot.search('wcc');
+    assert.ok(wcc.length >= 20 && wcc.every(p => p.noStatus && p.abbr.startsWith('$wcc')), wcc.map(p => p.abbr).join());
+    assert.ok(Dot.search('well child 2 months').some(p => p.abbr === '$wcc2m'));
+    assert.ok(Dot.search('well child 15').some(p => p.abbr === '$wcc1517'));
+    assert.ok(['$wcc1114', '$wcc1517'].every(a => dot.phrases.some(p => p.abbr === a)));
+    assert.ok(Library.search('annual').some(l => l.key === 'hm') && Library.search('physical').some(l => l.key === 'hm'));
     assert.ok(!Dot.search('hyper').some(p => p.lib));   // library problems aren't listed twice
     assert.deepEqual(picks('LDL goal: _under 100 / under 70, then ***').map(x => x.options), [['under 100', 'under 70']]);
     assert.deepEqual(picks('my_file / x'), []);

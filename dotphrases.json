@@ -1,0 +1,3038 @@
+{
+ "source": "Projects/dot/dotphrases.md (# problem blocks, clinic settings)",
+ "phrases": [
+  {
+   "abbr": "#htn",
+   "title": "Hypertension",
+   "name": "Hypertension",
+   "setting": "Clinic",
+   "lib": "htn",
+   "notes": [
+    "_controlled / uncontrolled, office BP ***, home average ***. Most likely primary given ***."
+   ],
+   "plan": [
+    "Continue lisinopril *** mg PO daily",
+    "Home BP log, goal under 130/80",
+    "DASH diet, sodium under 2,300 mg/day, ideally under 1,500 mg/day, 150 min/week moderate activity",
+    "BMP and UACR ***",
+    "Single-pill combination if 2 drugs needed ***",
+    "Follow up in *** weeks"
+   ]
+  },
+  {
+   "abbr": "#dm2",
+   "title": "Type 2 diabetes",
+   "name": "Type 2 diabetes",
+   "setting": "Clinic",
+   "lib": "dm2",
+   "notes": [
+    "_controlled / uncontrolled, A1c *** on ***, goal under ***. Complications ***."
+   ],
+   "plan": [
+    "Metformin *** mg PO BID",
+    "GLP-1 RA or SGLT2i ***, indicated for ASCVD, HF, or CKD",
+    "Statin: atorvastatin *** mg PO daily",
+    "ACEi or ARB if albuminuria or HTN ***",
+    "UACR and BMP ***",
+    "Eye exam ***, foot exam ***",
+    "Vaccines: influenza, pneumococcal, hepatitis B, COVID-19, zoster ***",
+    "Nutrition: plate method, limit refined carbs and sugary drinks, medical nutrition therapy or DSMES referral ***",
+    "Activity: 150 min/week moderate activity plus resistance training 2 days/week",
+    "Follow up in *** months with A1c"
+   ]
+  },
+  {
+   "abbr": "#prediab",
+   "title": "Prediabetes",
+   "name": "Prediabetes",
+   "setting": "Clinic",
+   "lib": "prediabetes",
+   "notes": [
+    "A1c ***, BMI ***."
+   ],
+   "plan": [
+    "Lifestyle: 7 percent weight loss goal, 150 min/week moderate activity, reduce refined carbs and sugary drinks",
+    "DPP referral ***",
+    "Metformin 500 mg PO daily, titrate to 1000 mg PO BID, consider if BMI 35 or higher, age under 60, or prior GDM ***",
+    "A1c annually"
+   ]
+  },
+  {
+   "abbr": "#hld",
+   "title": "Hyperlipidemia",
+   "name": "Hyperlipidemia",
+   "setting": "Clinic",
+   "lib": "hld",
+   "notes": [
+    "LDL ***, non-HDL ***, Lp(a) ***, 10-year risk by PREVENT *** percent, risk enhancers ***."
+   ],
+   "plan": [
+    "Statin: atorvastatin 10 to 20 mg PO daily for moderate intensity, or 40 to 80 mg PO daily for high intensity ***",
+    "LDL goal by risk: _under 100 / under 70 / under 55",
+    "Ezetimibe 10 mg PO daily if above goal on maximally tolerated statin ***",
+    "Lp(a) once in adulthood ***",
+    "Lipid panel 4 to 12 weeks after start or change, then every 3 to 12 months",
+    "Diet: more vegetables, fruit, whole grains, legumes, and fish; limit saturated fat and processed meats",
+    "Activity: 150 min/week moderate activity"
+   ]
+  },
+  {
+   "abbr": "#obes",
+   "title": "Obesity",
+   "name": "Obesity",
+   "setting": "Clinic",
+   "lib": "obesity",
+   "notes": [
+    "BMI ***, weight-related comorbidities ***."
+   ],
+   "plan": [
+    "Nutrition: 500 to 750 kcal/day deficit, protein with each meal, limit sugary drinks and ultraprocessed foods",
+    "Activity: 150 to 300 min/week moderate activity plus resistance training 2 days/week",
+    "Pharmacotherapy if BMI 30 or higher, or 27 or higher with comorbidity: semaglutide 0.25 mg SC weekly titrated to 2.4 mg, or tirzepatide 2.5 mg SC weekly titrated to 5 to 15 mg ***",
+    "Phentermine *** mg PO every morning if no cardiovascular disease, monthly visits for 3 months, stop if under 5 percent weight loss at 12 weeks ***",
+    "Bariatric surgery if BMI 35 or higher, or 30 or higher with metabolic disease: ***",
+    "Weight check in *** weeks"
+   ]
+  },
+  {
+   "abbr": "#dep",
+   "title": "Depression",
+   "name": "Depression",
+   "setting": "Clinic",
+   "lib": "depression",
+   "notes": [
+    "PHQ-9 ***, item 9 ***, _minimal / mild / moderate / moderately severe / severe. Safety screen ***, firearms access ***."
+   ],
+   "plan": [
+    "Therapy referral ***",
+    "Sertraline *** mg PO daily, start 25 to 50 mg PO daily",
+    "Safety plan reviewed, 988 and COPES 918-744-4800 given",
+    "SSRI counseling: GI upset, sexual side effects, activation, boxed warning for suicidality under 25; patient will report suicidal thoughts ***",
+    "Follow up in 4 to 6 weeks with repeat PHQ-9"
+   ]
+  },
+  {
+   "abbr": "#anx",
+   "title": "Anxiety",
+   "name": "Anxiety",
+   "setting": "Clinic",
+   "lib": "anxiety",
+   "notes": [
+    "GAD-7 ***, _minimal / mild / moderate / severe."
+   ],
+   "plan": [
+    "Therapy referral, CBT ***",
+    "Escitalopram 10 mg PO daily or venlafaxine XR 75 mg PO daily ***",
+    "Avoid chronic benzodiazepines",
+    "Sleep, caffeine, alcohol, and exercise counseling",
+    "Follow up in 4 to 6 weeks with repeat GAD-7"
+   ]
+  },
+  {
+   "abbr": "#hypothy",
+   "title": "Hypothyroidism",
+   "name": "Hypothyroidism",
+   "setting": "Clinic",
+   "lib": "hypothyroid",
+   "notes": [
+    "TSH *** on ***, _controlled / uncontrolled."
+   ],
+   "plan": [
+    "Levothyroxine *** mcg PO daily",
+    "Take on an empty stomach 30 to 60 minutes before breakfast, 4 hours apart from calcium or iron",
+    "Recheck TSH in 6 to 8 weeks after dose change, annually when stable"
+   ]
+  },
+  {
+   "abbr": "#asthma",
+   "title": "Asthma",
+   "name": "Asthma",
+   "setting": "Clinic",
+   "lib": "asthma",
+   "notes": [
+    "_well controlled / partly controlled / uncontrolled, GINA step ***. Exacerbations in past year ***, rescue use ***."
+   ],
+   "plan": [
+    "Budesonide-formoterol 160/4.5 mcg 2 inhalations BID and 1 inhalation as needed, max 12 inhalations/day ***",
+    "Step up or down: ***",
+    "Written action plan given",
+    "Spacer and inhaler technique reviewed",
+    "Triggers, tobacco, influenza and COVID-19 vaccines ***"
+   ]
+  },
+  {
+   "abbr": "#copd",
+   "title": "COPD",
+   "name": "COPD",
+   "setting": "Clinic",
+   "lib": "copd",
+   "notes": [
+    "GOLD group ***, FEV1 *** percent, exacerbations in past year ***, rescue use ***, eosinophils ***."
+   ],
+   "plan": [
+    "Tiotropium 18 mcg inhaled daily, or umeclidinium-vilanterol 62.5/25 mcg 1 inhalation daily ***",
+    "Albuterol 90 mcg 2 puffs every 4 to 6 hours as needed",
+    "Add ICS if exacerbations and eosinophils 300 or higher ***",
+    "Pulmonary rehab referral ***",
+    "Vaccines: influenza, pneumococcal, COVID-19, RSV, Tdap ***",
+    "Tobacco: ***"
+   ]
+  },
+  {
+   "abbr": "#ckd",
+   "title": "Chronic kidney disease",
+   "name": "Chronic kidney disease",
+   "setting": "Clinic",
+   "lib": "ckd",
+   "notes": [
+    "Stage G*** A***, eGFR ***, UACR ***, cause ***."
+   ],
+   "plan": [
+    "BP goal under 130/80, SBP under 120 if tolerated",
+    "Glucose control ***",
+    "ACEi or ARB at max tolerated dose if albuminuria ***",
+    "SGLT2i if eGFR 20 or higher: empagliflozin 10 mg PO daily or dapagliflozin 10 mg PO daily ***",
+    "Type 2 diabetes with albuminuria: finerenone 10 to 20 mg PO daily if eGFR 25 or higher and K 5 or less, and a GLP-1 RA with kidney benefit ***",
+    "Renally dose meds, avoid NSAIDs",
+    "BMP and UACR every *** months",
+    "Nephrology referral if eGFR under 30, UACR 300 or higher, rapid decline, or refractory HTN ***"
+   ]
+  },
+  {
+   "abbr": "#gerd",
+   "title": "GERD",
+   "name": "GERD",
+   "setting": "Clinic",
+   "lib": "gerd",
+   "notes": [
+    "*** typical symptoms, alarm features ***."
+   ],
+   "plan": [
+    "Lifestyle: weight loss if overweight, avoid meals 3 hours before bed, elevate head of bed, limit trigger foods",
+    "Omeprazole 20 mg PO daily 30 to 60 minutes before breakfast for 8 weeks, then step down to lowest effective dose or stop",
+    "EGD if alarm features: dysphagia, GI bleeding, anemia, weight loss, persistent vomiting"
+   ]
+  },
+  {
+   "abbr": "#lbp",
+   "title": "Low back pain",
+   "name": "Low back pain",
+   "setting": "Clinic",
+   "lib": "lbp",
+   "notes": [
+    "_acute / subacute nonspecific low back pain, red flags absent."
+   ],
+   "plan": [
+    "Stay active, avoid bed rest, heat",
+    "Naproxen 500 mg PO BID with food for *** days",
+    "PT referral ***",
+    "Radicular symptoms: SLR *** and crossed SLR ***; MRI and spine referral if progressive deficit or symptoms persist beyond 6 weeks ***",
+    "Imaging not indicated unless red flags or no improvement after 6 weeks",
+    "Return for weakness, numbness, bowel or bladder changes, fever"
+   ]
+  },
+  {
+   "abbr": "#oa",
+   "title": "Osteoarthritis",
+   "name": "Osteoarthritis",
+   "setting": "Clinic",
+   "lib": "oa",
+   "notes": [
+    "*** osteoarthritis of ***, function ***."
+   ],
+   "plan": [
+    "Exercise and strengthening, PT ***",
+    "Weight loss goal 5 to 10 percent if overweight",
+    "Diclofenac 1 percent gel topical QID, 4 g per knee, ankle, or foot, 2 g per hand, wrist, or elbow",
+    "Naproxen 500 mg PO BID with food as needed if topical inadequate ***",
+    "Corticosteroid injection option ***"
+   ]
+  },
+  {
+   "abbr": "#insom",
+   "title": "Insomnia",
+   "name": "Insomnia",
+   "setting": "Clinic",
+   "lib": "insomnia",
+   "notes": [
+    "*** chronic insomnia, duration ***, contributing factors ***."
+   ],
+   "plan": [
+    "Sleep hygiene: fixed wake time, bed for sleep only, limit caffeine after noon, no screens 1 hour before bed, limit alcohol",
+    "CBT-I first line, referral or app ***",
+    "Avoid sedative-hypnotics where possible",
+    "Screen and treat OSA, depression, anxiety, pain ***"
+   ]
+  },
+  {
+   "abbr": "#tob",
+   "title": "Tobacco use",
+   "name": "Tobacco use",
+   "setting": "Clinic",
+   "lib": "tobacco",
+   "notes": [
+    "*** pack-years, currently *** per day, readiness ***."
+   ],
+   "plan": [
+    "Varenicline 0.5 mg PO daily for 3 days, then 0.5 mg PO BID for 4 days, then 1 mg PO BID to complete 12 weeks total ***",
+    "Or nicotine patch 21 mg/24 hours transdermal daily plus nicotine gum or lozenge 2 to 4 mg every 1 to 2 hours as needed ***",
+    "Quitline 1-800-QUIT-NOW referral, quit date ***",
+    "Lung cancer screening eligible if age 50 to 80, 20 or more pack-years, and current or quit within 15 years: ***"
+   ]
+  },
+  {
+   "abbr": "#contra",
+   "title": "Contraception",
+   "name": "Contraception",
+   "setting": "Clinic",
+   "notes": [
+    "Desires ***, method chosen ***, US MEC category _1 / 2 / 3 / 4."
+   ],
+   "plan": [
+    "Counseled on effectiveness, side effects, and STI protection",
+    "***",
+    "Follow up ***"
+   ]
+  },
+  {
+   "abbr": "#hm",
+   "title": "Health maintenance",
+   "name": "Health maintenance",
+   "setting": "Clinic",
+   "lib": "hm",
+   "notes": [
+    "***yo ***, preventive care reviewed."
+   ],
+   "plan": [
+    "BP: annually if 40 or older or increased risk, every 3 to 5 years if 18 to 39 and not at increased risk",
+    "Lipids and statin: 40 to 75 ***",
+    "Diabetes: 35 to 70 if overweight ***",
+    "Colorectal: 45 to 75 ***",
+    "Breast: mammogram every 2 years 40 to 74 ***",
+    "Cervical: 21 to 65 ***",
+    "Lung: LDCT 50 to 80 with 20 pack-years ***",
+    "AAA: ultrasound once, men 65 to 75 who ever smoked ***",
+    "Osteoporosis: DXA women 65 and older, younger if increased risk ***",
+    "HIV once 15 to 65, HCV once 18 to 79 ***",
+    "Chlamydia and gonorrhea: sexually active women 24 and under or at risk ***",
+    "Depression and anxiety screen ***, unhealthy alcohol use ***",
+    "Falls: 65 and older, exercise ***",
+    "Vaccines due: influenza ***, COVID-19 ***, Tdap or Td ***, zoster ***, pneumococcal ***, RSV ***, HPV ***, hepatitis B ***"
+   ]
+  },
+  {
+   "abbr": "#uti",
+   "title": "Acute cystitis",
+   "name": "Acute cystitis",
+   "setting": "Clinic",
+   "lib": "uti",
+   "notes": [
+    "*** uncomplicated cystitis, UA ***. Most likely cystitis given ***. Pyelonephritis and STI considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Nitrofurantoin monohydrate/macrocrystals 100 mg PO BID for 5 days, avoid if CrCl under 30",
+    "Or TMP-SMX 1 DS tab PO BID for 3 days if local resistance under 20 percent",
+    "Or fosfomycin 3 g PO once",
+    "Urine culture if recurrent, recent antibiotics, or symptoms persist ***",
+    "Return for fever, flank pain, or vomiting"
+   ]
+  },
+  {
+   "abbr": "#uri",
+   "title": "Viral upper respiratory infection",
+   "name": "Viral upper respiratory infection",
+   "setting": "Clinic",
+   "lib": "uri",
+   "notes": [
+    "Day *** of symptoms. Most likely viral URI given ***. Bacterial sinusitis, strep pharyngitis, and pneumonia considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Supportive care: fluids, saline, honey for cough if over 1 year old",
+    "Antibiotics not indicated",
+    "Return if symptoms last more than 10 days, worsen after improving, or dyspnea develops"
+   ]
+  },
+  {
+   "abbr": "#sinus",
+   "title": "Acute rhinosinusitis",
+   "name": "Acute rhinosinusitis",
+   "setting": "Clinic",
+   "notes": [
+    "Day *** of symptoms. Most likely _viral / bacterial sinusitis given ***. Allergic rhinitis considered but unlikely given ***, will ***. Bacterial features: 10 days or more without improvement, fever 39 C or higher with purulent discharge for 3 days, or worsening after initial improvement ***."
+   ],
+   "plan": [
+    "Saline irrigation, fluticasone 50 mcg 2 sprays each nostril daily",
+    "Watchful waiting for 7 days if follow-up assured ***",
+    "Adults, if bacterial: amoxicillin-clavulanate 875/125 mg PO BID for 5 to 7 days",
+    "Children, if bacterial: amoxicillin-clavulanate 45 mg/kg/day of amoxicillin PO divided BID, max 875 mg per dose, for 10 days",
+    "Adult penicillin allergy: doxycycline 100 mg PO BID for 5 to 7 days",
+    "Return for vision change, periorbital swelling, or severe headache"
+   ]
+  },
+  {
+   "abbr": "#pharyn",
+   "title": "Pharyngitis",
+   "name": "Pharyngitis",
+   "setting": "Clinic",
+   "notes": [
+    "Centor or McIsaac ***, rapid strep ***. Most likely _viral / streptococcal pharyngitis given ***. Peritonsillar abscess and mononucleosis considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Strep positive: amoxicillin 50 mg/kg PO once daily, max 1000 mg, for 10 days; adults may use penicillin V 500 mg PO BID for 10 days",
+    "Non-anaphylactic penicillin allergy: cephalexin 20 mg/kg PO BID, max 500 mg per dose, for 10 days",
+    "Anaphylactic penicillin allergy: azithromycin 12 mg/kg PO once, max 500 mg, then 6 mg/kg PO daily, max 250 mg, for 4 more days",
+    "Analgesia: acetaminophen or ibuprofen",
+    "Return to school or work after 12 hours of antibiotics and no fever"
+   ]
+  },
+  {
+   "abbr": "#aom",
+   "title": "Acute otitis media",
+   "name": "Acute otitis media",
+   "setting": "Clinic, pediatric",
+   "notes": [
+    "*** side, _mild / moderate / severe, age ***. Most likely AOM given bulging TM ***. Otitis media with effusion and otitis externa considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Observation for 48 to 72 hours with safety-net prescription if nonsevere and age 6 to 23 months with unilateral AOM or age 2 years or older ***",
+    "Amoxicillin 80 to 90 mg/kg/day PO divided BID, max 2 g per dose ***",
+    "Amoxicillin-clavulanate 90 mg/kg/day of amoxicillin PO divided BID, max 2 g per dose, if amoxicillin in past 30 days or conjunctivitis ***",
+    "Non-anaphylactic penicillin allergy: cefdinir 14 mg/kg/day PO divided daily or BID, max 600 mg/day ***",
+    "Duration: 10 days if under 2 years, severe symptoms, or otorrhea; nonsevere 7 days age 2 to 5, 5 to 7 days age 6 and older",
+    "Acetaminophen 15 mg/kg PO every 6 hours as needed, max 75 mg/kg/day; ibuprofen 10 mg/kg PO every 6 to 8 hours as needed if 6 months or older, max 40 mg/kg/day",
+    "Recheck if no improvement in 48 to 72 hours"
+   ]
+  },
+  {
+   "abbr": "#bronch",
+   "title": "Acute bronchitis",
+   "name": "Acute bronchitis",
+   "setting": "Clinic",
+   "notes": [
+    "Cough for *** days. Most likely viral bronchitis given ***. Pneumonia and pertussis considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Antibiotics not indicated",
+    "Honey, fluids, smoke avoidance",
+    "Albuterol 90 mcg 2 puffs every 4 to 6 hours as needed if wheezing ***",
+    "Cough may last 3 weeks, return for dyspnea, fever over 3 days, or hemoptysis"
+   ]
+  },
+  {
+   "abbr": "#vertigo",
+   "title": "Vertigo",
+   "name": "Vertigo",
+   "setting": "Clinic",
+   "lib": "dizziness",
+   "notes": [
+    "*** positional vertigo, Dix-Hallpike *** side, HINTS ***. Most likely BPPV given ***. Vestibular neuritis and posterior circulation stroke considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Epley maneuver performed in clinic ***, home Epley or Brandt-Daroff exercises taught",
+    "Meclizine 12.5 to 25 mg PO every 8 hours as needed for severe symptoms only, short term",
+    "Vestibular PT referral if persistent ***",
+    "Fall precautions, return for neurologic symptoms"
+   ]
+  },
+  {
+   "abbr": "#migraine",
+   "title": "Migraine",
+   "name": "Migraine",
+   "setting": "Clinic",
+   "lib": "migraine",
+   "notes": [
+    "_with / without aura, *** headache days per month, MIDAS ***. Red flags absent ***. Acute medication use *** days per month."
+   ],
+   "plan": [
+    "Acute: sumatriptan 50 to 100 mg PO at onset, may repeat in 2 hours, max 200 mg/day, avoid in vascular disease",
+    "Acute: naproxen 500 mg PO at onset, may combine with triptan ***",
+    "Acute if triptans fail or are contraindicated: ubrogepant 50 to 100 mg PO, may repeat in 2 hours, max 200 mg/day; or rimegepant 75 mg ODT once, max 75 mg/day ***",
+    "Limit triptans to under 10 days per month and simple analgesics to under 15 days per month",
+    "Prevention if 4 or more headache days per month or disabling: propranolol 20 mg PO BID titrated to 80 to 160 mg/day, topiramate 25 mg PO nightly titrated to 50 mg BID, amitriptyline 10 mg PO nightly titrated to 25 to 50 mg, or a CGRP monoclonal antibody ***",
+    "Topiramate is teratogenic, contraception counseling ***",
+    "Headache diary, regular sleep and meals, hydration, regular exercise"
+   ]
+  },
+  {
+   "abbr": "#anemia",
+   "title": "Iron deficiency anemia",
+   "name": "Iron deficiency anemia",
+   "setting": "Clinic",
+   "lib": "anemia",
+   "notes": [
+    "Hgb *** from ***, MCV ***, ferritin ***, TSAT ***. Likely source ***."
+   ],
+   "plan": [
+    "Ferrous sulfate 325 mg PO once daily or every other day",
+    "IV iron if intolerant, malabsorption, or ongoing losses ***",
+    "GI evaluation for men and postmenopausal women: EGD and colonoscopy ***, celiac serology ***",
+    "Menstrual losses: ***",
+    "Recheck CBC in 4 weeks and ferritin in 3 months, continue iron 3 months after Hgb normalizes"
+   ]
+  },
+  {
+   "abbr": "#osteop",
+   "title": "Osteoporosis",
+   "name": "Osteoporosis",
+   "setting": "Clinic",
+   "lib": "osteoporosis",
+   "notes": [
+    "DXA on ***, lowest T-score *** at ***, FRAX 10-year major fracture *** percent and hip *** percent. Fracture history ***."
+   ],
+   "plan": [
+    "Treatment threshold met: ***",
+    "Alendronate 70 mg PO weekly with a full glass of water, upright and no food for 30 minutes ***",
+    "Calcium 1,000 to 1,200 mg/day total, diet first; vitamin D 800 to 1,000 IU PO daily",
+    "Weight-bearing and resistance exercise, fall prevention",
+    "Creatinine, calcium, 25-OH vitamin D, dental exam before starting ***",
+    "Repeat DXA in 2 years, drug holiday review at 5 years ***"
+   ]
+  },
+  {
+   "abbr": "#gout",
+   "title": "Gout",
+   "name": "Gout",
+   "setting": "Clinic",
+   "lib": "gout",
+   "notes": [
+    "_acute flare / chronic gout, *** flares per year, uric acid ***, tophi ***, CKD ***."
+   ],
+   "plan": [
+    "Flare: colchicine 1.2 mg PO, then 0.6 mg PO 1 hour later, then 0.6 mg PO daily or BID until resolved; or naproxen 500 mg PO BID; or prednisone 40 mg PO daily for 5 days",
+    "Urate-lowering therapy if 2 or more flares per year, tophi, or radiographic damage: allopurinol 100 mg PO daily, 50 mg if CKD stage 3 or worse, titrate by 100 mg every 2 to 4 weeks to uric acid under 6",
+    "Flare prophylaxis: colchicine 0.6 mg PO daily for 3 to 6 months when starting allopurinol",
+    "HLA-B 5801 testing before allopurinol in patients of Southeast Asian or African descent",
+    "Limit alcohol, sugary drinks, and organ meats; review thiazides"
+   ]
+  },
+  {
+   "abbr": "#rhinitis",
+   "title": "Allergic rhinitis",
+   "name": "Allergic rhinitis",
+   "setting": "Clinic",
+   "lib": "rhinitis",
+   "notes": [
+    "_seasonal / perennial, triggers ***, _mild / moderate / severe."
+   ],
+   "plan": [
+    "Fluticasone 50 mcg 2 sprays each nostril daily, aimed away from septum",
+    "Cetirizine 10 mg PO daily or loratadine 10 mg PO daily as needed, adult doses",
+    "Saline irrigation, allergen avoidance",
+    "Allergy referral for immunotherapy if uncontrolled ***"
+   ]
+  },
+  {
+   "abbr": "#osa",
+   "title": "Obstructive sleep apnea",
+   "name": "Obstructive sleep apnea",
+   "setting": "Clinic",
+   "lib": "osa",
+   "notes": [
+    "STOP-BANG ***, Epworth ***, _suspected / confirmed, AHI ***."
+   ],
+   "plan": [
+    "Home sleep apnea test or polysomnography ***",
+    "CPAP nightly, adherence goal 4 hours or more on 70 percent of nights ***",
+    "Weight loss, avoid alcohol and sedatives before bed, positional therapy",
+    "Tirzepatide if moderate to severe OSA with obesity ***",
+    "Drowsy driving counseled"
+   ]
+  },
+  {
+   "abbr": "#masld",
+   "title": "Steatotic liver disease",
+   "name": "Metabolic dysfunction-associated steatotic liver disease",
+   "setting": "Clinic",
+   "notes": [
+    "ALT ***, AST ***, platelets ***, FIB-4 ***, metabolic risk factors ***. Alcohol ***."
+   ],
+   "plan": [
+    "FIB-4 under 1.3: low risk, repeat in 1 to 3 years; 1.3 or higher: elastography ***",
+    "Weight loss 7 to 10 percent, Mediterranean diet, 150 min/week activity, avoid alcohol",
+    "Treat diabetes, lipids, and HTN; statin if indicated",
+    "Hepatitis A and B vaccines ***",
+    "Hepatology if F2 or higher fibrosis, for MASH-directed therapy ***"
+   ]
+  },
+  {
+   "abbr": "#cad",
+   "title": "Coronary artery disease",
+   "name": "Coronary artery disease",
+   "setting": "Clinic",
+   "lib": "cad",
+   "notes": [
+    "*** stable, angina ***, prior events ***, last ischemic evaluation ***."
+   ],
+   "plan": [
+    "Aspirin 81 mg PO daily",
+    "Atorvastatin 40 to 80 mg PO daily, LDL goal under 70, under 55 if very high risk; add ezetimibe 10 mg PO daily if above goal ***",
+    "Beta blocker if MI within the past year, LVEF 50 percent or less, angina, arrhythmia, or uncontrolled HTN ***",
+    "Nitroglycerin 0.4 mg SL every 5 minutes as needed for chest pain, max 3 doses, call 911 if not better 5 minutes after the first dose",
+    "BP under 130/80, A1c at goal, tobacco cessation, cardiac rehab ***",
+    "Influenza vaccine yearly"
+   ]
+  },
+  {
+   "abbr": "#chf",
+   "title": "Heart failure",
+   "name": "Heart failure",
+   "setting": "Clinic",
+   "lib": "hf",
+   "notes": [
+    "_HFrEF / HFmrEF / HFpEF, EF *** percent on ***, NYHA class ***, *** euvolemic, weight *** vs dry weight ***."
+   ],
+   "plan": [
+    "ARNI: sacubitril-valsartan *** mg PO BID, or ACEi or ARB ***",
+    "Beta blocker: carvedilol *** mg PO BID or metoprolol succinate *** mg PO daily",
+    "MRA: spironolactone 12.5 to 25 mg PO daily if K under 5 and eGFR over 30",
+    "SGLT2i: empagliflozin 10 mg PO daily or dapagliflozin 10 mg PO daily",
+    "HFmrEF or HFpEF: finerenone ***",
+    "Diuretic: furosemide *** mg PO *** for volume",
+    "Daily weights, call for gain of 3 lb in a day or 5 lb in a week, sodium under 2 g/day",
+    "BMP in 1 to 2 weeks after med changes, echo ***, cardiology ***"
+   ]
+  },
+  {
+   "abbr": "#hcv",
+   "title": "Hepatitis C",
+   "name": "Hepatitis C",
+   "setting": "Clinic",
+   "notes": [
+    "HCV antibody ***, RNA *** on ***, FIB-4 or elastography ***, prior treatment ***."
+   ],
+   "plan": [
+    "Pretreatment: HBsAg, anti-HBc, anti-HBs, HIV, CMP, CBC, INR, pregnancy test ***",
+    "Simplified treatment if treatment-naive without cirrhosis: glecaprevir-pibrentasvir 3 tabs PO daily with food for 8 weeks, or sofosbuvir-velpatasvir 1 tab PO daily for 12 weeks ***",
+    "Check drug interactions",
+    "Hepatitis A and B vaccines if not immune",
+    "HCV RNA 12 weeks after treatment to confirm cure",
+    "Counsel on reinfection prevention and alcohol avoidance"
+   ]
+  },
+  {
+   "abbr": "#fall",
+   "title": "Falls",
+   "name": "Falls",
+   "setting": "Clinic",
+   "notes": [
+    "*** falls in past year, injury ***, Timed Up and Go *** seconds, orthostatics ***."
+   ],
+   "plan": [
+    "Medication review: deprescribe sedatives, anticholinergics, and unneeded antihypertensives ***",
+    "PT for strength, gait, and balance, or tai chi ***",
+    "Home safety evaluation ***",
+    "Vision check, footwear, assistive device ***",
+    "Vitamin D if deficient, osteoporosis screening ***"
+   ]
+  },
+  {
+   "abbr": "#dementia",
+   "title": "Cognitive impairment",
+   "name": "Cognitive impairment",
+   "setting": "Clinic",
+   "notes": [
+    "_mild cognitive impairment / dementia, MoCA *** on ***, function ***, informant ***."
+   ],
+   "plan": [
+    "Reversible causes: B12, TSH, CMP, CBC, depression screen, medication review ***, brain imaging ***",
+    "Donepezil 5 mg PO nightly, increase to 10 mg after 4 to 6 weeks, if dementia ***",
+    "Safety: driving ***, firearms ***, wandering ***, finances ***",
+    "Advance care planning and health care agent ***",
+    "Caregiver support ***"
+   ]
+  },
+  {
+   "abbr": "#eczema",
+   "title": "Atopic dermatitis",
+   "name": "Atopic dermatitis",
+   "setting": "Clinic",
+   "notes": [
+    "_mild / moderate / severe, distribution ***, infection ***."
+   ],
+   "plan": [
+    "Thick fragrance-free moisturizer at least twice daily and after bathing",
+    "Flares: triamcinolone 0.1 percent ointment topically BID to body for up to 2 weeks, hydrocortisone 2.5 percent ointment topically BID to face and skin folds",
+    "Short lukewarm baths, gentle cleanser",
+    "Hand dermatitis: thick emollient after every hand wash, cotton gloves overnight over moisturizer ***",
+    "Treat secondary infection if present ***",
+    "Dermatology if refractory ***"
+   ]
+  },
+  {
+   "abbr": "#acne",
+   "title": "Acne",
+   "name": "Acne vulgaris",
+   "setting": "Clinic",
+   "notes": [
+    "_comedonal / inflammatory / nodular, _mild / moderate / severe."
+   ],
+   "plan": [
+    "Benzoyl peroxide 2.5 to 5 percent wash daily",
+    "Adapalene 0.1 percent gel topically nightly",
+    "Moderate inflammatory acne: add doxycycline 100 mg PO daily for 3 to 4 months max, with benzoyl peroxide ***",
+    "Combined oral contraceptive if contraception desired ***",
+    "Dermatology for isotretinoin if severe nodular or scarring acne ***",
+    "Results take 8 to 12 weeks"
+   ]
+  },
+  {
+   "abbr": "#bph",
+   "title": "Benign prostatic hyperplasia",
+   "name": "Benign prostatic hyperplasia",
+   "setting": "Clinic",
+   "lib": "bph",
+   "notes": [
+    "IPSS ***, bother ***, PVR ***. Red flags absent: hematuria, retention, recurrent UTI ***."
+   ],
+   "plan": [
+    "Tamsulosin 0.4 mg PO daily 30 minutes after the same meal; counsel on dizziness and on telling eye surgeons before cataract surgery",
+    "Add finasteride 5 mg PO daily if prostate enlarged, effect after 6 months, lowers PSA by half",
+    "Limit evening fluids, caffeine, and alcohol",
+    "PSA discussion ***, UA ***",
+    "Urology if refractory or red flags"
+   ]
+  },
+  {
+   "abbr": "#ed",
+   "title": "Erectile dysfunction",
+   "name": "Erectile dysfunction",
+   "setting": "Clinic",
+   "notes": [
+    "*** onset, morning erections ***, cardiovascular risk ***, testosterone ***."
+   ],
+   "plan": [
+    "Sildenafil 50 mg PO 1 hour before sex as needed, max 100 mg/day, or tadalafil 10 mg PO as needed, max 20 mg/day",
+    "Do not use with nitrates; caution with alpha blockers",
+    "Address cardiovascular risk, tobacco, alcohol, and depression",
+    "A1c, lipids, morning total testosterone ***"
+   ]
+  },
+  {
+   "abbr": "#menop",
+   "title": "Menopause symptoms",
+   "name": "Menopause symptoms",
+   "setting": "Clinic",
+   "notes": [
+    "LMP ***, vasomotor symptoms *** per day, genitourinary symptoms ***, contraindications to hormones ***."
+   ],
+   "plan": [
+    "Hormone therapy favorable if under 60 or within 10 years of menopause and no contraindications ***",
+    "Estradiol 0.025 to 0.05 mg/day transdermal patch changed twice weekly, plus micronized progesterone 100 mg PO nightly if uterus present ***",
+    "Nonhormonal: paroxetine 7.5 mg PO nightly, venlafaxine XR 37.5 to 75 mg PO daily, or gabapentin 300 mg PO nightly ***",
+    "Neurokinin antagonist: fezolinetant 45 mg PO daily with LFTs at baseline, monthly for 2 months, then at months 3, 6, and 9; or elinzanetant ***",
+    "Vaginal estradiol cream 0.5 g vaginally twice weekly for genitourinary symptoms ***",
+    "Lowest effective dose, reassess yearly, review bone and cardiovascular risk"
+   ]
+  },
+  {
+   "abbr": "#aub",
+   "title": "Abnormal uterine bleeding",
+   "name": "Abnormal uterine bleeding",
+   "setting": "Clinic",
+   "notes": [
+    "_heavy / irregular / intermenstrual bleeding, likely cause ***, pregnancy test ***, Hgb ***."
+   ],
+   "plan": [
+    "Labs: CBC, TSH, ferritin, prolactin if irregular, bleeding disorder workup if heavy since menarche ***",
+    "Pelvic ultrasound ***",
+    "Endometrial biopsy if 45 or older, or younger with unopposed estrogen exposure or failed treatment ***",
+    "Treatment: levonorgestrel 52 mg IUD, combined oral contraceptive 1 tab PO daily, tranexamic acid 1,300 mg PO TID for up to 5 days during menses, or naproxen 500 mg PO BID during menses ***",
+    "Iron if deficient"
+   ]
+  },
+  {
+   "abbr": "#pcos",
+   "title": "Polycystic ovary syndrome",
+   "name": "Polycystic ovary syndrome",
+   "setting": "Clinic",
+   "notes": [
+    "Criteria: oligo-ovulation ***, hyperandrogenism ***, polycystic ovaries ***. Other causes excluded with TSH, prolactin, and 17-OH progesterone ***."
+   ],
+   "plan": [
+    "Weight loss 5 to 10 percent if overweight, 150 min/week activity",
+    "Combined oral contraceptive 1 tab PO daily for cycles and hirsutism ***",
+    "Metformin 500 mg PO daily titrated to 1,000 mg PO BID for metabolic risk ***",
+    "Screen: A1c or OGTT, lipids, depression, OSA ***",
+    "Endometrial protection if fewer than 4 cycles per year",
+    "Fertility: letrozole discussion or referral if desired ***"
+   ]
+  },
+  {
+   "abbr": "#sti",
+   "title": "Sexually transmitted infection",
+   "name": "Sexually transmitted infection",
+   "setting": "Clinic",
+   "notes": [
+    "_exposure / symptoms, ***. Most likely *** given ***. *** considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Testing: GC/CT NAAT at sites of exposure, HIV, syphilis, trichomonas ***, hepatitis B and C ***",
+    "Gonorrhea: ceftriaxone 500 mg IM once, 1 g if weight 150 kg or more",
+    "Chlamydia: doxycycline 100 mg PO BID for 7 days; azithromycin 1 g PO once if pregnant",
+    "Trichomonas: metronidazole 500 mg PO BID for 7 days in women, 2 g PO once in men",
+    "Expedited partner therapy ***, no sex for 7 days after treatment and until partners treated",
+    "Retest in 3 months, PrEP and doxy-PEP discussed ***"
+   ]
+  },
+  {
+   "abbr": "#prep",
+   "title": "HIV PrEP",
+   "name": "HIV pre-exposure prophylaxis",
+   "setting": "Clinic",
+   "notes": [
+    "Indication: ***. HIV test negative on ***, within 7 days of start ***. Acute HIV symptoms ***."
+   ],
+   "plan": [
+    "Emtricitabine-tenofovir disoproxil fumarate 200/300 mg PO daily, CrCl 60 or more ***",
+    "Alternative: emtricitabine-tenofovir alafenamide 200/25 mg PO daily, not for receptive vaginal sex ***",
+    "Or cabotegravir 600 mg IM at 0 and 1 month, then every 2 months ***",
+    "Or lenacapavir SC every 6 months after label initiation doses, weight 35 kg or more ***",
+    "Baseline: creatinine clearance, hepatitis B and C, STI panel, pregnancy test ***",
+    "HIV and STI testing every 3 months, creatinine every 6 to 12 months",
+    "Condoms and adherence counseling, 90-day supply with refill at each visit"
+   ]
+  },
+  {
+   "abbr": "#adhd",
+   "title": "ADHD",
+   "name": "ADHD",
+   "setting": "Clinic",
+   "notes": [
+    "*** presentation, Vanderbilt or ASRS ***, _controlled / uncontrolled."
+   ],
+   "plan": [
+    "Methylphenidate ER *** mg PO every morning; OROS max 54 mg/day age 6 to 12; age 13 to 17 max 72 mg/day, not over 2 mg/kg/day; adults per label ***",
+    "Nonstimulant: atomoxetine 0.5 mg/kg/day PO, titrate to 1.2 mg/kg/day, max 1.4 mg/kg/day or 100 mg/day ***",
+    "Behavioral therapy, school or workplace accommodations",
+    "Monitor BP, HR, weight, sleep, and mood each visit; PDMP ***",
+    "Prescription proposed to preceptor Dr. *** for signature"
+   ]
+  },
+  {
+   "abbr": "#aud",
+   "title": "Alcohol use disorder",
+   "name": "Alcohol use disorder",
+   "setting": "Clinic",
+   "lib": "alcohol",
+   "notes": [
+    "AUDIT ***, DSM-5 criteria ***, _mild / moderate / severe, last drink ***, withdrawal history ***."
+   ],
+   "plan": [
+    "Naltrexone 50 mg PO daily, avoid with opioids or liver failure ***",
+    "Acamprosate 666 mg PO TID, 333 mg PO TID if CrCl 30 to 50, avoid under 30 ***",
+    "Gabapentin or topiramate as alternatives ***",
+    "Counseling, mutual help groups, recovery support",
+    "LFTs, thiamine 100 mg PO daily ***",
+    "Outpatient withdrawal management only if low risk, otherwise refer ***"
+   ]
+  },
+  {
+   "abbr": "#oud",
+   "title": "Opioid use disorder",
+   "name": "Opioid use disorder",
+   "setting": "Clinic",
+   "notes": [
+    "_mild / moderate / severe, *** opioid, route ***, last use ***, on treatment since ***."
+   ],
+   "plan": [
+    "Buprenorphine-naloxone *** mg SL daily, usual 16 to 24 mg daily ***",
+    "Naloxone 4 mg nasal spray, 1 spray in a nostril for overdose, may repeat every 2 to 3 minutes ***",
+    "UDS and PDMP each visit",
+    "HIV, hepatitis B and C, and syphilis screening; hepatitis A and B vaccines ***",
+    "Counseling and recovery support offered, not required for medication",
+    "Prescription proposed to preceptor Dr. *** for signature"
+   ]
+  },
+  {
+   "abbr": "#cpain",
+   "title": "Chronic pain",
+   "name": "Chronic pain",
+   "setting": "Clinic",
+   "notes": [
+    "*** pain for *** months, diagnosis ***, PEG score ***, function ***."
+   ],
+   "plan": [
+    "Nonopioid: acetaminophen 1,000 mg PO TID, max 3,000 mg/day; topical diclofenac; duloxetine 30 mg PO daily titrated to 60 mg ***",
+    "Exercise therapy, PT, CBT for pain ***",
+    "If on opioids: MME ***, PDMP reviewed, UDS ***, agreement ***, naloxone ***, continue or taper ***",
+    "Avoid opioid and benzodiazepine co-prescribing",
+    "Functional goals: ***"
+   ]
+  },
+  {
+   "abbr": "#plantar",
+   "title": "Plantar fasciitis",
+   "name": "Plantar fasciitis",
+   "setting": "Clinic",
+   "notes": [
+    "*** side, duration ***, first-step pain ***."
+   ],
+   "plan": [
+    "Plantar fascia and calf stretching 3 times daily, roll a frozen bottle under the arch",
+    "Supportive shoes, heel cups or arch supports, avoid barefoot walking",
+    "Naproxen 500 mg PO BID with food for up to 2 weeks ***",
+    "Night splint ***, PT ***",
+    "Podiatry if not better in 3 months ***"
+   ]
+  },
+  {
+   "abbr": "#rotator",
+   "title": "Rotator cuff tendinopathy",
+   "name": "Rotator cuff tendinopathy",
+   "setting": "Clinic",
+   "notes": [
+    "*** side, impingement tests ***, strength ***. Most likely rotator cuff tendinopathy given ***. Full-thickness tear considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Relative rest, avoid overhead activity",
+    "PT or home rotator cuff and scapular strengthening",
+    "Naproxen 500 mg PO BID with food for up to 2 weeks ***",
+    "Subacromial corticosteroid injection if not improving ***",
+    "Weakness on testing: MRI and orthopedic referral for possible full-thickness tear ***",
+    "Loss of active and passive ROM: shoulder x-ray, 3 views, for adhesive capsulitis or arthritis ***"
+   ]
+  },
+  {
+   "abbr": "#const",
+   "title": "Chronic constipation",
+   "name": "Chronic constipation",
+   "setting": "Clinic",
+   "notes": [
+    "*** months of ***, Bristol type ***, alarm features absent ***. Contributing meds ***."
+   ],
+   "plan": [
+    "Fiber 25 to 30 g/day, psyllium 1 tablespoon PO daily with water, titrate slowly",
+    "Polyethylene glycol 17 g PO daily in 8 oz of liquid, titrate to effect",
+    "Add senna 8.6 to 17.2 mg PO nightly or bisacodyl 5 to 10 mg PO nightly as needed ***",
+    "Toilet routine after breakfast, footstool, do not ignore the urge",
+    "Review and reduce constipating meds: opioids, anticholinergics, iron, calcium channel blockers ***",
+    "Refractory: anorectal and transit evaluation, GI referral ***"
+   ]
+  },
+  {
+   "abbr": "#constk",
+   "title": "Pediatric functional constipation",
+   "name": "Functional constipation",
+   "setting": "Clinic, pediatric",
+   "notes": [
+    "Age ***, duration ***, stools *** per week, withholding ***, encopresis ***, impaction on exam ***. Red flags absent: delayed meconium over 48 hours, onset under 1 month, failure to thrive, bilious vomiting, abnormal spine or neuro exam, ribbon stools ***."
+   ],
+   "plan": [
+    "Disimpaction if impacted: polyethylene glycol 1 to 1.5 g/kg/day PO for 3 to 6 days, max 100 g/day ***",
+    "Maintenance: polyethylene glycol 0.4 to 0.8 g/kg/day PO daily, max 17 g/day, titrate to 1 to 2 soft stools daily",
+    "Continue maintenance at least 2 months and 1 month after symptoms resolve, wean slowly",
+    "Toilet sitting 5 minutes after meals, footstool, reward chart",
+    "Fruits, vegetables, water; avoid excess milk over 16 to 24 oz/day",
+    "Follow up in *** weeks"
+   ]
+  },
+  {
+   "abbr": "#constpreg",
+   "title": "Constipation in pregnancy",
+   "name": "Constipation in pregnancy",
+   "setting": "Clinic",
+   "notes": [
+    "***w***d, *** stools per week, hemorrhoids ***, iron supplement ***."
+   ],
+   "plan": [
+    "Fiber 25 to 30 g/day, psyllium 1 tablespoon PO daily with water, fluids 8 to 10 cups/day, daily walking",
+    "Polyethylene glycol 17 g PO daily in 8 oz of liquid, safe in pregnancy",
+    "Senna 8.6 to 17.2 mg PO nightly or bisacodyl 5 to 10 mg PO nightly for short-term use if needed ***",
+    "Iron: change to every other day or a lower dose if constipating ***",
+    "Avoid mineral oil, castor oil, and phosphate enemas",
+    "Hemorrhoid care: sitz baths, witch hazel pads ***"
+   ]
+  },
+  {
+   "abbr": "#constsl",
+   "title": "Refractory or slow-transit constipation",
+   "name": "Refractory constipation",
+   "setting": "Clinic",
+   "notes": [
+    "Rome IV criteria ***. Failed: fiber ***, polyethylene glycol at *** g/day ***, stimulant ***. Alarm features absent: age 45 or older without CRC screening, bleeding, iron deficiency anemia, weight loss, family history of CRC or IBD ***."
+   ],
+   "plan": [
+    "Labs: CBC, TSH, calcium, glucose ***, celiac serology if IBS-C features ***",
+    "Colonoscopy if alarm features or due for screening ***",
+    "Medication review for constipating drugs ***",
+    "Digital rectal exam for dyssynergia: paradoxical contraction or poor push effort ***",
+    "Trial before referral: linaclotide 145 mcg PO daily 30 minutes before breakfast, or prucalopride 2 mg PO daily, 1 mg if eGFR under 30 ***",
+    "If dyssynergia suspected: anorectal manometry and balloon expulsion test, pelvic floor PT with biofeedback ***",
+    "Colon transit study after dyssynergia excluded ***",
+    "GI referral with workup results attached ***"
+   ]
+  },
+  {
+   "abbr": "#cpod",
+   "title": "Long-term opioid therapy with persistent dependence",
+   "name": "Long-term opioid therapy with persistent dependence",
+   "setting": "Clinic",
+   "notes": [
+    "*** MME/day of *** for *** years. Benefit ***, harms ***. OUD criteria *** not met. Patient goals ***."
+   ],
+   "plan": [
+    "Shared decision with patient: _continue current dose / slow taper / rotate to buprenorphine",
+    "Do not stop abruptly; taper with patient agreement unless risk clearly outweighs benefit ***",
+    "Taper plan: ***",
+    "Buprenorphine rotation plan: ***",
+    "Naloxone 4 mg nasal spray prescribed ***",
+    "Avoid or taper co-prescribed benzodiazepines ***",
+    "Nonopioid and nondrug pain treatment: ***",
+    "Treat depression, anxiety, insomnia, and sleep apnea ***",
+    "PDMP and UDS per policy, next visit ***",
+    "Prescription proposed to preceptor Dr. *** for signature"
+   ]
+  },
+  {
+   "abbr": "#bzd",
+   "title": "Long-term benzodiazepine use",
+   "name": "Long-term benzodiazepine use",
+   "setting": "Clinic",
+   "notes": [
+    "*** at diazepam equivalent *** mg/day for *** years, physiologic dependence ***, sedative use disorder *** not met. Risks ***. Patient goals ***."
+   ],
+   "plan": [
+    "No abrupt discontinuation",
+    "Shared decision: _taper now / taper later / continue with risk reduction",
+    "Taper plan: ***",
+    "Treat the underlying condition: SSRI or SNRI and CBT for anxiety, CBT-I for insomnia ***",
+    "Avoid opioid, alcohol, and other sedative co-use; naloxone if on opioids ***",
+    "Fall and driving safety counseling",
+    "Written education given",
+    "Prescription proposed to preceptor Dr. *** for signature"
+   ]
+  },
+  {
+   "abbr": "#deprx",
+   "title": "Potentially inappropriate medications",
+   "name": "Potentially inappropriate medications",
+   "setting": "Clinic",
+   "notes": [
+    "***yo on *** medications. High-risk medications: ***. Falls ***, cognition ***, CrCl ***."
+   ],
+   "plan": [
+    "Stop: ***",
+    "Taper: ***, plan ***",
+    "Switch: *** to ***",
+    "Dose reduce for kidney function: ***",
+    "Patient and caregiver agree ***, written handout given",
+    "Reassess in *** weeks"
+   ]
+  },
+  {
+   "abbr": "#wuhtn",
+   "title": "New hypertension workup",
+   "name": "Hypertension, new diagnosis",
+   "setting": "Clinic",
+   "notes": [
+    "Office BP *** and ***, home or ambulatory average ***. Secondary cause features ***."
+   ],
+   "plan": [
+    "Confirm with home BP monitoring or ambulatory monitoring before starting treatment unless BP 160/100 or higher ***",
+    "Labs: BMP with eGFR, calcium, fasting glucose or A1c, lipid panel, TSH, CBC, UA, UACR",
+    "ECG",
+    "Primary aldosteronism screen with aldosterone and renin if resistant hypertension, hypokalemia, sleep apnea, or stage 2 hypertension ***",
+    "Other secondary causes if onset under 30, sudden worsening, or target organ damage out of proportion ***",
+    "Review contributors: NSAIDs, decongestants, stimulants, oral contraceptives, alcohol, sodium, sleep apnea",
+    "10-year cardiovascular risk by PREVENT ***"
+   ]
+  },
+  {
+   "abbr": "#wurhtn",
+   "title": "Resistant hypertension workup",
+   "name": "Resistant hypertension",
+   "setting": "Clinic",
+   "notes": [
+    "BP *** on *** at maximal tolerated doses, including a diuretic ***."
+   ],
+   "plan": [
+    "Rule out pseudoresistance: proper cuff size and technique, home or ambulatory BP to exclude white coat effect, adherence check",
+    "Stop or reduce contributors: NSAIDs, decongestants, stimulants, oral contraceptives, licorice, alcohol, high sodium intake",
+    "Screen for primary aldosteronism: aldosterone and renin, can be drawn on current meds except MRAs; interpret with caution on beta blockers or clonidine",
+    "Positive screen: suppressed renin, PRA 1 ng/mL/h or less, with aldosterone 10 ng/dL or higher and ARR over 20; cutoffs vary by lab and assay ***",
+    "BMP, UACR, eGFR for kidney disease",
+    "Sleep apnea evaluation: STOP-BANG ***",
+    "Other secondary causes when suggested: renal artery stenosis, pheochromocytoma, Cushing syndrome, thyroid disease, coarctation ***",
+    "Treatment: switch to chlorthalidone *** mg PO daily, add spironolactone 25 mg PO daily if K under 4.5 and eGFR over 45 ***",
+    "Hypertension specialist or nephrology referral if not controlled ***"
+   ]
+  },
+  {
+   "abbr": "#wuca",
+   "title": "Hypercalcemia workup",
+   "name": "Hypercalcemia",
+   "setting": "Clinic",
+   "notes": [
+    "Calcium *** with albumin ***, corrected or ionized calcium ***. Symptoms ***."
+   ],
+   "plan": [
+    "Repeat calcium with albumin or ionized calcium, and check PTH at the same time",
+    "Review meds: thiazides, lithium, calcium and vitamin D supplements",
+    "PTH high or inappropriately normal: primary hyperparathyroidism likely; 24-hour urine calcium and creatinine to exclude familial hypocalciuric hypercalcemia, 25-OH vitamin D, creatinine, DXA with forearm, kidney imaging for stones",
+    "PTH low: PTHrP, 1,25-OH vitamin D, SPEP and serum free light chains, TSH, chest imaging and age-appropriate cancer screening",
+    "Hydration, hold calcium supplements and thiazides",
+    "Endocrinology referral for primary hyperparathyroidism meeting surgical criteria ***",
+    "ED if calcium 14 or higher, or symptoms such as confusion or vomiting"
+   ]
+  },
+  {
+   "abbr": "#wuobesk",
+   "title": "Pediatric obesity evaluation",
+   "name": "Obesity, pediatric",
+   "setting": "Clinic, pediatric",
+   "notes": [
+    "Age ***, BMI *** at the *** percentile, *** percent of the 95th percentile. BP *** at the *** percentile. Acanthosis ***."
+   ],
+   "plan": [
+    "History: diet and sugary drinks ***, activity ***, screen time ***, sleep and snoring ***, mental health and bullying ***, family history of diabetes and heart disease ***, eating disorder screen ***",
+    "Labs, age 10 or older with obesity: lipid panel, A1c or fasting glucose, ALT; age 2 to 9: lipid panel optional ***",
+    "BP category: ***",
+    "Screen for sleep apnea, MASLD, PCOS, depression, and orthopedic problems ***",
+    "Intensive health behavior and lifestyle treatment referral ***",
+    "Pharmacotherapy if 12 or older: ***",
+    "Bariatric surgery evaluation if 13 or older with severe obesity: ***",
+    "Family handout given"
+   ]
+  },
+  {
+   "abbr": "#wuhtnk",
+   "title": "Pediatric hypertension workup",
+   "name": "Elevated blood pressure, pediatric",
+   "setting": "Clinic, pediatric",
+   "notes": [
+    "Age ***, BP *** and ***, *** percentile, category _I / II / III."
+   ],
+   "plan": [
+    "Age 13 or older: elevated 120 to 129/under 80, stage 1 130 to 139/80 to 89, stage 2 140/90 or higher",
+    "Age 1 to 12: elevated 90th to under 95th percentile, stage 1 95th percentile or higher, stage 2 95th percentile plus 12 mm Hg or higher",
+    "Confirm with correct cuff size on 3 separate visits; ambulatory BP monitoring if persistent ***",
+    "History: sleep, snoring, stimulants, decongestants, family history ***",
+    "Labs: UA, BMP with creatinine, lipid panel; A1c and ALT if obese ***",
+    "Renal ultrasound if under 6 years or abnormal UA or kidney function",
+    "Echocardiogram when starting medicine",
+    "Lifestyle: DASH-style diet, activity, sodium reduction, weight management",
+    "Pediatric nephrology or cardiology referral if stage 2 or secondary cause suspected ***"
+   ]
+  },
+  {
+   "abbr": "#wulft",
+   "title": "Elevated liver tests workup",
+   "name": "Elevated liver enzymes",
+   "setting": "Clinic",
+   "notes": [
+    "ALT ***, AST ***, alk phos ***, bilirubin ***, pattern _hepatocellular / cholestatic / mixed. Alcohol ***, meds and supplements ***."
+   ],
+   "plan": [
+    "Repeat in 4 to 12 weeks after stopping alcohol and offending meds if mild ***",
+    "Hepatitis B surface antigen, hepatitis B core antibody, hepatitis C antibody with reflex RNA",
+    "Iron studies with transferrin saturation and ferritin",
+    "Right upper quadrant ultrasound",
+    "A1c and lipids for MASLD risk; FIB-4 ***",
+    "If no cause: ANA, anti-smooth muscle antibody, IgG, alpha-1 antitrypsin, ceruloplasmin if under 55, celiac serology, TSH, CK",
+    "Cholestatic pattern: GGT, ultrasound for ductal dilation, antimitochondrial antibody",
+    "Hepatology referral if ALT over 5 times normal, unclear cause, or advanced fibrosis ***"
+   ]
+  },
+  {
+   "abbr": "#wuplt",
+   "title": "Thrombocytopenia workup",
+   "name": "Thrombocytopenia",
+   "setting": "Clinic",
+   "notes": [
+    "Platelets *** from ***, bleeding ***, other cell lines ***."
+   ],
+   "plan": [
+    "Repeat CBC in a citrate tube and review peripheral smear for clumping",
+    "Review meds, alcohol, recent viral illness",
+    "HIV, hepatitis C, B12, folate, LFTs, TSH",
+    "Ultrasound for splenomegaly if liver disease suspected ***",
+    "Inpatient: 4Ts score ***; if intermediate or high, stop all heparin, start a non-heparin anticoagulant ***, and send HIT antibody",
+    "Schistocytes or hemolysis: PLASMIC score ***, urgent hematology for possible TTP",
+    "DIC panel: PT, PTT, fibrinogen, D-dimer ***",
+    "Platelet transfusion if under 10,000 with hypoproliferative thrombocytopenia, under 50,000 with bleeding or major nonneuraxial surgery, under 20,000 for lumbar puncture; other procedures ***",
+    "Hematology referral if under 50,000, falling, other cytopenias, or abnormal smear ***"
+   ]
+  },
+  {
+   "abbr": "#wupoly",
+   "title": "Erythrocytosis workup",
+   "name": "Erythrocytosis",
+   "setting": "Clinic",
+   "notes": [
+    "Hgb *** and Hct *** on repeat. Smoking ***, testosterone ***, sleep apnea symptoms ***, SGLT2i ***."
+   ],
+   "plan": [
+    "Repeat CBC to confirm",
+    "Erythropoietin level",
+    "JAK2 V617F if EPO low or normal, or if splenomegaly, high platelets, or thrombosis ***",
+    "Secondary causes: smoking or carboxyhemoglobin, sleep apnea, testosterone, SGLT2i, kidney or liver lesions ***",
+    "Hematology referral if EPO low or JAK2 positive"
+   ]
+  },
+  {
+   "abbr": "#wuwbc",
+   "title": "Leukocytosis workup",
+   "name": "Leukocytosis",
+   "setting": "Clinic",
+   "notes": [
+    "WBC *** with differential ***, symptoms ***."
+   ],
+   "plan": [
+    "Repeat CBC with differential and peripheral smear",
+    "Common causes: smoking, obesity, steroids, lithium, infection, inflammation, stress, asplenia ***",
+    "Hematology referral if WBC over 30,000, or over 20,000 after initial management, blasts, abnormal smear, cytopenias, splenomegaly, or lymphadenopathy ***"
+   ]
+  },
+  {
+   "abbr": "#wuhema",
+   "title": "Microscopic hematuria workup",
+   "name": "Microscopic hematuria",
+   "setting": "Clinic",
+   "notes": [
+    "Microscopic UA with *** RBC/hpf. Smoking *** pack-years, gross hematuria history ***, risk category _low / intermediate / high."
+   ],
+   "plan": [
+    "Confirm with microscopic UA, 3 or more RBC/hpf, and exclude infection, menstruation, recent exercise, or instrumentation",
+    "Creatinine, UA for protein and dysmorphic RBCs; nephrology if glomerular features",
+    "Low or negligible risk, women under 60 or men under 40, never smoker or under 10 pack-years, 3 to 10 RBC/hpf, and no other urothelial cancer risk factors: repeat UA within 6 months rather than cystoscopy or imaging; if hematuria persists, reclassify as intermediate or high risk",
+    "Intermediate risk, women 60 or older, men 40 to 59, 10 to 30 pack-years, 11 to 25 RBC/hpf, or any other urothelial cancer risk factor: cystoscopy and renal ultrasound",
+    "High risk, men 60 or older, more than 30 pack-years, over 25 RBC/hpf, or gross hematuria: cystoscopy and CT urography",
+    "Urology referral ***"
+   ]
+  },
+  {
+   "abbr": "#wuprot",
+   "title": "Proteinuria workup",
+   "name": "Proteinuria",
+   "setting": "Clinic",
+   "notes": [
+    "UACR *** or UPCR ***, eGFR ***, BP ***, A1c ***."
+   ],
+   "plan": [
+    "Confirm with 2 of 3 elevated UACR results over 3 to 6 months",
+    "Exclude transient causes: exercise, fever, UTI, heart failure",
+    "UA with microscopy for hematuria",
+    "BMP, A1c, lipid panel",
+    "If not explained by diabetes or hypertension: hepatitis B and C, HIV, SPEP with serum free light chains, ANA, complements ***",
+    "ACEi or ARB and SGLT2i if indicated ***",
+    "Nephrology if eGFR under 30, UACR over 700, UACR 300 or higher with hematuria, sustained over 20 RBC/hpf or red cell casts, sustained eGFR fall over 20 to 30 percent, or uncertain cause"
+   ]
+  },
+  {
+   "abbr": "#wuthynod",
+   "title": "Thyroid nodule workup",
+   "name": "Thyroid nodule",
+   "setting": "Clinic",
+   "notes": [
+    "Nodule *** cm, found by ***. Neck radiation ***, family history of thyroid cancer ***, compressive symptoms ***."
+   ],
+   "plan": [
+    "TSH",
+    "TSH low: radioiodine uptake scan",
+    "Thyroid ultrasound with risk category and cervical lymph node survey for all, regardless of TSH",
+    "Fine needle aspiration based on ultrasound risk category and size ***",
+    "Endocrinology or ENT referral if biopsy needed or symptoms ***"
+   ]
+  },
+  {
+   "abbr": "#wuhyperthy",
+   "title": "Hyperthyroidism workup",
+   "name": "Hyperthyroidism",
+   "setting": "Clinic",
+   "notes": [
+    "TSH ***, free T4 ***, total T3 ***. Symptoms ***, eye findings ***, recent iodine contrast, amiodarone, or pregnancy ***."
+   ],
+   "plan": [
+    "TSH receptor antibody",
+    "Radioiodine uptake scan if cause unclear and not pregnant",
+    "Propranolol 10 to 20 mg PO every 6 to 8 hours as needed for symptoms ***",
+    "Endocrinology referral for Graves disease or toxic nodule treatment ***",
+    "Recheck thyroid tests in 4 to 6 weeks if thyroiditis suspected"
+   ]
+  },
+  {
+   "abbr": "#wuwtloss",
+   "title": "Unintentional weight loss workup",
+   "name": "Unintentional weight loss",
+   "setting": "Clinic",
+   "lib": "wtloss",
+   "notes": [
+    "Loss of *** lb, *** percent, over *** months. Appetite ***, dentition ***, mood ***, functional status ***."
+   ],
+   "plan": [
+    "Significant if over 5 percent in 6 to 12 months",
+    "Labs: CBC, CMP, TSH, A1c, UA, CRP, HIV, hepatitis C",
+    "Age-appropriate cancer screening up to date ***, chest x-ray ***",
+    "Depression and cognitive screen, medication review, alcohol and substance use, food access",
+    "Further imaging only if directed by findings ***",
+    "Recheck weight in *** weeks"
+   ]
+  },
+  {
+   "abbr": "#wufatigue",
+   "title": "Fatigue workup",
+   "name": "Fatigue",
+   "setting": "Clinic",
+   "lib": "fatigue",
+   "notes": [
+    "Duration ***, sleep ***, mood ***, PHQ-9 ***, red flags ***."
+   ],
+   "plan": [
+    "Labs: CBC, CMP, TSH, A1c, ferritin; pregnancy test if applicable ***",
+    "Screen for depression, anxiety, sleep apnea, insomnia, medication side effects, alcohol",
+    "B12 if anemia, neuropathy, metformin, or bariatric surgery ***",
+    "Avoid broad testing without findings",
+    "Graded activity, sleep hygiene, follow up in *** weeks"
+   ]
+  },
+  {
+   "abbr": "#wucough",
+   "title": "Chronic cough workup",
+   "name": "Chronic cough",
+   "setting": "Clinic",
+   "lib": "cough",
+   "notes": [
+    "Cough for *** weeks, smoking ***, ACEi ***, red flags ***."
+   ],
+   "plan": [
+    "Chest x-ray",
+    "Stop ACEi if taking",
+    "Spirometry with bronchodilator; FeNO if available ***",
+    "Treat in order: upper airway cough syndrome with a first-generation antihistamine plus decongestant, or intranasal steroid, asthma, and reflux with lifestyle changes plus PPI if heartburn ***",
+    "CT chest and pulmonology if x-ray abnormal, hemoptysis, or no response to treatment"
+   ]
+  },
+  {
+   "abbr": "#wuneuro",
+   "title": "Peripheral neuropathy workup",
+   "name": "Peripheral neuropathy",
+   "setting": "Clinic",
+   "lib": "numbness",
+   "notes": [
+    "Distribution ***, duration ***, progression ***, weakness ***, alcohol ***, family history ***."
+   ],
+   "plan": [
+    "Labs: A1c or 2-hour glucose tolerance test, B12 with methylmalonic acid if borderline, SPEP with immunofixation",
+    "Also CMP, CBC, TSH ***",
+    "EMG and nerve conduction studies if asymmetric, motor-predominant, rapidly progressive, or atypical",
+    "Neurology referral if red flags ***",
+    "Foot care and fall prevention"
+   ]
+  },
+  {
+   "abbr": "#wudiarrhea",
+   "title": "Chronic diarrhea workup",
+   "name": "Chronic diarrhea",
+   "setting": "Clinic",
+   "notes": [
+    "Duration ***, stools *** per day, nocturnal ***, blood ***, weight loss ***, travel and antibiotics ***."
+   ],
+   "plan": [
+    "Labs: CBC, CMP, TSH, tissue transglutaminase IgA with total IgA",
+    "Stool: fecal calprotectin, Giardia antigen; C. difficile if risk factors",
+    "Review meds, sugar alcohols, dairy, alcohol, caffeine",
+    "Colonoscopy if alarm features, age 45 or older due for screening, or abnormal calprotectin ***",
+    "GI referral if no cause found ***"
+   ]
+  },
+  {
+   "abbr": "#wudyspep",
+   "title": "Dyspepsia workup",
+   "name": "Dyspepsia",
+   "setting": "Clinic",
+   "notes": [
+    "Age ***, alarm features ***, NSAIDs ***."
+   ],
+   "plan": [
+    "Age 60 or older: EGD",
+    "Under 60: test for H. pylori with stool antigen or urea breath test, off PPI for 2 weeks; treat if positive and confirm eradication",
+    "If H. pylori negative: PPI trial for 8 weeks",
+    "Stop NSAIDs if possible",
+    "Under 60, alarm features alone do not require EGD; consider EGD case by case for a prominent feature such as major weight loss or rapidly progressive dysphagia, or a combination of alarm features ***"
+   ]
+  },
+  {
+   "abbr": "#wuamen",
+   "title": "Secondary amenorrhea workup",
+   "name": "Secondary amenorrhea",
+   "setting": "Clinic",
+   "notes": [
+    "No menses for *** months. Weight change ***, exercise ***, stress ***, galactorrhea ***, hyperandrogenism ***, hot flashes ***."
+   ],
+   "plan": [
+    "Pregnancy test",
+    "TSH, prolactin, FSH, estradiol",
+    "Total testosterone and DHEA-S if hyperandrogenism",
+    "Pelvic ultrasound if PCOS or structural cause suspected",
+    "MRI pituitary if prolactin elevated without clear cause",
+    "Endometrial protection if prolonged anovulation"
+   ]
+  },
+  {
+   "abbr": "#wupsa",
+   "title": "Elevated PSA workup",
+   "name": "Elevated PSA",
+   "setting": "Clinic",
+   "notes": [
+    "PSA *** from ***, age ***, symptoms ***, family history ***."
+   ],
+   "plan": [
+    "Repeat PSA before further workup, usually in a few months, sooner or later based on recent catheterization, prostate procedure, or retention ***; avoid ejaculation and cycling for 48 hours before",
+    "UA to exclude infection; treat prostatitis if present",
+    "Review finasteride or dutasteride, which halve PSA",
+    "DRE ***",
+    "Urology referral if persistently elevated, for MRI and biopsy discussion"
+   ]
+  },
+  {
+   "abbr": "#wunodule",
+   "title": "Incidental lung nodule follow-up",
+   "name": "Pulmonary nodule",
+   "setting": "Clinic",
+   "notes": [
+    "Solid nodule *** mm on ***, single or multiple ***. Risk ***, smoking *** pack-years."
+   ],
+   "plan": [
+    "Under 6 mm: low risk, no routine follow-up; high risk, optional CT at 12 months",
+    "6 to 8 mm single: CT at 6 to 12 months, then consider CT at 18 to 24 months if low risk, CT at 18 to 24 months if high risk",
+    "Multiple, 6 mm or larger: CT at 3 to 6 months, then consider CT at 18 to 24 months if low risk, CT at 18 to 24 months if high risk; manage by the most suspicious nodule",
+    "Over 8 mm: CT at 3 months, PET-CT, or biopsy",
+    "Not for patients with cancer, immunosuppression, or age under 35",
+    "Pulmonology referral if over 8 mm or growing ***"
+   ]
+  },
+  {
+   "abbr": "#wuadrenal",
+   "title": "Adrenal incidentaloma workup",
+   "name": "Adrenal incidentaloma",
+   "setting": "Clinic",
+   "notes": [
+    "Size *** cm, unenhanced CT density *** HU, HTN ***, hypokalemia ***."
+   ],
+   "plan": [
+    "1 mg overnight dexamethasone suppression test for all",
+    "Plasma free metanephrines unless clearly lipid-rich on CT, 10 HU or less ***",
+    "Aldosterone and renin if hypertension or hypokalemia",
+    "Indeterminate imaging, over 10 HU or heterogeneous, or functional tumor: endocrinology and multidisciplinary review; surgery usual if 4 cm or larger and heterogeneous or over 20 HU",
+    "Homogeneous with 10 HU or less on unenhanced CT, any size: benign, no further imaging needed"
+   ]
+  },
+  {
+   "abbr": "#wulymph",
+   "title": "Lymphadenopathy workup",
+   "name": "Lymphadenopathy",
+   "setting": "Clinic",
+   "notes": [
+    "Node *** cm at ***, duration ***, tender ***, fixed ***, B symptoms ***, localized or generalized ***."
+   ],
+   "plan": [
+    "Localized with benign features: observe 3 to 4 weeks",
+    "CBC with differential; HIV, EBV, CMV, syphilis as indicated ***",
+    "Generalized: CBC, LFTs, HIV, hepatitis B and C, ANA ***",
+    "Excisional biopsy or ENT or surgery referral if over 2 cm, supraclavicular, hard or fixed, persistent over 4 to 6 weeks, or B symptoms",
+    "Avoid steroids before diagnosis"
+   ]
+  },
+  {
+   "abbr": "#wuhypok",
+   "title": "Hypokalemia workup",
+   "name": "Hypokalemia",
+   "setting": "Clinic",
+   "notes": [
+    "K *** on ***, BP ***, diuretics ***, GI losses ***."
+   ],
+   "plan": [
+    "Magnesium; replete if low",
+    "Review diuretics, laxatives, vomiting, diarrhea",
+    "Spot urine potassium and creatinine if cause unclear",
+    "Hypertension with hypokalemia: aldosterone and renin",
+    "Potassium chloride *** mEq PO daily, recheck in *** days"
+   ]
+  },
+  {
+   "abbr": "#wuosteosec",
+   "title": "Osteoporosis secondary causes",
+   "name": "Osteoporosis, secondary causes",
+   "setting": "Clinic",
+   "notes": [
+    "DXA T-score ***, fracture history ***, meds ***."
+   ],
+   "plan": [
+    "Labs: CBC, CMP with calcium and phosphorus, 25-OH vitamin D, TSH",
+    "PTH if calcium high or low-normal ***",
+    "Celiac serology if anemia or GI symptoms ***",
+    "SPEP with serum free light chains if fracture with anemia or older age ***",
+    "Men: total testosterone",
+    "24-hour urine calcium if stones or very low bone density ***",
+    "Review steroids, aromatase inhibitors, PPIs, anticonvulsants, alcohol, smoking"
+   ]
+  },
+  {
+   "abbr": "#wufttk",
+   "title": "Poor weight gain in children",
+   "name": "Poor weight gain",
+   "setting": "Clinic, pediatric",
+   "notes": [
+    "Age ***, weight *** percentile, crossed 2 major percentile lines ***, weight for length or BMI *** percentile."
+   ],
+   "plan": [
+    "Feeding history: intake, volume, formula mixing, breastfeeding, food insecurity ***",
+    "Observe a feed if infant ***",
+    "Labs only if guided by history or no improvement: CBC, CMP, UA, TSH, lead, celiac serology if eating gluten ***",
+    "Calorie plan and close weight checks every *** weeks",
+    "Admit if severe malnutrition, dehydration, or concern for neglect",
+    "Dietitian and social work referral ***"
+   ]
+  },
+  {
+   "abbr": "#vt",
+   "title": "Stable monomorphic ventricular tachycardia",
+   "name": "Monomorphic ventricular tachycardia",
+   "setting": "Clinic",
+   "notes": [
+    "Wide complex tachycardia, QRS *** ms, rate ***, hemodynamically stable. Most likely VT given ***. SVT with aberrancy considered but unlikely given ***."
+   ],
+   "plan": [
+    "Continuous telemetry, defibrillator pads on",
+    "12-lead ECG, compare with prior",
+    "K goal over 4, Mg goal over 2, BMP and Mg now",
+    "Amiodarone 150 mg IV over 10 min, then 1 mg/min x6 h, then 0.5 mg/min x18 h, or procainamide 20-50 mg/min IV until arrhythmia stops, max 17 mg/kg",
+    "Synchronized cardioversion if becomes unstable",
+    "Troponin, echo, review QT-prolonging meds",
+    "Cardiology consult"
+   ]
+  },
+  {
+   "abbr": "#asb",
+   "title": "Asymptomatic bacteriuria",
+   "name": "Asymptomatic bacteriuria",
+   "setting": "Clinic",
+   "notes": [
+    "Urine culture with *** without dysuria, frequency, fever, flank pain or systemic signs attributable to the urinary tract."
+   ],
+   "plan": [
+    "No antibiotics, not pregnant and no urologic procedure planned",
+    "No repeat urine culture",
+    "Remove or replace urinary catheter if no longer indicated",
+    "Tamsulosin 0.4 mg PO daily only if BPH symptoms ***",
+    "Treat if fever, dysuria, flank pain or sepsis develops"
+   ]
+  },
+  {
+   "abbr": "#abdpainx",
+   "title": "Acute abdominal pain, inpatient",
+   "name": "Abdominal pain, acute",
+   "setting": "Clinic",
+   "notes": [
+    "Pain is *** in the ***, onset ***. Most likely *** given ***. *** considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "CBC, CMP, lipase, lactate, UA, hCG if of childbearing potential",
+    "Imaging: *** RUQ ultrasound, CT abdomen and pelvis with contrast",
+    "ECG and troponin if upper abdominal pain with cardiac risk factors",
+    "NPO *** and IV fluids ***",
+    "Analgesia: ***",
+    "Biliary source: RUQ ultrasound, MRCP if CBD stone suspected",
+    "Pancreatitis: lipase, triglycerides, calcium",
+    "Diverticulitis: ceftriaxone 2 g IV q24h plus metronidazole 500 mg IV q8h if complicated or systemically ill",
+    "PUD: IV pantoprazole 40 mg q12h, EGD if bleeding or alarm features",
+    "Mesenteric ischemia: CT angiography, surgery consult",
+    "Surgery consult if peritonitis, obstruction or free air"
+   ]
+  },
+  {
+   "abbr": "#acidosis",
+   "title": "Acid-base disorder",
+   "name": "Acidemia",
+   "setting": "Clinic",
+   "notes": [
+    "Blood gas: pH ***, pCO2 ***, HCO3 ***. Anion gap ***, albumin-corrected ***. Delta-delta ***. Primary *** with *** compensation. Most likely due to *** given ***. *** considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Treat underlying cause: ***",
+    "Lactate, BMP, serum osm, ketones, toxic alcohol screen as indicated",
+    "Repeat blood gas in *** h"
+   ]
+  },
+  {
+   "abbr": "#anemiax",
+   "title": "Anemia, inpatient",
+   "name": "Anemia",
+   "setting": "Clinic",
+   "notes": [
+    "Hgb ***, baseline ***, MCV ***. *** signs of active bleeding, hemodynamically _stable / unstable. Most likely *** given ***. *** considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Trend CBC ***",
+    "Microcytic: iron studies, ferritin",
+    "Normocytic: reticulocyte count, iron studies, creatinine",
+    "Macrocytic: B12, folate, reticulocyte count, smear",
+    "Hemolysis suspected: LDH, haptoglobin, bilirubin, DAT, smear",
+    "Bleeding suspected: stool guaiac, type and screen, hold anticoagulants and antiplatelets",
+    "Transfuse if Hgb under 7, under 10 with acute coronary syndrome if not actively bleeding, under 8 with other cardiac disease"
+   ]
+  },
+  {
+   "abbr": "#angioedema",
+   "title": "Angioedema",
+   "name": "Angioedema",
+   "setting": "Clinic",
+   "notes": [
+    "Swelling of ***, onset ***. Airway ***, stridor ***, voice change ***. *** urticaria. Most likely *** mediated given ***. *** considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Airway assessment now, anesthesia or ENT for airway if tongue, floor of mouth or larynx involved",
+    "Stop ACE inhibitor, ARB, DPP-4 inhibitor if taking ***",
+    "Histaminergic or anaphylaxis: epinephrine 0.3-0.5 mg IM q5-15 min PRN, diphenhydramine 50 mg IV once, methylprednisolone 125 mg IV once",
+    "Bradykinin mediated: icatibant 30 mg SC once or C1 esterase inhibitor ***, antihistamines and steroids not effective",
+    "C4 level, tryptase if anaphylaxis",
+    "Observe at least *** h in monitored setting"
+   ]
+  },
+  {
+   "abbr": "#dissection",
+   "title": "Acute aortic dissection",
+   "name": "Acute aortic dissection, type ***",
+   "setting": "Clinic",
+   "notes": [
+    "CT angiography shows ***. Hemodynamically ***."
+   ],
+   "plan": [
+    "Type A: cardiothoracic surgery emergently",
+    "Type B: vascular surgery consult, medical management unless complicated",
+    "HR goal 60 to 80 and SBP 100-120 within 20 min",
+    "Esmolol 500 mcg/kg IV bolus then 50-300 mcg/kg/min, or labetalol 20 mg IV then 20-80 mg q10 min, max 300 mg",
+    "Add nicardipine 5-15 mg/h IV only after beta-blockade",
+    "Pain control with *** IV",
+    "Arterial line, ICU",
+    "Type and crossmatch"
+   ]
+  },
+  {
+   "abbr": "#appy",
+   "title": "Acute appendicitis",
+   "name": "Acute appendicitis",
+   "setting": "Clinic",
+   "notes": [
+    "Imaging shows ***. WBC ***. *** perforation or abscess."
+   ],
+   "plan": [
+    "General surgery consult for appendectomy",
+    "Ceftriaxone 2 g IV q24h plus metronidazole 500 mg IV q8h",
+    "NPO, IV fluids *** at *** mL/h",
+    "Analgesia: acetaminophen 1 g IV q6h, *** for severe pain",
+    "Ondansetron 4 mg IV q8h PRN nausea"
+   ]
+  },
+  {
+   "abbr": "#cdiff",
+   "title": "Clostridioides difficile infection",
+   "name": "C. difficile infection, *** episode",
+   "setting": "Clinic",
+   "notes": [
+    "3 or more unformed stools in 24 h, no laxatives in prior 48 h, C. diff test ***. WBC ***, Cr ***. Severity ***."
+   ],
+   "plan": [
+    "Contact precautions",
+    "Stop unnecessary antibiotics and PPI if possible",
+    "Fidaxomicin 200 mg PO BID x10 days, or vancomycin 125 mg PO QID x10 days",
+    "Fulminant: vancomycin 500 mg PO QID plus metronidazole 500 mg IV q8h, surgery consult",
+    "Recurrence: fidaxomicin, standard or extended-pulsed; FMT referral for multiple recurrences"
+   ]
+  },
+  {
+   "abbr": "#chb",
+   "title": "Complete heart block",
+   "name": "Complete heart block",
+   "setting": "Clinic",
+   "notes": [
+    "ECG shows AV dissociation with ventricular rate ***, QRS ***. Hemodynamically ***. Most likely *** given ***. *** considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Transcutaneous pacing pads on, telemetry",
+    "Unstable: atropine 1 mg IV q3-5 min, max 3 mg, then transcutaneous pacing",
+    "If hypotensive: dopamine 5-20 mcg/kg/min IV or epinephrine 2-10 mcg/min IV",
+    "Hold AV nodal blockers",
+    "Beta-blocker toxicity: glucagon ***; CCB toxicity: calcium ***; digoxin toxicity: digoxin immune fab ***",
+    "Troponin, BMP, Mg, TSH, Lyme serology if endemic exposure",
+    "Cardiology and EP consult for temporary or permanent pacing"
+   ]
+  },
+  {
+   "abbr": "#cholangitis",
+   "title": "Acute cholangitis",
+   "name": "Acute cholangitis",
+   "setting": "Clinic",
+   "notes": [
+    "Fever ***, RUQ pain ***, jaundice ***, WBC ***, bilirubin ***, CBD *** mm on imaging. Severity grade ***."
+   ],
+   "plan": [
+    "Blood cultures x2 before antibiotics",
+    "Piperacillin-tazobactam 4.5 g IV q6h, or ceftriaxone 2 g IV q24h plus metronidazole 500 mg IV q8h",
+    "IV fluids ***",
+    "GI consult for ERCP, urgent if septic, within 24-48 h otherwise",
+    "NPO for procedure, trend LFTs"
+   ]
+  },
+  {
+   "abbr": "#choledocho",
+   "title": "Choledocholithiasis",
+   "name": "Choledocholithiasis",
+   "setting": "Clinic",
+   "notes": [
+    "Bilirubin ***, ALP ***, CBD *** mm, stone *** on imaging. Risk of CBD stone ***."
+   ],
+   "plan": [
+    "MRCP or EUS if intermediate risk, ERCP if high risk",
+    "GI consult",
+    "NPO for procedure, IV fluids ***",
+    "Analgesia: ***",
+    "Daily LFTs",
+    "General surgery for cholecystectomy during this admission"
+   ]
+  },
+  {
+   "abbr": "#cirrhosisx",
+   "title": "Decompensated cirrhosis",
+   "name": "Cirrhosis, ***",
+   "setting": "Clinic",
+   "notes": [
+    "Etiology ***. MELD-Na ***, Child-Pugh ***."
+   ],
+   "plan": [
+    "Etiology workup if unknown: hepatitis panel, ferritin and iron studies, ANA, ASMA, AMA, ceruloplasmin if age 3 to 55, A1AT, alcohol history, MASLD risk factors",
+    "Ascites: 2 g sodium diet, spironolactone 100 mg PO daily plus furosemide 40 mg PO daily, diagnostic paracentesis on admission",
+    "SBP prophylaxis if prior SBP or GI bleed: ceftriaxone 1 g IV daily during bleed, ciprofloxacin 500 mg PO daily for secondary prophylaxis",
+    "Varices: carvedilol 6.25 mg PO daily or propranolol 20 mg PO BID if no bleed, EGD screening if not done",
+    "Hepatic encephalopathy: lactulose titrated to 2-3 soft BMs daily",
+    "Coagulopathy and thrombocytopenia: monitor for bleeding, no routine correction",
+    "Hepatorenal: hold diuretics and nephrotoxins, albumin 1 g/kg IV daily x2 days, max 100 g/day, nephrology",
+    "VTE prophylaxis unless active bleeding",
+    "Avoid NSAIDs, limit acetaminophen to 2 g/day"
+   ]
+  },
+  {
+   "abbr": "#covidx",
+   "title": "COVID-19, inpatient",
+   "name": "COVID-19",
+   "setting": "Clinic",
+   "notes": [
+    "Positive test ***, symptom onset ***. O2 requirement ***. CXR ***."
+   ],
+   "plan": [
+    "No O2 and high risk of progression: remdesivir 200 mg IV day 1 then 100 mg IV daily x4 days",
+    "On conventional O2: dexamethasone 6 mg PO or IV daily up to 10 days plus remdesivir as above",
+    "Rising O2 need or high-flow or NIV: add baricitinib 4 mg PO daily, renally adjusted, or tocilizumab 8 mg/kg IV once, max 800 mg",
+    "Enoxaparin 40 mg SC daily for VTE prophylaxis",
+    "Isolation with N95 respirator, gown, gloves, and eye protection per *** local",
+    "Proning if hypoxemic and able"
+   ]
+  },
+  {
+   "abbr": "#stroke",
+   "title": "Acute ischemic stroke",
+   "name": "Acute ischemic stroke",
+   "setting": "Clinic",
+   "notes": [
+    "Deficits ***. LKW ***. NIHSS ***. CT ***, CTA ***, MRI ***. Thrombolysis *** given at ***. Thrombectomy ***."
+   ],
+   "plan": [
+    "Neurology consult",
+    "After thrombolysis: BP under 180/105 x24 h, neuro checks per protocol, no antithrombotics x24 h",
+    "No thrombolysis: permissive HTN to 220/120 x48-72 h, treat above with labetalol 10-20 mg IV or nicardipine 5-15 mg/h IV",
+    "Aspirin 325 mg PO once then 81 mg PO daily, or minor stroke NIHSS 3 or less, or NIHSS 5 or less with presumed atherosclerotic cause within 72 h: aspirin 81 mg plus clopidogrel 300 mg load then 75 mg PO daily x21 days",
+    "Atorvastatin 80 mg PO daily",
+    "Glucose 140-180, euthermia, euvolemia with NS",
+    "NPO until swallow screen",
+    "Telemetry, echo, lipid panel, A1c",
+    "PT, OT, SLP",
+    "VTE prophylaxis"
+   ]
+  },
+  {
+   "abbr": "#debility",
+   "title": "Debility",
+   "name": "Debility",
+   "setting": "Clinic",
+   "notes": [
+    "Baseline function ***, current mobility ***."
+   ],
+   "plan": [
+    "PT and OT evaluation, recommendations ***",
+    "Fall precautions",
+    "Out of bed to chair for meals, ambulate *** times daily",
+    "VTE prophylaxis with ***",
+    "Dispo per therapy recommendations: ***"
+   ]
+  },
+  {
+   "abbr": "#divertx",
+   "title": "Acute diverticulitis, inpatient",
+   "name": "Acute diverticulitis, ***",
+   "setting": "Clinic",
+   "notes": [
+    "CT shows ***. *** abscess, perforation or obstruction. WBC ***."
+   ],
+   "plan": [
+    "Ceftriaxone 2 g IV q24h plus metronidazole 500 mg IV q8h, or piperacillin-tazobactam 4.5 g IV q6h",
+    "Abscess over 3 cm: IR drainage",
+    "Clear liquids, advance as tolerated",
+    "IV fluids ***, analgesia ***, ondansetron 4 mg IV q8h PRN",
+    "Surgery consult if perforation, obstruction or failed medical therapy",
+    "Colonoscopy in 6-8 weeks if none in prior year"
+   ]
+  },
+  {
+   "abbr": "#dvt",
+   "title": "Acute deep vein thrombosis",
+   "name": "Acute DVT, *** leg, *** proximal",
+   "setting": "Clinic",
+   "notes": [
+    "Ultrasound shows ***. *** provoked by ***. Bleeding risk ***."
+   ],
+   "plan": [
+    "Apixaban 10 mg PO BID x7 days then 5 mg PO BID, or rivaroxaban 15 mg PO BID with food x21 days then 20 mg PO daily",
+    "Enoxaparin 1 mg/kg SC q12h bridged to warfarin goal INR 2-3 if DOAC unsuitable: severe CKD or APS",
+    "Duration: 3 months if provoked, consider extended if unprovoked",
+    "Isolated distal DVT: anticoagulate or repeat ultrasound in 2 weeks ***",
+    "Age-appropriate cancer screening",
+    "Check insurance coverage for DOAC before discharge"
+   ]
+  },
+  {
+   "abbr": "#dysphagia",
+   "title": "Dysphagia",
+   "name": "Dysphagia",
+   "setting": "Clinic",
+   "notes": [
+    "SLP evaluation ***, aspiration risk ***."
+   ],
+   "plan": [
+    "Diet: *** solids with *** liquids per SLP",
+    "Aspiration precautions, upright for meals and 30 min after",
+    "Review med forms, crush or liquid as able",
+    "Nutrition consult"
+   ]
+  },
+  {
+   "abbr": "#esrd",
+   "title": "End-stage kidney disease on dialysis",
+   "name": "End-stage kidney disease on ***",
+   "setting": "Clinic",
+   "notes": [
+    "Dialysis days ***, access ***, dry weight ***, last session ***."
+   ],
+   "plan": [
+    "Nephrology consult for inpatient dialysis",
+    "No BP checks, IVs or labs in access arm",
+    "Renally dose medications, avoid NSAIDs, group II gadolinium agent only if contrast MRI needed",
+    "Phosphate binder ***, ESA ***",
+    "Fluid restriction *** mL/day, renal diet",
+    "K and volume status daily"
+   ]
+  },
+  {
+   "abbr": "#fever",
+   "title": "Fever, unclear source",
+   "name": "Fever",
+   "setting": "Clinic",
+   "notes": [
+    "Tmax ***. Lines and devices ***. Most likely *** given ***. *** considered but unlikely given ***."
+   ],
+   "plan": [
+    "Blood cultures x2 before antibiotics",
+    "UA with culture, CXR, CBC with differential",
+    "Examine lines, wounds, skin, joints",
+    "C. diff testing if diarrhea",
+    "Duplex ultrasound if leg symptoms, CTPA if PE suspected",
+    "Review drugs for drug fever, recent transfusion",
+    "Empiric antibiotics if septic: ***",
+    "Acetaminophen 650 mg PO q6h PRN fever"
+   ]
+  },
+  {
+   "abbr": "#hepenceph",
+   "title": "Hepatic encephalopathy",
+   "name": "Hepatic encephalopathy, grade ***",
+   "setting": "Clinic",
+   "notes": [
+    "Confusion ***, asterixis ***. Precipitant ***."
+   ],
+   "plan": [
+    "Lactulose 20-30 g PO q1-2h until BM, then titrate to 2-3 soft BMs daily",
+    "Rifaximin 550 mg PO BID",
+    "Precipitant search: infection workup, diagnostic paracentesis, GI bleed, electrolytes, sedatives, constipation",
+    "Aspiration and fall precautions",
+    "Avoid benzodiazepines and opioids",
+    "Daily BMP"
+   ]
+  },
+  {
+   "abbr": "#hiv",
+   "title": "HIV",
+   "name": "HIV",
+   "setting": "Clinic",
+   "notes": [
+    "CD4 *** on ***, viral load *** on ***. ART: ***."
+   ],
+   "plan": [
+    "Continue ART, check interactions with new meds",
+    "PJP prophylaxis if CD4 under 200: TMP-SMX DS 1 tab PO daily",
+    "Toxoplasma prophylaxis if CD4 under 100 and IgG positive: TMP-SMX DS 1 tab PO daily",
+    "MAC prophylaxis only if CD4 under 50 and not starting ART: azithromycin 1200 mg PO weekly",
+    "ID or HIV clinic follow-up ***"
+   ]
+  },
+  {
+   "abbr": "#htnx",
+   "title": "Asymptomatic severe hypertension, inpatient",
+   "name": "Severe hypertension without end-organ damage",
+   "setting": "Clinic",
+   "notes": [
+    "BP ***. No chest pain, dyspnea, neuro deficits, AKI or encephalopathy."
+   ],
+   "plan": [
+    "Recheck after rest, confirm cuff size",
+    "Treat pain, anxiety, urinary retention, withdrawal ***",
+    "Resume or intensify oral regimen: ***",
+    "Avoid IV PRN antihypertensives",
+    "Lower gradually over hours to days"
+   ]
+  },
+  {
+   "abbr": "#hxstroke",
+   "title": "History of stroke",
+   "name": "History of ischemic stroke",
+   "setting": "Clinic",
+   "notes": [
+    "Stroke on ***, residual deficits ***."
+   ],
+   "plan": [
+    "Continue _antiplatelet / anticoagulant",
+    "Continue atorvastatin *** mg PO daily",
+    "Aspiration and fall precautions",
+    "PT and OT if new decline"
+   ]
+  },
+  {
+   "abbr": "#hypercax",
+   "title": "Hypercalcemia, inpatient",
+   "name": "Hypercalcemia",
+   "setting": "Clinic",
+   "notes": [
+    "Corrected calcium ***, ionized ***. Symptoms ***. Most likely *** given ***. *** considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Corrected Ca = measured Ca + 0.8 x (4 - albumin)",
+    "NS 1-2 L bolus then 200-300 mL/h to UOP 100-150 mL/h, adjust for HF or CKD",
+    "Calcitonin 4 units/kg SC or IM q12h x48 h if Ca over 14 or symptomatic",
+    "Zoledronic acid 4 mg IV over at least 15 minutes once, no dose adjustment if serum creatinine under 4.5",
+    "Stop calcium, vitamin D, thiazides, lithium",
+    "PTH, then PTHrP, 25-OH and 1,25-OH vitamin D, SPEP if PTH suppressed",
+    "Daily Ca, BMP"
+   ]
+  },
+  {
+   "abbr": "#hypogly",
+   "title": "Hypoglycemia, inpatient",
+   "name": "Hypoglycemia",
+   "setting": "Clinic",
+   "notes": [
+    "Glucose *** at ***, symptomatic ***. Most likely due to *** given ***. *** considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Able to eat: 15-20 g oral glucose, recheck in 15 min",
+    "Unable to eat: dextrose 50 percent 25 g IV, or glucagon 1 mg IM if no IV access",
+    "Dextrose 10 percent at *** mL/h if recurrent or sulfonylurea related",
+    "Reduce or hold insulin and sulfonylurea ***",
+    "If no clear cause: with glucose under 55 draw insulin, C-peptide, proinsulin, beta-hydroxybutyrate, sulfonylurea screen, cortisol",
+    "Fingersticks q*** h"
+   ]
+  },
+  {
+   "abbr": "#hypok",
+   "title": "Hypokalemia",
+   "name": "Hypokalemia",
+   "setting": "Clinic",
+   "notes": [
+    "K ***, Mg ***, Cr ***. Most likely due to ***. *** considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "KCl 40 mEq PO q4h x*** doses, or 10 mEq/h IV peripheral if unable to take PO",
+    "Check and replete Mg",
+    "Telemetry if K under 3 or cardiac disease",
+    "Recheck K ***"
+   ]
+  },
+  {
+   "abbr": "#hypomg",
+   "title": "Hypomagnesemia",
+   "name": "Hypomagnesemia",
+   "setting": "Clinic",
+   "notes": [
+    "Mg ***, Cr ***."
+   ],
+   "plan": [
+    "Magnesium sulfate 2 g IV over 1-2 h, reduce dose if CrCl under 30",
+    "Recheck Mg ***",
+    "Review PPI, diuretics, alcohol use"
+   ]
+  },
+  {
+   "abbr": "#myxedema",
+   "title": "Myxedema coma",
+   "name": "Myxedema coma",
+   "setting": "Clinic",
+   "notes": [
+    "Mental status ***, temp ***, HR ***, BP ***, Na ***. TSH ***, free T4 ***."
+   ],
+   "plan": [
+    "ICU",
+    "Random cortisol before steroids, then hydrocortisone 100 mg IV q8h until adrenal insufficiency excluded",
+    "Levothyroxine 200-400 mcg IV once, lower end if older or cardiac disease, then 50-100 mcg IV daily",
+    "Liothyronine 5-20 mcg IV once then 2.5-10 mcg IV q8h, lower dose if older or cardiac disease",
+    "Passive rewarming",
+    "Fluids and pressors as needed",
+    "Hyponatremia: fluid restriction, hypertonic saline only if severe symptoms",
+    "Treat precipitant: ***",
+    "Endocrinology consult"
+   ]
+  },
+  {
+   "abbr": "#meningitis",
+   "title": "Bacterial meningitis, suspected",
+   "name": "Bacterial meningitis, suspected",
+   "setting": "Clinic",
+   "notes": [
+    "Fever ***, headache ***, neck stiffness ***, altered mental status ***. CT head *** if indicated before LP."
+   ],
+   "plan": [
+    "Blood cultures x2 then antibiotics immediately, do not delay for LP or CT",
+    "Dexamethasone 0.15 mg/kg IV q6h x4 days, first dose before or with antibiotics, stop if not pneumococcal",
+    "Vancomycin IV per pharmacy, goal AUC 400-600, plus ceftriaxone 2 g IV q12h",
+    "Age over 50 or immunocompromised: add ampicillin 2 g IV q4h",
+    "Post-neurosurgery or shunt: vancomycin plus cefepime 2 g IV q8h or meropenem 2 g IV q8h",
+    "HSV possible: acyclovir 10 mg/kg IV q8h, CSF HSV PCR",
+    "LP: opening pressure, cell count, glucose, protein, Gram stain, culture, meningitis PCR panel",
+    "Droplet precautions until N. meningitidis excluded",
+    "MRI if focal deficits"
+   ]
+  },
+  {
+   "abbr": "#jaundice",
+   "title": "Jaundice, cholestatic or unclear",
+   "name": "Jaundice",
+   "setting": "Clinic",
+   "notes": [
+    "Bilirubin ***, direct ***, ALP ***, AST ***, ALT ***, INR ***. Pattern ***. Most likely *** given ***. *** considered but unlikely given ***."
+   ],
+   "plan": [
+    "RUQ ultrasound for biliary dilation",
+    "Painless jaundice with dilation or weight loss: CT pancreas protocol, CA 19-9",
+    "MRCP or EUS if dilation without clear cause",
+    "Hepatitis A IgM, HBsAg, HBcAb IgM, HCV Ab, HEV if indicated",
+    "AMA, ANA, ASMA, IgG",
+    "Medication review, hold cholestatic drugs ***",
+    "Hemolysis labs if indirect predominant",
+    "hCG and bile acids if pregnant",
+    "Cholangitis: blood cultures and antibiotics"
+   ]
+  },
+  {
+   "abbr": "#pe",
+   "title": "Acute pulmonary embolism",
+   "name": "Acute pulmonary embolism, *** risk",
+   "setting": "Clinic",
+   "notes": [
+    "CTPA shows ***. BP ***, HR ***, SpO2 ***. sPESI ***. RV strain ***, troponin ***, BNP ***."
+   ],
+   "plan": [
+    "Low risk: apixaban 10 mg PO BID x7 days then 5 mg PO BID, consider early discharge",
+    "Intermediate risk: enoxaparin 1 mg/kg SC q12h, or heparin infusion per protocol if advanced therapy may be needed or CrCl under 30, telemetry, echo, transition to DOAC when stable",
+    "High risk, SBP under 90 for 15 min: systemic thrombolysis or catheter therapy, PE response team, ICU",
+    "Leg duplex if proximal clot burden matters for plan",
+    "Duration: 3 to 6 months if major transient provoking factor, extended if no major reversible risk factor or persistent risk factor",
+    "Age-appropriate cancer screening"
+   ]
+  },
+  {
+   "abbr": "#pidx",
+   "title": "Pelvic inflammatory disease, inpatient",
+   "name": "Pelvic inflammatory disease",
+   "setting": "Clinic",
+   "notes": [
+    "Cervical motion, uterine or adnexal tenderness ***. Fever ***. Pregnancy test ***. TOA ***."
+   ],
+   "plan": [
+    "Ceftriaxone 1 g IV q24h plus doxycycline 100 mg PO or IV q12h plus metronidazole 500 mg PO or IV q12h",
+    "Alternative: cefoxitin 2 g IV q6h plus doxycycline 100 mg PO or IV q12h",
+    "Severe beta-lactam allergy: clindamycin 900 mg IV q8h plus gentamicin 5 mg/kg IV q24h",
+    "Transition to oral doxycycline plus metronidazole after 24-48 h of improvement, 14 days total",
+    "Pelvic ultrasound for TOA",
+    "GC, chlamydia, trichomonas, HIV, syphilis testing",
+    "Partner treatment, abstain until both treated"
+   ]
+  },
+  {
+   "abbr": "#rhabdo",
+   "title": "Rhabdomyolysis",
+   "name": "Rhabdomyolysis",
+   "setting": "Clinic",
+   "notes": [
+    "CK ***, Cr ***, K ***. Cause ***."
+   ],
+   "plan": [
+    "IV crystalloid to UOP 200-300 mL/h, adjust for volume status",
+    "Daily CK, BMP, Ca, phos",
+    "Stop IVF when CK under 5000 and falling",
+    "Avoid bicarbonate and mannitol",
+    "Hold statins and nephrotoxins",
+    "Treat hyperkalemia, avoid treating asymptomatic hypocalcemia",
+    "Compartment checks if crush or limb pain"
+   ]
+  },
+  {
+   "abbr": "#seizurenew",
+   "title": "First seizure",
+   "name": "First seizure",
+   "setting": "Clinic",
+   "notes": [
+    "*** seizure lasting ***, witnessed ***, postictal ***. Back to baseline ***. Provoked ***. Most likely *** given ***. *** considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Glucose, CMP, Mg, Ca, CBC, UDS, ethanol level, hCG",
+    "CT head ***, MRI brain with epilepsy protocol",
+    "EEG, urgent if not back to baseline",
+    "LP if fever or meningismus",
+    "Seizure precautions, lorazepam 0.1 mg/kg IV, max 4 mg per dose, PRN seizure over 5 min, may repeat once",
+    "Antiseizure medication generally not started after one unprovoked seizure, neurology input ***",
+    "Driving restriction counseling per state law *** local"
+   ]
+  },
+  {
+   "abbr": "#epilepsy",
+   "title": "Chronic seizure disorder",
+   "name": "Epilepsy",
+   "setting": "Clinic",
+   "notes": [
+    "Seizure type ***, last seizure ***."
+   ],
+   "plan": [
+    "Continue *** mg PO *** without interruption",
+    "Seizure precautions",
+    "Lorazepam 0.1 mg/kg IV, max 4 mg per dose, PRN seizure over 5 min, may repeat once",
+    "Level of *** if applicable"
+   ]
+  },
+  {
+   "abbr": "#sicklecell",
+   "title": "Sickle cell pain crisis",
+   "name": "Sickle cell disease with vaso-occlusive crisis",
+   "setting": "Clinic",
+   "notes": [
+    "Pain ***, trigger ***. Hgb ***, baseline ***, retic ***. Acute chest syndrome ***."
+   ],
+   "plan": [
+    "Opioid within 60 min of arrival, then scheduled dosing or PCA: ***",
+    "Continue home long-acting analgesic ***",
+    "Judicious IV fluids only if hypovolemic or unable to drink",
+    "Incentive spirometry q2h while awake",
+    "CBC and retic daily",
+    "Transfuse if symptomatic anemia or Hgb drop 2 g/dL or more below baseline; avoid Hgb over 10",
+    "Continue hydroxyurea and folic acid 1 mg PO daily",
+    "Acute chest syndrome if new infiltrate with fever or respiratory symptoms",
+    "VTE prophylaxis"
+   ]
+  },
+  {
+   "abbr": "#tia",
+   "title": "Transient ischemic attack",
+   "name": "Transient ischemic attack",
+   "setting": "Clinic",
+   "notes": [
+    "Symptoms ***, duration ***, resolved. ABCD2 ***. MRI *** infarct."
+   ],
+   "plan": [
+    "MRI brain, CTA or carotid duplex",
+    "Telemetry, then outpatient rhythm monitor if no cause found",
+    "ABCD2 4 or more: aspirin 81 mg plus clopidogrel 300-600 mg load then 75 mg PO daily x21 days, then single antiplatelet",
+    "Otherwise aspirin 81 mg PO daily",
+    "Atorvastatin 80 mg PO daily",
+    "Lipid panel, A1c, echo",
+    "BP goal under 130/80 at discharge"
+   ]
+  },
+  {
+   "abbr": "#weakness",
+   "title": "Generalized weakness",
+   "name": "Weakness",
+   "setting": "Clinic",
+   "notes": [
+    "True weakness vs fatigue ***, pattern ***. Most likely *** given ***. *** considered but unlikely given ***."
+   ],
+   "plan": [
+    "Neurologic: CT head, MRI brain or spine if focal findings",
+    "Muscular: CK, TSH, ESR, CRP",
+    "Metabolic: CMP, Mg, phos, glucose, A1c",
+    "Infectious: UA, CXR, blood cultures if febrile",
+    "Medication review",
+    "PT and OT"
+   ]
+  },
+  {
+   "abbr": "#fttx",
+   "title": "Failure to thrive, inpatient",
+   "name": "Failure to thrive",
+   "setting": "Clinic",
+   "notes": [
+    "*** month old with weight for length at the *** percentile, z score ***, down *** major percentiles. Most likely inadequate intake given ***. Malabsorption, increased needs, and anatomic causes considered but unlikely given ***, will ***.",
+    "Catch-up calories: RDA for weight-age *** kcal/kg/day x ideal weight for length *** kg / actual weight *** kg = *** kcal/kg/day.",
+    "Current intake: *** oz/day x *** kcal/oz = *** kcal/day, or *** kcal/kg/day.",
+    "Goal intake: *** kcal/kg/day x *** kg = *** kcal/day, or *** oz/day, or *** mL every *** hours."
+   ],
+   "plan": [
+    "Feeding regimen *** kcal/kg/day: *** mL every *** hours of *** kcal/oz feed",
+    "Calorie count and strict intake and output",
+    "Daily weight on the same scale, goal gain *** g/day",
+    "Observe feeding with caregiver",
+    "Dietitian consult",
+    "Social work consult for feeding environment and food security ***",
+    "Labs only as guided by history and exam: CBC, CMP, UA ***",
+    "Weight check *** days after discharge"
+   ]
+  },
+  {
+   "abbr": "#abdpain",
+   "title": "Acute abdominal pain",
+   "name": "Acute abdominal pain",
+   "setting": "Clinic",
+   "lib": "abdpain",
+   "notes": [
+    "*** pain in the *** for ***, with ***. Exam ***. Labs ***, imaging ***. Most likely ***, given ***. *** considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Lipase, CBC, CMP, UA, pregnancy test ***",
+    "Imaging: *** RUQ ultrasound for biliary source, CT abdomen and pelvis with IV contrast for lower or diffuse pain, CTA for suspected mesenteric ischemia",
+    "Lactate if ischemia or sepsis is suspected ***",
+    "ECG and troponin if upper abdominal pain with cardiac risk ***",
+    "NPO ***, IV fluids *** at *** mL/h",
+    "Analgesia: ***",
+    "Antiemetic: ***",
+    "Antibiotics if cholangitis, cholecystitis, or complicated diverticulitis: ceftriaxone 2 g IV daily plus metronidazole 500 mg IV every 8 hours, or piperacillin-tazobactam 4.5 g IV every 6 hours ***",
+    "Surgery or GI consult: ***"
+   ]
+  },
+  {
+   "abbr": "#ahrf",
+   "title": "Acute hypoxic respiratory failure",
+   "name": "Acute hypoxic respiratory failure",
+   "setting": "Clinic",
+   "notes": [
+    "SpO2 *** percent on room air, now *** percent on *** L by ***. Most likely ***, given ***. *** considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Titrate oxygen to SpO2 92 to 96 percent, or 88 to 92 percent if COPD or hypercapnia risk",
+    "ABG or VBG ***",
+    "Chest x-ray ***, BNP ***, troponin ***, procalcitonin ***",
+    "D-dimer if low or intermediate pretest probability for PE, CT pulmonary angiogram if high pretest probability or D-dimer above age-adjusted cutoff ***",
+    "Bronchodilators: ***",
+    "Diuresis: ***",
+    "Antibiotics: ***",
+    "Swallow evaluation if aspiration risk ***",
+    "Incentive spirometry, ambulate, head of bed elevated",
+    "Escalate to high-flow nasal cannula or BiPAP and notify ICU if work of breathing or oxygen needs rise"
+   ]
+  },
+  {
+   "abbr": "#nstemi",
+   "title": "NSTEMI",
+   "name": "Non-ST elevation MI",
+   "setting": "Clinic",
+   "notes": [
+    "*** NSTEMI, hs-troponin *** to ***, ECG ***, TIMI ***, GRACE ***. No features needing emergent catheterization: hemodynamic instability, refractory angina, acute heart failure, ventricular arrhythmia, ST elevation ***."
+   ],
+   "plan": [
+    "Aspirin 325 mg PO chewed once, then 81 mg PO daily",
+    "P2Y12 inhibitor: ticagrelor 180 mg PO once, then 90 mg PO BID, or clopidogrel 600 mg PO once, then 75 mg PO daily, timing per cardiology ***",
+    "Heparin infusion per ACS protocol *** local",
+    "Atorvastatin 80 mg PO daily",
+    "Metoprolol tartrate 12.5 to 25 mg PO BID, hold for HR under 60, SBP under 100, or signs of heart failure",
+    "Nitroglycerin 0.4 mg SL every 5 minutes as needed for chest pain, up to 3 doses, avoid with PDE5 inhibitor use or RV infarct",
+    "Oxygen only if SpO2 under 90 percent",
+    "Trend hs-troponin to peak, repeat ECG with any recurrent pain",
+    "Telemetry, TTE, lipids, A1c",
+    "ACEi or ARB once stable if EF under 40 percent, diabetes, hypertension, or CKD ***",
+    "Cardiology consulted, invasive strategy within *** hours",
+    "Any STEMI or emergent criteria: activate the cath lab"
+   ]
+  },
+  {
+   "abbr": "#nsvt",
+   "title": "NSVT and QTc prolongation",
+   "name": "Nonsustained ventricular tachycardia",
+   "setting": "Clinic",
+   "notes": [
+    "#QTc prolongation",
+    "*** beats of NSVT at *** on telemetry, symptoms ***. ECG after the event: QTc *** ms, ***. Likely ***, given ***."
+   ],
+   "plan": [
+    "Repeat 12-lead ECG now and with each change in QT-prolonging drugs",
+    "BMP, Mg, phosphate, troponin",
+    "Keep K 4 or higher and Mg 2 or higher",
+    "MAR reviewed for QT-prolonging drugs and renal dosing: ***",
+    "Hold QT-prolonging drugs if QTc over 500 ms or rise over 60 ms from baseline",
+    "TTE if no EF in *** months",
+    "Beta blocker *** if structural heart disease and BP allows",
+    "Continue telemetry",
+    "Cardiology or EP consult if sustained VT, syncope, reduced EF, or recurrent runs ***"
+   ]
+  },
+  {
+   "abbr": "#panc",
+   "title": "Acute pancreatitis",
+   "name": "Acute pancreatitis",
+   "setting": "Clinic",
+   "notes": [
+    "Lipase *** times ULN, pain ***, imaging ***. BISAP ***, SIRS ***, organ failure ***. Most likely *** cause, given ***. *** considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Lactated Ringer's 10 mL/kg IV bolus if hypovolemic, then 1.5 mL/kg/hour, reassess volume, UOP, BUN, and Hct at 12 to 24 hours",
+    "Low-fat oral diet as tolerated, start within 24 hours if pain and nausea allow",
+    "Acetaminophen 1000 mg PO or IV every 8 hours, hydromorphone 0.2 to 0.5 mg IV every 3 hours as needed for severe pain",
+    "Ondansetron 4 mg IV every 6 hours as needed for nausea",
+    "No prophylactic antibiotics, treat only suspected infected necrosis or another infection",
+    "Cause: RUQ ultrasound, triglycerides, calcium, alcohol history, medication review ***",
+    "CT with contrast only if diagnosis unclear or no improvement at 48 to 72 hours",
+    "Gallstone cause: surgery consult for cholecystectomy this admission if mild, ERCP only for cholangitis or ongoing obstruction ***",
+    "Alcohol cause: CIWA monitoring, thiamine 100 mg PO daily, cessation counseling ***"
+   ]
+  },
+  {
+   "abbr": "#pericard",
+   "title": "Acute pericarditis",
+   "name": "Acute pericarditis",
+   "setting": "Clinic",
+   "notes": [
+    "Meets *** of 4 criteria: pleuritic chest pain relieved by leaning forward ***, friction rub ***, widespread ST elevation or PR depression ***, new or worsening effusion ***. CRP ***, troponin ***. Most likely _viral / idiopathic, given ***. *** considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Ibuprofen 600 to 800 mg PO TID for 1 to 2 weeks, then taper over 2 to 4 weeks, with omeprazole 20 mg PO daily",
+    "Colchicine 0.5 mg PO BID, or 0.5 mg PO daily if under 70 kg, for 3 months",
+    "Prednisone 0.2 to 0.5 mg/kg PO daily only if NSAIDs contraindicated or failed, slow taper ***",
+    "TTE for effusion",
+    "Troponin elevated: treat as myopericarditis, avoid high-dose NSAIDs, cardiology input ***",
+    "Admit if fever over 38 C, large effusion, tamponade, immunosuppression, anticoagulation, trauma, or no response to NSAIDs ***",
+    "ANA, HIV, TB testing, or BUN only if history suggests ***",
+    "No strenuous exercise for at least 1 month, then individualized once symptoms resolve and CRP normalizes",
+    "Recheck CRP in 1 to 2 weeks"
+   ]
+  },
+  {
+   "abbr": "#htnemerg",
+   "title": "Hypertensive emergency",
+   "name": "Hypertensive emergency",
+   "setting": "Clinic",
+   "notes": [
+    "BP ***/*** with acute end-organ injury: ***. Evidence: ***.",
+    "Special situations, keep the one that applies:"
+   ],
+   "plan": [
+    "ICU or stepdown, arterial line ***",
+    "Lower MAP by no more than 25 percent in the first hour, then to 160/100 over the next 2 to 6 hours, then to normal over 24 to 48 hours, unless a special situation below applies",
+    "Nicardipine 5 mg/hour IV, increase by 2.5 mg/hour every 5 to 15 minutes, max 15 mg/hour, or labetalol or clevidipine per protocol *** local",
+    "BMP, CBC, troponin, UA, ECG, CXR, head CT if neurologic symptoms",
+    "Ischemic stroke: treat only if over 220/120 without thrombolysis, under 185/110 before and under 180/105 for 24 hours after thrombolysis",
+    "Intracerebral hemorrhage: SBP goal 140, avoid under 130, nicardipine or labetalol",
+    "Aortic dissection: SBP under 120, or lowest BP that maintains perfusion, and HR 60 to 80, esmolol or labetalol first, then add nicardipine or nitroprusside, no hydralazine",
+    "Acute pulmonary edema: nitroglycerin 5 to 10 mcg/minute IV titrated to effect, or nitroprusside, plus loop diuretic if volume overloaded",
+    "ACS: nitroglycerin IV, beta blocker if no heart failure",
+    "Preeclampsia or eclampsia with BP 160/110 or higher: labetalol 20 mg IV, hydralazine 5 to 10 mg IV, or nifedipine IR 10 mg PO, plus magnesium sulfate",
+    "Pheochromocytoma or sympathomimetic toxicity: phentolamine 5 mg IV, benzodiazepines for stimulants, no beta blocker first"
+   ]
+  },
+  {
+   "abbr": "#recluse",
+   "title": "Brown recluse spider bite",
+   "name": "Brown recluse spider bite",
+   "setting": "Clinic",
+   "notes": [
+    "*** suspected loxoscelism, bite on *** on ***, lesion ***, necrosis ***, systemic symptoms ***."
+   ],
+   "plan": [
+    "Clean wound, cool compresses, elevation, rest the limb",
+    "Adult: acetaminophen 1000 mg PO every 8 hours as needed and ibuprofen 400 to 600 mg PO every 6 hours as needed with food",
+    "Child: acetaminophen 15 mg/kg PO every 6 hours as needed, max 1000 mg per dose, and ibuprofen 10 mg/kg PO every 6 hours as needed, max 600 mg per dose",
+    "Tetanus update if due ***",
+    "Antibiotics only for secondary infection: cephalexin 500 mg PO QID for 5 days, child 12.5 mg/kg PO QID, max 500 mg per dose ***",
+    "No dapsone, no early excision or debridement",
+    "CBC, UA, BMP, LDH, and bilirubin daily for 72 hours if systemic symptoms or a young child, to screen for hemolysis",
+    "Wound recheck in 2 to 3 days, surgical referral only after necrosis demarcates",
+    "Return for fever, dark urine, spreading redness, or rapidly enlarging necrosis"
+   ]
+  },
+  {
+   "abbr": "#cannabis",
+   "title": "Cannabis use",
+   "name": "Cannabis use",
+   "setting": "Clinic",
+   "notes": [
+    "Uses *** route, *** times per day or week, for ***. Cannabis use disorder criteria *** of 11. Cannabinoid hyperemesis symptoms ***. Mood, anxiety, psychosis, sleep ***. Pregnancy or breastfeeding ***."
+   ],
+   "plan": [
+    "Discussed effects on mood, memory, sleep, lungs, and driving",
+    "Recommended stopping or cutting back, goal ***",
+    "No driving within 6 hours of use, store products away from children",
+    "Cannabinoid hyperemesis: counseled that symptoms resolve only with stopping, capsaicin 0.1% cream to abdomen TID as needed ***",
+    "Behavioral health or counseling referral ***",
+    "Follow up in *** weeks"
+   ]
+  },
+  {
+   "abbr": "#divert",
+   "title": "Acute diverticulitis",
+   "name": "Acute diverticulitis",
+   "setting": "Clinic",
+   "notes": [
+    "_uncomplicated / complicated diverticulitis on CT with IV contrast: ***. Abscess ***, perforation ***, obstruction ***, fistula ***. Most likely diverticulitis given ***. *** considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Admit for complicated disease, sepsis, uncontrolled pain, unable to take PO, immunosuppression, major comorbidity, or failed outpatient care ***",
+    "Uncomplicated, immunocompetent, no systemic signs: antibiotics optional, shared decision ***",
+    "Antibiotics when used: ceftriaxone 2 g IV daily plus metronidazole 500 mg IV or PO every 8 hours, then amoxicillin-clavulanate 875/125 mg PO BID, total 4 to 7 days",
+    "Clear liquids, advance as pain improves",
+    "Acetaminophen 1000 mg PO every 8 hours, oxycodone 5 mg PO every 4 hours as needed for severe pain",
+    "Abscess 3 cm or larger: IR drainage, perforation or peritonitis: surgery consult",
+    "Repeat CT if not improving in 48 to 72 hours",
+    "Colonoscopy 6 to 8 weeks after recovery if no high-quality exam in the past year or after complicated disease",
+    "Outpatient: clear liquids for 2 to 3 days, recheck in 2 to 3 days, return for fever, worsening pain, or vomiting"
+   ]
+  },
+  {
+   "abbr": "#dfu",
+   "title": "Diabetic foot ulcer",
+   "name": "Diabetic foot ulcer",
+   "setting": "Clinic",
+   "notes": [
+    "Ulcer of ***, size *** cm, depth ***, probe to bone ***, infection grade ***. Pulses ***, ABI ***. A1c ***. Photo uploaded to chart ***."
+   ],
+   "plan": [
+    "Not infected: no antibiotics, stop current antibiotics ***",
+    "Moderate or severe infection: blood cultures if systemic signs, deep tissue culture after debridement, vancomycin dosed by pharmacy plus ampicillin-sulbactam 3 g IV every 6 hours, add Pseudomonas coverage only with risk factors ***",
+    "Foot X-ray, MRI if X-ray negative and osteomyelitis suspected, ESR and CRP",
+    "Surgery or podiatry consult for debridement or bone biopsy ***",
+    "ABI and toe pressures, arterial duplex if pulses diminished, vascular consult if PAD ***",
+    "Aspirin 81 mg PO daily and statin if PAD confirmed",
+    "Offloading, wound care consult, PT",
+    "Glucose goal 140 to 180"
+   ]
+  },
+  {
+   "abbr": "#ams",
+   "title": "Acute encephalopathy",
+   "name": "Acute encephalopathy",
+   "setting": "Clinic",
+   "notes": [
+    "Acute encephalopathy, etiology ***. Most likely ***, given ***. *** considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Metabolic: CMP, glucose, TSH, B12, ammonia if liver disease, VBG or ABG if hypercapnia or hypoxia suspected ***",
+    "Infection: UA with reflex culture, treat bacteriuria only with urinary symptoms or systemic signs, CXR, blood cultures if febrile ***",
+    "LP if meningismus, fever without source, or concern for encephalitis ***",
+    "Neuro: CT head ***, MRI brain if focal deficit or CT nondiagnostic, EEG if concern for nonconvulsive seizure ***",
+    "Toxic: medication review for anticholinergics, sedatives, opioids, and new meds, UDS, ethanol level, drug levels if on the drug ***",
+    "Alcohol withdrawal: CIWA monitoring ***",
+    "Delirium precautions: reorientation, sleep hygiene, glasses and hearing aids, early mobility, avoid restraints and benzodiazepines unless withdrawal"
+   ]
+  },
+  {
+   "abbr": "#ha",
+   "title": "Headache",
+   "name": "Headache",
+   "setting": "Clinic",
+   "lib": "headache",
+   "notes": [
+    "*** headache, *** pattern, red flags ***. Most likely ***, given ***. *** considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Neuro exam ***",
+    "Imaging not indicated without red flags, MRI brain *** if red flags present",
+    "Tension-type: ibuprofen 400 mg PO q6h prn or acetaminophen 1000 mg PO q6h prn, max 3 g/day, stretching, PT ***",
+    "TMJ: night guard, soft diet ***",
+    "Limit acute pain medicines to under 10 days/month to avoid medication overuse headache",
+    "Headache diary",
+    "ER for thunderclap onset, fever with stiff neck, new neuro deficit, or rapidly worsening pattern",
+    "Follow up in *** weeks"
+   ]
+  },
+  {
+   "abbr": "#tobx",
+   "title": "Inpatient nicotine replacement",
+   "name": "Tobacco use, inpatient nicotine replacement",
+   "setting": "Clinic",
+   "notes": [
+    "Smokes *** cigarettes/day, first cigarette *** minutes after waking, readiness to quit ***."
+   ],
+   "plan": [
+    "10 or fewer cigarettes/day: nicotine patch 14 mg/24 hours transdermal daily",
+    "More than 10 cigarettes/day: nicotine patch 21 mg/24 hours transdermal daily",
+    "Plus nicotine gum or lozenge 2 mg PO q1-2h prn cravings, 4 mg if first cigarette within 30 minutes of waking, max 24 pieces gum or 20 lozenges/day",
+    "Recent MI, unstable angina, or serious arrhythmia: NRT generally preferred over continued smoking, discuss with cardiology ***",
+    "Monitor for withdrawal: irritability, anxiety, cravings, and for excess nicotine: nausea, dizziness, palpitations",
+    "Cessation counseling ***, Quitline 1-800-QUIT-NOW referral ***",
+    "Reassess at discharge for NRT or varenicline prescription"
+   ]
+  },
+  {
+   "abbr": "#nv",
+   "title": "Nausea and vomiting",
+   "name": "Nausea and vomiting",
+   "setting": "Clinic",
+   "notes": [
+    "*** for ***. Most likely ***, given ***. *** considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "BMP, LFTs, lipase, UA, hCG if able to become pregnant ***",
+    "Troponin if cardiac cause possible ***",
+    "ECG for QTc before QT-prolonging antiemetics ***",
+    "CT abdomen and pelvis if obstruction or other surgical cause suspected ***",
+    "NPO and NG decompression if obstruction ***",
+    "IV fluids: LR *** mL/hr ***",
+    "QTc normal, choose one: ondansetron 4 mg PO or IV q8h prn, prochlorperazine 10 mg PO or IV q6h prn, or metoclopramide 10 mg PO or IV q6h prn, avoid metoclopramide in obstruction",
+    "QTc prolonged: lorazepam 0.5 mg PO or IV q6h prn, scopolamine 1.5 mg transdermal patch q72h, or dexamethasone 4 mg PO or IV daily for selected causes ***",
+    "Inhaled isopropyl alcohol pad prn nausea ***"
+   ]
+  },
+  {
+   "abbr": "#goo",
+   "title": "Malignant gastric outlet obstruction",
+   "name": "Malignant gastric outlet obstruction",
+   "setting": "Clinic",
+   "notes": [
+    "#Nausea and vomiting",
+    "#Anorexia",
+    "Due to progressive *** cancer with gastric outlet involvement, leading to ***. Goals of care: ***."
+   ],
+   "plan": [
+    "NPO or clear liquids for comfort, small sips, advance slowly as tolerated",
+    "Head of bed elevated",
+    "Liquid or crushed medications when possible",
+    "Antiemetic: haloperidol 0.5 to 1 mg PO, IV, or SC q6h prn, avoid metoclopramide if obstruction is complete",
+    "Octreotide 100 mcg SC q8h to reduce secretions ***",
+    "Dexamethasone 4 to 8 mg PO or IV daily ***",
+    "Sucralfate 1 g PO QID only if tolerated ***",
+    "NG tube only if refractory and consistent with goals",
+    "Venting gastrostomy or duodenal stent per goals, GI consult ***",
+    "Palliative care consult ***"
+   ]
+  },
+  {
+   "abbr": "#preopdentk",
+   "title": "Pediatric dental preanesthesia assessment",
+   "name": "Preanesthesia evaluation before dental procedure",
+   "setting": "Clinic",
+   "notes": [
+    "***yo *** with *** presenting for preanesthesia evaluation before *** under *** on ***. ASA class ***. No contraindication to planned anesthesia identified ***. Medically optimized from a pediatric standpoint, final anesthetic risk determined by anesthesiology on the day of procedure."
+   ],
+   "plan": [
+    "Preop testing: *** none indicated for healthy child and low-risk procedure",
+    "Medications: ***",
+    "Endocarditis prophylaxis: *** not indicated",
+    "Postop: *** routine outpatient",
+    "NPO instructions reviewed with family, procedure to be postponed if fever or URI symptoms develop",
+    "Letter and forms sent to dental and anesthesia team ***",
+    "Work or school note for parent ***",
+    "Return precautions given"
+   ]
+  },
+  {
+   "abbr": "#pid",
+   "title": "Pelvic inflammatory disease",
+   "name": "Pelvic inflammatory disease",
+   "setting": "Clinic",
+   "notes": [
+    "Pelvic or lower abdominal pain with _cervical motion / uterine / adnexal tenderness. Most likely PID given ***. Ectopic pregnancy, appendicitis, tubo-ovarian abscess, ovarian torsion, and pyelonephritis considered but unlikely given ***, will ***. Treating empirically given risk of reproductive morbidity."
+   ],
+   "plan": [
+    "Pregnancy test ***, GC and chlamydia NAAT, trichomonas, wet prep, HIV, syphilis, UA and urine culture",
+    "CBC, CMP, CRP if ill-appearing ***",
+    "Pelvic ultrasound if severe pain, mass, or concern for TOA, torsion, or ectopic ***",
+    "Outpatient: ceftriaxone 500 mg IM once, 1 g IM if 150 kg or more, plus doxycycline 100 mg PO BID x14 days plus metronidazole 500 mg PO BID x14 days",
+    "Cephalosporin allergy and low gonorrhea risk: levofloxacin 500 mg PO daily or moxifloxacin 400 mg PO daily x14 days plus metronidazole 500 mg PO BID x14 days ***",
+    "Inpatient: ceftriaxone 1 g IV q24h plus doxycycline 100 mg PO or IV q12h plus metronidazole 500 mg PO or IV q12h",
+    "Inpatient alternatives: cefoxitin 2 g IV q6h plus doxycycline 100 mg PO or IV q12h, or clindamycin 900 mg IV q8h plus gentamicin per pharmacy ***",
+    "Transition to PO after 24 to 48 hours of clinical improvement, complete 14 days total",
+    "Admit if pregnant, TOA, severe illness or sepsis, unable to tolerate PO, surgical abdomen not excluded, or failed outpatient therapy ***",
+    "TOA: IV antibiotics, gynecology consult, drainage if large, ruptured, or not improving ***",
+    "Abstain from intercourse until treatment complete, symptoms resolved, and partners treated",
+    "Partners from prior 60 days referred for evaluation and treatment",
+    "Reassess in 48 to 72 hours"
+   ]
+  },
+  {
+   "abbr": "#padpain",
+   "title": "Ischemic rest pain",
+   "name": "Ischemic rest pain",
+   "setting": "Clinic",
+   "notes": [
+    "Ischemic rest pain of the *** limb from ***. Definitive pain control requires revascularization."
+   ],
+   "plan": [
+    "Vascular surgery consulted for urgent revascularization ***",
+    "Acetaminophen 1000 mg PO q8h scheduled",
+    "Oxycodone 5 mg PO q6h scheduled for baseline rest pain ***",
+    "Hydromorphone 0.5 mg IV q4h PRN breakthrough pain ***",
+    "Gabapentin *** mg PO TID for neuropathic pain, start 100 to 300 mg PO TID, titrate to 600 mg PO TID if tolerated, renally dosed for Cr ***",
+    "Avoid NSAIDs given contrast exposure and perioperative renal risk ***",
+    "Keep limb dependent, avoid elevation",
+    "Senna 8.6 mg PO BID while on opioids, hold for loose stools",
+    "Monitor BP, sedation, and respiratory status"
+   ]
+  },
+  {
+   "abbr": "#cirrpreop",
+   "title": "Cirrhosis perioperative risk",
+   "name": "Cirrhosis, perioperative risk",
+   "setting": "Clinic",
+   "notes": [
+    "#Portal hypertension",
+    "#Thrombocytopenia",
+    "Cirrhosis from *** with ***. Albumin ***, bilirubin ***, INR ***, platelets ***, ascites ***, encephalopathy ***. Child-Pugh ***, MELD ***. At increased risk for perioperative hepatic decompensation, infection, and bleeding."
+   ],
+   "plan": [
+    "Platelet goal at least 50 for surgery, at *** no prophylactic transfusion needed unless neuraxial anesthesia, defer to anesthesia ***",
+    "Diagnostic paracentesis preop if any concern for SBP ***",
+    "INR, PT, PTT, fibrinogen, type and screen",
+    "Minimize sodium-containing fluid loads, judicious crystalloid",
+    "Avoid hepatotoxic medications, acetaminophen no more than 2 g/day, avoid NSAIDs",
+    "Monitor mental status, bilirubin, INR, creatinine, and sodium for decompensation",
+    "High protein, high calorie diet after surgery as tolerated, nutrition consult"
+   ]
+  },
+  {
+   "abbr": "#refeed",
+   "title": "Refeeding syndrome risk",
+   "name": "Refeeding syndrome risk",
+   "setting": "Clinic",
+   "notes": [
+    "At *** risk for refeeding syndrome given ***."
+   ],
+   "plan": [
+    "Thiamine 100 mg IV or PO daily, start before feeding and continue 5 to 7 days",
+    "Start nutrition at 10 to 20 kcal/kg/day, advance over 4 to 7 days per nutrition ***",
+    "BMP, magnesium, phosphorus q12h for first 72 hours",
+    "Replace potassium, magnesium, and phosphorus to normal range before and during feeding advancement",
+    "Slow or hold advancement if electrolytes fall",
+    "Monitor volume status and cardiac rhythm ***"
+   ]
+  },
+  {
+   "abbr": "#dyspnea",
+   "title": "Dyspnea differential",
+   "name": "Dyspnea",
+   "setting": "Clinic",
+   "lib": "dyspnea",
+   "notes": [
+    "Most likely ***, given ***. *** considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "COPD exacerbation ***: prednisone 40 mg PO daily x5 days, doxycycline 100 mg PO BID x5 days, ipratropium-albuterol 3 mL neb q6h scheduled",
+    "Heart failure ***: BNP, CXR, echocardiogram, diuresis per volume status",
+    "Pneumonia ***: CXR, antibiotics if infiltrate",
+    "PE ***: Wells ***, D-dimer only if low or intermediate pretest probability, CT pulmonary angiogram if indicated",
+    "Anemia ***: Hgb ***, transfuse if under 7",
+    "Interstitial lung disease ***: high-resolution CT, pulmonology consult",
+    "Continuous pulse oximetry, SpO2 goal 88 to 92% if CO2 retainer, otherwise over 92% ***"
+   ]
+  },
+  {
+   "abbr": "#insomx",
+   "title": "Inpatient sleep disturbance",
+   "name": "Inpatient sleep disturbance",
+   "setting": "Clinic",
+   "notes": [
+    "Sleep disrupted by ***. Delirium risk ***. Non-pharmacologic sleep measures in place:"
+   ],
+   "plan": [
+    "Daytime mobilization, limit late-afternoon naps",
+    "Consistent lights-out time and calming pre-sleep routine such as reading, music, or relaxation",
+    "Lights dimmed and TV and phone limited in the evening",
+    "No caffeine after 14:00, avoid heavy late meals",
+    "Earplugs and eye mask offered",
+    "Vitals, labs, and non-urgent meds clustered to avoid 23:00 to 05:00 when safe",
+    "Pain, dyspnea, cough, nausea, and pruritus treated before bedtime",
+    "Avoid benzodiazepines, diphenhydramine, and sedative-hypnotics ***"
+   ]
+  },
+  {
+   "abbr": "#tpoab",
+   "title": "Positive TPO antibody, euthyroid",
+   "name": "Positive TPO antibody, euthyroid",
+   "setting": "Clinic",
+   "notes": [
+    "TPO antibody ***, TSH *** and free T4 *** normal. Increased risk of progression to hypothyroidism."
+   ],
+   "plan": [
+    "TSH annually or sooner with symptoms",
+    "TSH before conception and early in pregnancy ***",
+    "No treatment indicated while euthyroid"
+   ]
+  },
+  {
+   "abbr": "#gastro",
+   "title": "Acute gastroenteritis",
+   "name": "Acute gastroenteritis",
+   "setting": "Clinic",
+   "notes": [
+    "Most likely viral gastroenteritis given ***. Bacterial infection, C. difficile, and surgical abdomen considered but unlikely given ***, will ***. Hydration status ***, tolerating PO ***."
+   ],
+   "plan": [
+    "No labs or stool studies indicated ***",
+    "Oral rehydration, small frequent sips, advance diet as tolerated",
+    "Ondansetron 4 to 8 mg PO q8h PRN nausea",
+    "Expected self-limited course of 1 to 3 days ***",
+    "Return for inability to keep fluids down, signs of dehydration, bloody stool, high fever, severe abdominal pain, or symptoms over 7 days"
+   ]
+  },
+  {
+   "abbr": "#nipdc",
+   "title": "Nipple discharge",
+   "name": "Nipple discharge",
+   "setting": "Clinic",
+   "notes": [
+    "_unilateral / bilateral, _single / multiple duct, _spontaneous / expressed, _bloody / serous / milky / green. Most likely ***, given ***. Intraductal papilloma, carcinoma, duct ectasia, and prolactinoma considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Physiologic features, bilateral, multiduct, expressed only: reassurance, stop expressing, recheck in 1 to 2 months, screening mammogram if due ***",
+    "Pathologic features, spontaneous, unilateral, single duct, bloody or serous: diagnostic mammogram and ultrasound if 30 or older, ultrasound first if under 30, breast surgery referral ***",
+    "Galactorrhea: pregnancy test, prolactin, TSH, creatinine, medication review ***",
+    "Prolactin elevated: repeat, then pituitary MRI ***",
+    "Mastitis or abscess features: ***"
+   ]
+  },
+  {
+   "abbr": "#cap",
+   "title": "Community-acquired pneumonia, outpatient",
+   "name": "Community-acquired pneumonia, outpatient",
+   "setting": "Clinic",
+   "notes": [
+    "Cough, fever, dyspnea *** with CXR showing ***. CURB-65 ***. Appropriate for outpatient care ***."
+   ],
+   "plan": [
+    "Healthy adult without recent antibiotics: amoxicillin 1 g PO TID x5 days, or doxycycline 100 mg PO BID x5 days, or azithromycin 500 mg PO day 1 then 250 mg PO daily days 2 to 5 only if local macrolide resistance under 25 percent",
+    "Adult with comorbidities: amoxicillin-clavulanate 875/125 mg PO BID x5 days plus azithromycin 500 mg PO day 1 then 250 mg PO daily days 2 to 5 or doxycycline 100 mg PO BID x5 days, or levofloxacin 750 mg PO daily x5 days",
+    "Child 3 months to 5 years: amoxicillin 45 mg/kg PO BID, max 4 g/day, x5 days",
+    "Child 5 years or older with atypical features: azithromycin 10 mg/kg PO day 1, max 500 mg, then 5 mg/kg PO daily, max 250 mg, days 2 to 5; amoxicillin as above if typical features",
+    "Infant under 3 months: admit ***",
+    "Fever: acetaminophen 650 to 1000 mg PO q6h PRN, max 3 g/day; children 15 mg/kg PO q6h PRN, max 75 mg/kg/day up to 3 g/day",
+    "Minimum 5 days, stop when afebrile 48 to 72 hours and clinically stable",
+    "ED precautions for worsening dyspnea, confusion, or inability to tolerate PO",
+    "Recheck in *** days, sooner if not improving in 48 to 72 hours"
+   ]
+  },
+  {
+   "abbr": "#contactderm",
+   "title": "Contact dermatitis",
+   "name": "Contact dermatitis",
+   "setting": "Clinic",
+   "notes": [
+    "_allergic / irritant contact dermatitis of ***, suspected trigger ***. No signs of secondary infection ***."
+   ],
+   "plan": [
+    "Identify and avoid the trigger, patch testing referral to allergy or dermatology if recurrent or unclear ***",
+    "Wash affected skin with mild soap and water, bland emollients",
+    "Triamcinolone 0.1% ointment BID to affected body areas for 2 to 3 weeks, avoid face and skin folds",
+    "Extensive, over 20% BSA, or facial involvement: prednisone 0.5 to 1 mg/kg PO daily, max 60 mg, tapered over 2 to 3 weeks ***",
+    "Cetirizine 10 mg PO daily PRN itch ***",
+    "Return if spreading, signs of infection, or no improvement in 2 weeks"
+   ]
+  },
+  {
+   "abbr": "#covid",
+   "title": "COVID-19, outpatient",
+   "name": "COVID-19",
+   "setting": "Clinic",
+   "notes": [
+    "COVID-19 positive on *** test, symptom onset *** days ago, _mild / moderate illness. SpO2 ***. High-risk factors ***. Pregnant ***."
+   ],
+   "plan": [
+    "Antiviral if high risk and within 5 days of onset: nirmatrelvir-ritonavir 300/100 mg PO BID x5 days, eGFR 30 to 59: 150/100 mg PO BID x5 days, eGFR under 30 including dialysis: 300/100 mg PO once on day 1, then 150/100 mg PO daily on days 2 to 5 ***",
+    "Interactions reviewed: hold simvastatin or lovastatin from 12 hours before treatment through 5 days after completing it, backup contraception if on combined hormonal contraception ***",
+    "Supportive care: fluids, rest, acetaminophen 650 to 1000 mg PO q6h PRN, max 3 g/day",
+    "Stay home until fever-free 24 hours without antipyretics and symptoms improving, then 5 days of added precautions including masking",
+    "Seek care for worsening dyspnea, chest pain, confusion, or SpO2 under 94% ***"
+   ]
+  },
+  {
+   "abbr": "#cts",
+   "title": "Carpal tunnel syndrome",
+   "name": "Carpal tunnel syndrome",
+   "setting": "Clinic",
+   "notes": [
+    "*** side, _mild / moderate / severe. Weakness ***, thenar atrophy ***."
+   ],
+   "plan": [
+    "Neutral wrist splint at night and PRN during the day",
+    "Activity modification, nerve gliding exercises handout",
+    "Acetaminophen 1000 mg PO q8h PRN or ibuprofen 400 to 600 mg PO q6 to 8h PRN with food",
+    "Corticosteroid injection if no improvement in 4 to 6 weeks ***",
+    "EMG and nerve conduction study and hand surgery referral if weakness, atrophy, constant numbness, or failed conservative care ***",
+    "Follow up in *** weeks"
+   ]
+  },
+  {
+   "abbr": "#dysgeusia",
+   "title": "Dysgeusia",
+   "name": "Dysgeusia",
+   "setting": "Clinic",
+   "notes": [
+    "Taste change x ***. Most likely ***, given ***. Dental disease, postviral smell loss, medication effect, Bell palsy, and Sjogren syndrome considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Medication list reviewed: ***",
+    "Oral and dental exam: ***, dental referral ***",
+    "CBC, CMP, TSH, vitamin B12, zinc ***",
+    "SSA and SSB antibodies if dry eyes or mouth ***",
+    "Smell testing or ENT referral if persistent ***"
+   ]
+  },
+  {
+   "abbr": "#dyspar",
+   "title": "Dyspareunia",
+   "name": "Dyspareunia",
+   "setting": "Clinic",
+   "notes": [
+    "_superficial / vaginal / deep pain with intercourse x ***. Most likely ***, given ***. Infection, vulvar dermatoses, genitourinary syndrome of menopause, vaginismus, and endometriosis considered but unlikely given ***, will ***."
+   ],
+   "plan": [
+    "Superficial or entry pain: treat infection or dermatitis ***, lidocaine 5% ointment to vestibule 15 minutes before intercourse, warm bath before intercourse, positions allowing control of penetration",
+    "Vaginal or friction pain: water- or silicone-based lubricant compatible with condoms and devices, vaginal moisturizer 2 to 3 times weekly, vaginal estradiol 10 mcg insert nightly x2 weeks then twice weekly if GSM ***",
+    "Deep pain: positions directing force away from pain, avoid deep thrusting, ibuprofen 400 to 600 mg PO 1 hour before intercourse, pelvic ultrasound or gynecology referral if pelvic pathology suspected ***",
+    "Pelvic floor physical therapy referral ***",
+    "Education and counseling, couples or sex therapy ***"
+   ]
+  },
+  {
+   "abbr": "#fibro",
+   "title": "Fibromyalgia",
+   "name": "Fibromyalgia",
+   "setting": "Clinic",
+   "notes": [
+    "_improving / stable / worsening. Function ***, sleep ***, mood ***."
+   ],
+   "plan": [
+    "Graded low-intensity aerobic exercise, increase to moderate as able",
+    "CBT referral ***",
+    "Sleep hygiene counseling",
+    "Patient education and support resources given",
+    "Duloxetine 30 mg PO daily for 1 week, then 60 mg PO daily, trial at least 3 months ***",
+    "Pregabalin 75 mg PO BID, titrate to max 450 mg/day ***",
+    "Milnacipran 12.5 mg PO day 1, 12.5 mg PO BID days 2 to 3, 25 mg PO BID days 4 to 7, then 50 mg PO BID ***",
+    "Amitriptyline 10 mg PO nightly, titrate to 25 to 50 mg PO nightly ***",
+    "Cyclobenzaprine 5 to 10 mg PO nightly, 3 to 4 hours before bed ***",
+    "Avoid opioids",
+    "Follow up in *** weeks"
+   ]
+  },
+  {
+   "abbr": "#ibsc",
+   "title": "IBS with constipation",
+   "name": "Irritable bowel syndrome with constipation",
+   "setting": "Clinic",
+   "notes": [
+    "Meets Rome IV criteria, constipation predominant, *** pain and bloating. No alarm features: no weight loss, GI bleeding, nocturnal symptoms, anemia, onset after 45, or family history of colon cancer or IBD."
+   ],
+   "plan": [
+    "Soluble fiber, psyllium 1 tablespoon PO daily, increase slowly",
+    "Trial low-FODMAP diet for 4-6 weeks, then reintroduce foods",
+    "Limit caffeine, regular sleep and exercise, stress reduction",
+    "Polyethylene glycol 17 g PO daily, titrate to soft daily stool",
+    "Peppermint oil enteric-coated 180-225 mg PO TID PRN pain",
+    "Dicyclomine 10-20 mg PO QID PRN cramping",
+    "If inadequate response: linaclotide 290 mcg PO daily 30 minutes before breakfast",
+    "If pain persists: amitriptyline 10 mg PO nightly, titrate, and refer for CBT or gut-directed hypnotherapy",
+    "Follow up in *** weeks"
+   ]
+  },
+  {
+   "abbr": "#ibsd",
+   "title": "IBS with diarrhea",
+   "name": "Irritable bowel syndrome with diarrhea",
+   "setting": "Clinic",
+   "notes": [
+    "Meets Rome IV criteria, diarrhea predominant, *** pain and bloating. No alarm features: no weight loss, GI bleeding, nocturnal symptoms, anemia, onset after 45, or family history of colon cancer or IBD."
+   ],
+   "plan": [
+    "Celiac serology (tTG-IgA with total IgA) and CRP or fecal calprotectin ***",
+    "Trial low-FODMAP diet for 4-6 weeks, then reintroduce foods",
+    "Limit caffeine, lactose and fructose, regular sleep and exercise, stress reduction",
+    "Soluble fiber, psyllium 1 tablespoon PO daily, increase slowly",
+    "Loperamide 2 mg PO after each loose stool PRN, max 8 mg/day",
+    "Peppermint oil enteric-coated 180-225 mg PO TID PRN pain",
+    "Dicyclomine 10-20 mg PO QID PRN cramping",
+    "If inadequate response: rifaximin 550 mg PO TID x 14 days",
+    "If pain persists: amitriptyline 10 mg PO nightly, titrate, and refer for CBT or gut-directed hypnotherapy",
+    "Follow up in *** weeks"
+   ]
+  },
+  {
+   "abbr": "#onycho",
+   "title": "Onychomycosis",
+   "name": "Onychomycosis",
+   "setting": "Clinic",
+   "notes": [
+    "*** nails involved, *** confirmed by KOH, PAS or fungal culture."
+   ],
+   "plan": [
+    "Confirm with KOH, PAS or fungal culture before oral therapy ***",
+    "Baseline LFTs ***",
+    "Terbinafine 250 mg PO daily x 12 weeks for toenails or 6 weeks for fingernails",
+    "Topical option for mild disease: efinaconazole 10% solution to affected nails daily x 48 weeks",
+    "Stop terbinafine and call for jaundice, dark urine, rash, or loss of taste",
+    "Nail regrowth takes 12-18 months, follow up in *** months"
+   ]
+  },
+  {
+   "abbr": "#otext",
+   "title": "Acute otitis externa",
+   "name": "Acute otitis externa",
+   "setting": "Clinic",
+   "notes": [
+    "*** ear, canal edema and debris ***, TM ***.",
+    "If TM perforated or tubes present:"
+   ],
+   "plan": [
+    "Aural toilet performed ***, wick placed ***",
+    "Ciprofloxacin 0.2%-hydrocortisone 1% otic, 3 drops in affected ear BID x 7 days",
+    "Ibuprofen 400-600 mg PO q6h PRN pain or acetaminophen 650-1000 mg PO q6h PRN pain, max 3 g/day",
+    "Oral antibiotics only if spread beyond the canal, immunocompromised, uncontrolled diabetes, or unable to use drops",
+    "Expect improvement in 48-72 hours, return if not improving by then",
+    "Handout given",
+    "Use ofloxacin 0.3% otic, 10 drops in affected ear daily x 7 days, or ciprofloxacin 0.3%-dexamethasone 0.1% otic, 4 drops BID x 7 days, instead",
+    "Keep water out of the ear",
+    "Recheck in 4 weeks, ENT referral if not healed"
+   ]
+  },
+  {
+   "abbr": "#pad",
+   "title": "Peripheral artery disease",
+   "name": "Peripheral artery disease",
+   "setting": "Clinic",
+   "notes": [
+    "ABI *** right, *** left, symptoms ***. Risk factors ***."
+   ],
+   "plan": [
+    "Aspirin 81 mg PO daily or clopidogrel 75 mg PO daily",
+    "If symptomatic and low bleeding risk, consider rivaroxaban 2.5 mg PO BID with aspirin 81 mg PO daily",
+    "High-intensity statin: atorvastatin 40-80 mg PO daily, LDL goal under 70",
+    "Supervised exercise therapy, walking 30-45 min at least 3 times/week",
+    "Tobacco cessation ***",
+    "BP and diabetes control, daily foot checks",
+    "Vascular surgery referral for lifestyle-limiting claudication despite exercise, rest pain, or nonhealing wound",
+    "Follow up in *** months"
+   ]
+  },
+  {
+   "abbr": "#fsd",
+   "title": "Female sexual dysfunction",
+   "name": "Female sexual interest and arousal disorder",
+   "setting": "Clinic",
+   "notes": [
+    "*** duration, causing distress ***. Contributing factors ***."
+   ],
+   "plan": [
+    "Reviewed contributing medications, mood, relationship factors and pain ***",
+    "Communicate with partner during sexual activity, vary positions, plan time for intimacy",
+    "Use distraction techniques such as fantasy or background noise, and pelvic floor contraction and relaxation",
+    "Non-coital touch such as sensual massage, with each partner giving feedback",
+    "Vaginal moisturizer or lubricant, consider vaginal estrogen if genitourinary syndrome of menopause ***",
+    "Referral to pelvic floor PT or sex therapy ***",
+    "Education provided, follow up in *** weeks"
+   ]
+  },
+  {
+   "abbr": "#zoster",
+   "title": "Herpes zoster",
+   "name": "Herpes zoster",
+   "setting": "Clinic",
+   "notes": [
+    "*** dermatome, onset *** days ago. Eye involvement ***. Immune status ***."
+   ],
+   "plan": [
+    "Valacyclovir 1 g PO TID x 7 days, or acyclovir 800 mg PO 5 times daily x 7 days, if within 72 hours of onset or new lesions still forming",
+    "Ibuprofen 400-600 mg PO q6h and acetaminophen 650-1000 mg PO q6h scheduled for pain, max 3 g/day acetaminophen",
+    "PCR of vesicle fluid if diagnosis uncertain ***",
+    "Contagious to people without chickenpox immunity until all blisters crust, keep lesions covered",
+    "Urgent ophthalmology if eye symptoms or rash on nose tip",
+    "HIV screening if never tested ***",
+    "Recombinant zoster vaccine once rash resolves, if age 50 or older or immunocompromised"
+   ]
+  },
+  {
+   "abbr": "#bv",
+   "title": "Bacterial vaginosis",
+   "name": "Bacterial vaginosis",
+   "setting": "Clinic",
+   "notes": [
+    "Amsel criteria met, 3 of 4: pH over 4.5 ***, clue cells ***, thin white discharge ***, positive whiff test ***."
+   ],
+   "plan": [
+    "Metronidazole 500 mg PO BID x 7 days",
+    "Alternatives: metronidazole 0.75% gel 5 g intravaginally nightly x 5 days, or clindamycin 2% cream 5 g intravaginally nightly x 7 days",
+    "Partner treatment not routinely needed; recurrent symptomatic BV with a regular male partner: consider partner metronidazole *** mg PO BID plus clindamycin 2% cream to penile skin BID, both x 7 days ***",
+    "Return if symptoms persist or recur"
+   ]
+  },
+  {
+   "abbr": "#hernia",
+   "title": "Hernia",
+   "name": "*** hernia",
+   "setting": "Clinic",
+   "notes": [
+    "*** side, reducible ***, symptoms ***."
+   ],
+   "plan": [
+    "Symptomatic, refer to general surgery for elective repair ***",
+    "Minimally symptomatic inguinal hernia: watchful waiting is reasonable, discussed ***",
+    "Avoid heavy straining, treat constipation",
+    "Go to the ER for a painful bulge that will not go back in, redness over the hernia, vomiting, or inability to pass gas or stool"
+   ]
+  },
+  {
+   "abbr": "#hsvlab",
+   "title": "Herpes labialis",
+   "name": "Herpes labialis",
+   "setting": "Clinic",
+   "notes": [
+    "*** episode, onset *** hours ago, *** outbreaks per year."
+   ],
+   "plan": [
+    "Valacyclovir 2 g PO BID x 1 day, start at first symptoms",
+    "If 6 or more outbreaks a year: valacyclovir 500 mg PO daily for suppression ***",
+    "Avoid touching lesions, wash hands after touching or applying medicine",
+    "Dab topical products on, do not share lip products or utensils",
+    "Avoid kissing and oral sex until lesions fully heal",
+    "Avoid contact lens contamination, return for eye pain or redness"
+   ]
+  },
+  {
+   "abbr": "#bronchio",
+   "title": "Bronchiolitis, inpatient",
+   "name": "Bronchiolitis, *** RSV",
+   "setting": "Clinic",
+   "notes": [
+    "Day *** of illness, *** respiratory support, oral intake ***."
+   ],
+   "plan": [
+    "Nasal suction PRN, before feeds and sleep",
+    "Supplemental oxygen to keep SpO2 90% or more, intermittent SpO2 checks when stable off oxygen",
+    "Currently on ***",
+    "PO ad lib, hold feeds for RR over *** 60-70 or increased work of breathing",
+    "If not feeding: isotonic IV fluids, D5 0.9% NaCl with 20 mEq/L KCl at *** mL/hr, or NG feeds",
+    "Strict I/O and urine output",
+    "No routine albuterol, steroids, antibiotics or chest x-ray",
+    "If febrile, examine for AOM, chest x-ray only for focal findings or severe disease, UA if under 60 days or concern for UTI",
+    "Discharge when SpO2 90% or more on room air, feeding adequately and caregiver able to suction"
+   ]
+  }
+ ]
+}

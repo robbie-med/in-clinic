@@ -77,11 +77,13 @@ const TESTS = [
 ];
 const esc = s => s.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&');
 const TEST_RE = TESTS.map(t => [t, new RegExp(`(^|[^A-Za-z0-9])${esc(t)}(?![A-Za-z0-9])`, /^[A-Z]{2,3}$/.test(t) ? '' : 'i')]);
+/** Still a template (a *** blank, or an unpicked "_a / b" dotphrase list): nothing decided yet, so not counted. */
+const TEMPLATE = /\*\*\*|(^|[\s:(])_[^,.;_]+? \/ /;
 const NOT_ORDER = /\b(review(ed)?|result(s|ed)?|showed|shows|was|were|normal|unremarkable|declin|defer|consider|ordered? (previously|last))/i;
 
 /** Tests named in plan lines that read as orders (not "reviewed CBC"). */
 export function testsOrdered(v) {
-    const lines = v.problems.flatMap(p => p.plan).filter(s => !NOT_ORDER.test(s));
+    const lines = v.problems.flatMap(p => p.plan).filter(s => !NOT_ORDER.test(s) && !TEMPLATE.test(s));
     const found = [];
     for (const [t, re] of TEST_RE) if (lines.some(s => re.test(s)) && !found.some(f => f.toLowerCase() === t.toLowerCase())) found.push(t);
     // "x-ray" also matches inside "chest x-ray"; drop the shorter duplicate
@@ -117,7 +119,7 @@ const LOW = /\b(OTC|over[- ]the[- ]counter|physical therapy|home PT|PT referral|
 
 function riskLevel(v) {
     const lines = v.problems.flatMap(p => p.plan.map(s => s.trim()).filter(Boolean));
-    const ex = re => lines.filter(s => re.test(s));
+    const ex = re => lines.filter(s => re.test(s) && !TEMPLATE.test(s));
     if (v.risk && RISKS.includes(v.risk)) return { lvl: RISKS.indexOf(v.risk) + 1, why: ['set by hand'] };
     if (ex(HIGH).length) return { lvl: 4, why: ['escalation: ' + ex(HIGH)[0]] };
     if (ex(RX).length) return { lvl: 3, why: ['Rx drug mgmt: ' + ex(RX).slice(0, 2).join('; ')] };

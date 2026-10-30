@@ -15,7 +15,13 @@ Everything stays on the device that's running it. There's no server, account or 
 2. Tap Share → **Add to Home Screen**.
 3. Open it from the home screen once while online. After that it works offline (service worker).
 
-Landscape puts the live note beside the editor. Portrait puts it below, with a Copy bar at the bottom.
+Layouts:
+- **Desktop / iPad landscape (≥ 900 px wide):** the live note sits in a sticky column beside the editor, with a billing summary and a Copy button per section.
+- **iPad portrait / phone:** the note is at the bottom, and a Copy bar (CC · HPI · Exam · A/P · Sign) is fixed to the bottom of the screen. It hides while you type, so it doesn't sit on the keyboard.
+  A copied section shows ✓. If it changed after you copied it, its button turns amber.
+- **Phone (< 600 px):** header actions move into ⋯, and each exam system shows only nL until you tap **findings**.
+- Tabs under the header (Visit · HPI · Exam · A/P · F/u · Billing · Note) jump to each section.
+- Desktop: "hold" is a right-click. Enter in a dialog's text field saves it (Ctrl/⌘+Enter in a multi-line box), and Esc closes it.
 
 ## The note
 Sections, each copied on its own (titles aren't part of the copied text):
@@ -58,18 +64,29 @@ It's a suggestion, conservative when unsure. You pick the code.
 
 ## Use
 - **Tonight:** use **Import** with a pasted schedule. Only time, age, sex and visit type are kept; names, MRNs and DOBs are dropped.
-  For a known patient, open the visit and use **Paste last note** (the EMR note as is). Its numbered problems come back as Known with the trend cleared, and the plan, notes and DDx are kept.
+  For a known patient, open the visit and use **Paste last note** (in ⋯ on a phone) (the EMR note as is). Its numbered problems come back as Known with the trend cleared, and the plan, notes and DDx are kept.
 - **In the room:**
   - Age, F/M, known/new, visit type and chief complaint build the one-liner. Tap the one-liner to override it.
   - HPI lines: type or dictate, then press Enter.
-  - **Exam** (the clinic template's systems and normals): type the vitals if wanted, then for each system tap nL and/or findings ("+ other" for your own).
+  - **Exam** (the clinic template's systems and normals): for each system tap nL and/or findings ("+ other" for your own). The web app has no vitals fields, because vitals are already in the EMR.
     nL plus a finding appends it to the normal text. **All untouched → nL** fills the rest (not Abd or URO/GYNE). Only examined systems print.
-  - **+ Problem:** type a few letters, then Enter. Then tap the status, DDx chips (hold one to annotate) and plan chips, or use CONT/START/… to type a med.
+  - **+ Problem:** type a few letters, then Enter. Then tap the status, DDx chips (hold or right-click one to annotate) and plan chips, or use CONT/START/… to type a med.
   - Follow-up: who with (remembered), an interval and a reason.
   - Copy each section into its EMR section. A section copied and unchanged since shows **Copied ✓**; if it changed, **Copy again**.
 - A chip with `***` drops into the field with the blank selected, so you type over it.
-- Plan lines you type become chips for that problem next time. Hold a remembered chip to forget it.
+- Plan lines you type become chips for that problem next time. Hold (or right-click) a remembered chip to forget it. Each line has × to delete it; tap the line to edit or move it.
 - ⋯ → **Signature…** once per device (printed above the attestation). ⋯ → **Clear panel** at the end of clinic. Visits are removed after 3 days anyway.
+
+## Dotphrases
+Adding a problem fills its Notes and Plan from your dotphrase library (`~/Projects/dot`). The block's text lines go into Notes and its `- ` lines go into Plan.
+- Library problems use their mapped block (HTN → `#htn`, T2DM → `#dm2`, Fatigue → `#wufatigue`, …).
+  The ~130 clinic blocks without a library problem are in the **+ Problem** search by name or `#abbr` (e.g. `#pcos`, `#prep`, `#fibro`).
+- Lines with a `***` blank or an unpicked `_a / b` list have an amber edge. Tap one: its choices show as buttons, and the next `***` is selected so you can type over it.
+  Billing doesn't count these lines until they're filled. Delete what you don't need with ×.
+- A problem added another way (e.g. Paste last note) has **Insert #abbr dotphrase** in its ⋯ menu.
+- Only the clinic `#` problem blocks are copied, into `dotphrases.json`; the rest of the library stays in `~/Projects/dot`.
+  After editing the library: `node tools/import-dot.mjs` then `node tools/version-sw.mjs`. The library-to-block mapping is `LIB` in that script.
+- Web app only. The Android app doesn't use dotphrases.
 
 ## Develop
 - `library.json` is the one source of the problem library (~40 primary-care problems). After editing it:

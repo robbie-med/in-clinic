@@ -83,6 +83,16 @@ class BillingTest {
         assertEquals(3, Billing.bill(Visit(sdoh = true, problems = listOf(Problem(name = "x", plan = listOf("labs"))))).risk.lvl)
     }
 
+    @Test fun unfilledTemplateLinesAreNotCounted() {
+        val plan = listOf("BMP and UACR ***", "CONT lisinopril *** mg PO daily", "Statin: _moderate / high intensity, start ***", "Naloxone prescribed ***")
+        val v = Visit(problems = listOf(Problem(name = "x", plan = plan)))
+        assertEquals(emptyList<String>(), Billing.testsOrdered(v))
+        assertEquals(2, Billing.bill(v).risk.lvl)
+        val filled = Visit(problems = listOf(Problem(name = "x", plan = listOf("BMP and UACR today", "CONT lisinopril 10 mg PO daily", "my_file / x"))))
+        assertEquals(listOf("BMP", "UACR"), Billing.testsOrdered(filled))
+        assertEquals(3, Billing.bill(filled).risk.lvl)
+    }
+
     @Test fun codeSetByHandPicksTheAttestation() {
         val v = sample.copy(code = "99213")
         val b = Billing.bill(v)

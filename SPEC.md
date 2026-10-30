@@ -28,10 +28,15 @@ Same rules in `js/billing.js` and `Billing.kt`, each with its own test suite.
 - **Visit:** time, age, F/M, relation, visit type and chief complaint build the one-liner (tap it to override). The HPI is a line list.
   `+ Problem` searches the library (`Library.kt`, ~40 primary-care problems) or adds a free problem. Each problem has status pills,
   Notes, DDx (grouped chips; hold one to annotate, e.g. "(PHQ-9 negative)") and Plan (chips, plus med verbs CONT/START/INCREASE/DECREASE/STOP/REFILL).
-  **Exam** (ported from On-Call: same systems, normals and findings, plus HEENT, Psych and Wt): vitals fields, then nL or abnL per
+  **Exam** (ported from On-Call: same systems, normals and findings, plus HEENT, Psych and Wt): vitals fields (Android only; the web app dropped them, since vitals are in the EMR), then nL or abnL per
   system, "+ other" for a typed finding, "All untouched → nL". It prints between the HPI and PLAN as `Vitals:` and `Exam:` lines (examined systems only).
   A chip containing `***` drops into the field with the blank selected. Follow-up has interval and purpose chips.
 - **Paste last note:** parses a prior note in this format. Its problems come back as Known with the trend cleared; plan, notes and DDx are kept.
+
+## Dotphrases (web)
+`dotphrases.json` holds the clinic `#` problem blocks from `~/Projects/dot` (`tools/import-dot.mjs`). Adding a problem fills Notes (text lines)
+and Plan (`- ` lines) from its block. Library problems are mapped by key; other blocks are searchable by name or `#abbr`. Billing (both apps) ignores
+plan lines that still have `***` or an unpicked `_a / b` list.
 
 ## Learning
 Typed plan lines and follow-up purposes are remembered per problem and come back as chips (hold one to forget it). Free-typed problem

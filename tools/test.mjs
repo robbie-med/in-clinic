@@ -8,6 +8,7 @@ import { Library } from '../js/library.js';
 import * as Note from '../js/note.js';
 import * as Billing from '../js/billing.js';
 import { extract } from '../js/schedule.js';
+import { Dot, picks, unfilled } from '../js/dot.js';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 Library.load(JSON.parse(fs.readFileSync(path.join(root, 'library.json'), 'utf8')));
@@ -283,6 +284,38 @@ test('code set by hand picks the attestation', () => {
     assert.deepEqual([b.code, b.auto, b.overridden, b.pce], ['99213', '99214', true, true]);
     assert.equal(text(v).sign, Billing.ATTEST_PCE);
     assert.equal(Billing.bill({ ...sample, code: '99203' }).code, '99214');   // wrong patient kind is ignored
+});
+test('unfilled template lines (*** or an unpicked "_a / b") are not counted', () => {
+    const plan = ['BMP and UACR ***', 'CONT lisinopril *** mg PO daily', 'Statin: _moderate / high intensity, start ***', 'Naloxone prescribed ***'];
+    const v = V({ problems: [P({ name: 'x', plan })] });
+    assert.deepEqual(Billing.testsOrdered(v), []);
+    assert.equal(Billing.bill(v).risk.lvl, 2);   // still a plan, but no Rx decided
+    const filled = V({ problems: [P({ name: 'x', plan: ['BMP and UACR today', 'CONT lisinopril 10 mg PO daily', 'my_file / x'] })] });
+    assert.deepEqual(Billing.testsOrdered(filled), ['BMP', 'UACR']);
+    assert.equal(Billing.bill(filled).risk.lvl, 3);
+});
+
+// ---- dotphrases
+test('dotphrase blocks fill a new problem; pick lists parse', () => {
+    const dot = JSON.parse(fs.readFileSync(path.join(root, 'dotphrases.json'), 'utf8'));
+    Dot.load(dot);
+    const libKeys = new Set(Library.data.problems.map(p => p.key));
+    for (const ph of dot.phrases) {
+        if (ph.lib) assert.ok(libKeys.has(ph.lib), `${ph.abbr} maps to unknown library key ${ph.lib}`);
+        assert.ok(ph.name && !ph.name.startsWith('#'), ph.abbr);
+    }
+    const htn = Dot.fill(Note.newProblem({ name: 'HTN', lib: 'htn' }), Dot.find('htn'));
+    assert.equal(htn.notes[0], '_controlled / uncontrolled, office BP ***, home average ***. Most likely primary given ***.');
+    assert.ok(htn.plan.includes('Home BP log, goal under 130/80'));
+    assert.equal(Dot.fill(htn, Dot.find('htn')).plan.length, htn.plan.length);   // no duplicates
+    assert.equal(Dot.find('', '#pcos')?.abbr, '#pcos');
+    assert.equal(Dot.find('', 'polycystic ovary syndrome')?.abbr, '#pcos');
+    assert.equal(Dot.find('', 'no such thing'), null);
+    assert.equal(Dot.search('pcos')[0].abbr, '#pcos');
+    assert.ok(!Dot.search('hyper').some(p => p.lib));   // library problems aren't listed twice
+    assert.deepEqual(picks('LDL goal: _under 100 / under 70, then ***').map(x => x.options), [['under 100', 'under 70']]);
+    assert.deepEqual(picks('my_file / x'), []);
+    assert.ok(unfilled('_a / b') && unfilled('dose ***') && !unfilled('dose 10 mg'));
 });
 
 // ---- schedule

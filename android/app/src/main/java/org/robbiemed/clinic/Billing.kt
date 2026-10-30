@@ -85,11 +85,13 @@ object Billing {
         val opts = if (Regex("^[A-Z]{2,3}$").matches(t)) emptySet() else setOf(RegexOption.IGNORE_CASE)
         t to Regex("(^|[^A-Za-z0-9])" + Regex.escape(t) + "(?![A-Za-z0-9])", opts)
     }
+    /** Still a template (a *** blank, or an unpicked "_a / b" dotphrase list): nothing decided yet, so not counted. */
+    private val template = Regex("\\*\\*\\*|(^|[\\s:(])_[^,.;_]+? / ")
     private val notOrder = Regex("\\b(review(ed)?|result(s|ed)?|showed|shows|was|were|normal|unremarkable|declin|defer|consider|ordered? (previously|last))", RegexOption.IGNORE_CASE)
 
     /** Tests named in plan lines that read as orders (not "reviewed CBC"). */
     fun testsOrdered(v: Visit): List<String> {
-        val lines = v.problems.flatMap { it.plan }.filter { !notOrder.containsMatchIn(it) }
+        val lines = v.problems.flatMap { it.plan }.filter { !notOrder.containsMatchIn(it) && !template.containsMatchIn(it) }
         val found = mutableListOf<String>()
         for ((t, re) in testRe) if (lines.any { re.containsMatchIn(it) } && found.none { it.equals(t, true) }) found += t
         // "x-ray" also matches inside "chest x-ray"; drop the shorter duplicate
@@ -124,7 +126,7 @@ object Billing {
 
     private fun riskLevel(v: Visit): Part {
         val lines = v.problems.flatMap { p -> p.plan.map { it.trim() }.filter { it.isNotEmpty() } }
-        fun ex(re: Regex) = lines.filter { re.containsMatchIn(it) }
+        fun ex(re: Regex) = lines.filter { re.containsMatchIn(it) && !template.containsMatchIn(it) }
         if (v.risk in risks) return Part(risks.indexOf(v.risk) + 1, listOf("set by hand"))
         if (ex(high).isNotEmpty()) return Part(4, listOf("escalation: " + ex(high)[0]))
         if (ex(rx).isNotEmpty()) return Part(3, listOf("Rx drug mgmt: " + ex(rx).take(2).joinToString("; ")))

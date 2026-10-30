@@ -137,6 +137,38 @@ function focusSelect(input, text) {
     if (i >= 0) input.setSelectionRange(i, i + 3); else input.setSelectionRange(text.length, text.length);
 }
 
+/** A line with one "_a / b" pick list (from picks()) replaced by the chosen option; capitalized at the start of a line. */
+const choose = (s, pk, o) => s.slice(0, pk.at) + (pk.at === 0 ? o[0].toUpperCase() + o.slice(1) : o) + s.slice(pk.at + pk.text.length);
+
+/** A dropdown for one pick list. Its clicks don't reach the line under it (which opens the editor). */
+function pickSelect(pk, onPick) {
+    const all = pk.options.join(' / ');
+    const label = all.length <= 28 ? all : `${pk.options[0]} … ${pk.options[pk.options.length - 1]}`;
+    const sel = h('select', { class: 'pick', 'aria-label': 'Choose ' + pk.options.join(' or ') },
+        h('option', { value: '', disabled: true, selected: true }, label),
+        pk.options.map(o => h('option', { value: o }, o)));
+    for (const ev of ['click', 'pointerdown', 'keydown']) sel.addEventListener(ev, e => e.stopPropagation());
+    sel.addEventListener('change', () => onPick(sel.value));
+    return sel;
+}
+
+/** A line's text with a dropdown in place of each "_a / b" pick list; onChange gets the line with the choice made. */
+function withDropdowns(s, onChange) {
+    const out = []; let pos = 0;
+    for (const pk of picks(s)) { out.push(s.slice(pos, pk.at), pickSelect(pk, o => onChange(choose(s, pk, o)))); pos = pk.at + pk.text.length; }
+    out.push(s.slice(pos));
+    return out;
+}
+
+/** Dropdowns under a text field for the pick lists in it (edit dialogs). */
+function pickBox(field, after) {
+    const box = h('div', { class: 'picks' });
+    const draw = () => box.replaceChildren(...picks(field.value).map(pk => pickSelect(pk, o => { field.value = choose(field.value, pk, o); draw(); after?.(); })));
+    field.addEventListener('input', draw);
+    draw();
+    return box;
+}
+
 async function copyText(text, msg) {
     try { await navigator.clipboard.writeText(text); }
     catch {
@@ -504,7 +536,7 @@ function problemCard(id) {
     card.append(h('label', { class: 'mdm' }, h('span', {}, 'MDM'), sel));
 
     if (!open) {
-        const rest = N.problemLines(p0).slice(p0.noStatus ? 1 : 4).join('\n').trim();
+        const rest = N.problemLines(p0).slice(1).join('\n').trim();
         card.append(h('div', { class: 'mini' + (rest ? '' : ' faint'), role: 'button', tabIndex: 0, onclick: () => toggleOpen(id),
             onkeydown: e => { if (e.key === 'Enter') toggleOpen(id); } }, rest || 'Tap to add notes, DDx, plan'));
         return card;
@@ -538,9 +570,17 @@ function ddxView(id, lib) {
     const box = h('div', { class: 'ddx' });
     const p = () => v.problems.find(x => x.id === id);
     const set = (label, items) => { const x = p(); if (x) update(vv => ({ ...vv, problems: vv.problems.map(q => (q.id === id ? N.withDdx(x, label, items) : q)) })); };
+    /** Edit an item and add its reasoning: ">Iron deficiency anemia; most likely given ***" (the build spec's DDx form). */
     const annotate = (label, item) => {
         const t = h('input', { type: 'text', value: item });
-        modal({ title: 'Edit DDx item', body: t, onOpen: () => t.focus(), actions: [
+        const why = phrase => {
+            t.value = t.value.replace(/\s*[;(].*$/, '') + phrase;
+            t.focus(); const j = t.value.indexOf('***'); if (j >= 0) t.setSelectionRange(j, j + 3);
+        };
+        const body = h('div', {}, t, pickBox(t, () => t.focus()), h('div', { class: 'flow' },
+            chip('; most likely given ***', () => why('; most likely given ***'), 'small sugg'),
+            chip('; considered but unlikely given ***, will ***', () => why('; considered but unlikely given ***, will ***'), 'small sugg')));
+        modal({ title: 'DDx item', body, onOpen: () => t.focus(), actions: [
             { label: 'Remove', cls: 'danger', onClick: () => { set(label, N.ddxItems(p(), label).filter(i => i !== item)); draw(); } },
             { label: 'Save', cls: 'primary', onClick: () => {
                 const s = t.value.trim();
@@ -558,7 +598,7 @@ function ddxView(id, lib) {
                 if (add.length) { set(l, [...N.ddxItems(p(), l), ...add]); draw(); }
             } }] });
     };
-    const hint = matchMedia('(hover: hover)').matches ? 'right-click to annotate' : 'hold to annotate';
+    const hint = matchMedia('(hover: hover)').matches ? 'right-click to add reasoning' : 'hold to add reasoning';
     function draw() {
         const x = p(); if (!x) return;
         const labels = [...new Set([...(lib?.ddx || []).map(g => g.label), ...x.ddx.map(g => g.label)])];
@@ -567,7 +607,7 @@ function ddxView(id, lib) {
             if (g) box.append(h('div', { class: 'glabel' }, '>' + g));
             const opts = (lib?.ddx || []).find(d => d.label === g)?.items || [];
             const chosen = N.ddxItems(x, g);
-            const matchOf = o => chosen.find(c => c === o || c.startsWith(o + ' ('));
+            const matchOf = o => chosen.find(c => c === o || c.startsWith(o + ' (') || c.startsWith(o + ';'));
             const flow = h('div', { class: 'flow' });
             for (const o of opts) {
                 const m = matchOf(o);
@@ -575,7 +615,7 @@ function ddxView(id, lib) {
                 if (m) onHold(c, () => annotate(g, m));
                 flow.append(c);
             }
-            for (const extra of chosen.filter(c => !opts.some(o => c === o || c.startsWith(o + ' (')))) {
+            for (const extra of chosen.filter(c => !opts.some(o => c === o || c.startsWith(o + ' (') || c.startsWith(o + ';')))) {
                 flow.append(onHold(pill(extra, true, () => { set(g, chosen.filter(i => i !== extra)); draw(); }, 'small sugg'), () => annotate(g, extra)));
             }
             flow.append(chip('+ other', () => addItems(g), 'small link'));
@@ -606,7 +646,7 @@ function problemMenu(id) {
                 i > 0 ? chip('Move up', () => { move(-1); close(); }) : null,
                 i < v.problems.length - 1 ? chip('Move down', () => { move(1); close(); }) : null,
                 dotInsert(p, () => { drawProblems(); close(); }),
-                chip(p.noStatus ? 'Show status lines' : 'No status lines', () => { update(x => ({ ...x, problems: x.problems.map(q => (q.id === id ? { ...q, noStatus: !q.noStatus } : q)) })); drawProblems(); close(); }),
+                chip(p.noStatus ? 'Show status (count for billing)' : 'Hide status (not counted for billing)', () => { update(x => ({ ...x, problems: x.problems.map(q => (q.id === id ? { ...q, noStatus: !q.noStatus } : q)) })); drawProblems(); close(); }),
                 chip('Remove problem', () => { update(x => ({ ...x, problems: x.problems.filter(q => q.id !== id) })); drawProblems(); close(); }, 'danger'))),
     });
     name.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); rename(); close(); } });
@@ -615,7 +655,8 @@ function problemMenu(id) {
 /** "Insert #abbr dotphrase" for a problem whose block has lines it doesn't have yet (e.g. one carried forward). */
 function dotInsert(p, after) {
     const blk = Dot.find(p.lib, p.name);
-    if (!blk || [...blk.notes, ...blk.plan].every(l => p.notes.includes(l) || p.plan.includes(l))) return null;
+    const has = new Set([...p.notes, ...p.plan, ...p.ddx.flatMap(g => g.items)]);
+    if (!blk || [...blk.notes, ...(blk.ddx || []), ...blk.plan].every(l => has.has(l))) return null;
     return chip(`Insert ${blk.abbr} dotphrase`, () => {
         update(x => ({ ...x, problems: x.problems.map(q => (q.id === p.id ? Dot.fill(q, blk) : q)) }));
         expanded.add(p.id);
@@ -792,21 +833,12 @@ function Lines({ get, set, chips, learnKey = () => null, kind = '', placeholder,
     };
     input.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); add(); } });
 
-    /** Edit a line. A dotphrase "_a / b" list shows as chips: tap one to put it in; *** blanks are selected to type over. */
+    /** Edit a line. A dotphrase "_a / b" list shows as a dropdown; *** blanks are selected to type over. */
     const edit = i => {
         const s = get()[i]; if (s === undefined) return;
         const t = h('textarea', { rows: 3, value: s });
         const blank = () => { t.focus(); const j = t.value.indexOf('***'); if (j >= 0) t.setSelectionRange(j, j + 3); };
-        const pickBox = h('div', { class: 'picks' });
-        const drawPicks = () => pickBox.replaceChildren(...picks(t.value).map(pk => h('div', { class: 'flow' },
-            pk.options.map(o => chip(o, () => {
-                const word = pk.at === 0 ? o[0].toUpperCase() + o.slice(1) : o;
-                t.value = t.value.slice(0, pk.at) + word + t.value.slice(pk.at + pk.text.length);
-                drawPicks(); blank();
-            }, 'small sugg')))));
-        t.addEventListener('input', drawPicks);
-        drawPicks();
-        modal({ title: 'Edit line', body: h('div', {}, t, pickBox), onOpen: blank, actions: [
+        modal({ title: 'Edit line', body: h('div', {}, t, pickBox(t, blank)), onOpen: blank, actions: [
             i > 0 ? { label: 'Move up', onClick: () => { const l = [...get()]; [l[i - 1], l[i]] = [l[i], l[i - 1]]; set(l); draw(); } } : null,
             { label: 'Delete', cls: 'danger', onClick: () => { set(get().filter((_, j) => j !== i)); draw(); } },
             { label: 'Save', cls: 'primary', onClick: () => {
@@ -819,8 +851,10 @@ function Lines({ get, set, chips, learnKey = () => null, kind = '', placeholder,
 
     function draw() {
         rows.replaceChildren(...get().map((s, i) => h('div', { class: 'line' + (dash ? ' dash' : '') + (unfilled(s) ? ' tmpl' : '') },
-            h('button', { type: 'button', class: 'linet', onclick: () => edit(i),
-                title: unfilled(s) ? 'Has blanks to fill (not counted for billing until filled)' : 'Edit' }, s),
+            h('div', { class: 'linet', role: 'button', tabIndex: 0, onclick: () => edit(i),
+                onkeydown: e => { if (e.key === 'Enter' && e.target === e.currentTarget) edit(i); },
+                title: unfilled(s) ? 'Has blanks to fill (not counted for billing until filled)' : 'Edit' },
+            withDropdowns(s, n => { set(get().map((x, j) => (j === i ? n : x))); draw(); })),
             h('button', { type: 'button', class: 'linex', onclick: () => remove(i), 'aria-label': 'Delete line', title: 'Delete' }, '×'))));
         const cur = get(); const base = chips(); const key = learnKey();
         const learned = key ? Store.learned(key, kind).filter(c => !base.includes(c)) : [];

@@ -3,7 +3,7 @@ package org.robbiemed.clinic
 // GENERATED from library.json by tools/gen-library.mjs. Edit library.json, then run the script.
 
 internal object LibraryData {
-    val medVerbs = listOf("CONT ", "START ", "INCREASE ", "DECREASE ", "STOP ", "REFILL ")
+    val medVerbs = listOf("CONT ", "START ", "INCR. ", "DECR. ", "STOP ", "HOLD ", "REFILL ")
     val hpiGeneric = listOf("Adherent to medications; no side effects", "No ED visits or hospitalizations since last visit", "Denies chest pain, dyspnea, palpitations", "Denies fevers, chills, night sweats, weight loss", "Onset ***; duration ***", "Denies ***")
     val fuWhen = listOf("1 wk", "2 wk", "3 wk", "4 wk", "6 wk", "2 mo", "3 mo", "6 mo", "1 yr", "PRN")
     val fuGeneric = listOf("review labs", "reassess symptoms", "medication titration", "chronic disease management", "annual exam")
@@ -66,5 +66,6 @@ internal object LibraryData {
         Lib("uti", "Dysuria", aliases = listOf("uti", "urinary tract infection", "cystitis"), course = "Acute", plan = listOf("UA, urine culture", "GC/CT NAAT", "Nitrofurantoin 100 mg PO BID x5 days", "Return precautions reviewed"), ddx = listOf(Ddx("", listOf("cystitis", "pyelonephritis", "urethritis / STI", "vaginitis", "nephrolithiasis")))),
         Lib("rash", "Rash", aliases = listOf(), course = "Acute", plan = listOf("Topical steroid ***", "KOH prep", "Dermatology referral"), ddx = listOf(Ddx("", listOf("contact dermatitis", "eczema", "tinea", "psoriasis", "drug eruption", "viral exanthem")))),
         Lib("hm", "Health maintenance", aliases = listOf("hcm", "preventive care", "screening", "vaccines", "annual"), noStatus = true, notes = listOf("Up to date on screening", "Declines ***"), plan = listOf("Colorectal cancer screening: ***", "Mammogram", "Cervical cancer screening", "Lipid panel", "A1C", "Hepatitis C screening", "HIV screening", "Influenza vaccine", "COVID vaccine", "Tdap", "Shingrix", "Pneumococcal vaccine", "RSV vaccine", "AAA ultrasound", "DEXA", "Low-dose CT lung cancer screening")),
+        Lib("deferred", "Deferred to future visit", aliases = listOf("deferred", "future visit", "next visit"), noStatus = true, plan = listOf("Lipid screening", "Colon cancer screening", "Breast cancer screening", "Cervical cancer screening", "Diabetes screening", "Vaccines", "Medication review")),
     )
 }

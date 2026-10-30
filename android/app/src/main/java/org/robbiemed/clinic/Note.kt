@@ -8,17 +8,18 @@ package org.robbiemed.clinic
  *   History of Present Illness 52F known to me presents for follow-up of fatigue.
  *                              <HPI lines>
  *   Physical Exam              General: No acute distress, ...   (examined systems only)
- *   Assessment/Plan            1. Fatigue
- *                              New / Chronic / Worsening        (one per line; unpicked = ***)
+ *   Assessment/Plan            #Fatigue
  *                              <supporting lines>
- *                              DDx: ...
+ *
+ *                              DDx:
+ *                              >Iron deficiency anemia; most likely given ...
  *
  *                              - plan item
  *
- *                              F/u w Dr. X in 2 wk to review labs
+ *                              F/u w Dr. X in 2 wk to review labs   (only when follow-up is filled in)
  *   Signature                  <signature from settings> + the teaching-physician attestation for the billed level
  *
- * The status lines also drive the billing level ([Billing]).
+ * Each problem's status pills (not printed) drive the billing level ([Billing]).
  */
 object Note {
     val novelty = listOf("New", "Known")
@@ -59,20 +60,17 @@ object Note {
         return listOf(who, rel, here).filter { it.isNotEmpty() }.joinToString(" ") + "."
     }
 
-    /** "1. Fatigue", status lines (unpicked = ***), supporting lines, DDx, then a blank line and the "- " plan items. [n] is 1-based. */
-    fun problem(p: Problem, n: Int = 1): List<String> {
-        val out = mutableListOf("$n. " + p.name.trim())
-        if (!p.noStatus) for (s in listOf(p.novelty, p.course, p.trend)) out += s.ifEmpty { "***" }
-        out += p.notes.map { it.trim() }.filter { it.isNotEmpty() }
-        val groups = p.ddx.filter { it.items.isNotEmpty() }
-        if (groups.size == 1 && groups[0].label.isEmpty()) out += "DDx: " + groups[0].items.joinToString(", ")
-        else if (groups.isNotEmpty()) {
-            out += "DDx:"
-            for (g in groups) out += ">" + (if (g.label.isEmpty()) "" else "${g.label}: ") + g.items.joinToString(", ")
-        }
-        val plan = p.plan.map { it.trim() }.filter { it.isNotEmpty() }
-        if (plan.isNotEmpty()) { if (out.size > 1) out += ""; out += plan.map { "- $it" } }
-        return out
+    /**
+     * "#Fatigue", then the supporting lines, "DDx:" with one ">item; reasoning" line per item, and the "- " plan items,
+     * with a blank line between those blocks (not after the header). The status pills aren't printed; they drive billing.
+     * DDx group labels only sort the chips on screen.
+     */
+    fun problem(p: Problem): List<String> {
+        fun clean(l: List<String>) = l.map { it.trim() }.filter { it.isNotEmpty() }
+        val ddx = clean(p.ddx.flatMap { it.items })
+        val blocks = listOf(clean(p.notes), if (ddx.isEmpty()) emptyList() else listOf("DDx:") + ddx.map { ">$it" },
+            clean(p.plan).map { "- $it" }).filter { it.isNotEmpty() }
+        return listOf("#" + p.name.trim().trimStart('#')) + blocks.flatMapIndexed { i, b -> if (i > 0) listOf("") + b else b }
     }
 
     // A typed reason that already starts with its own connector ("after OSU visit") doesn't get "to" in front.
@@ -86,8 +84,7 @@ object Note {
         if (who.isNotEmpty()) out += "w $who"
         if (whenTxt.isNotEmpty()) out += if (whenTxt.equals("PRN", true) || whenTxt.equals("as needed", true)) "PRN" else "in $whenTxt"
         if (why.isNotEmpty()) out += (if (connector.containsMatchIn(why[0])) "" else "to ") + join(why)
-        if (out.size == 1) out += "***"
-        return out.joinToString(" ")
+        return if (out.size == 1) "" else out.joinToString(" ")
     }
 
     class Section(val key: String, val title: String, val short: String, val text: String)
@@ -105,11 +102,9 @@ object Note {
             v.hpi.map { it.trim() }.filter { it.isNotEmpty() }).joinToString("\n")
         val vit = Exam.vitalsText(v); val exam = Exam.lines(v)
         if (vit.isNotEmpty() || exam.isNotEmpty()) text["exam"] = ((if (vit.isNotEmpty()) listOf("Vitals: $vit") else emptyList()) + exam).joinToString("\n")
-        val ap = mutableListOf<String>()
-        v.problems.forEachIndexed { i, p -> if (i > 0) ap += ""; ap += problem(p, i + 1) }
-        if (ap.isNotEmpty()) ap += ""
-        ap += followUp(v)
-        text["ap"] = ap.joinToString("\n")
+        val fu = followUp(v)
+        val ap = (v.problems.map { problem(it).joinToString("\n") } + (if (fu.isEmpty()) emptyList() else listOf(fu))).joinToString("\n\n")
+        if (ap.isNotEmpty()) text["ap"] = ap
         text["sign"] = listOf(signature.trim(), Billing.attestation(v)).filter { it.isNotEmpty() }.joinToString("\n\n")
         return sectionTitles.mapNotNull { (k, t, s) -> text[k]?.let { Section(k, t, s, plain(it)) } }
     }
@@ -150,7 +145,7 @@ object Note {
     private fun word(s: String, set: List<String>) = set.firstOrNull { it.equals(s.trim(), ignoreCase = true) }
 
     /**
-     * Reads a previous note: every "1. Problem" (or older "#Problem") block after the Assessment/Plan header
+     * Reads a previous note: every "#Problem" (or older "1. Problem") block after the Assessment/Plan header
      * (supporting lines, DDx, "- " items). A block ends at the next problem, an "F/u" / "Follow-up" line, or the signature.
      */
     fun parse(text: String): Parsed {
@@ -169,7 +164,7 @@ object Note {
             if (num != null) { close(); p = Problem(name = num.groupValues[1].trim()); continue }
             if (s.startsWith("Follow-up", ignoreCase = true) || Regex("^f/u\\b", RegexOption.IGNORE_CASE).containsMatchIn(s)) { close(); continue }
             val cur = p ?: continue
-            if (s.isEmpty() || s == "***") continue
+            if (s.isEmpty() || s == "***") { if (s.isEmpty()) ddxOpen = false; continue }
             when {
                 word(s, novelty) != null && cur.novelty.isEmpty() -> p = cur.copy(novelty = word(s, novelty)!!)
                 word(s, course) != null && cur.course.isEmpty() -> p = cur.copy(course = word(s, course)!!)
@@ -180,10 +175,12 @@ object Note {
                     ddxOpen = true
                 }
                 ddxOpen && s.startsWith(">") -> {
+                    // ">Iron deficiency anemia; most likely given ..." is one item; older notes have ">Hormonal: a, b"
                     val body = s.drop(1).trim()
-                    val label = if (':' in body) body.substringBefore(':').trim() else ""
-                    val items = split(if (':' in body) body.substringAfter(':') else body)
-                    p = cur.withDdx(label, cur.ddxItems(label) + items)
+                    val c = body.indexOf(':')
+                    val group = ';' !in body && c > 0 && ',' !in body.substring(0, c)
+                    val label = if (group) body.substring(0, c).trim() else ""
+                    p = cur.withDdx(label, cur.ddxItems(label) + (if (group) split(body.substring(c + 1)) else listOf(body)))
                 }
                 s.startsWith("- ") || s.startsWith("• ") || (s.startsWith("-") && !s.startsWith("--")) -> {
                     ddxOpen = false; p = cur.copy(plan = cur.plan + s.trimStart('-', '•', ' '))

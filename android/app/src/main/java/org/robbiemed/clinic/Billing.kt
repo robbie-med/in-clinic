@@ -89,9 +89,13 @@ object Billing {
     private val template = Regex("\\*\\*\\*|(^|[\\s:(])_[^,.;_]+? / ")
     private val notOrder = Regex("\\b(review(ed)?|result(s|ed)?|showed|shows|was|were|normal|unremarkable|declin|defer|consider|ordered? (previously|last))", RegexOption.IGNORE_CASE)
 
+    /** Plan lines that can count: not under "#Deferred to future visit" (those aren't done today). */
+    private val deferred = Regex("^#?deferred\\b", RegexOption.IGNORE_CASE)
+    private fun planned(v: Visit) = v.problems.filter { !deferred.containsMatchIn(it.name.trim()) }.flatMap { it.plan }
+
     /** Tests named in plan lines that read as orders (not "reviewed CBC"). */
     fun testsOrdered(v: Visit): List<String> {
-        val lines = v.problems.flatMap { it.plan }.filter { !notOrder.containsMatchIn(it) && !template.containsMatchIn(it) }
+        val lines = planned(v).filter { !notOrder.containsMatchIn(it) && !template.containsMatchIn(it) }
         val found = mutableListOf<String>()
         for ((t, re) in testRe) if (lines.any { re.containsMatchIn(it) } && found.none { it.equals(t, true) }) found += t
         // "x-ray" also matches inside "chest x-ray"; drop the shorter duplicate
@@ -120,12 +124,12 @@ object Billing {
 
     // ------------------------------------------------------------ risk of patient management
 
-    private val rx = Regex("^(CONT|START|INCREASE|DECREASE|STOP|REFILL|TAPER|HOLD|RESUME|SWITCH)\\b|prescri|\\bRx\\b")
+    private val rx = Regex("^(CONT|START|INCREASE|DECREASE|INCR|DECR|STOP|REFILL|TAPER|HOLD|RESUME|SWITCH)\\b|prescri|\\bRx\\b")
     private val high = Regex("\\b(admit|admission|hospitaliz|direct(ly)? to (the )?ED|sent to (the )?ED|send to (the )?ED|DNR|hospice|comfort care)", RegexOption.IGNORE_CASE)
     private val low = Regex("\\b(OTC|over[- ]the[- ]counter|physical therapy|home PT|PT referral|OT)\\b", RegexOption.IGNORE_CASE)
 
     private fun riskLevel(v: Visit): Part {
-        val lines = v.problems.flatMap { p -> p.plan.map { it.trim() }.filter { it.isNotEmpty() } }
+        val lines = planned(v).map { it.trim() }.filter { it.isNotEmpty() }
         fun ex(re: Regex) = lines.filter { re.containsMatchIn(it) && !template.containsMatchIn(it) }
         if (v.risk in risks) return Part(risks.indexOf(v.risk) + 1, listOf("set by hand"))
         if (ex(high).isNotEmpty()) return Part(4, listOf("escalation: " + ex(high)[0]))

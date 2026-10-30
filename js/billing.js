@@ -81,9 +81,12 @@ const TEST_RE = TESTS.map(t => [t, new RegExp(`(^|[^A-Za-z0-9])${esc(t)}(?![A-Za
 const TEMPLATE = /\*\*\*|(^|[\s:(])_[^,.;_]+? \/ /;
 const NOT_ORDER = /\b(review(ed)?|result(s|ed)?|showed|shows|was|were|normal|unremarkable|declin|defer|consider|ordered? (previously|last))/i;
 
+/** Plan lines that can count: not under "#Deferred to future visit" (those aren't done today). */
+const planned = v => v.problems.filter(p => !/^#?deferred\b/i.test(p.name.trim())).flatMap(p => p.plan);
+
 /** Tests named in plan lines that read as orders (not "reviewed CBC"). */
 export function testsOrdered(v) {
-    const lines = v.problems.flatMap(p => p.plan).filter(s => !NOT_ORDER.test(s) && !TEMPLATE.test(s));
+    const lines = planned(v).filter(s => !NOT_ORDER.test(s) && !TEMPLATE.test(s));
     const found = [];
     for (const [t, re] of TEST_RE) if (lines.some(s => re.test(s)) && !found.some(f => f.toLowerCase() === t.toLowerCase())) found.push(t);
     // "x-ray" also matches inside "chest x-ray"; drop the shorter duplicate
@@ -113,12 +116,12 @@ function dataLevel(v) {
 
 // ------------------------------------------------------------ risk of patient management
 
-const RX = /^(CONT|START|INCREASE|DECREASE|STOP|REFILL|TAPER|HOLD|RESUME|SWITCH)\b|prescri|\bRx\b/;
+const RX = /^(CONT|START|INCREASE|DECREASE|INCR|DECR|STOP|REFILL|TAPER|HOLD|RESUME|SWITCH)\b|prescri|\bRx\b/;
 const HIGH = /\b(admit|admission|hospitaliz|direct(ly)? to (the )?ED|sent to (the )?ED|send to (the )?ED|DNR|hospice|comfort care)/i;
 const LOW = /\b(OTC|over[- ]the[- ]counter|physical therapy|home PT|PT referral|OT)\b/i;
 
 function riskLevel(v) {
-    const lines = v.problems.flatMap(p => p.plan.map(s => s.trim()).filter(Boolean));
+    const lines = planned(v).map(s => s.trim()).filter(Boolean);
     const ex = re => lines.filter(s => re.test(s) && !TEMPLATE.test(s));
     if (v.risk && RISKS.includes(v.risk)) return { lvl: RISKS.indexOf(v.risk) + 1, why: ['set by hand'] };
     if (ex(HIGH).length) return { lvl: 4, why: ['escalation: ' + ex(HIGH)[0]] };

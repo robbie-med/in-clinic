@@ -5,17 +5,18 @@
 //   History of Present Illness 52F known to me presents for follow-up of fatigue.
 //                              <HPI lines>
 //   Physical Exam              General: No acute distress, ...   (examined systems only; nL + findings append)
-//   Assessment/Plan            1. Fatigue
-//                              New / Chronic / Worsening        (one per line; unpicked = ***)
+//   Assessment/Plan            #Fatigue
 //                              <supporting lines>
-//                              DDx: ...
+//
+//                              DDx:
+//                              >Iron deficiency anemia; most likely given ...
 //
 //                              - plan item
 //
-//                              F/u w Dr. X in 2 wk to review labs
+//                              F/u w Dr. X in 2 wk to review labs   (only when follow-up is filled in)
 //   Signature                  <signature from settings> + the teaching-physician attestation for the billed level
 //
-// The status lines also drive the billing level (billing.js).
+// Each problem's status pills (not printed) drive the billing level (billing.js).
 import { Library } from './library.js';
 import { attestation, emptyData } from './billing.js';
 
@@ -89,26 +90,22 @@ export function oneLiner(v) {
     return [who, rel, here].filter(Boolean).join(' ') + '.';
 }
 
-/** "1. Fatigue", status lines (unpicked = ***), supporting lines, DDx, then a blank line and the "- " plan items. n is 1-based. */
-export function problemLines(p, n = 1) {
-    const out = [`${n}. ${p.name.trim()}`];
-    if (!p.noStatus) for (const s of [p.novelty, p.course, p.trend]) out.push(s || '***');
-    out.push(...p.notes.map(s => s.trim()).filter(Boolean));
-    const groups = p.ddx.filter(g => g.items.length);
-    if (groups.length === 1 && !groups[0].label) out.push('DDx: ' + groups[0].items.join(', '));
-    else if (groups.length) {
-        out.push('DDx:');
-        for (const g of groups) out.push('>' + (g.label ? g.label + ': ' : '') + g.items.join(', '));
-    }
-    const plan = p.plan.map(s => s.trim()).filter(Boolean);
-    if (plan.length) out.push(...(out.length > 1 ? [''] : []), ...plan.map(s => '- ' + s));
-    return out;
+/**
+ * "#Fatigue", then the supporting lines, "DDx:" with one ">item; reasoning" line per item, and the "- " plan items,
+ * with a blank line between those blocks (not after the header). The status pills aren't printed; they drive billing.
+ * DDx group labels only sort the chips on screen.
+ */
+export function problemLines(p) {
+    const clean = l => l.map(s => s.trim()).filter(Boolean);
+    const ddx = clean(p.ddx.flatMap(g => g.items));
+    const blocks = [clean(p.notes), ddx.length ? ['DDx:', ...ddx.map(s => '>' + s)] : [], clean(p.plan).map(s => '- ' + s)].filter(b => b.length);
+    return ['#' + p.name.trim().replace(/^#+/, ''), ...blocks.flatMap((b, i) => (i ? ['', ...b] : b))];
 }
 
 // A typed reason that already starts with its own connector ("after OSU visit") doesn't get "to" in front.
 const CONNECTOR = /^(to|after|for|before|once|when|if|in|at|with|w\/|re:?|;)(\s|$)/i;
 
-/** "F/u w Dr. Richard in 2 mo to review labs and reassess symptoms". Nothing picked at all → "F/u ***". */
+/** "F/u w Dr. Richard in 2 mo to review labs and reassess symptoms". Nothing picked at all → "" (no line). */
 export function followUp(v) {
     const why = v.fuWhy.map(s => s.trim().replace(/\.+$/, '')).filter(Boolean);
     const who = (v.fuWith || '').trim(); const when = v.fuWhen.trim();
@@ -116,8 +113,7 @@ export function followUp(v) {
     if (who) out.push('w ' + who);
     if (when) out.push(/^(prn|as needed)$/i.test(when) ? 'PRN' : 'in ' + when);
     if (why.length) out.push((CONNECTOR.test(why[0]) ? '' : 'to ') + join(why));
-    if (out.length === 1) out.push('***');
-    return out.join(' ');
+    return out.length === 1 ? '' : out.join(' ');
 }
 
 export const SECTIONS = [
@@ -128,17 +124,16 @@ export const SECTIONS = [
     { key: 'sign', title: 'Signature', short: 'Sign' },
 ];
 
-/** The note as separately copyable sections: [{key, title, short, text}]. Empty CC / exam are left out. */
+/** The note as separately copyable sections: [{key, title, short, text}]. Empty CC / exam / A/P are left out. */
 export function sections(v, signature = '') {
     const text = {};
     if (v.cc.trim()) text.cc = v.cc.trim().replace(/\.+$/, '');
     text.hpi = [oneLiner(v), ...(v.relation === 'new to me' ? [RECORDS] : []), ...v.hpi.map(s => s.trim()).filter(Boolean)].join('\n');
     const vit = vitalsText(v); const exam = examLines(v);
     if (vit || exam.length) text.exam = [...(vit ? ['Vitals: ' + vit] : []), ...exam].join('\n');
-    const ap = [];
-    v.problems.forEach((p, i) => { ap.push(...(i ? [''] : []), ...problemLines(p, i + 1)); });
-    ap.push(...(ap.length ? [''] : []), followUp(v));
-    text.ap = ap.join('\n');
+    const fu = followUp(v);
+    const ap = [...v.problems.map(p => problemLines(p).join('\n')), ...(fu ? [fu] : [])].join('\n\n');
+    if (ap) text.ap = ap;
     text.sign = [signature.trim(), attestation(v)].filter(Boolean).join('\n\n');
     return SECTIONS.filter(s => text[s.key] !== undefined).map(s => ({ ...s, text: plain(text[s.key]) }));
 }
@@ -205,7 +200,8 @@ const WHO = /^(\d{1,3})\s?([FM])\b/;
 const word = (s, set) => set.find(w => w.toLowerCase() === s.trim().toLowerCase());
 
 /**
- * Reads a previous note: every "1. Problem" (or older "#Problem") block after the Assessment/Plan header.
+ * Reads a previous note: every "#Problem" (or older "1. Problem") block after the Assessment/Plan header, or in
+ * the whole paste when there's no header.
  * A block ends at the next problem, an "F/u" / "Follow-up" line, or the signature.
  */
 export function parse(text) {
@@ -221,7 +217,7 @@ export function parse(text) {
         if (s.startsWith('#') && s.length > 1) { close(); p = newProblem({ name: s.slice(1).trim() }); continue; }
         if (NUMBERED.test(s)) { close(); p = newProblem({ name: NUMBERED.exec(s)[1].trim() }); continue; }
         if (/^follow-up/i.test(s) || /^f\/u\b/i.test(s)) { close(); continue; }
-        if (!p || !s || s === '***') continue;
+        if (!p || !s || s === '***') { if (!s) ddxOpen = false; continue; }
         if (word(s, NOVELTY) && !p.novelty) p = { ...p, novelty: word(s, NOVELTY) };
         else if (word(s, COURSE) && !p.course) p = { ...p, course: word(s, COURSE) };
         else if (word(s, TREND) && !p.trend) p = { ...p, trend: word(s, TREND) };
@@ -230,10 +226,12 @@ export function parse(text) {
             if (rest) p = withDdx(p, '', [...ddxItems(p, ''), ...split(rest)]);
             ddxOpen = true;
         } else if (ddxOpen && s.startsWith('>')) {
+            // ">Iron deficiency anemia; most likely given ..." is one item; older notes have ">Hormonal: a, b"
             const body = s.slice(1).trim();
             const c = body.indexOf(':');
-            const label = c >= 0 ? body.slice(0, c).trim() : '';
-            p = withDdx(p, label, [...ddxItems(p, label), ...split(c >= 0 ? body.slice(c + 1) : body)]);
+            const group = !body.includes(';') && c > 0 && !body.slice(0, c).includes(',');
+            const label = group ? body.slice(0, c).trim() : '';
+            p = withDdx(p, label, [...ddxItems(p, label), ...(group ? split(body.slice(c + 1)) : [body])]);
         } else if (s.startsWith('- ') || s.startsWith('• ') || (s.startsWith('-') && !s.startsWith('--'))) {
             ddxOpen = false; p = { ...p, plan: [...p.plan, s.replace(/^[-• ]+/, '')] };
         } else { ddxOpen = false; p = { ...p, notes: [...p.notes, s] }; }

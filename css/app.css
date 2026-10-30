@@ -173,7 +173,16 @@ textarea { resize: vertical; min-height: 3em; }
 .line.dash .linet::before { content: "- "; color: var(--dim); }
 /* a dotphrase line with *** blanks or an unpicked "_a / b" list: tap to fill */
 .line.tmpl { box-shadow: inset 3px 0 0 var(--warn); }
-.picks .flow { margin-top: 10px; }
+.linet { cursor: pointer; }
+/* an "_a / b" pick list as a dropdown, inside the line (amber like the line's edge until picked) */
+select.pick {
+    font: inherit; font-weight: 600; color: var(--warn); background: rgba(232, 163, 61, .12); border: 1px solid rgba(232, 163, 61, .5);
+    border-radius: 8px; padding: 1px 6px; margin: 0 1px; max-width: 100%; vertical-align: baseline; cursor: pointer;
+}
+.picks { display: flex; flex-wrap: wrap; gap: 8px; }
+.picks:not(:empty) { margin-top: 10px; }
+.picks select.pick { padding: 8px 10px; }
+@media (pointer: coarse) { select.pick { font-size: 16px; } }   /* iOS zooms into anything smaller */
 .linex { flex: none; width: 40px; background: none; border: 0; border-radius: 0 10px 10px 0; color: var(--faint); font-size: 20px; line-height: 1; }
 .addrow { display: flex; gap: 8px; align-items: center; }
 .flow.verbs { gap: 6px; }

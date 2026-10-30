@@ -547,7 +547,7 @@ class MainActivity : Activity() {
         card.addView(cxT, LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(8) })
 
         if (!open) {
-            val rest = Note.problem(p0).drop(if (p0.noStatus) 1 else 4).joinToString("\n").trim()
+            val rest = Note.problem(p0).drop(1).joinToString("\n").trim()
             card.addView(label(rest.ifEmpty { "Tap to add notes, DDx, plan" }, 13f, if (rest.isEmpty()) FAINT else DIM).apply {
                 typeface = Typeface.MONOSPACE; setPadding(0, dp(10), 0, 0); setOnClickListener { toggleOpen(id) }
             })
@@ -573,9 +573,22 @@ class MainActivity : Activity() {
         val box = vertical()
         fun p() = v.problem(id)
         fun set(label: String, items: List<String>) { val x = p() ?: return; update { it.withProblem(x.withDdx(label, items)) } }
+        /** Edit an item and add its reasoning: ">Iron deficiency anemia; most likely given ***" (the build spec's DDx form). */
         fun annotate(label: String, item: String, redraw: () -> Unit) {
             val e = EditText(this).apply { setText(item); setTextColor(INK); setSelection(text.length) }
-            AlertDialog.Builder(this).setTitle("Edit DDx item").setView(e)
+            fun why(phrase: String) {
+                e.setText(e.text.toString().replace(Regex("\\s*[;(].*$"), "") + phrase)
+                val j = e.text.indexOf("***"); if (j >= 0) e.setSelection(j, j + 3) else e.setSelection(e.text.length)
+            }
+            val body = vertical().apply {
+                setPadding(dp(20), dp(8), dp(20), 0)
+                addView(e)
+                addView(Flow(this@MainActivity, dp(6)).apply {
+                    addView(small(chip("; most likely given ***") { why("; most likely given ***") }))
+                    addView(small(chip("; considered but unlikely given ***, will ***") { why("; considered but unlikely given ***, will ***") }))
+                })
+            }
+            AlertDialog.Builder(this).setTitle("DDx item").setView(body)
                 .setPositiveButton("Save") { _, _ ->
                     val t = e.text.toString().trim()
                     set(label, p()?.ddxItems(label).orEmpty().mapNotNull { if (it == item) t.ifEmpty { null } else it }); redraw()
@@ -599,12 +612,12 @@ class MainActivity : Activity() {
             box.removeAllViews()
             val x = p() ?: return
             val labels = (lib?.ddx.orEmpty().map { it.label } + x.ddx.map { it.label }).distinct()
-            box.addView(sub("DDx" + if (labels.isEmpty()) "" else " · tap to include · hold to annotate"))
+            box.addView(sub("DDx" + if (labels.isEmpty()) "" else " · tap to include · hold to add reasoning"))
             for (g in labels) {
                 if (g.isNotEmpty()) box.addView(label(">$g", 13f, DIM).apply { setPadding(0, dp(4), 0, dp(4)) })
                 val opts = lib?.ddx?.firstOrNull { it.label == g }?.items.orEmpty()
                 val chosen = x.ddxItems(g)
-                fun matchOf(o: String) = chosen.firstOrNull { it == o || it.startsWith("$o (") }
+                fun matchOf(o: String) = chosen.firstOrNull { it == o || it.startsWith("$o (") || it.startsWith("$o;") }
                 val flow = Flow(this, dp(6))
                 for (o in opts) {
                     val m = matchOf(o)
@@ -612,7 +625,7 @@ class MainActivity : Activity() {
                         set(g, if (m != null) chosen - m else chosen + o); draw()
                     }).apply { if (m != null) setOnLongClickListener { annotate(g, m) { draw() }; true } })
                 }
-                for (extra in chosen.filter { c -> opts.none { c == it || c.startsWith("$it (") } })
+                for (extra in chosen.filter { c -> opts.none { c == it || c.startsWith("$it (") || c.startsWith("$it;") } })
                     flow.addView(small(pill(extra, true) { set(g, chosen - extra); draw() }).apply {
                         setOnLongClickListener { annotate(g, extra) { draw() }; true }
                     })
@@ -630,7 +643,7 @@ class MainActivity : Activity() {
     private fun problemMenu(id: String) {
         val p = v.problem(id) ?: return
         val i = v.problems.indexOfFirst { it.id == id }
-        val items = arrayOf("Rename", "Move up", "Move down", if (p.noStatus) "Show status lines" else "No status lines", "Remove problem")
+        val items = arrayOf("Rename", "Move up", "Move down", if (p.noStatus) "Show status (count for billing)" else "Hide status (not counted for billing)", "Remove problem")
         AlertDialog.Builder(this).setTitle("#" + p.name).setItems(items) { _, w ->
             when (w) {
                 0 -> {

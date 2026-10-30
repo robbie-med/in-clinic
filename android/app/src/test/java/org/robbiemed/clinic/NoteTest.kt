@@ -50,40 +50,80 @@ class NoteTest {
     """.trimIndent()
 
     private val expectedAp = """
-        1. Fatigue
-        New
-        Chronic
-        Worsening
+        #Fatigue
         Incidental pituitary finding on prior imaging; labs not yet done
         Prior cortisol confounded by IV steroid the day before
         Denies recent steroid use
+
         DDx:
-        >Non-hormonal: OSA, depression/anxiety (PHQ-9 negative), medication effect (fatigue, mood change), iron deficiency anemia
-        >Hormonal: hyperprolactinemia, central adrenal insufficiency, panhypopituitarism, perimenopause/estrogen insufficiency
+        >OSA
+        >depression/anxiety (PHQ-9 negative)
+        >medication effect (fatigue, mood change)
+        >iron deficiency anemia
+        >hyperprolactinemia
+        >central adrenal insufficiency
+        >panhypopituitarism
+        >perimenopause/estrogen insufficiency
 
         - 8 AM serum cortisol with simultaneous ACTH, DHEA-S
         - TSH, free T4, IGF-1, prolactin, estradiol, LH, FSH
         - CBC, CMP, A1C, ferritin, iron panel
         - Sleep study ordered
 
-        2. Left hand tingling
-        New
-        Acute
-        Stable
+        #Left hand tingling
         Seen by neurology; workup ongoing
         Neurology recommends continuing current meds
 
         - Continue current meds; defer changes for now
 
-        3. HTN
-        Known
-        Chronic
-        Stable
-
+        #HTN
         - CONT amlodipine 5 mg PO daily
 
         F/u in 2 wk to review labs and confirm sleep study scheduled
     """.trimIndent()
+
+    /** The clinic example from the build spec, character for character (same as tools/test.mjs). */
+    private val golden = """
+        #Fatigue
+        Likely iron deficiency anemia given menorrhagia and microcytosis.
+        Hgb 10.8, MCV 76, ferritin 9, no melena or hematochezia.
+
+        DDx:
+        >Iron deficiency anemia; most likely given menorrhagia and ferritin 9, treating empirically
+        >Hypothyroidism; considered but unlikely given no cold intolerance or weight gain, TSH to exclude
+
+        - START ferrous sulfate 325 mg PO every other day with vitamin C source
+        - Increase dietary iron: red meat 2-3x/wk, lentils, spinach; avoid tea/coffee within 1 hr of dose
+        - TSH today
+        - Repeat CBC, ferritin in 8 wk
+
+        #Primary hypertension
+        Above goal on current regimen, home average 142/90.
+        No hypokalemia, no resistant pattern.
+
+        - CONT lisinopril 10 mg PO daily
+        - INCR. lisinopril to 20 mg PO daily if home average >130/80 at f/u
+        - DASH diet, sodium <2 g/day, 150 min/wk moderate aerobic activity
+        - Home BP log BID x 2 wk, f/u 4 wk
+
+        #Deferred to future visit
+        - Lipid screening
+        - Colon cancer screening
+    """.trimIndent()
+
+    private val goldenVisit = Visit(age = "34", sex = "F", problems = listOf(
+        Problem(name = "Fatigue", novelty = "New", course = "Subacute", trend = "Worsening",
+            notes = listOf("Likely iron deficiency anemia given menorrhagia and microcytosis.", "Hgb 10.8, MCV 76, ferritin 9, no melena or hematochezia."),
+            ddx = listOf(Ddx("Hematologic", listOf("Iron deficiency anemia; most likely given menorrhagia and ferritin 9, treating empirically")),
+                Ddx("Endocrine", listOf("Hypothyroidism; considered but unlikely given no cold intolerance or weight gain, TSH to exclude"))),
+            plan = listOf("START ferrous sulfate 325 mg PO every other day with vitamin C source",
+                "Increase dietary iron: red meat 2-3x/wk, lentils, spinach; avoid tea/coffee within 1 hr of dose", "TSH today", "Repeat CBC, ferritin in 8 wk")),
+        Problem(name = "Primary hypertension", novelty = "Known", course = "Chronic", trend = "Worsening",
+            notes = listOf("Above goal on current regimen, home average 142/90.", "No hypokalemia, no resistant pattern."),
+            plan = listOf("CONT lisinopril 10 mg PO daily", "INCR. lisinopril to 20 mg PO daily if home average >130/80 at f/u",
+                "DASH diet, sodium <2 g/day, 150 min/wk moderate aerobic activity", "Home BP log BID x 2 wk, f/u 4 wk")),
+        Problem(name = "Deferred to future visit", noStatus = true, plan = listOf("Lipid screening", "Colon cancer screening")),
+    ))
 
     private fun text(v: Visit, sig: String = "") = Note.sections(v, sig).associate { it.key to it.text }
 
@@ -101,19 +141,32 @@ class NoteTest {
         val t = text(Visit(problems = listOf(Problem(name = "Cough"))))
         assertEquals(listOf("hpi", "ap", "sign"), t.keys.toList())
         assertEquals("*** known to me presents for follow-up.", t["hpi"])
-        assertEquals("1. Cough\n***\n***\n***\n\nF/u ***", t["ap"])
+        assertEquals("#Cough", t["ap"])
     }
 
-    @Test fun statusLinesPrintAndHealthMaintenanceHasNone() {
+    @Test fun statusIsNotPrintedAndBlocksAreSeparatedByABlankLine() {
         val hm = Library.problem(Library.get("hm")!!).copy(plan = listOf("Tdap"))
-        assertEquals(listOf("4. Health maintenance", "- Tdap"), Note.problem(hm, 4))
+        assertEquals(listOf("#Health maintenance", "- Tdap"), Note.problem(hm))
         val htn = Problem(name = "HTN", novelty = "Known", course = "Chronic", trend = "Stable", notes = listOf("At goal"), plan = listOf("CONT x"))
-        assertEquals(listOf("1. HTN", "Known", "Chronic", "Stable", "At goal", "", "- CONT x"), Note.problem(htn))
+        assertEquals(listOf("#HTN", "At goal", "", "- CONT x"), Note.problem(htn))
+        val cough = Problem(name = "#Cough", ddx = listOf(Ddx("Infectious", listOf("viral URI; most likely")), Ddx("", listOf("GERD"))))
+        assertEquals(listOf("#Cough", "DDx:", ">viral URI; most likely", ">GERD"), Note.problem(cough))
     }
 
-    @Test fun unlabelledDdxIsOneLine() {
-        val p = Problem(name = "Cough", ddx = listOf(Ddx("", listOf("viral URI", "GERD"))))
-        assertTrue("DDx: viral URI, GERD" in Note.problem(p))
+    @Test fun apMatchesTheClinicExampleExactly() = assertEquals(golden, text(goldenVisit)["ap"])
+
+    @Test fun theClinicExampleParsesBackToTheSameAp() {
+        val r = Note.parse(golden)
+        assertEquals(listOf("Fatigue", "Primary hypertension", "Deferred to future visit"), r.problems.map { it.name })
+        assertEquals(listOf(Ddx("", goldenVisit.problems[0].ddx.flatMap { it.items })), r.problems[0].ddx)
+        assertEquals(golden, text(Visit(problems = r.problems))["ap"])
+    }
+
+    @Test fun deferredPlanIsNotBilledAndTheExampleBills99214() {
+        val v = Visit(problems = listOf(Problem(name = "Deferred to future visit", noStatus = true, plan = listOf("Mammogram", "Lipid panel", "START statin"))))
+        assertEquals(emptyList<String>(), Billing.testsOrdered(v))
+        assertEquals(1, Billing.bill(v).risk.lvl)
+        assertEquals("99214", Billing.bill(goldenVisit).code)
     }
 
     @Test fun oneLinerVariants() {
@@ -132,7 +185,7 @@ class NoteTest {
         assertEquals("F/u w Dr. Owen after specialist visit and ED precautions reviewed",
             Note.followUp(Visit(fuWith = "Dr. Owen", fuWhy = listOf("after specialist visit", "ED precautions reviewed"))))
         assertEquals("F/u PRN", Note.followUp(Visit(fuWhen = "PRN")))
-        assertEquals("F/u ***", Note.followUp(Visit()))
+        assertEquals("", Note.followUp(Visit()))   // no follow-up line
     }
 
     @Test fun parseRoundTrips() {
@@ -140,8 +193,8 @@ class NoteTest {
         assertEquals("52", parsed.age); assertEquals("F", parsed.sex)
         assertEquals(sample.problems.map { it.name }, parsed.problems.map { it.name })
         for ((a, b) in sample.problems.zip(parsed.problems)) {
-            assertEquals(a.novelty, b.novelty); assertEquals(a.course, b.course); assertEquals(a.trend, b.trend)
-            assertEquals(a.notes, b.notes); assertEquals(a.ddx, b.ddx); assertEquals(a.plan, b.plan)
+            assertEquals(a.notes, b.notes); assertEquals(a.plan, b.plan)
+            assertEquals(a.ddx.flatMap { it.items }, b.ddx.flatMap { it.items })
         }
     }
 
@@ -187,7 +240,11 @@ class NoteTest {
         assertEquals(listOf("CONT metformin 500 mg BID", "f/u in 2-3 weeks"), r.problems[1].plan)
     }
 
-    @Test fun stillReadsTheOldHashFormat() {
+    @Test fun stillReadsOlderNotes() {
+        val r0 = Note.parse("Assessment/Plan\n1. Fatigue\nNew\nChronic\nDDx:\n>Hormonal: hyperprolactinemia, central adrenal insufficiency\n\n- TSH")
+        assertEquals("Chronic", r0.problems[0].course)
+        assertEquals(listOf(Ddx("Hormonal", listOf("hyperprolactinemia", "central adrenal insufficiency"))), r0.problems[0].ddx)
+        assertEquals(listOf("TSH"), r0.problems[0].plan)
         val r = Note.parse("52F known to me.\n\nPLAN\n\n#HTN\nKnown\nChronic\nStable\n\n- CONT amlodipine\n\nFollow-up: 2 wk.")
         assertEquals("HTN", r.problems[0].name); assertEquals("Stable", r.problems[0].trend); assertEquals(listOf("CONT amlodipine"), r.problems[0].plan)
     }

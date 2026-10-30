@@ -83,6 +83,11 @@ class BillingTest {
         assertEquals(3, Billing.bill(Visit(sdoh = true, problems = listOf(Problem(name = "x", plan = listOf("labs"))))).risk.lvl)
     }
 
+    @Test fun buildStyleMedVerbsCountAsRx() {
+        for (l in listOf("INCR. lisinopril to 20 mg PO daily", "DECR. metoprolol to 25 mg PO BID", "HOLD metformin while AKI"))
+            assertEquals(l, 3, Billing.bill(Visit(problems = listOf(Problem(name = "x", plan = listOf(l))))).risk.lvl)
+    }
+
     @Test fun unfilledTemplateLinesAreNotCounted() {
         val plan = listOf("BMP and UACR ***", "CONT lisinopril *** mg PO daily", "Statin: _moderate / high intensity, start ***", "Naloxone prescribed ***")
         val v = Visit(problems = listOf(Problem(name = "x", plan = plan)))

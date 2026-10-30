@@ -31,21 +31,30 @@ History of Present Illness  41F known to me presents for follow-up of fatigue.
                             <HPI lines>
 Physical Exam               General: No acute distress, pleasant, conversant, well-groomed
                             MSK: Normal ambulation, no clubbing or cyanosis, myofascial trigger points
-Assessment/Plan             1. Fatigue
-                            New
-                            Chronic
-                            Worsening
-                            <supporting lines>
+Assessment/Plan             #Fatigue
+                            Likely iron deficiency anemia given menorrhagia and microcytosis.
+                            Hgb 10.8, MCV 76, ferritin 9, no melena or hematochezia.
+
                             DDx:
-                            >Hormonal: hyperprolactinemia
+                            >Iron deficiency anemia; most likely given menorrhagia and ferritin 9, treating empirically
+                            >Hypothyroidism; considered but unlikely given no cold intolerance or weight gain, TSH to exclude
 
-                            - 8 AM serum cortisol with simultaneous ACTH, DHEA-S
+                            - START ferrous sulfate 325 mg PO every other day with vitamin C source
+                            - TSH today
 
-                            F/u w Dr. Richard in 2 wk to review labs
+                            #Deferred to future visit
+                            - Lipid screening
+
+                            F/u w Dr. Richard in 2 wk to review labs   (only if follow-up is filled in)
 Signature                   <your signature block> + teaching-physician attestation
 ```
 - "New to me" prints the line *This was my first time seeing this patient, but records were available for review and the patient is well-known to our clinic.* under the one-liner.
-- Status lines (New/Known, Acute/Subacute/Chronic, trend) print one per line under the problem; an unpicked one prints `***`. They also drive the billing level.
+- The A/P follows the build spec's format (`~/Projects/dot/Cerner Dot Phrase Build Spec.md`). Both test suites check it against the spec's clinic example character for character:
+  `#Problem`, then the supporting lines, `DDx:` with one `>item; reasoning` line per item, and `- ` plan lines, with a blank line between those blocks.
+- DDx: hold or right-click a picked item for **; most likely given \*\*\*** or **; considered but unlikely given \*\*\*, will \*\*\***. Group labels (">Hormonal") only sort the chips on screen and don't print.
+- The status pills (New/Known, Acute/Subacute/Chronic, trend) aren't printed; they drive the billing level. **Hide status** in a problem's ⋯ leaves it out of billing.
+- **Deferred to future visit** is a problem in the picker. Its plan lines print, but billing never counts them.
+- Paste last note reads this format and the older numbered one.
 - The attestation follows the billed code: 99202/99203/99212/99213 get the primary-care-exception text, and 99204/99205/99214/99215 get the "physically present" text.
 
 ## Billing
@@ -81,7 +90,7 @@ It's a suggestion, conservative when unsure. You pick the code.
 Adding a problem fills its Notes and Plan from your dotphrase library (`~/Projects/dot`). The block's text lines go into Notes and its `- ` lines go into Plan.
 - Library problems use their mapped block (HTN → `#htn`, T2DM → `#dm2`, Fatigue → `#wufatigue`, …).
   The ~130 clinic blocks without a library problem are in the **+ Problem** search by name or `#abbr` (e.g. `#pcos`, `#prep`, `#fibro`).
-- Lines with a `***` blank or an unpicked `_a / b` list have an amber edge. Tap one: its choices show as buttons, and the next `***` is selected so you can type over it.
+- An `_a / b / c` list in a line shows as a dropdown right in the line; picking writes the choice into the line and the note. Lines with a `***` blank or an unpicked list have an amber edge. Tap one to edit it: the next `***` is selected so you can type over it.
   Billing doesn't count these lines until they're filled. Delete what you don't need with ×.
 - A problem added another way (e.g. Paste last note) has **Insert #abbr dotphrase** in its ⋯ menu.
 - Only the clinic `#` problem blocks are copied, into `dotphrases.json`; the rest of the library stays in `~/Projects/dot`.

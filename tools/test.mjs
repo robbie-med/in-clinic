@@ -60,36 +60,33 @@ Complains of fatigue, poor sleep and low mood for several months
 Recently moved; new commute
 Denies significant stress; does not explain all symptoms
 LMP 2 wk ago`,
-    ap: `1. Fatigue
-New
-Chronic
-Worsening
+    ap: `#Fatigue
 Incidental pituitary finding on prior imaging; labs not yet done
 Prior cortisol confounded by IV steroid the day before
 Denies recent steroid use
+
 DDx:
->Non-hormonal: OSA, depression/anxiety (PHQ-9 negative), medication effect (fatigue, mood change), iron deficiency anemia
->Hormonal: hyperprolactinemia, central adrenal insufficiency, panhypopituitarism, perimenopause/estrogen insufficiency
+>OSA
+>depression/anxiety (PHQ-9 negative)
+>medication effect (fatigue, mood change)
+>iron deficiency anemia
+>hyperprolactinemia
+>central adrenal insufficiency
+>panhypopituitarism
+>perimenopause/estrogen insufficiency
 
 - 8 AM serum cortisol with simultaneous ACTH, DHEA-S
 - TSH, free T4, IGF-1, prolactin, estradiol, LH, FSH
 - CBC, CMP, A1C, ferritin, iron panel
 - Sleep study ordered
 
-2. Left hand tingling
-New
-Acute
-Stable
+#Left hand tingling
 Seen by neurology; workup ongoing
 Neurology recommends continuing current meds
 
 - Continue current meds; defer changes for now
 
-3. HTN
-Known
-Chronic
-Stable
-
+#HTN
 - CONT amlodipine 5 mg PO daily
 
 F/u in 2 wk to review labs and confirm sleep study scheduled`,
@@ -109,16 +106,62 @@ test('empty visit', () => {
     const t = text(Note.newVisit({ problems: [P({ name: 'Cough' })] }));
     assert.deepEqual(Object.keys(t), ['hpi', 'ap', 'sign']);
     assert.equal(t.hpi, '*** known to me presents for follow-up.');
-    assert.equal(t.ap, '1. Cough\n***\n***\n***\n\nF/u ***');
+    assert.equal(t.ap, '#Cough');
 });
-test('status lines print (unpicked = ***); health maintenance has none', () => {
-    const l = Library.get('hm');
-    assert.deepEqual(Note.problemLines(P({ name: l.name, lib: l.key, noStatus: true, plan: ['Tdap'] }), 4), ['4. Health maintenance', '- Tdap']);
+test('status pills are not printed; blank line between notes, DDx and plan, none after the header', () => {
+    assert.deepEqual(Note.problemLines(P({ name: 'Health maintenance', noStatus: true, plan: ['Tdap'] })), ['#Health maintenance', '- Tdap']);
     assert.deepEqual(Note.problemLines(P({ name: 'HTN', novelty: 'Known', course: 'Chronic', trend: 'Stable', notes: ['At goal'], plan: ['CONT x'] })),
-        ['1. HTN', 'Known', 'Chronic', 'Stable', 'At goal', '', '- CONT x']);
+        ['#HTN', 'At goal', '', '- CONT x']);
+    assert.deepEqual(Note.problemLines(P({ name: '#Cough', ddx: [{ label: 'Infectious', items: ['viral URI; most likely'] }, { label: '', items: ['GERD'] }] })),
+        ['#Cough', 'DDx:', '>viral URI; most likely', '>GERD']);
 });
-test('unlabelled DDx is one line', () =>
-    assert.ok(Note.problemLines(P({ name: 'Cough', ddx: [{ label: '', items: ['viral URI', 'GERD'] }] })).includes('DDx: viral URI, GERD')));
+
+// The clinic example from the build spec, character for character
+const golden = `#Fatigue
+Likely iron deficiency anemia given menorrhagia and microcytosis.
+Hgb 10.8, MCV 76, ferritin 9, no melena or hematochezia.
+
+DDx:
+>Iron deficiency anemia; most likely given menorrhagia and ferritin 9, treating empirically
+>Hypothyroidism; considered but unlikely given no cold intolerance or weight gain, TSH to exclude
+
+- START ferrous sulfate 325 mg PO every other day with vitamin C source
+- Increase dietary iron: red meat 2-3x/wk, lentils, spinach; avoid tea/coffee within 1 hr of dose
+- TSH today
+- Repeat CBC, ferritin in 8 wk
+
+#Primary hypertension
+Above goal on current regimen, home average 142/90.
+No hypokalemia, no resistant pattern.
+
+- CONT lisinopril 10 mg PO daily
+- INCR. lisinopril to 20 mg PO daily if home average >130/80 at f/u
+- DASH diet, sodium <2 g/day, 150 min/wk moderate aerobic activity
+- Home BP log BID x 2 wk, f/u 4 wk
+
+#Deferred to future visit
+- Lipid screening
+- Colon cancer screening`;
+const goldenVisit = Note.newVisit({ age: '34', sex: 'F', problems: [
+    P({ name: 'Fatigue', novelty: 'New', course: 'Subacute', trend: 'Worsening',
+        notes: ['Likely iron deficiency anemia given menorrhagia and microcytosis.', 'Hgb 10.8, MCV 76, ferritin 9, no melena or hematochezia.'],
+        ddx: [{ label: 'Hematologic', items: ['Iron deficiency anemia; most likely given menorrhagia and ferritin 9, treating empirically'] },
+            { label: 'Endocrine', items: ['Hypothyroidism; considered but unlikely given no cold intolerance or weight gain, TSH to exclude'] }],
+        plan: ['START ferrous sulfate 325 mg PO every other day with vitamin C source',
+            'Increase dietary iron: red meat 2-3x/wk, lentils, spinach; avoid tea/coffee within 1 hr of dose', 'TSH today', 'Repeat CBC, ferritin in 8 wk'] }),
+    P({ name: 'Primary hypertension', novelty: 'Known', course: 'Chronic', trend: 'Worsening',
+        notes: ['Above goal on current regimen, home average 142/90.', 'No hypokalemia, no resistant pattern.'],
+        plan: ['CONT lisinopril 10 mg PO daily', 'INCR. lisinopril to 20 mg PO daily if home average >130/80 at f/u',
+            'DASH diet, sodium <2 g/day, 150 min/wk moderate aerobic activity', 'Home BP log BID x 2 wk, f/u 4 wk'] }),
+    P({ name: 'Deferred to future visit', noStatus: true, plan: ['Lipid screening', 'Colon cancer screening'] }),
+] });
+test('A/P matches the clinic example exactly', () => assert.equal(text(goldenVisit).ap, golden));
+test('the clinic example parses back to the same A/P', () => {
+    const r = Note.parse(golden);
+    assert.deepEqual(r.problems.map(p => p.name), ['Fatigue', 'Primary hypertension', 'Deferred to future visit']);
+    assert.deepEqual(r.problems[0].ddx, [{ label: '', items: goldenVisit.problems[0].ddx.flatMap(g => g.items) }]);
+    assert.equal(text(Note.newVisit({ problems: r.problems })).ap, golden);
+});
 test('one-liner variants', () => {
     assert.equal(Note.oneLiner(Note.newVisit({ age: '63', sex: 'M', relation: 'new to clinic', type: 'establish' })), '63M new to clinic presents to establish care.');
     assert.equal(Note.oneLiner(Note.newVisit({ age: '28', sex: 'F', type: 'acute', cc: 'cough x5 days' })), '28F known to me presents for cough x5 days.');
@@ -133,7 +176,7 @@ test('follow-up line', () => {
     assert.equal(fu({ fuWith: 'Dr. Richard', fuWhen: '2 mo', fuWhy: ['prenatal care'] }), 'F/u w Dr. Richard in 2 mo to prenatal care');
     assert.equal(fu({ fuWith: 'Dr. Owen', fuWhy: ['after specialist visit', 'ED precautions reviewed'] }), 'F/u w Dr. Owen after specialist visit and ED precautions reviewed');
     assert.equal(fu({ fuWhen: 'PRN' }), 'F/u PRN');
-    assert.equal(fu({}), 'F/u ***');
+    assert.equal(fu({}), '');   // no follow-up line
 });
 test('parse round-trips', () => {
     const r = Note.parse('History of Present Illness\n' + expected.hpi + '\n\nAssessment/Plan\n' + expected.ap);
@@ -141,7 +184,8 @@ test('parse round-trips', () => {
     assert.deepEqual(r.problems.map(p => p.name), sample.problems.map(p => p.name));
     sample.problems.forEach((a, i) => {
         const b = r.problems[i];
-        for (const k of ['novelty', 'course', 'trend', 'notes', 'ddx', 'plan']) assert.deepEqual(b[k], a[k], `${a.name}.${k}`);
+        for (const k of ['notes', 'plan']) assert.deepEqual(b[k], a[k], `${a.name}.${k}`);
+        assert.deepEqual(b.ddx.flatMap(g => g.items), a.ddx.flatMap(g => g.items), `${a.name}.ddx`);
     });
 });
 // Synthetic note in the shape the EMR pastes back (leading spaces, stray blanks, signature + attestation after)
@@ -182,7 +226,11 @@ test('parses an EMR paste and stops at the signature', () => {
     assert.deepEqual(r.problems[0].notes, ['Likely venous insufficiency', 'No calf tenderness']);
     assert.deepEqual(r.problems[1].plan, ['CONT metformin 500 mg BID', 'f/u in 2-3 weeks']);
 });
-test('still reads the old #problem format', () => {
+test('still reads older notes: "1. Problem", status lines, ">Label: a, b" DDx', () => {
+    const r0 = Note.parse('Assessment/Plan\n1. Fatigue\nNew\nChronic\nDDx:\n>Hormonal: hyperprolactinemia, central adrenal insufficiency\n\n- TSH');
+    assert.equal(r0.problems[0].course, 'Chronic');
+    assert.deepEqual(r0.problems[0].ddx, [{ label: 'Hormonal', items: ['hyperprolactinemia', 'central adrenal insufficiency'] }]);
+    assert.deepEqual(r0.problems[0].plan, ['TSH']);
     const r = Note.parse('52F known to me.\n\nPLAN\n\n#HTN\nKnown\nChronic\nStable\n\n- CONT amlodipine\n\nFollow-up: 2 wk.');
     assert.equal(r.problems[0].name, 'HTN'); assert.equal(r.problems[0].trend, 'Stable'); assert.deepEqual(r.problems[0].plan, ['CONT amlodipine']);
 });
@@ -210,7 +258,7 @@ test('all untouched -> nL skips optional systems', () => {
 });
 test('old saved visits still render', () => {
     const old = Note.newVisit(); for (const k of ['exam', 'vitals', 'fuWith', 'data', 'risk', 'code', 'copied']) delete old[k];
-    assert.equal(text(old).ap, 'F/u ***');
+    assert.equal(text(old).ap, undefined);
     assert.equal(Billing.bill(old).code, '99212');
 });
 test('exam is ASCII', () => Library.data.exam.forEach(s => [s.name, s.normal, ...s.abnormal].forEach(x => assert.ok(/^[\x00-\x7f]*$/.test(x), x))));
@@ -294,6 +342,16 @@ test('unfilled template lines (*** or an unpicked "_a / b") are not counted', ()
     assert.deepEqual(Billing.testsOrdered(filled), ['BMP', 'UACR']);
     assert.equal(Billing.bill(filled).risk.lvl, 3);
 });
+test('the build style\'s med verbs (INCR. / DECR. / HOLD) count as Rx management', () => {
+    for (const l of ['INCR. lisinopril to 20 mg PO daily', 'DECR. metoprolol to 25 mg PO BID', 'HOLD metformin while AKI'])
+        assert.equal(Billing.bill(V({ problems: [P({ name: 'x', plan: [l] })] })).risk.lvl, 3, l);
+});
+test('plan under "Deferred to future visit" is not counted', () => {
+    const v = V({ problems: [P({ name: 'Deferred to future visit', noStatus: true, plan: ['Mammogram', 'Lipid panel', 'START statin'] })] });
+    assert.deepEqual(Billing.testsOrdered(v), []);
+    assert.equal(Billing.bill(v).risk.lvl, 1);
+    assert.equal(Billing.bill(goldenVisit).code, '99214');   // the clinic example: 2 problems, IDA workup, Rx
+});
 
 // ---- dotphrases
 test('dotphrase blocks fill a new problem; pick lists parse', () => {
@@ -305,16 +363,31 @@ test('dotphrase blocks fill a new problem; pick lists parse', () => {
         assert.ok(ph.name && !ph.name.startsWith('#'), ph.abbr);
     }
     const htn = Dot.fill(Note.newProblem({ name: 'HTN', lib: 'htn' }), Dot.find('htn'));
-    assert.equal(htn.notes[0], '_controlled / uncontrolled, office BP ***, home average ***. Most likely primary given ***.');
-    assert.ok(htn.plan.includes('Home BP log, goal under 130/80'));
+    assert.deepEqual([htn.notes, htn.plan], [Dot.find('htn').notes, Dot.find('htn').plan]);   // follows the library as rebuilt
+    assert.ok(htn.plan.length > 0);
     assert.equal(Dot.fill(htn, Dot.find('htn')).plan.length, htn.plan.length);   // no duplicates
     assert.equal(Dot.find('', '#pcos')?.abbr, '#pcos');
+    for (const ph of dot.phrases) assert.ok(!ph.notes.some(l => /^(DDx:?|>)/.test(l)), `${ph.abbr}: DDx lines belong in ddx`);
+    const ddxBlock = { notes: ['n'], ddx: ['A; most likely given ***', 'B; considered but unlikely given ***'], plan: ['p'] };
+    const filled = Dot.fill(Note.newProblem({ name: 'x', ddx: [{ label: 'Lab', items: ['C'] }] }), ddxBlock);
+    assert.deepEqual(filled.ddx, [{ label: 'Lab', items: ['C'] }, { label: '', items: ddxBlock.ddx }]);
+    assert.deepEqual(Dot.fill(filled, ddxBlock).ddx, filled.ddx);   // no duplicates
+    assert.deepEqual(Note.problemLines(filled), ['#x', 'n', '', 'DDx:', '>C', '>A; most likely given ***', '>B; considered but unlikely given ***', '', '- p']);
     assert.equal(Dot.find('', 'polycystic ovary syndrome')?.abbr, '#pcos');
     assert.equal(Dot.find('', 'no such thing'), null);
     assert.equal(Dot.search('pcos')[0].abbr, '#pcos');
     assert.ok(!Dot.search('hyper').some(p => p.lib));   // library problems aren't listed twice
     assert.deepEqual(picks('LDL goal: _under 100 / under 70, then ***').map(x => x.options), [['under 100', 'under 70']]);
     assert.deepEqual(picks('my_file / x'), []);
+    const opts = l => picks(l).map(x => x.options);
+    assert.deepEqual(opts('BP _controlled / uncontrolled on current regimen, most likely primary given ***.'), [['controlled', 'uncontrolled']]);
+    assert.deepEqual(opts('_minimal / mild / moderate / moderately severe / severe on current regimen, ***.'), [['minimal', 'mild', 'moderate', 'moderately severe', 'severe']]);
+    assert.deepEqual(opts('_mild / moderate / severe alcohol use disorder, ***.'), [['mild', 'moderate', 'severe']]);
+    assert.deepEqual(opts('_mild cognitive impairment / dementia given ***.'), [['mild cognitive impairment', 'dementia']]);
+    assert.deepEqual(opts('_acute flare / chronic gout, *** on current regimen.'), [['acute flare', 'chronic gout']]);
+    assert.deepEqual(opts('Plan: _taper now / taper later / continue with risk reduction'), [['taper now', 'taper later', 'continue with risk reduction']]);
+    const pk = picks('BP _controlled / uncontrolled on current regimen, ***.')[0];
+    assert.equal('BP _controlled / uncontrolled on current regimen, ***.'.slice(pk.at, pk.at + pk.text.length), pk.text);
     assert.ok(unfilled('_a / b') && unfilled('dose ***') && !unfilled('dose 10 mg'));
 });
 

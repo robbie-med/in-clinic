@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Copies the clinic problem blocks (#abbr) from the dotphrase library (~/Projects/dot) into dotphrases.json.
-// Adding a problem fills its Notes and Plan from the matching block: the block's text lines become Notes
-// and its "- " lines become Plan lines. Only the # problem blocks for clinic settings are copied; the rest
+// Adding a problem fills it from the matching block: text lines become Notes, the ">item; reasoning" lines under
+// "DDx:" become DDx items, and "- " lines become Plan lines. Only the # problem blocks for clinic settings are copied; the rest
 // of the library (OB, inpatient, patient instructions, the Cerner dump) stays in ~/Projects/dot.
 //   node tools/import-dot.mjs [path/to/dot]     (default ../dot), then: node tools/version-sw.mjs
 import fs from 'node:fs';
@@ -48,9 +48,13 @@ for (const m of md.matchAll(/^### (#\w+) : (.+?)\n\n[\s\S]*?\n```\n([\s\S]*?)\n`
     if (!/^Clinic/.test(setting)) continue;
     const lines = body.split('\n').map(s => s.trim()).filter(Boolean);
     const name = (lines[0].startsWith('#') ? lines.shift() : '#' + title).slice(1).trim();
-    const notes = []; const plan = [];
-    for (const l of lines) (l.startsWith('- ') ? plan : notes).push(l.startsWith('- ') ? l.slice(2).trim() : l);
-    phrases.push({ abbr, title, name, setting, ...(byLib[abbr] ? { lib: byLib[abbr] } : {}), notes, plan });
+    const notes = []; const ddx = []; const plan = [];
+    for (const l of lines) {
+        if (l.startsWith('- ')) plan.push(l.slice(2).trim());
+        else if (l.startsWith('>') && !l.startsWith('>>')) ddx.push(l.slice(1).trim());
+        else if (!/^DDx:?$/i.test(l)) notes.push(l);
+    }
+    phrases.push({ abbr, title, name, setting, ...(byLib[abbr] ? { lib: byLib[abbr] } : {}), notes, ddx, plan });
 }
 
 const missing = Object.values(LIB).filter(a => !phrases.some(p => p.abbr === a));

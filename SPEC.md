@@ -13,8 +13,10 @@ The note is written by the time you walk out of the room. You tap through the vi
 ## Output format (the clinic's template)
 Sections, each copied on its own into the EMR (titles not included): Chief Complaint, History of Present Illness (one-liner, the
 "first time seeing this patient" records line for *new to me*, HPI lines), Physical Exam (vitals if typed, then examined systems),
-Assessment/Plan (`1. Problem`, status lines New|Known / Acute|Subacute|Chronic / trend with `***` if unpicked, supporting lines, DDx, blank, `- plan`; then `F/u w <who> in <when> to <why>`), Signature (signature setting + attestation).
-Status lines also feed billing. Pinned by `NoteTest` and `tools/test.mjs`.
+Assessment/Plan in the build spec's format (`~/Projects/dot`): `#Problem`, supporting lines, `DDx:` + one `>item; reasoning` line per item,
+`- plan`, a blank line between blocks; then `F/u w <who> in <when> to <why>` only if follow-up is filled in. Signature (signature setting + attestation).
+Status pills aren't printed; they feed billing. "Deferred to future visit" plan lines print but aren't billed.
+Pinned by `NoteTest` and `tools/test.mjs`, including the spec's clinic example character for character (2026-10-30).
 
 ## Billing
 AMA 2021+ office E/M by MDM (2nd-highest of problems, data, risk). Problems from status pills, with a per-problem override. Data from

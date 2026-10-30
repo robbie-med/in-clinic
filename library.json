@@ -2,9 +2,10 @@
   "medVerbs": [
     "CONT ",
     "START ",
-    "INCREASE ",
-    "DECREASE ",
+    "INCR. ",
+    "DECR. ",
     "STOP ",
+    "HOLD ",
     "REFILL "
   ],
   "hpiGeneric": [
@@ -1347,6 +1348,26 @@
         "AAA ultrasound",
         "DEXA",
         "Low-dose CT lung cancer screening"
+      ]
+    },
+    {
+      "key": "deferred",
+      "name": "Deferred to future visit",
+      "aliases": [
+        "deferred",
+        "future visit",
+        "next visit"
+      ],
+      "noStatus": true,
+      "notes": [],
+      "plan": [
+        "Lipid screening",
+        "Colon cancer screening",
+        "Breast cancer screening",
+        "Cervical cancer screening",
+        "Diabetes screening",
+        "Vaccines",
+        "Medication review"
       ]
     }
   ]

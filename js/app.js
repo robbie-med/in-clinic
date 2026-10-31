@@ -683,7 +683,9 @@ function addProblem() {
         const rows = [];
         // Show the alias the search matched ("annual" → Health maintenance · annual), else the first two
         const lq = s.toLowerCase();
-        for (const l of Library.search(s)) {
+        // "#uti" names the block of a library problem: that problem comes first
+        const byAbbr = Library.get(Dot.phrases.find(p => p.lib && p.abbr === lq)?.lib);
+        for (const l of [...(byAbbr ? [byAbbr] : []), ...Library.search(s).filter(l => l !== byAbbr)]) {
             const hit = lq && !l.name.toLowerCase().includes(lq) ? (l.aliases || []).filter(a => a.includes(lq)).slice(0, 1) : [];
             rows.push([l.name, [Dot.find(l.key)?.abbr, ...(hit.length ? hit : (l.aliases || []).slice(0, 2))].filter(Boolean).join(', '), () => add(fromLib(l))]);
         }
@@ -852,15 +854,21 @@ function Lines({ get, set, chips, learnKey = () => null, kind = '', placeholder,
             } },
         ].filter(Boolean) });
     };
-    const remove = i => { set(get().filter((_, j) => j !== i)); draw(); };
+    /** × on a line deletes it; on an "If DMPA:" branch header it deletes the header and the lines under it. */
+    const remove = i => {
+        const l = get(); let j = i + 1;
+        if (B.isBranch(l[i])) while (j < l.length && !B.isBranch(l[j])) j++;
+        set(l.filter((_, k) => k < i || k >= j)); draw();
+    };
 
     function draw() {
-        rows.replaceChildren(...get().map((s, i) => h('div', { class: 'line' + (dash ? ' dash' : '') + (unfilled(s) ? ' tmpl' : '') },
+        rows.replaceChildren(...get().map((s, i) => h('div', { class: 'line' + (B.isBranch(s) ? ' branch' : dash ? ' dash' : '') + (unfilled(s) ? ' tmpl' : '') },
             h('div', { class: 'linet', role: 'button', tabIndex: 0, onclick: () => edit(i),
                 onkeydown: e => { if (e.key === 'Enter' && e.target === e.currentTarget) edit(i); },
                 title: unfilled(s) ? 'Has blanks to fill (not counted for billing until filled)' : 'Edit' },
             withDropdowns(s, n => { set(get().map((x, j) => (j === i ? n : x))); draw(); })),
-            h('button', { type: 'button', class: 'linex', onclick: () => remove(i), 'aria-label': 'Delete line', title: 'Delete' }, '×'))));
+            h('button', { type: 'button', class: 'linex', onclick: () => remove(i), 'aria-label': B.isBranch(s) ? 'Delete this branch' : 'Delete line',
+                title: B.isBranch(s) ? 'Delete this branch and its lines' : 'Delete' }, '×'))));
         const cur = get(); const base = chips(); const key = learnKey();
         const learned = key ? Store.learned(key, kind).filter(c => !base.includes(c)) : [];
         chipBox.replaceChildren(...[...new Set([...base, ...learned])].map(c => {

@@ -342,6 +342,15 @@ test('unfilled template lines (*** or an unpicked "_a / b") are not counted', ()
     assert.deepEqual(Billing.testsOrdered(filled), ['BMP', 'UACR']);
     assert.equal(Billing.bill(filled).risk.lvl, 3);
 });
+test('"If ...:" plan branches: header between blank lines, dropped once its lines are gone, not billed, parsed back', () => {
+    const p = P({ name: 'UTI', notes: ['UA ***.'], plan: ['Return for fever', 'If local resistance <20%:', 'START TMP-SMX 1 DS tab PO BID x 3 days', 'If recurrent:'] });
+    const lines = ['#UTI', 'UA ***.', '', '- Return for fever', '', 'If local resistance <20%:', '', '- START TMP-SMX 1 DS tab PO BID x 3 days'];
+    assert.deepEqual(Note.problemLines(p), lines);
+    assert.deepEqual(Note.problemLines(P({ name: 'x', plan: ['If DMPA:', 'START DMPA'] })), ['#x', 'If DMPA:', '', '- START DMPA']);
+    assert.deepEqual(Note.parse(lines.join('\n')).problems[0].plan, p.plan.slice(0, 3));
+    assert.deepEqual(Billing.testsOrdered(V({ problems: [P({ name: 'x', plan: ['If UA positive:', 'Return PRN'] })] })), []);
+    assert.equal(Billing.bill(V({ problems: [P({ name: 'x', plan: ['START _amoxicillin 500 mg PO TID, 5 days / doxycycline'] })] })).risk.lvl, 2);   // unpicked: no Rx yet
+});
 test('the build style\'s med verbs (INCR. / DECR. / HOLD) count as Rx management', () => {
     for (const l of ['INCR. lisinopril to 20 mg PO daily', 'DECR. metoprolol to 25 mg PO BID', 'HOLD metformin while AKI'])
         assert.equal(Billing.bill(V({ problems: [P({ name: 'x', plan: [l] })] })).risk.lvl, 3, l);
@@ -384,6 +393,7 @@ test('dotphrase blocks fill a new problem; pick lists parse', () => {
     assert.ok(['$wcc1114', '$wcc1517'].every(a => dot.phrases.some(p => p.abbr === a)));
     assert.ok(Library.search('annual').some(l => l.key === 'hm') && Library.search('physical').some(l => l.key === 'hm'));
     assert.ok(!Dot.search('hyper').some(p => p.lib));   // library problems aren't listed twice
+    assert.equal(Dot.search('#pid')[0].abbr, '#pid');   // exact abbreviation before #pidx
     assert.deepEqual(picks('LDL goal: _under 100 / under 70, then ***').map(x => x.options), [['under 100', 'under 70']]);
     assert.deepEqual(picks('my_file / x'), []);
     const opts = l => picks(l).map(x => x.options);
@@ -393,6 +403,23 @@ test('dotphrase blocks fill a new problem; pick lists parse', () => {
     assert.deepEqual(opts('_mild cognitive impairment / dementia given ***.'), [['mild cognitive impairment', 'dementia']]);
     assert.deepEqual(opts('_acute flare / chronic gout, *** on current regimen.'), [['acute flare', 'chronic gout']]);
     assert.deepEqual(opts('Plan: _taper now / taper later / continue with risk reduction'), [['taper now', 'taper later', 'continue with risk reduction']]);
+    assert.deepEqual(opts('START POP _norethindrone / norgestrel / drospirenone *** mg PO daily'), [['norethindrone', 'norgestrel', 'drospirenone']]);
+    assert.deepEqual(opts('Vitamin D deficiency, _new / on repletion / on maintenance, ***.'), [['new', 'on repletion', 'on maintenance']]);
+    assert.deepEqual(opts('Likely _essential / enhanced physiologic / parkinsonian / drug-induced tremor given ***.'), [['essential', 'enhanced physiologic', 'parkinsonian', 'drug-induced']]);
+    assert.deepEqual(opts('Pain with _cervical motion / uterine / adnexal tenderness.'), [['cervical motion', 'uterine', 'adnexal']]);
+    assert.deepEqual(opts('H. pylori _positive / persistent after treatment by _stool antigen / urea breath test / biopsy, ***.'),
+        [['positive', 'persistent'], ['stool antigen', 'urea breath test', 'biopsy']]);
+    assert.deepEqual(opts('Likely cystitis given _dysuria and frequency, no discharge / urgency, suprapubic pain / recurrent sxs, no discharge.'),
+        [['dysuria and frequency, no discharge', 'urgency, suprapubic pain', 'recurrent sxs, no discharge']]);
+    assert.deepEqual(opts('Likely _essential / drug-induced tremor given _action tremor, relieved by alcohol / tremor after new med. Onset ***.'),
+        [['essential', 'drug-induced'], ['action tremor, relieved by alcohol', 'tremor after new med']]);
+    assert.deepEqual(opts('Likely _celiac given + tTG / H. pylori given + breath test / NSAID-related given NSAID use.'),
+        [['celiac given + tTG', 'H. pylori given + breath test', 'NSAID-related given NSAID use']]);
+    assert.deepEqual(opts('Likely stroke given _sudden weakness / sudden aphasia / visual field loss or ataxia, DWI lesion.'),
+        [['sudden weakness', 'sudden aphasia', 'visual field loss or ataxia, DWI lesion']]);
+    assert.deepEqual(opts('_Dog / cat / human / *** bite to *** on ***.'), [['Dog', 'cat', 'human', '***']]);
+    assert.deepEqual(opts('Likely _major depression with bereavement / prolonged grief disorder / normal grief given _a / b / c.')[0],
+        ['major depression with bereavement', 'prolonged grief disorder', 'normal grief']);
     const pk = picks('BP _controlled / uncontrolled on current regimen, ***.')[0];
     assert.equal('BP _controlled / uncontrolled on current regimen, ***.'.slice(pk.at, pk.at + pk.text.length), pk.text);
     assert.ok(unfilled('_a / b') && unfilled('dose ***') && !unfilled('dose 10 mg'));

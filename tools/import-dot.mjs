@@ -20,7 +20,8 @@ const LIB = {
     insomnia: '#insom', osa: '#osa', tobacco: '#tob', alcohol: '#aud', migraine: '#migraine', bph: '#bph',
     osteoporosis: '#osteop', gout: '#gout', rhinitis: '#rhinitis', oa: '#oa', anemia: '#anemia', fatigue: '#wufatigue',
     dyspnea: '#dyspnea', cough: '#wucough', uri: '#uri', abdpain: '#abdpain', dizziness: '#vertigo', headache: '#ha',
-    wtloss: '#wuwtloss', lbp: '#lbp', numbness: '#wuneuro', uti: '#uti', hm: '#hm',
+    wtloss: '#wuwtloss', lbp: '#lbp', numbness: '#wuneuro', uti: '#uti', hm: '#hm', palpitations: '#palp', edema: '#wuedema',
+    rash: '#rash', jointpain: '#polyarth',
 };
 
 /** Minimal CSV reader (quoted fields, doubled quotes). */
@@ -46,11 +47,13 @@ const byLib = Object.fromEntries(Object.entries(LIB).map(([k, a]) => [a, k]));
 /** Extra search words for visit-note blocks, by abbreviation prefix. */
 const ALIASES = { $wcc: ['wcc', 'well child', 'well child check', 'wcv', 'well visit', 'well baby', 'checkup', 'physical'] };
 
-/** Block lines → { notes, ddx, plan }: "- " lines are plan, ">" lines under "DDx:" are DDx items, the rest notes. */
+/** Block lines → { notes, ddx, plan }: "- " lines are plan, ">" lines under "DDx:" are DDx items, the rest notes.
+ *  An "If DMPA:" branch header goes into the plan, in place, ahead of the lines it groups. */
 function split(lines) {
     const notes = []; const ddx = []; const plan = [];
     for (const l of lines) {
         if (l.startsWith('- ')) plan.push(l.slice(2).trim());
+        else if (/^If\b.*:$/.test(l)) plan.push(l);
         else if (l.startsWith('>') && !l.startsWith('>>')) ddx.push(l.slice(1).trim());
         else if (!/^DDx:?$/i.test(l)) notes.push(l);
     }

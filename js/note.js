@@ -18,7 +18,7 @@
 //
 // Each problem's status pills (not printed) drive the billing level (billing.js).
 import { Library } from './library.js';
-import { attestation, emptyData } from './billing.js';
+import { attestation, emptyData, isBranch } from './billing.js';
 
 export const NOVELTY = ['New', 'Known'];
 export const COURSE = ['Acute', 'Subacute', 'Chronic'];
@@ -98,7 +98,10 @@ export function oneLiner(v) {
 export function problemLines(p) {
     const clean = l => l.map(s => s.trim()).filter(Boolean);
     const ddx = clean(p.ddx.flatMap(g => g.items));
-    const blocks = [clean(p.notes), ddx.length ? ['DDx:', ...ddx.map(s => '>' + s)] : [], clean(p.plan).map(s => '- ' + s)].filter(b => b.length);
+    // An "If DMPA:" branch header prints on its own between blank lines, and only while it still has lines under it.
+    const plan = clean(p.plan).filter((s, i, l) => !isBranch(s) || (l[i + 1] !== undefined && !isBranch(l[i + 1])));
+    const planOut = plan.flatMap((s, i) => (isBranch(s) ? [...(i ? [''] : []), s, ''] : ['- ' + s]));
+    const blocks = [clean(p.notes), ddx.length ? ['DDx:', ...ddx.map(s => '>' + s)] : [], planOut].filter(b => b.length);
     return ['#' + p.name.trim().replace(/^#+/, ''), ...blocks.flatMap((b, i) => (i ? ['', ...b] : b))];
 }
 
@@ -232,6 +235,8 @@ export function parse(text) {
             const group = !body.includes(';') && c > 0 && !body.slice(0, c).includes(',');
             const label = group ? body.slice(0, c).trim() : '';
             p = withDdx(p, label, [...ddxItems(p, label), ...(group ? split(body.slice(c + 1)) : [body])]);
+        } else if (isBranch(s) && p.plan.length) {
+            ddxOpen = false; p = { ...p, plan: [...p.plan, s] };
         } else if (s.startsWith('- ') || s.startsWith('• ') || (s.startsWith('-') && !s.startsWith('--'))) {
             ddxOpen = false; p = { ...p, plan: [...p.plan, s.replace(/^[-• ]+/, '')] };
         } else { ddxOpen = false; p = { ...p, notes: [...p.notes, s] }; }

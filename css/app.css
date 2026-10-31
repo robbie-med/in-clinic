@@ -173,6 +173,8 @@ textarea { resize: vertical; min-height: 3em; }
 .line.dash .linet::before { content: "- "; color: var(--dim); }
 /* a dotphrase line with *** blanks or an unpicked "_a / b" list: tap to fill */
 .line.tmpl { box-shadow: inset 3px 0 0 var(--warn); }
+.line.branch { background: none; margin-top: 6px; }
+.line.branch .linet { font-weight: 600; color: var(--dim); }
 .linet { cursor: pointer; }
 /* an "_a / b" pick list as a dropdown, inside the line (amber like the line's edge until picked) */
 select.pick {

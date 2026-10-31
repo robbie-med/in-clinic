@@ -78,11 +78,13 @@ const TESTS = [
 const esc = s => s.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&');
 const TEST_RE = TESTS.map(t => [t, new RegExp(`(^|[^A-Za-z0-9])${esc(t)}(?![A-Za-z0-9])`, /^[A-Z]{2,3}$/.test(t) ? '' : 'i')]);
 /** Still a template (a *** blank, or an unpicked "_a / b" dotphrase list): nothing decided yet, so not counted. */
-const TEMPLATE = /\*\*\*|(^|[\s:(])_[^,.;_]+? \/ /;
+const TEMPLATE = /\*\*\*|(^|[\s:(])_[^\s_][^_]*? \/ /;
+/** A dotphrase plan branch header ("If DMPA:"): groups the plan lines under it, isn't a plan step itself. */
+export const isBranch = s => /^If\b.*:$/.test(s.trim());
 const NOT_ORDER = /\b(review(ed)?|result(s|ed)?|showed|shows|was|were|normal|unremarkable|declin|defer|consider|ordered? (previously|last))/i;
 
-/** Plan lines that can count: not under "#Deferred to future visit" (those aren't done today). */
-const planned = v => v.problems.filter(p => !/^#?deferred\b/i.test(p.name.trim())).flatMap(p => p.plan);
+/** Plan lines that can count: not under "#Deferred to future visit" (those aren't done today), no branch headers. */
+const planned = v => v.problems.filter(p => !/^#?deferred\b/i.test(p.name.trim())).flatMap(p => p.plan).filter(s => !isBranch(s));
 
 /** Tests named in plan lines that read as orders (not "reviewed CBC"). */
 export function testsOrdered(v) {

@@ -88,10 +88,12 @@ It's a suggestion, conservative when unsure. You pick the code.
 
 ## Dotphrases
 Adding a problem fills its Notes and Plan from your dotphrase library (`~/Projects/dot`). The block's text lines go into Notes and its `- ` lines go into Plan.
-- Library problems use their mapped block (HTN → `#htn`, T2DM → `#dm2`, Fatigue → `#wufatigue`, …).
-  The ~130 clinic blocks without a library problem are in the **+ Problem** search by name or `#abbr` (e.g. `#pcos`, `#prep`, `#fibro`).
+- Library problems use their mapped block (HTN → `#htn`, T2DM → `#dm2`, Fatigue → `#wufatigue`, Joint pain → `#polyarth`, …).
+  The ~250 clinic blocks without a library problem are in the **+ Problem** search by name or `#abbr` (e.g. `#pcos`, `#prep`, `#fibro`).
 - An `_a / b / c` list in a line shows as a dropdown right in the line; picking writes the choice into the line and the note. Lines with a `***` blank or an unpicked list have an amber edge. Tap one to edit it: the next `***` is selected so you can type over it.
   Billing doesn't count these lines until they're filled. Delete what you don't need with ×.
+- `If DMPA:` branch headers stay in the plan above their lines. × on a header deletes that branch and its lines. A header with no lines left doesn't print, and billing ignores headers.
+- Typing a library problem's `#abbr` (e.g. `#uti`) finds that problem first.
 - A problem added another way (e.g. Paste last note) has **Insert #abbr dotphrase** in its ⋯ menu.
 - Only the clinic `#` problem blocks are copied, into `dotphrases.json`; the rest of the library stays in `~/Projects/dot`.
   After editing the library: `node tools/import-dot.mjs` then `node tools/version-sw.mjs`. The library-to-block mapping is `LIB` in that script.

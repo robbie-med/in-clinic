@@ -18,7 +18,7 @@ export const Dot = {
         return this.phrases.find(p => p.name.toLowerCase() === n || p.title.toLowerCase() === n || p.abbr.slice(1) === n) || null;
     },
 
-    /** Blocks without a library problem whose name, title, abbreviation or aliases contain every word of the query (prefix matches first). */
+    /** Blocks without a library problem whose name, title, abbreviation or aliases contain every word of the query (exact, then prefix matches first). */
     search(q) {
         const n = q.trim().toLowerCase().replace(/^[#$]/, '');
         const free = this.phrases.filter(p => !p.lib);
@@ -26,8 +26,8 @@ export const Dot = {
         const hay = p => [p.name.toLowerCase(), p.title.toLowerCase(), p.abbr.slice(1), ...(p.aliases || [])];
         const words = n.split(/[\s,]+/).filter(Boolean);   // every word somewhere: "well child 15" → Well child, 15 to 17 years
         const hit = p => { const all = hay(p).join(' | '); return words.every(w => all.includes(w)); };
-        const starts = p => hay(p).some(s => s.startsWith(n));
-        return free.filter(hit).sort((a, b) => (starts(a) ? 0 : 1) - (starts(b) ? 0 : 1));
+        const rank = p => (hay(p).slice(0, 3).includes(n) ? 0 : hay(p).some(s => s.startsWith(n)) ? 1 : 2);   // exact, prefix, the rest
+        return free.filter(hit).sort((a, b) => rank(a) - rank(b));
     },
 
     /** The problem with the block's lines added to its Notes, DDx (unlabelled group) and Plan; lines it already has are skipped. */
@@ -42,27 +42,60 @@ export const Dot = {
 };
 
 const LINKING = new Set(['on', 'given', 'with', 'for', 'of', 'x', 'since', 'in', 'at', 'to', 'from', 'per', 'after', 'before', 'while']);
+const words = s => s.trim().split(/\s+/);
 
 /**
- * "_controlled / uncontrolled" pick lists in a line: [{ at, text, options }]. Where the list doesn't end the line, the
- * last option is cut to the shortest earlier option's word count and before a linking word, so the words after it stay
- * in the sentence: "_mild / moderate / severe alcohol use disorder" → mild | moderate | severe;
- * "_controlled / uncontrolled on current regimen" → controlled | uncontrolled.
+ * "_controlled / uncontrolled" pick lists in a line: [{ at, text, options }].
+ * A list runs to the end of its sentence (". " or a final "."), a ";", a *** blank, the next "_" list or an unmatched ")".
+ * - Presentation lists (right after "given", or an option before the last has a comma or "given") keep the whole last option:
+ *   "given _dysuria and frequency, no discharge / urgency, suprapubic pain / recurrent sxs." → 3 options.
+ * - Otherwise the last option stops at a comma, and if more text follows it is cut to the shortest earlier option's
+ *   word count (the earlier option's count if both start with the same word, "on repletion / on maintenance"),
+ *   kept longer through words the earlier options use ("LNG-IUD / copper IUD placement" → copper IUD), and cut
+ *   before a linking word, so the words after it stay in the sentence:
+ *   "_mild / moderate / severe alcohol use disorder" → mild | moderate | severe;
+ *   "_controlled / uncontrolled on current regimen" → controlled | uncontrolled.
  */
 export function picks(line) {
-    return [...line.matchAll(/(?:^|(?<=[\s:(]))_([^,.;_]+?(?: \/ [^,.;_]+?)+)(?=[,.;)]|$)/g)].map(m => {
-        const opts = m[1].split(' / ');
-        let last = opts.pop();
-        if (m.index + m[0].length < line.length) {
-            const words = last.split(' ');
-            let k = Math.min(words.length, ...opts.map(o => o.trim().split(/\s+/).length));
-            const link = words.findIndex((w, i) => i > 0 && LINKING.has(w.toLowerCase()));
-            if (link > 0) k = Math.min(k, link);
-            last = words.slice(0, k).join(' ');
+    const out = [];
+    for (const m of line.matchAll(/(?:^|(?<=[\s:(]))_(?=[^\s_])/g)) {
+        const from = m.index + 1;
+        if (out.length && m.index < out.at(-1).at + out.at(-1).text.length) continue;
+        let end = line.length; let depth = 0;
+        for (let i = from; i < line.length; i++) {
+            const c = line[i];
+            if (c === '(') depth++;
+            else if (c === ')') { if (!depth) { end = i; break; } depth--; }
+            else if ((c === '.' && /\s|$/.test(line[i + 1] || '') && !/(^|\s)[A-Za-z]$/.test(line.slice(from, i)))   // "H. pylori" goes on
+                || c === ';' || (line.startsWith(' ***', i) && line[i - 1] !== '/') || /^ _[^\s_]/.test(line.slice(i, i + 3))) { end = i; break; }
         }
-        const options = [...opts, last].map(s => s.trim());
-        return { at: m.index, text: '_' + [...opts, last].join(' / '), options };
-    });
+        const parts = line.slice(from, end).split(' / ');
+        const opts = parts.slice(0, -1);
+        if (!opts.length || parts.some(o => !o.trim() || o.includes('_'))) continue;
+        let last = parts.at(-1);
+        if (!/\bgiven $/.test(line.slice(0, m.index)) && !opts.some(o => o.includes(',') || /\bgiven\b/.test(o))) {
+            if (opts.some(o => /[,;]/.test(o))) continue;
+            last = last.split(',')[0];
+            if (from + parts.slice(0, -1).join(' / ').length + 3 + last.length < line.length) {
+                const w = last.trim().split(' ');
+                const ws = opts.map(words);
+                const twin = ws.find(o => o[0].toLowerCase() === w[0].toLowerCase());
+                // Earlier options all 2+ words are full names ("normal grief / prolonged grief disorder / major depression
+                // with bereavement given"): the last one isn't cut by word count, only before a linking word.
+                const full = ws.every(o => o.length > 1) && !twin;
+                let k = full ? w.length : Math.min(w.length, twin ? twin.length : Math.min(...ws.map(o => o.length)));
+                const used = new Set(ws.flat().flatMap(x => [x, ...x.split('-')]).map(x => x.toLowerCase()));
+                const link = w.findIndex((x, i) => i > 0 && LINKING.has(x.toLowerCase()));
+                const stop = link > 0 ? link : w.length;
+                while (k < stop && w[k].length > 2 && !['and', 'the'].includes(w[k].toLowerCase()) && used.has(w[k].toLowerCase())) k++;
+                last = w.slice(0, Math.min(k, stop)).join(' ');
+            }
+        }
+        const text = '_' + [...opts, last].join(' / ');
+        if (!last.trim()) continue;
+        out.push({ at: m.index, text, options: [...opts, last].map(o => o.trim()) });
+    }
+    return out;
 }
 
 /** Still a template: has a *** blank or an unpicked "_a / b" list. */

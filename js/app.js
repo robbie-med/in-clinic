@@ -347,6 +347,7 @@ function refresh() {
             h('span', { class: 'faint small' }, b.overridden ? 'set by hand' : 'auto')),
         h('div', { class: 'bsumrow' }, [['Problems', b.problems], ['Data', b.data], ['Risk', b.risk]].map(([n, part]) =>
             h('span', {}, h('span', { class: 'faint' }, n + ' '), h('b', { class: 'blvl l' + part.lvl }, B.LEVELS[part.lvl])))));
+    drawAvs();
     for (const sel of R.problems.querySelectorAll('select.cx')) {
         const p = v.problems.find(x => x.id === sel.dataset.id);
         if (p) sel.options[0].text = 'Auto · ' + B.cx(B.autoCx(p)).label;
@@ -379,6 +380,7 @@ function showVisit(id) {
     R.badge = chip('', () => jump('billing'), 'badge', { title: 'Billing level · jump to Billing' });
     R.problems = h('div', { class: 'problems' });
     R.sideBill = h('button', { type: 'button', class: 'bsum', onclick: () => jump('billing'), title: 'Jump to Billing' });
+    R.avs = h('div', { class: 'rows' });
 
     const lib = Library.data;
     R.hpi = Lines({
@@ -418,6 +420,10 @@ function showVisit(id) {
             h('div', { class: 'glabel' }, 'To'),
             R.fu.el),
 
+        block('avs', 'After Visit Summary', chip('+ Handout', addHandout, 'primary small'),
+            R.avs,
+            h('button', { type: 'button', class: 'addtile', onclick: addHandout }, '+ Add handout')),
+
         billingView(),
     );
     // One live note element: under the editor on narrow screens, in the side column on wide ones (desktop, iPad landscape)
@@ -429,7 +435,7 @@ function showVisit(id) {
     const wideQ = matchMedia('(min-width: 900px)');
     const placeNote = () => (wideQ.matches ? sideNote : R.noteBlock).append(R.note);
 
-    const TABS = [['visit', 'Visit'], ['hpi', 'HPI'], ['exam', 'Exam'], ['plan', 'A/P'], ['fu', 'F/u'], ['billing', 'Billing'], ['note', 'Note']];
+    const TABS = [['visit', 'Visit'], ['hpi', 'HPI'], ['exam', 'Exam'], ['plan', 'A/P'], ['fu', 'F/u'], ['avs', 'AVS'], ['billing', 'Billing'], ['note', 'Note']];
     R.tabs = h('nav', { class: 'tabs', 'aria-label': 'Sections' }, TABS.map(([k, label]) =>
         h('button', { type: 'button', class: 'tab' + (k === 'note' ? ' narrow-only' : ''), 'data-sec': k, onclick: () => jump(k) }, label)));
 
@@ -646,6 +652,7 @@ function problemMenu(id) {
                 i > 0 ? chip('Move up', () => { move(-1); close(); }) : null,
                 i < v.problems.length - 1 ? chip('Move down', () => { move(1); close(); }) : null,
                 dotInsert(p, () => { drawProblems(); close(); }),
+                avsToggle(p, close),
                 chip(p.noStatus ? 'Show status (count for billing)' : 'Hide status (not counted for billing)', () => { update(x => ({ ...x, problems: x.problems.map(q => (q.id === id ? { ...q, noStatus: !q.noStatus } : q)) })); drawProblems(); close(); }),
                 chip('Remove problem', () => { update(x => ({ ...x, problems: x.problems.filter(q => q.id !== id) })); drawProblems(); close(); }, 'danger'))),
     });
@@ -662,6 +669,74 @@ function dotInsert(p, after) {
         expanded.add(p.id);
         after();
     });
+}
+
+/** "Leave $pihtn out of AVS" / "Add $pihtn to AVS" for a problem that has a handout. */
+function avsToggle(p, after) {
+    const pi = p.avs || Dot.find(p.lib, p.name)?.pi;
+    if (!pi || !Dot.handout(pi)) return null;
+    return chip(p.avs ? `Leave ${pi} out of AVS` : `Add ${pi} to AVS`, () => {
+        update(x => ({ ...x, problems: x.problems.map(q => (q.id === p.id ? { ...q, avs: p.avs ? '' : pi } : q)) }));
+        after();
+    });
+}
+
+// ================================================================ After Visit Summary
+
+/** The visit's handouts: tap one to fill its blanks; × takes it out (from its problems too). */
+function drawAvs() {
+    if (!R.avs) return;
+    const list = N.avsHandouts(v);
+    const remove = abbr => update(x => ({ ...x, avs: (x.avs || []).filter(a => a !== abbr),
+        problems: x.problems.map(q => (q.avs === abbr ? { ...q, avs: '' } : q)) }));
+    R.avs.replaceChildren(...(list.length ? list.map(x => h('div', { class: 'line' + (unfilled(x.text) ? ' tmpl' : '') },
+        h('div', { class: 'linet', role: 'button', tabIndex: 0, onclick: () => editHandout(x),
+            onkeydown: e => { if (e.key === 'Enter' && e.target === e.currentTarget) editHandout(x); },
+            title: unfilled(x.text) ? 'Has blanks to fill' : 'Edit' },
+        x.title, h('span', { class: 'faint' }, `  ·  ${x.abbr}` + (x.from.length ? ' · from ' + x.from.map(n => '#' + n).join(', ') : '')
+            + ((v.avsEdits || {})[x.abbr] !== undefined ? ' · edited' : ''))),
+        h('button', { type: 'button', class: 'linex', onclick: () => remove(x.abbr), 'aria-label': 'Remove ' + x.title, title: 'Remove from AVS' }, '×')))
+        : [h('p', { class: 'empty' }, 'Adding a problem adds its patient handout here. Add others with + Handout.')]));
+}
+
+/** This visit's copy of a handout: *** blanks are selected in turn (Next ***), "_a / b" lists are dropdowns. */
+function editHandout(x) {
+    const t = h('textarea', { rows: 14, value: x.text });
+    const next = (from = 0) => {
+        t.focus();
+        let j = t.value.indexOf('***', from);
+        if (j < 0) j = t.value.indexOf('***');
+        if (j >= 0) t.setSelectionRange(j, j + 3); else t.setSelectionRange(0, 0);
+    };
+    const save = text => update(y => {
+        const edits = { ...(y.avsEdits || {}) };
+        if (text === null || text === Dot.handout(x.abbr)?.text) delete edits[x.abbr]; else edits[x.abbr] = text;
+        return { ...y, avsEdits: edits };
+    });
+    const body = h('div', {}, t, pickBox(t, () => next(t.selectionEnd)),
+        h('div', { class: 'flow' }, chip('Next ***', () => next(t.selectionEnd), 'small sugg')));
+    modal({ title: x.title, body, onOpen: () => next(), actions: [
+        (v.avsEdits || {})[x.abbr] !== undefined ? { label: 'Reset to library text', onClick: () => save(null) } : null,
+        { label: 'Save', cls: 'primary', onClick: () => save(t.value.trim()) },
+    ].filter(Boolean) });
+}
+
+function addHandout() {
+    const q = h('input', { type: 'text', placeholder: 'Search handouts, e.g. preop, $pibp', autocomplete: 'off', enterKeyHint: 'done' });
+    const results = h('div', { class: 'results', role: 'listbox' });
+    let first = null;
+    const have = () => new Set(N.avsHandouts(v).map(x => x.abbr));
+    const pick = x => { dlg.close(); update(y => ({ ...y, avs: [...(y.avs || []), x.abbr] })); };
+    const draw = () => {
+        const list = Dot.searchHandouts(q.value).filter(x => !have().has(x.abbr));
+        first = list[0] ? () => pick(list[0]) : null;
+        results.replaceChildren(...list.map((x, i) => h('button', { type: 'button', class: 'result' + (i === 0 && q.value.trim() ? ' first' : ''), onclick: () => pick(x) },
+            x.title, h('span', { class: 'faint' }, '  ·  ' + x.abbr))));
+    };
+    q.addEventListener('input', draw);
+    q.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); first?.(); } });
+    draw();
+    const dlg = modal({ title: 'Add handout', body: h('div', {}, q, results), onOpen: () => q.focus() });
 }
 
 function addProblem() {

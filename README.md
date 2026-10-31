@@ -1,7 +1,7 @@
 # In-Clinic
 
 Clinic note builder. You tap through the visit in the room, and the note is written by the time you walk out.
-Each section (Chief Complaint, HPI, Physical Exam, Assessment/Plan, Signature) has its own **Copy** button, so you paste it into the
+Each section (Chief Complaint, HPI, Physical Exam, Assessment/Plan, After Visit Summary, Signature) has its own **Copy** button, so you paste it into the
 EMR's matching section. The E/M level is calculated live as you go.
 
 Two apps, one behavior:
@@ -17,10 +17,10 @@ Everything stays on the device that's running it. There's no server, account or 
 
 Layouts:
 - **Desktop / iPad landscape (≥ 900 px wide):** the live note sits in a sticky column beside the editor, with a billing summary and a Copy button per section.
-- **iPad portrait / phone:** the note is at the bottom, and a Copy bar (CC · HPI · Exam · A/P · Sign) is fixed to the bottom of the screen. It hides while you type, so it doesn't sit on the keyboard.
+- **iPad portrait / phone:** the note is at the bottom, and a Copy bar (CC · HPI · Exam · A/P · AVS · Sign) is fixed to the bottom of the screen. It hides while you type, so it doesn't sit on the keyboard.
   A copied section shows ✓. If it changed after you copied it, its button turns amber.
 - **Phone (< 600 px):** header actions move into ⋯, and each exam system shows only nL until you tap **findings**.
-- Tabs under the header (Visit · HPI · Exam · A/P · F/u · Billing · Note) jump to each section.
+- Tabs under the header (Visit · HPI · Exam · A/P · F/u · AVS · Billing · Note) jump to each section.
 - Desktop: "hold" is a right-click. Enter in a dialog's text field saves it (Ctrl/⌘+Enter in a multi-line box), and Esc closes it.
 
 ## The note
@@ -46,6 +46,7 @@ Assessment/Plan             #Fatigue
                             - Lipid screening
 
                             F/u w Dr. Richard in 2 wk to review labs   (only if follow-up is filled in)
+After Visit Summary         <the problems' patient handouts, then any added by hand>   (only if there are any)
 Signature                   <your signature block> + teaching-physician attestation
 ```
 - "New to me" prints the line *This was my first time seeing this patient, but records were available for review and the patient is well-known to our clinic.* under the one-liner.
@@ -98,6 +99,15 @@ Adding a problem fills its Notes and Plan from your dotphrase library (`~/Projec
 - Only the clinic `#` problem blocks are copied, into `dotphrases.json`; the rest of the library stays in `~/Projects/dot`.
   After editing the library: `node tools/import-dot.mjs` then `node tools/version-sw.mjs`. The library-to-block mapping is `LIB` in that script.
 - Web app only. The Android app doesn't use dotphrases.
+
+## After Visit Summary
+The library's clinic `$pi` patient instructions (~200) are copied into `dotphrases.json` as handouts.
+- Adding a problem adds its handout to the **After Visit Summary** section: `#htn` → `$pihtn` by name, others through `PAIR` in `tools/import-dot.mjs` (`#dm2` → `$pidm`, `#pharyn` → `$pithroat`, …).
+  Removing the problem takes its handout out. A problem's ⋯ has **Leave $pi… out of AVS** / **Add $pi… to AVS**.
+- **+ Handout** adds any other one (search by title or `$pi` name, e.g. preop, `$pibp`). × takes a handout out.
+- Tap a handout to fill it in for this visit: its `***` blanks are selected in turn (**Next \*\*\***), and its `_a / b` lists are dropdowns. Handouts with blanks have an amber edge.
+  The edited copy stays with this visit; **Reset to library text** undoes it.
+- The AVS has its own Copy button and isn't included in Copy all or Share, which are for the note.
 
 ## Develop
 - `library.json` is the one source of the problem library (~40 primary-care problems). After editing it:

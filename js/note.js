@@ -14,11 +14,13 @@
 //                              - plan item
 //
 //                              F/u w Dr. X in 2 wk to review labs   (only when follow-up is filled in)
+//   After Visit Summary        the handouts ($pi patient instructions) of the problems, then any added by hand
 //   Signature                  <signature from settings> + the teaching-physician attestation for the billed level
 //
 // Each problem's status pills (not printed) drive the billing level (billing.js).
 import { Library } from './library.js';
 import { attestation, emptyData, isBranch } from './billing.js';
+import { Dot } from './dot.js';
 
 export const NOVELTY = ['New', 'Known'];
 export const COURSE = ['Acute', 'Subacute', 'Chronic'];
@@ -47,12 +49,12 @@ export function newVisit(fields = {}) {
     return {
         id: uid(), created: Date.now(), slot: '', age: '', sex: '', relation: 'known to me', type: 'follow-up', cc: '',
         oneLiner: '', hpi: [], vitals: {}, exam: {}, problems: [], fuWith: '', fuWhen: '', fuWhy: [],
-        data: emptyData(), risk: '', sdoh: false, code: '', copied: {}, copiedAt: 0, ...fields,
+        data: emptyData(), risk: '', sdoh: false, code: '', copied: {}, copiedAt: 0, avs: [], avsEdits: {}, ...fields,
     };
 }
 
 export function newProblem(fields = {}) {
-    return { id: uid(), name: '', lib: '', novelty: '', course: '', trend: '', noStatus: false, cx: '', notes: [], ddx: [], plan: [], ...fields };
+    return { id: uid(), name: '', lib: '', novelty: '', course: '', trend: '', noStatus: false, cx: '', notes: [], ddx: [], plan: [], avs: '', ...fields };
 }
 
 export const ddxItems = (p, label) => (p.ddx.find(g => g.label === label) || { items: [] }).items;
@@ -124,10 +126,22 @@ export const SECTIONS = [
     { key: 'hpi', title: 'History of Present Illness', short: 'HPI' },
     { key: 'exam', title: 'Physical Exam', short: 'Exam' },
     { key: 'ap', title: 'Assessment/Plan', short: 'A/P' },
+    { key: 'avs', title: 'After Visit Summary', short: 'AVS' },
     { key: 'sign', title: 'Signature', short: 'Sign' },
 ];
 
-/** The note as separately copyable sections: [{key, title, short, text}]. Empty CC / exam / A/P are left out. */
+/**
+ * The After Visit Summary's handouts, once each: the problems' (in problem order), then the ones added by hand (v.avs).
+ * [{abbr, title, text, from}]: text is this visit's edited copy if there is one; from is the problems that added it.
+ */
+export function avsHandouts(v) {
+    const abbrs = [...new Set([...v.problems.map(p => p.avs), ...(v.avs || [])].filter(Boolean))];
+    return abbrs.map(a => Dot.handout(a)).filter(Boolean).map(x => ({
+        ...x, text: (v.avsEdits || {})[x.abbr] ?? x.text, from: v.problems.filter(p => p.avs === x.abbr).map(p => p.name),
+    }));
+}
+
+/** The note as separately copyable sections: [{key, title, short, text}]. Empty CC / exam / A/P / AVS are left out. */
 export function sections(v, signature = '') {
     const text = {};
     if (v.cc.trim()) text.cc = v.cc.trim().replace(/\.+$/, '');
@@ -137,12 +151,14 @@ export function sections(v, signature = '') {
     const fu = followUp(v);
     const ap = [...v.problems.map(p => problemLines(p).join('\n')), ...(fu ? [fu] : [])].join('\n\n');
     if (ap) text.ap = ap;
+    const avs = avsHandouts(v).map(x => x.text.trim()).filter(Boolean).join('\n\n');
+    if (avs) text.avs = avs;
     text.sign = [signature.trim(), attestation(v)].filter(Boolean).join('\n\n');
     return SECTIONS.filter(s => text[s.key] !== undefined).map(s => ({ ...s, text: plain(text[s.key]) }));
 }
 
-/** The whole note with section titles (for Share). */
-export const render = (v, signature = '') => sections(v, signature).map(s => `${s.title}\n${s.text}`).join('\n\n');
+/** The whole note with section titles (for Share). The After Visit Summary is for the patient, so it's left out. */
+export const render = (v, signature = '') => sections(v, signature).filter(s => s.key !== 'avs').map(s => `${s.title}\n${s.text}`).join('\n\n');
 
 // ------------------------------------------------------------ physical exam (from the On-Call app)
 // Vitals fields, then per system nL (one tap) or abnL findings. Systems / findings live in library.json.

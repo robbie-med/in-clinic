@@ -423,6 +423,29 @@ test('dotphrase blocks fill a new problem; pick lists parse', () => {
     const pk = picks('BP _controlled / uncontrolled on current regimen, ***.')[0];
     assert.equal('BP _controlled / uncontrolled on current regimen, ***.'.slice(pk.at, pk.at + pk.text.length), pk.text);
     assert.ok(unfilled('_a / b') && unfilled('dose ***') && !unfilled('dose 10 mg'));
+    assert.deepEqual(opts('Your test is a breast _ultrasound / mammogram / mammogram and ultrasound on ***.'), [['ultrasound', 'mammogram', 'mammogram and ultrasound']]);
+    assert.deepEqual(opts('Tetanus: We _gave you a tetanus shot today / checked your tetanus shot and it is up to date.'),
+        [['gave you a tetanus shot today', 'checked your tetanus shot and it is up to date']]);
+    assert.deepEqual(opts('caused by _a virus / bacteria\nNext line.'), [['a virus', 'bacteria']]);   // a list ends with its line
+});
+
+test('a problem brings its handout into the After Visit Summary', () => {
+    const dot = JSON.parse(fs.readFileSync(path.join(root, 'dotphrases.json'), 'utf8'));
+    Dot.load(dot);
+    const abbrs = new Set(dot.handouts.map(x => x.abbr));
+    for (const ph of dot.phrases.filter(p => p.pi)) assert.ok(abbrs.has(ph.pi), `${ph.abbr} pairs with missing ${ph.pi}`);
+    assert.equal(Dot.find('htn').pi, '$pihtn');
+    assert.equal(Dot.find('dm2').pi, '$pidm');
+    const htn = Dot.fill(Note.newProblem({ name: 'HTN', lib: 'htn' }), Dot.find('htn'));
+    let v = Note.newVisit({ problems: [htn, Note.newProblem({ name: 'Other' })] });
+    assert.equal(text(v).avs, Note.plain(Dot.handout('$pihtn').text));
+    assert.ok(!Note.render(v).includes('After Visit Summary'));   // not part of the whole note
+    v = { ...v, avs: ['$pibp', '$pihtn'], avsEdits: { $pihtn: 'Your goal is 130/80.' } };   // added by hand; edited copy
+    assert.deepEqual(Note.avsHandouts(v).map(x => [x.abbr, x.from]), [['$pihtn', ['HTN']], ['$pibp', []]]);
+    assert.ok(text(v).avs.startsWith('Your goal is 130/80.\n\n' + Note.plain(Dot.handout('$pibp').text).slice(0, 20)));
+    assert.equal(text({ ...v, avs: [], problems: [{ ...htn, avs: '' }] }).avs, undefined);   // taken out: no section
+    assert.deepEqual(Dot.searchHandouts('blood pressure').map(x => x.abbr).sort(), ['$pibp', '$pihtn'].sort());
+    assert.equal(Dot.searchHandouts('').length, dot.handouts.length);
 });
 
 // ---- schedule

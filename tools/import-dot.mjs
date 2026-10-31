@@ -4,7 +4,9 @@
 // preventive visits can be added as problems too. Those have no status pills (they aren't MDM problems).
 // Adding a problem fills it from the matching block: text lines become Notes, the ">item; reasoning" lines under
 // "DDx:" become DDx items, and "- " lines become Plan lines. Only the # problem blocks for clinic settings are copied; the rest
-// of the library (OB, inpatient, patient instructions, the Cerner dump) stays in ~/Projects/dot.
+// of the library (OB, inpatient, the Cerner dump) stays in ~/Projects/dot.
+// The clinic $pi patient-instruction blocks are copied too, as "handouts" for the After Visit Summary. A problem block
+// is paired with its handout by name ($pihtn ↔ #htn) or by PAIR below; adding the problem adds the handout.
 //   node tools/import-dot.mjs [path/to/dot]     (default ../dot), then: node tools/version-sw.mjs
 import fs from 'node:fs';
 import path from 'node:path';
@@ -22,6 +24,15 @@ const LIB = {
     dyspnea: '#dyspnea', cough: '#wucough', uri: '#uri', abdpain: '#abdpain', dizziness: '#vertigo', headache: '#ha',
     wtloss: '#wuwtloss', lbp: '#lbp', numbness: '#wuneuro', uti: '#uti', hm: '#hm', palpitations: '#palp', edema: '#wuedema',
     rash: '#rash', jointpain: '#polyarth',
+};
+
+/** Problem block → handout, where the names don't pair by themselves. */
+const PAIR = {
+    '#dm2': '$pidm', '#pharyn': '$pithroat', '#gastro': '$pigi', '#bv': '$pivag', '#vvc': '$piyeast', '#aom': '$pieark',
+    '#osteop': '$piosteo', '#hsvgen': '$pihsv', '#zoster': '$pishingles', '#cap': '$pipneumo', '#wuedema': '$piedema',
+    '#thynod': '$pinodule', '#wuthynod': '$pinodule', '#endomet': '$piendo', '#wuinfert': '$piinfert', '#alopecia': '$pihair',
+    '#ed': '$pisexm', '#fsd': '$pisexf', '#tendinopathy': '$pitendon', '#varicella': '$pichickenpox', '#statinint': '$pistatin',
+    '#cpod': '$piopioid', '#wuobesk': '$piobesk', '#wubruise': '$pibruise', '#hypok': '$pihighk',
 };
 
 /** Minimal CSV reader (quoted fields, doubled quotes). */
@@ -90,10 +101,26 @@ for (const [, abbr, title, body] of blocks.filter(m => m[1].startsWith('$'))) {
     phrases.push({ abbr, title, name, setting, noStatus: true, ...(aliases.length ? { aliases } : {}), ...parts });
 }
 
+// Handouts: the clinic $pi blocks, text as written (the first line is the handout's title).
+const handouts = [];
+for (const [, abbr, title, body] of blocks.filter(m => m[1].startsWith('$pi'))) {
+    const row = index.get(abbr);
+    if (row?.['Prefix group'] !== '$pi' || !/^Clinic/.test(row.Setting)) continue;
+    handouts.push({ abbr, title, text: body.split('\n').map(l => l.trimEnd()).join('\n').trim() });
+}
+const hasHandout = new Set(handouts.map(x => x.abbr));
+const badPair = Object.entries(PAIR).filter(([a, pi]) => !phrases.some(p => p.abbr === a) || !hasHandout.has(pi));
+if (badPair.length) { console.error('PAIR entries not found:', badPair.map(e => e.join(' → ')).join(', ')); process.exit(1); }
+for (const p of phrases) {
+    const pi = PAIR[p.abbr] || (p.abbr.startsWith('#') && hasHandout.has('$pi' + p.abbr.slice(1)) ? '$pi' + p.abbr.slice(1) : '');
+    if (pi) p.pi = pi;
+}
+
 const missing = Object.values(LIB).filter(a => !phrases.some(p => p.abbr === a));
 if (missing.length) { console.error('Mapped in LIB but not found as clinic blocks:', missing.join(', ')); process.exit(1); }
 
 fs.writeFileSync(path.join(root, 'dotphrases.json'), JSON.stringify({
-    source: 'Projects/dot/dotphrases.md (# problem blocks, clinic settings)', phrases,
+    source: 'Projects/dot/dotphrases.md (# problem blocks and $pi handouts, clinic settings)', phrases, handouts,
 }, null, 1) + '\n');
-console.log(`dotphrases.json: ${phrases.length} problem blocks (${phrases.filter(p => p.abbr.startsWith('$')).length} from visit notes), ${phrases.filter(p => p.lib).length} mapped to library problems`);
+console.log(`dotphrases.json: ${phrases.length} problem blocks (${phrases.filter(p => p.abbr.startsWith('$')).length} from visit notes), ${phrases.filter(p => p.lib).length} mapped to library problems; `
+    + `${handouts.length} handouts, ${phrases.filter(p => p.pi).length} problems with one`);

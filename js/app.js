@@ -239,7 +239,8 @@ function showPanel() {
             chip('⋯', panelMenu, 'icon', { 'aria-label': 'Menu', title: 'Menu' }),
             chip('+ New visit', newVisit, 'primary roomy-only'))),
         h('div', { class: 'panelsub' }, h('span', {}, visits.length === 1 ? '1 visit' : `${visits.length} visits`),
-            visits.length ? h('span', { class: copied === visits.length ? 'ok' : 'faint' }, `${copied} copied`) : null),
+            visits.length ? h('span', { class: copied === visits.length ? 'ok' : 'faint' }, `${copied} copied`) : null,
+            grow(), emrToggle()),
         chip('+ New visit', newVisit, 'primary big compact-only'),
         h('div', { class: 'cards' }, list)));
 }
@@ -280,6 +281,11 @@ function panelMenu() {
 }
 
 const signature = () => Store.setting('signature', '');
+
+/** The EMR the note is pasted into (remembered on this device): its blanks print as "_" (Cerner, the default) or "***" (Epic). */
+const emr = () => Store.setting('emr', 'cerner');
+const blank = () => (N.EMRS.find(e => e.key === emr()) || N.EMRS[0]).blank;
+const emrToggle = after => seg(N.EMRS.map(e => [e.key, `${e.label} ${e.blank}`]), emr, k => { Store.setSetting('emr', k || emr()); after?.(); }, 'emr', 'EMR blanks');
 
 function editSignature(after) {
     const t = h('textarea', { rows: 4, value: signature(), placeholder: 'Name, MD\nPGY-2, Program\nPhone' });
@@ -329,7 +335,7 @@ function update(f) {
 const copyState = s => ((v.copied || {})[s.key] === s.text ? 'done' : (v.copied || {})[s.key] !== undefined ? 'stale' : '');
 
 function refresh() {
-    const secs = N.sections(v, signature());
+    const secs = N.sections(v, signature(), blank());
     R.note.replaceChildren(...secs.map(sectionCard));
     R.copyBar.replaceChildren(...secs.map(s => {
         const st = copyState(s);
@@ -364,6 +370,11 @@ function sectionCard(s) {
         h('pre', { class: 'note' }, s.text));
 }
 
+/** HPI chips that billing counts as data (billing.js reads their wording): tap one in, tap again to take it out. */
+const DATA_CHIPS = ['Reviewed outside records', 'Reviewed hospital discharge summary', 'Reviewed ED note', 'Reviewed CGM data',
+    'History obtained from parent', 'History obtained from family', 'Personally reviewed the images', 'Independently interpreted EKG',
+    'Discussed with specialist', 'Cost is a barrier to treatment'];
+
 const libs = () => v.problems.map(p => Library.get(p.lib)).filter(Boolean);
 
 function showVisit(id) {
@@ -385,7 +396,7 @@ function showVisit(id) {
     const lib = Library.data;
     R.hpi = Lines({
         get: () => v.hpi, set: l => update(x => ({ ...x, hpi: l })),
-        chips: () => [...lib.hpiGeneric, ...libs().flatMap(l => l.hpi || [])],
+        chips: () => [...lib.hpiGeneric, ...libs().flatMap(l => l.hpi || []), ...DATA_CHIPS],
         placeholder: 'Complains of… (type or dictate, Enter adds)',
     });
     R.fu = Lines({
@@ -459,13 +470,14 @@ function showVisit(id) {
 }
 
 function visitActions() {
+    const foot = h('div', { class: 'emrrow' }, h('span', { class: 'dim small' }, 'Blanks for'), emrToggle(refresh));
     menu([v.slot, v.age + v.sex].filter(s => s.trim()).join(' · ') || 'Visit', [
         ['Paste last note…', pasteLast],
         ['Share note…', share],
         ['Copy whole note', copyAll],
         ['Signature…', () => editSignature(refresh)],
         ['Delete visit…', () => { if (confirm('Delete this visit?')) { Store.remove(v.id); go('#/'); } }, 'danger'],
-    ]);
+    ], foot);
 }
 
 /**
@@ -556,13 +568,17 @@ function problemCard(id) {
         Lines({ get: () => cur()?.plan || [], set: l => upd(p => ({ ...p, plan: l })), chips: () => lib?.plan || [],
             learnKey: () => (cur() ? N.learnKey(cur()) : null), kind: 'plan', placeholder: 'Order / action (Enter adds)',
             prefixes: Library.data.medVerbs, dash: true }).el,
-        h('div', { class: 'pfoot' }, chip('Done', () => toggleOpen(id), 'small primary')));
+        h('div', { class: 'pfoot' },
+            !p0.confirmed && (p0.dot || []).length ? h('span', { class: 'faint small grow' }, 'Delete what you didn\'t do. Done counts the rest for billing.') : null,
+            chip('Done', () => toggleOpen(id), 'small primary')));
     return card;
 }
 
+/** Opens or closes a problem. Closing it (Done) confirms its plan: its dotphrase lines now count for billing. */
 function toggleOpen(id) {
     const wasOpen = expanded.has(id);
     if (wasOpen) expanded.delete(id); else expanded.add(id);
+    if (wasOpen && v.problems.some(p => p.id === id && !p.confirmed)) update(x => ({ ...x, problems: x.problems.map(q => (q.id === id ? { ...q, confirmed: true } : q)) }));
     drawProblems();
     // Collapsing a long card can leave you far below it; bring its header back into view
     if (wasOpen) {
@@ -745,7 +761,7 @@ function addProblem() {
     let first = null;
     let dlg = null;
     const add = (p0, block = Dot.find(p0.lib, p0.name)) => {
-        const p = Dot.fill(p0, block);   // the problem's dotphrase fills its notes, DDx and plan
+        const p = N.withStatus(v, Dot.fill(p0, block));   // the dotphrase fills notes, DDx, plan and handout; status pills from its kind
         dlg.close();
         expanded.add(p.id);
         update(x => ({ ...x, problems: [...x.problems, p] }));
@@ -820,7 +836,7 @@ function copySection(s) {
 
 /** The whole note with section titles (for pasting somewhere that isn't the EMR's sectioned form). */
 function copyAll() {
-    copyText(N.render(v, signature()), 'Whole note copied');
+    copyText(N.render(v, signature(), blank()), 'Whole note copied');
 }
 
 /** F/u with: typed, or a remembered name (hold or right-click to forget). */
@@ -857,27 +873,38 @@ function billingView() {
     const row = (name, part) => h('div', { class: 'brow' },
         h('span', { class: 'bname' }, name), h('b', { class: 'blvl l' + part.lvl }, B.LEVELS[part.lvl]), h('span', { class: 'dim small bwhy' }, part.why.join('; ')));
     R.drawBilling = b => {
-        const d = { ...B.emptyData(), ...(v.data || {}) };
-        const auto = d.ordered === null || d.ordered === undefined;
+        const d = B.dataValues(v); const a = d.auto;
+        const reset = k => (d.isAuto(k) ? null : () => setData(x => ({ ...x, [k]: null })));
+        const note = (k, auto) => (d.isAuto(k) ? (auto ? 'auto: ' + auto : 'auto') : 'set by hand');
+        /** A yes/no data item: on from the note's text, or set by hand (tap flips it, "auto" goes back). */
+        const flag = (k, label, why) => h('span', { class: 'flag' },
+            pill(label, d[k], () => setData(x => ({ ...x, [k]: !d[k] })), 'small sugg', { title: note(k, why) }),
+            d.isAuto(k) ? (why ? h('span', { class: 'faint small' }, 'auto') : null) : chip('auto', reset(k), 'small link'));
+        const bl = B.blanks(v);
+        const sdohAuto = B.sdohAuto(v); const sdoh = v.sdoh === true || (v.sdoh !== false && !!sdohAuto);
         box.replaceChildren(
             h('div', { class: 'bcode' }, h('b', {}, b.code), h('span', {}, `${B.LEVELS[b.mdm]} MDM · ${b.kind === 'new' ? 'new' : 'established'} patient`
                 + (b.overridden ? ` · set by hand (calc ${b.auto})` : '')),
             h('span', { class: 'faint small' }, b.pce ? 'Attestation: primary care exception' : 'Attestation: teaching physician present')),
             row('Problems', b.problems), row('Data', b.data), row('Risk', b.risk),
+            bl.pending.length ? h('p', { class: 'warn small' }, `Not counted yet: ${bl.pending.map(n => '#' + n).join(', ')}. Tap Done on ${bl.pending.length > 1 ? 'each' : 'it'} once its plan is what you did.`) : null,
+            bl.stars || bl.picks ? h('p', { class: 'warn small' }, [
+                bl.stars ? `${bl.stars} plan line${bl.stars > 1 ? 's' : ''} still ha${bl.stars > 1 ? 've' : 's'} *** and ${bl.stars > 1 ? 'are' : 'is'} counted as written` : '',
+                bl.picks ? `${bl.picks} unpicked choice${bl.picks > 1 ? 's' : ''} not counted` : ''].filter(Boolean).join('; ') + '. Delete what you didn\'t do.') : null,
             sub('Data'),
-            counter('Tests ordered', b.data.ordered, n => setData(x => ({ ...x, ordered: n })), auto ? (b.data.auto.length ? 'auto from plan' : 'auto') : '',
-                auto ? null : () => setData(x => ({ ...x, ordered: null }))),
-            counter('Results reviewed', d.reviewed, n => setData(x => ({ ...x, reviewed: n })), 'not ones ordered today'),
-            counter('External notes', d.external, n => setData(x => ({ ...x, external: n })), 'per unique source'),
+            counter('Tests ordered', d.ordered, n => setData(x => ({ ...x, ordered: n })), note('ordered', a.ordered.join(', ')), reset('ordered')),
+            counter('Results reviewed', d.reviewed, n => setData(x => ({ ...x, reviewed: n })), note('reviewed', a.reviewed.join(', ')), reset('reviewed')),
+            counter('External notes', d.external, n => setData(x => ({ ...x, external: n })), note('external', a.external.map(s => s.slice(0, 40)).join('; ')), reset('external')),
             h('div', { class: 'flow' },
-                pill('Independent historian', d.historian, () => setData(x => ({ ...x, historian: !x.historian })), 'small sugg'),
-                pill('Independent interpretation', d.interp, () => setData(x => ({ ...x, interp: !x.interp })), 'small sugg'),
-                pill('Discussed w/ external MD', d.discuss, () => setData(x => ({ ...x, discuss: !x.discuss })), 'small sugg')),
+                flag('historian', 'Independent historian', a.historian),
+                flag('interp', 'Independent interpretation', a.interp),
+                flag('discuss', 'Discussed w/ external MD', a.discuss)),
             sub('Risk'),
             h('div', { class: 'flow' },
                 pill('Auto', !v.risk, () => update(x => ({ ...x, risk: '' })), 'small'),
                 B.RISKS.map(r => pill(r[0].toUpperCase() + r.slice(1), v.risk === r, () => update(x => ({ ...x, risk: x.risk === r ? '' : r })), 'small')),
-                pill('SDOH limits dx/tx', !!v.sdoh, () => update(x => ({ ...x, sdoh: !x.sdoh })), 'small sugg')),
+                pill('SDOH limits dx/tx', sdoh, () => update(x => ({ ...x, sdoh: !sdoh })), 'small sugg', { title: v.sdoh == null ? (sdohAuto ? 'auto: ' + sdohAuto : 'auto') : 'set by hand' }),
+                v.sdoh == null ? (sdohAuto ? h('span', { class: 'faint small' }, 'auto') : null) : chip('auto', () => update(x => ({ ...x, sdoh: null })), 'small link')),
             sub('Bill as'),
             h('div', { class: 'flow' },
                 pill('Auto · ' + b.auto, !b.overridden, () => update(x => ({ ...x, code: '' })), 'small'),
@@ -889,7 +916,7 @@ function billingView() {
 }
 
 async function share() {
-    const text = N.render(v, signature());
+    const text = N.render(v, signature(), blank());
     if (navigator.share) { try { await navigator.share({ text }); } catch { /* cancelled */ } } else copyText(text, 'Note copied');
 }
 

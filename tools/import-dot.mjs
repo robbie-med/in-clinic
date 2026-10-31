@@ -35,6 +35,28 @@ const PAIR = {
     '#cpod': '$piopioid', '#wuobesk': '$piobesk', '#wubruise': '$pibruise', '#hypok': '$pihighk',
 };
 
+/**
+ * What kind of problem a block is, for billing (js/billing.js autoCx): adding the problem sets its status pills from it.
+ * threat: threat to life or bodily function · systemic: acute illness with systemic symptoms · acute · minor (self-limited)
+ * workup: undiagnosed new problem (#wu… blocks, symptoms) · none: counseling / preventive, not an MDM problem ·
+ * everything else is chronic.
+ */
+const KIND = {
+    threat: 'dissection stemi nstemi pe meningitis thystorm myxedema htnemerg appy ahrf cholangitis stroke tia hepenceph rhabdo ams goo vt chb ssnhl padpain acidosis sicklecell',
+    systemic: 'cap pid pidx divert divertx cdiff panc pertussis measles mumps mastoid febinf mono tick dvt hypercax',
+    acute: 'sinus pharyn aom bronch fall angioedema covid covidx flu fever hypogly hypok hypomg abdpainx nv gastro contactderm otext zoster bv '
+        + 'bronchio conj bite hfmd bell vvc epidid prostatitis stone croup abscess paronychia varicella utik uti uri rash lbp recluse ome '
+        + 'tubeotorrhea tmperf impetigo scabies asb type2mi thyroiditis knee ankle hip neck elbow hand',
+    minor: 'cerumen lice pinworm molluscum roseola fifth hsvlab warts skintear hematoma earfb',
+    workup: 'jaundice dysphagia weakness breast nipdc seizurenew tremor dysgeusia devscreen abdpain ha palp vertigo dyspnea polyarth',
+    none: 'precon nfp travel',
+};
+const kindOf = abbr => {
+    const a = abbr.slice(1);
+    const k = Object.keys(KIND).find(k => KIND[k].split(' ').includes(a));
+    return k || (/^wu/.test(a) && !['wuobesk', 'wufrail', 'wuinsom'].includes(a) ? 'workup' : 'chronic');
+};
+
 /** Minimal CSV reader (quoted fields, doubled quotes). */
 function csv(text) {
     const rows = []; let row = []; let f = ''; let q = false;
@@ -78,7 +100,7 @@ for (const [, abbr, title, body] of blocks.filter(m => m[1].startsWith('#'))) {
     if (!/^Clinic/.test(setting)) continue;
     const lines = body.split('\n').map(s => s.trim()).filter(Boolean);
     const name = (lines[0].startsWith('#') ? lines.shift() : '#' + title).slice(1).trim();
-    phrases.push({ abbr, title, name, setting, ...(byLib[abbr] ? { lib: byLib[abbr] } : {}), ...split(lines) });
+    phrases.push({ abbr, title, name, setting, kind: kindOf(abbr), ...(byLib[abbr] ? { lib: byLib[abbr] } : {}), ...split(lines) });
 }
 
 // Visit notes: the first named block of the A&P, up to the next "#" header or the F/u line. Skipped: placeholders
@@ -115,6 +137,9 @@ for (const p of phrases) {
     const pi = PAIR[p.abbr] || (p.abbr.startsWith('#') && hasHandout.has('$pi' + p.abbr.slice(1)) ? '$pi' + p.abbr.slice(1) : '');
     if (pi) p.pi = pi;
 }
+
+const unknownKind = Object.values(KIND).flatMap(l => l.split(' ')).filter(a => !phrases.some(p => p.abbr === '#' + a));
+if (unknownKind.length) { console.error('KIND names not found as clinic blocks:', unknownKind.join(', ')); process.exit(1); }
 
 const missing = Object.values(LIB).filter(a => !phrases.some(p => p.abbr === a));
 if (missing.length) { console.error('Mapped in LIB but not found as clinic blocks:', missing.join(', ')); process.exit(1); }

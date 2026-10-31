@@ -49,12 +49,26 @@ export function newVisit(fields = {}) {
     return {
         id: uid(), created: Date.now(), slot: '', age: '', sex: '', relation: 'known to me', type: 'follow-up', cc: '',
         oneLiner: '', hpi: [], vitals: {}, exam: {}, problems: [], fuWith: '', fuWhen: '', fuWhy: [],
-        data: emptyData(), risk: '', sdoh: false, code: '', copied: {}, copiedAt: 0, avs: [], avsEdits: {}, ...fields,
+        data: emptyData(), risk: '', sdoh: null, code: '', copied: {}, copiedAt: 0, avs: [], avsEdits: {}, ...fields,
     };
 }
 
 export function newProblem(fields = {}) {
     return { id: uid(), name: '', lib: '', novelty: '', course: '', trend: '', noStatus: false, cx: '', notes: [], ddx: [], plan: [], avs: '', ...fields };
+}
+
+/**
+ * Status pills for a problem being added, from its dotphrase's kind (p.kind) and the visit. Pills already set are kept.
+ * Chronic: Known, or New at an establish-care / new-to-clinic visit. Acute kinds: New, Acute. A workup: Known at a
+ * follow-up or lab visit, else New (an undiagnosed new problem). A problem with no dotphrase follows the visit type.
+ */
+export function withStatus(v, p) {
+    if (p.noStatus || p.kind === 'none') return p;
+    const kind = p.kind || (v.type === 'acute' ? 'acute' : 'chronic');
+    const set = (novelty, course) => ({ ...p, novelty: p.novelty || novelty, course: p.course || course });
+    if (kind === 'chronic') return set(v.relation === 'new to clinic' || v.type === 'establish' ? 'New' : 'Known', 'Chronic');
+    if (kind === 'workup') return set(['follow-up', 'labs'].includes(v.type) ? 'Known' : 'New', '');
+    return set('New', 'Acute');
 }
 
 export const ddxItems = (p, label) => (p.ddx.find(g => g.label === label) || { items: [] }).items;
@@ -141,8 +155,14 @@ export function avsHandouts(v) {
     }));
 }
 
-/** The note as separately copyable sections: [{key, title, short, text}]. Empty CC / exam / A/P / AVS are left out. */
-export function sections(v, signature = '') {
+/** EMR blank styles: Cerner's "_" or Epic's "***". The library and the app write ***; the app's setting picks one. */
+export const EMRS = [{ key: 'cerner', label: 'Cerner', blank: '_' }, { key: 'epic', label: 'Epic', blank: '***' }];
+
+/**
+ * The note as separately copyable sections: [{key, title, short, text}]. Empty CC / exam / A/P / AVS are left out.
+ * *** blanks print as `blank` (an EMR's style, see EMRS).
+ */
+export function sections(v, signature = '', blank = '***') {
     const text = {};
     if (v.cc.trim()) text.cc = v.cc.trim().replace(/\.+$/, '');
     text.hpi = [oneLiner(v), ...(v.relation === 'new to me' ? [RECORDS] : []), ...v.hpi.map(s => s.trim()).filter(Boolean)].join('\n');
@@ -154,11 +174,11 @@ export function sections(v, signature = '') {
     const avs = avsHandouts(v).map(x => x.text.trim()).filter(Boolean).join('\n\n');
     if (avs) text.avs = avs;
     text.sign = [signature.trim(), attestation(v)].filter(Boolean).join('\n\n');
-    return SECTIONS.filter(s => text[s.key] !== undefined).map(s => ({ ...s, text: plain(text[s.key]) }));
+    return SECTIONS.filter(s => text[s.key] !== undefined).map(s => ({ ...s, text: plain(text[s.key]).replaceAll('***', blank) }));
 }
 
 /** The whole note with section titles (for Share). The After Visit Summary is for the patient, so it's left out. */
-export const render = (v, signature = '') => sections(v, signature).filter(s => s.key !== 'avs').map(s => `${s.title}\n${s.text}`).join('\n\n');
+export const render = (v, signature = '', blank = '***') => sections(v, signature, blank).filter(s => s.key !== 'avs').map(s => `${s.title}\n${s.text}`).join('\n\n');
 
 // ------------------------------------------------------------ physical exam (from the On-Call app)
 // Vitals fields, then per system nL (one tap) or abnL findings. Systems / findings live in library.json.
@@ -266,6 +286,7 @@ export function carryForward(ps) {
     return ps.map(p => {
         const lib = Library.match(p.name);
         const none = lib ? !!lib.noStatus : false;
-        return { ...p, lib: lib ? lib.key : '', noStatus: none, novelty: none ? '' : 'Known', trend: '' };
+        const kind = Dot.find(lib ? lib.key : '', p.name)?.kind || '';
+        return { ...p, lib: lib ? lib.key : '', noStatus: none, novelty: none ? '' : 'Known', trend: '', ...(kind ? { kind } : {}) };
     });
 }

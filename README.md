@@ -59,18 +59,35 @@ Signature                   <your signature block> + teaching-physician attestat
 - The attestation follows the billed code: 99202/99203/99212/99213 get the primary-care-exception text, and 99204/99205/99214/99215 get the "physically present" text.
 
 ## Billing
-The **Billing** section (and the code badge at the top) recalculates on every tap, using the AMA 2021+ office E/M MDM table (2 of 3 elements):
-- **Problems** come from the status pills: Chronic + Stable/Improving = stable chronic, Chronic + Worsening = exacerbation, Acute = acute uncomplicated, Resolved = minor, and health maintenance isn't counted.
-  Each problem has an **MDM** menu to override this (e.g. undiagnosed new problem with uncertain prognosis, acute with systemic symptoms, threat to life).
-- **Data:** tests named in plan lines are counted as ordered (each unique test once, and "reviewed …" or "consider …" lines are skipped). Add results reviewed,
-  external notes, independent historian, independent interpretation and discussion with an outside physician by hand.
-- **Risk:** a plan line starting with a med verb (CONT/START/…) or mentioning "prescri"/"Rx" counts as prescription drug management (moderate). Admit/ED/hospice is high.
-  Any other plan is low. You can override it, and the SDOH toggle makes it moderate.
+The **Billing** section (and the code badge at the top) recalculates on every tap, using the AMA 2021+ office E/M MDM table (2 of 3 elements).
+It's automatic from what the note says. Every part has a by-hand override, and **auto** puts it back.
+- **What counts:** lines you type, tap in or edit count right away. Lines a dotphrase put in are a menu until you tap **Done** on the problem.
+  Delete what you didn't do, then Done; the rest counts as written, `***` blanks included. The Billing section lists problems not yet Done.
+  An unpicked `_a / b` list never counts. Conditional lines ("Admit if …", "Labs only if …") never count as orders or escalation.
+- **Problems:** adding a problem sets its status pills from its dotphrase's kind and the visit:
+  - chronic → Known/Chronic (New at an establish-care or new-to-clinic visit)
+  - acute → New/Acute
+  - a workup (`#wu…` blocks, symptoms) → an undiagnosed new problem, or stable at a follow-up
+  - systemic (CAP, PID, diverticulitis…) and threat-to-life blocks count as those
+  - minor ones (cerumen, lice…) count as minor
+  - A chronic problem that isn't at goal counts as chronic with progression (AMA: not at goal isn't stable): "uncontrolled", "flare", "worsening", "side effects" in its lines, or a START / INCREASE / SWITCH plan line. Tapping **Stable** overrides that.
+  - Each problem's **MDM** menu overrides the result, e.g. "threat to life".
+- **Data:**
+  - tests ordered: test names in plan lines, each once ("reviewed", "consider", "if" lines skipped)
+  - results reviewed: tests named with a result in the HPI or notes ("Hgb 10.8" is the CBC; "Reviewed CGM data"), not ones ordered today
+  - external notes: "outside records", "discharge summary", "ED note"…; a hospital or ED follow-up visit counts its discharge records
+  - independent historian: age under 12, or "history obtained from wife", "per mom"
+  - independent interpretation: "personally reviewed the images", "independently interpreted EKG"
+  - discussion: "discussed with cardiology / Dr. …" (not "with attending")
+  - The HPI has one-tap chips for these: Reviewed outside records, Reviewed CGM data, History obtained from parent, Discussed with specialist, …
+- **Risk:** a plan line starting with a med verb (CONT/START/…) or mentioning "prescri"/"Rx" counts as prescription drug management (moderate); OTC lines are low.
+  Admit/ED/hospice is high, only when spelled out (no `***`, no "if"). "Cannot afford", "no transportation" and similar make it moderate (SDOH). Any other plan is low.
 - New vs established: only "new to clinic" bills as a new patient (9920x).
 - **Bill as** overrides the code. If the teaching physician wasn't physically present, bill 99213/99203 or lower (primary care exception).
 - Time-based billing isn't offered: with a resident, only the teaching physician's time counts.
+- The Android app has the same table but only reads its pills, counters and plan verbs.
 
-It's a suggestion, conservative when unsure. You pick the code.
+It's a suggestion. You pick the code.
 
 ## Use
 - **Tonight:** use **Import** with a pasted schedule. Only time, age, sex and visit type are kept; names, MRNs and DOBs are dropped.
@@ -85,6 +102,8 @@ It's a suggestion, conservative when unsure. You pick the code.
   - Copy each section into its EMR section. A section copied and unchanged since shows **Copied ✓**; if it changed, **Copy again**.
 - A chip with `***` drops into the field with the blank selected, so you type over it.
 - Plan lines you type become chips for that problem next time. Hold (or right-click) a remembered chip to forget it. Each line has × to delete it; tap the line to edit or move it.
+- **Blanks:** Cerner `_` or Epic `***`, the toggle on the panel (and in a visit's ⋯). Cerner is the default; the choice is remembered on this device.
+  It changes only the copied text: `***` blanks print as `_` for Cerner.
 - ⋯ → **Signature…** once per device (printed above the attestation). ⋯ → **Clear panel** at the end of clinic. Visits are removed after 3 days anyway.
 
 ## Dotphrases
@@ -92,7 +111,7 @@ Adding a problem fills its Notes and Plan from your dotphrase library (`~/Projec
 - Library problems use their mapped block (HTN → `#htn`, T2DM → `#dm2`, Fatigue → `#wufatigue`, Joint pain → `#polyarth`, …).
   The ~250 clinic blocks without a library problem are in the **+ Problem** search by name or `#abbr` (e.g. `#pcos`, `#prep`, `#fibro`).
 - An `_a / b / c` list in a line shows as a dropdown right in the line; picking writes the choice into the line and the note. Lines with a `***` blank or an unpicked list have an amber edge. Tap one to edit it: the next `***` is selected so you can type over it.
-  Billing doesn't count these lines until they're filled. Delete what you don't need with ×.
+  Delete what you don't need with ×, then **Done**: billing counts the rest (see Billing).
 - `If DMPA:` branch headers stay in the plan above their lines. × on a header deletes that branch and its lines. A header with no lines left doesn't print, and billing ignores headers.
 - Typing a library problem's `#abbr` (e.g. `#uti`) finds that problem first.
 - A problem added another way (e.g. Paste last note) has **Insert #abbr dotphrase** in its ⋯ menu.

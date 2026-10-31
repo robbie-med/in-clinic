@@ -333,14 +333,61 @@ test('code set by hand picks the attestation', () => {
     assert.equal(text(v).sign, Billing.ATTEST_PCE);
     assert.equal(Billing.bill({ ...sample, code: '99203' }).code, '99214');   // wrong patient kind is ignored
 });
-test('unfilled template lines (*** or an unpicked "_a / b") are not counted', () => {
-    const plan = ['BMP and UACR ***', 'CONT lisinopril *** mg PO daily', 'Statin: _moderate / high intensity, start ***', 'Naloxone prescribed ***'];
+test('lines with *** count as written; an unpicked "_a / b" list does not', () => {
+    const plan = ['BMP and UACR ***', 'CONT lisinopril *** mg PO daily', 'Statin: _moderate / high intensity, start ***'];
     const v = V({ problems: [P({ name: 'x', plan })] });
-    assert.deepEqual(Billing.testsOrdered(v), []);
-    assert.equal(Billing.bill(v).risk.lvl, 2);   // still a plan, but no Rx decided
-    const filled = V({ problems: [P({ name: 'x', plan: ['BMP and UACR today', 'CONT lisinopril 10 mg PO daily', 'my_file / x'] })] });
-    assert.deepEqual(Billing.testsOrdered(filled), ['BMP', 'UACR']);
-    assert.equal(Billing.bill(filled).risk.lvl, 3);
+    assert.deepEqual(Billing.testsOrdered(v), ['BMP', 'UACR']);
+    assert.equal(Billing.bill(v).risk.lvl, 3);
+    assert.deepEqual(Billing.blanks(v), { stars: 3, picks: 1, pending: [] });
+    assert.equal(Billing.bill(V({ problems: [P({ name: 'x', plan: ['START _amoxicillin 500 mg PO TID / doxycycline 100 mg PO BID'] })] })).risk.lvl, 2);
+    assert.equal(Billing.bill(V({ problems: [P({ name: 'x', plan: ['START vitamin D3 2000 IU OTC daily'] })] })).risk.lvl, 2);   // OTC is low
+});
+test('problem complexity from the dotphrase kind and whether a chronic problem is at goal', () => {
+    const cx = f => Billing.autoCx(P({ name: 'x', ...f }));
+    assert.equal(cx({ kind: 'workup', novelty: 'New' }), 'undx');
+    assert.equal(cx({ kind: 'workup', novelty: 'Known' }), 'stable');
+    assert.equal(cx({ kind: 'systemic', novelty: 'New', course: 'Acute' }), 'systemic');
+    assert.equal(cx({ kind: 'threat', novelty: 'New', course: 'Acute' }), 'threat');
+    assert.equal(cx({ kind: 'minor', novelty: 'New', course: 'Acute' }), 'minor');
+    assert.equal(cx({ kind: 'none', novelty: 'New' }), 'none');
+    assert.equal(cx({ course: 'Chronic', notes: ['BP uncontrolled on current regimen.'] }), 'chronicx');
+    assert.equal(cx({ course: 'Chronic', notes: ['BP _controlled / uncontrolled on current regimen.'] }), 'stable');   // not picked
+    assert.equal(cx({ course: 'Chronic', notes: ['No flares since last visit.'] }), 'stable');
+    assert.equal(cx({ course: 'Chronic', plan: ['INCREASE lisinopril to 20 mg PO daily'] }), 'chronicx');
+    assert.equal(cx({ course: 'Chronic', trend: 'Stable', plan: ['INCREASE lisinopril to 20 mg PO daily'] }), 'stable');   // tapped Stable wins
+    assert.equal(cx({ course: 'Chronic', plan: ['CONT lisinopril 20 mg PO daily'] }), 'stable');
+});
+test('a dotphrase\'s lines count once its problem is Done; conditional lines never do', () => {
+    const block = { abbr: '#x', kind: 'chronic', notes: ['BP uncontrolled.'], plan: ['START amlodipine 5 mg PO daily', 'CBC, CMP', 'Admit if hypoxic'] };
+    const p = Dot.fill(P({ name: 'x', course: 'Chronic', plan: ['TSH today'] }), block);
+    const v = V({ problems: [p] });
+    assert.deepEqual(Billing.testsOrdered(v), ['TSH']);   // only the line typed by hand
+    assert.equal(Billing.autoCx(p), 'stable');
+    assert.deepEqual(Billing.blanks(v).pending, ['x']);
+    const done = V({ problems: [{ ...p, confirmed: true }] });
+    assert.deepEqual(Billing.testsOrdered(done), ['CBC', 'CMP', 'TSH']);
+    assert.equal(Billing.autoCx(done.problems[0]), 'chronicx');
+    assert.equal(Billing.bill(done).risk.lvl, 3);   // Rx, not the conditional admit
+    assert.equal(Billing.bill(V({ problems: [P({ name: 'x', plan: ['Admit ***'] })] })).risk.lvl, 2);   // a blank escalation isn't one
+    const edited = V({ problems: [{ ...p, plan: p.plan.map(s => (s === 'CBC, CMP' ? 'CBC, CMP today' : s)) }] });
+    assert.deepEqual(Billing.testsOrdered(edited), ['CBC', 'CMP', 'TSH']);   // an edited line is a decision
+    assert.equal(Dot.fill({ ...p, confirmed: true }, { ...block, plan: ['Lipid panel'] }).confirmed, false);   // new lines: confirm again
+});
+test('data from the note\'s text', () => {
+    const v = V({ age: '4', hpi: ['Reviewed outside records', 'Reviewed CGM data'], problems: [P({ name: 'x',
+        notes: ['Hgb 10.8, MCV 76, ferritin 9', 'LDL goal under 70', 'Discussed with attending Dr. Lee'], plan: ['TSH today', 'Discussed with cardiology Dr. Patel'] })] });
+    const a = Billing.dataAuto(v);
+    assert.deepEqual(a.reviewed.sort(), ['CBC', 'CGM', 'ferritin']);
+    assert.equal(a.external.length, 1);
+    assert.match(a.historian, /^age 4/);
+    assert.equal(a.discuss, 'Discussed with cardiology Dr. Patel');
+    assert.equal(Billing.bill(v).data.lvl, 4);   // category 1 (3+) and a discussion
+    const adult = V({ age: '45', type: 'hospital', hpi: ['History obtained from wife', 'Personally reviewed the CXR images'] });
+    assert.deepEqual([Billing.dataAuto(adult).external, !!Billing.dataAuto(adult).historian, !!Billing.dataAuto(adult).interp], [['hospital discharge records'], true, true]);
+    assert.equal(Billing.dataAuto(V({ age: '45', hpi: ['Discussed with attending Dr. Lee'] })).discuss, '');
+    assert.equal(Billing.dataValues({ ...v, data: { ...Billing.emptyData(), reviewed: 0 } }).reviewed, 0);   // set by hand wins
+    assert.equal(Billing.bill(V({ hpi: ['Cannot afford insulin'], problems: [P({ name: 'x', plan: ['Diet'] })] })).risk.lvl, 3);   // SDOH
+    assert.equal(Billing.bill(V({ sdoh: false, hpi: ['Cannot afford insulin'], problems: [P({ name: 'x', plan: ['Diet'] })] })).risk.lvl, 2);
 });
 test('"If ...:" plan branches: header between blank lines, dropped once its lines are gone, not billed, parsed back', () => {
     const p = P({ name: 'UTI', notes: ['UA ***.'], plan: ['Return for fever', 'If local resistance <20%:', 'START TMP-SMX 1 DS tab PO BID x 3 days', 'If recurrent:'] });

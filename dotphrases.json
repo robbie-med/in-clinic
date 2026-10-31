@@ -6,6 +6,7 @@
    "title": "Hypertension",
    "name": "Hypertension",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "htn",
    "notes": [
     "BP _controlled / uncontrolled on current regimen, most likely primary given _onset after age 30 w/ obesity or FH of HTN / no severe, resistant, or rapid-onset pattern / stable readings, no OSA sxs or Cr rise on ACEi.",
@@ -36,6 +37,7 @@
    "title": "Type 2 diabetes",
    "name": "Type 2 diabetes",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "dm2",
    "notes": [
     "Diabetes _controlled / uncontrolled on ***, A1c goal <***.",
@@ -73,6 +75,7 @@
    "title": "Prediabetes",
    "name": "Prediabetes",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "prediabetes",
    "notes": [
     "*** on current regimen, ***.",
@@ -95,6 +98,7 @@
    "title": "Hyperlipidemia",
    "name": "Hyperlipidemia",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "hld",
    "notes": [
     "*** on current regimen, ***.",
@@ -131,6 +135,7 @@
    "title": "Obesity",
    "name": "Obesity",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "obesity",
    "notes": [
     "*** on current regimen, ***.",
@@ -165,6 +170,7 @@
    "title": "Depression",
    "name": "Depression",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "depression",
    "notes": [
     "Severity _minimal / mild / moderate / moderately severe / severe on current regimen, ***.",
@@ -199,6 +205,7 @@
    "title": "Anxiety",
    "name": "Anxiety",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "anxiety",
    "notes": [
     "Severity _minimal / mild / moderate / severe on current regimen, ***.",
@@ -219,6 +226,7 @@
    "title": "Hypothyroidism",
    "name": "Hypothyroidism",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "hypothyroid",
    "notes": [
     "Hypothyroidism _controlled / uncontrolled on ***.",
@@ -256,6 +264,7 @@
    "title": "Asthma",
    "name": "Asthma",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "asthma",
    "notes": [
     "_well controlled / partly controlled / uncontrolled on current regimen, GINA step ***.",
@@ -276,6 +285,7 @@
    "title": "COPD",
    "name": "COPD",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "copd",
    "notes": [
     "*** on current regimen, GOLD group ***.",
@@ -298,6 +308,7 @@
    "title": "Chronic kidney disease",
    "name": "Chronic kidney disease",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "ckd",
    "notes": [
     "*** on current regimen, ***.",
@@ -336,6 +347,7 @@
    "title": "GERD",
    "name": "GERD",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "gerd",
    "notes": [
     "Likely _GERD given heartburn, regurgitation / extraesophageal reflux given cough, hoarseness / refractory GERD given sxs on BID PPI / functional heartburn given normal AET.",
@@ -393,6 +405,7 @@
    "title": "Low back pain",
    "name": "Low back pain",
    "setting": "Clinic",
+   "kind": "acute",
    "lib": "lbp",
    "notes": [
     "Likely _acute / subacute nonspecific low back pain given _pain after bending, twisting, or lifting, no red flags / pain worse w/ movement, muscle tenderness / morning pain, restricted ROM, no red flags.",
@@ -418,6 +431,7 @@
    "title": "Osteoarthritis",
    "name": "Osteoarthritis",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "oa",
    "notes": [
     "*** osteoarthritis of *** on current regimen, ***.",
@@ -440,6 +454,7 @@
    "title": "Insomnia",
    "name": "Insomnia",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "insomnia",
    "notes": [
     "Likely *** chronic insomnia given _trouble falling asleep / trouble staying asleep / early waking. Sxs 3 or more nights/wk x 3 mo w/ daytime impairment.",
@@ -482,6 +497,7 @@
    "title": "Tobacco use",
    "name": "Tobacco use",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "tobacco",
    "notes": [
     "Currently *** per day, readiness ***.",
@@ -504,6 +520,7 @@
    "title": "Contraception",
    "name": "Contraception",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Desires ***. Method chosen _implant / LNG-IUD / copper IUD / DMPA / CHC / POP / condoms / fertility awareness or NFP / sterilization.",
     "US MEC category _1 / 2 / 3 / 4. LMP ***, BP ***, smoking ***."
@@ -544,6 +561,7 @@
    "title": "Health maintenance",
    "name": "Health maintenance",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "hm",
    "notes": [
     "***yo ***, preventive care reviewed."
@@ -579,6 +597,7 @@
    "title": "Acute cystitis",
    "name": "Acute cystitis",
    "setting": "Clinic",
+   "kind": "acute",
    "lib": "uti",
    "notes": [
     "Likely uncomplicated cystitis given _dysuria and frequency, no vaginal discharge / urgency, suprapubic pain, nocturia / self-diagnosed UTI w/ typical sxs, no discharge.",
@@ -606,6 +625,7 @@
    "title": "Viral upper respiratory infection",
    "name": "Viral upper respiratory infection",
    "setting": "Clinic",
+   "kind": "acute",
    "lib": "uri",
    "notes": [
     "Likely viral URI given _congestion, rhinorrhea, sore throat, cough / gradual onset, malaise, low-grade or no fever / cold sxs improving within 10 days.",
@@ -629,6 +649,7 @@
    "title": "Acute rhinosinusitis",
    "name": "Acute rhinosinusitis",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely _viral / bacterial sinusitis given _congestion, purulent discharge, facial pain <10 days / sxs 10 days or more w/o improvement / double sickening after initial improvement.",
     "Day *** of symptoms. Bacterial features: 10 days or more without improvement, fever 39 C or higher with purulent discharge x 3 days, or worsening after initial improvement ***."
@@ -657,6 +678,7 @@
    "title": "Pharyngitis",
    "name": "Pharyngitis",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely _viral / streptococcal pharyngitis given _sore throat w/ cough and congestion / fever, tonsillar exudate, cervical adenitis, no cough / sore throat age 3-15 w/ + rapid strep or cx.",
     "Centor or McIsaac ***, rapid strep ***."
@@ -687,6 +709,7 @@
    "title": "Acute otitis media",
    "name": "Acute otitis media",
    "setting": "Clinic, pediatric",
+   "kind": "acute",
    "notes": [
     "Likely AOM given _bulging TM w/ ear pain and fever / bulging TM w/ ear tugging, fussiness after URI / mild bulging TM w/ intense erythema, ear pain <48 hr.",
     "*** side, _mild / moderate / severe, age ***."
@@ -744,6 +767,7 @@
    "title": "Acute bronchitis",
    "name": "Acute bronchitis",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely viral bronchitis given _acute cough w/ sputum, normal vitals and chest exam / cough w/ wheezes or rhonchi clearing w/ cough / cough lasting 2-3 wk w/o dyspnea or rales.",
     "Cough for *** days."
@@ -767,6 +791,7 @@
    "title": "Vertigo",
    "name": "Vertigo",
    "setting": "Clinic",
+   "kind": "workup",
    "lib": "dizziness",
    "notes": [
     "Likely BPPV given _brief vertigo w/ rolling over in bed / vertigo tipping head back or turning on waking / upbeat-torsional nystagmus on Dix-Hallpike.",
@@ -791,6 +816,7 @@
    "title": "Migraine",
    "name": "Migraine",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "migraine",
    "notes": [
     "*** on current regimen, ***.",
@@ -823,6 +849,7 @@
    "title": "Iron deficiency anemia",
    "name": "Iron deficiency anemia",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "anemia",
    "notes": [
     "Likely 2/2 _heavy menstrual bleeding given menorrhagia, ferritin <45 / GI blood loss given male or postmenopausal, lesion on endoscopy / celiac disease or H. pylori given + noninvasive test.",
@@ -853,6 +880,7 @@
    "title": "Osteoporosis",
    "name": "Osteoporosis",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "osteoporosis",
    "notes": [
     "*** on current regimen, ***.",
@@ -875,6 +903,7 @@
    "title": "Gout",
    "name": "Gout",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "gout",
    "notes": [
     "_acute flare / chronic gout, *** on current regimen.",
@@ -902,6 +931,7 @@
    "title": "Allergic rhinitis",
    "name": "Allergic rhinitis",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "rhinitis",
    "notes": [
     "_seasonal / perennial, _mild / moderate / severe, *** on current regimen.",
@@ -921,6 +951,7 @@
    "title": "Obstructive sleep apnea",
    "name": "Obstructive sleep apnea",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "osa",
    "notes": [
     "Likely OSA given _loud snoring, witnessed apneas, daytime sleepiness / obesity, large neck, crowded oropharynx / AHI 5 or more on sleep study. _Suspected / confirmed.",
@@ -941,6 +972,7 @@
    "title": "Steatotic liver disease",
    "name": "Metabolic dysfunction-associated steatotic liver disease",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "*** on current regimen, ***.",
     "ALT ***, AST ***, platelets ***, FIB-4 ***. Metabolic risk factors ***, alcohol ***."
@@ -969,6 +1001,7 @@
    "title": "Coronary artery disease",
    "name": "Coronary artery disease",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "cad",
    "notes": [
     "*** stable on current regimen, angina ***.",
@@ -1021,6 +1054,7 @@
    "title": "Heart failure",
    "name": "Heart failure",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "hf",
    "notes": [
     "*** euvolemic on current regimen, ***.",
@@ -1048,6 +1082,7 @@
    "title": "Hepatitis C",
    "name": "Hepatitis C",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Chronic hepatitis C, prior treatment ***.",
     "HCV antibody ***, RNA *** on ***, FIB-4 or elastography ***."
@@ -1069,6 +1104,7 @@
    "title": "Falls",
    "name": "Falls",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely _gait and balance impairment given slow TUG, leg weakness / orthostatic hypotension given lightheaded on standing, + orthostatics / medication effect given sedatives or 4 or more meds.",
     "*** falls in past yr, injury ***. Timed Up and Go *** seconds, orthostatics ***."
@@ -1094,6 +1130,7 @@
    "title": "Cognitive impairment",
    "name": "Cognitive impairment",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely _mild cognitive impairment / dementia given _gradual memory decline per family, low MoCA / missed appointments, forgotten refills, confusion / decline in IADLs like finances or driving.",
     "MoCA *** on ***, function ***, informant ***."
@@ -1122,6 +1159,7 @@
    "title": "Atopic dermatitis",
    "name": "Atopic dermatitis",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "_mild / moderate / severe, *** on current regimen.",
     "Distribution ***, infection ***."
@@ -1145,6 +1183,7 @@
    "title": "Acne",
    "name": "Acne vulgaris",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "_comedonal / inflammatory / nodular, _mild / moderate / severe, ***."
    ],
@@ -1167,6 +1206,7 @@
    "title": "Benign prostatic hyperplasia",
    "name": "Benign prostatic hyperplasia",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "bph",
    "notes": [
     "Symptoms *** on current regimen, ***.",
@@ -1188,6 +1228,7 @@
    "title": "Erectile dysfunction",
    "name": "Erectile dysfunction",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely _vasculogenic ED given HTN, DM, or smoking, poor morning erections / psychogenic ED given sudden onset, intact morning erections / medication-induced ED given onset after SSRI or thiazide.",
     "*** onset, morning erections ***, cardiovascular risk ***, testosterone ***."
@@ -1225,6 +1266,7 @@
    "title": "Menopause symptoms",
    "name": "Menopause symptoms",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "*** symptoms of menopause, ***.",
     "LMP ***, vasomotor symptoms *** per day, genitourinary symptoms ***, contraindications to hormones ***."
@@ -1255,6 +1297,7 @@
    "title": "Abnormal uterine bleeding",
    "name": "Abnormal uterine bleeding",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely _ovulatory dysfunction given irregular, heavy, or prolonged bleeding / fibroids given heavy prolonged menses, enlarged uterus / endometrial polyp given intermenstrual bleeding, polyp on US.",
     "_heavy / irregular / intermenstrual bleeding. Pregnancy test ***, Hgb ***."
@@ -1283,6 +1326,7 @@
    "title": "Polycystic ovary syndrome",
    "name": "Polyendocrine metabolic ovarian syndrome (PCOS)",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely PMOS given _irregular cycles and hirsutism or acne / irregular cycles and polycystic ovaries on US or high AMH / hirsutism, high testosterone, polycystic ovaries on US.",
     "Oligo-ovulation ***, hyperandrogenism ***, polycystic ovaries on US or AMH ***. Total and free testosterone ***. TSH, prolactin, 17-OH progesterone ***."
@@ -1311,6 +1355,7 @@
    "title": "Polyendocrine metabolic ovarian syndrome (PMOS)",
    "name": "Polyendocrine metabolic ovarian syndrome (PCOS)",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely PMOS given _irregular cycles and hirsutism or acne / irregular cycles and polycystic ovaries on US or high AMH / hirsutism, high testosterone, polycystic ovaries on US.",
     "Oligo-ovulation ***, hyperandrogenism ***, polycystic ovaries on US or AMH ***. Total and free testosterone ***. TSH, prolactin, 17-OH progesterone ***."
@@ -1339,6 +1384,7 @@
    "title": "Sexually transmitted infection",
    "name": "Sexually transmitted infection",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely _chlamydia given dysuria or discharge, + CT NAAT / gonorrhea given purulent urethral discharge, + GC NAAT / trichomoniasis given frothy malodorous discharge, + trich NAAT.",
     "_exposure / symptoms, ***."
@@ -1365,6 +1411,7 @@
    "title": "HIV PrEP",
    "name": "HIV pre-exposure prophylaxis",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Indication: ***.",
     "HIV test negative on ***, within 7 days of start ***. Acute HIV symptoms ***."
@@ -1389,6 +1436,7 @@
    "title": "ADHD",
    "name": "ADHD",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "_controlled / uncontrolled on current regimen, ***.",
     "*** presentation, Vanderbilt or ASRS ***."
@@ -1412,6 +1460,7 @@
    "title": "Alcohol use disorder",
    "name": "Alcohol use disorder",
    "setting": "Clinic",
+   "kind": "chronic",
    "lib": "alcohol",
    "notes": [
     "_mild / moderate / severe alcohol use disorder, ***.",
@@ -1435,6 +1484,7 @@
    "title": "Opioid use disorder",
    "name": "Opioid use disorder",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "_mild / moderate / severe opioid use disorder, on treatment since ***.",
     "*** opioid, route ***, last use ***."
@@ -1454,6 +1504,7 @@
    "title": "Chronic pain",
    "name": "Chronic pain",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "*** on current regimen, ***.",
     "*** pain for *** mo, diagnosis ***, PEG score ***, function ***."
@@ -1477,6 +1528,7 @@
    "title": "Plantar fasciitis",
    "name": "Plantar fasciitis",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely plantar fasciitis given _first-step AM heel pain, medial heel tenderness / heel pain after prolonged standing, tight calf / heel pain w/ + windlass test.",
     "*** side, duration ***, first-step pain ***."
@@ -1498,6 +1550,7 @@
    "title": "Rotator cuff tendinopathy",
    "name": "Rotator cuff tendinopathy",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely rotator cuff tendinopathy given _pain w/ overhead activity, + Neer and Hawkins / night pain, anterolateral shoulder tenderness / insidious onset, pain on resisted Jobe test.",
     "*** side, impingement tests ***, strength ***."
@@ -1523,6 +1576,7 @@
    "title": "Chronic constipation",
    "name": "Chronic constipation",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "*** on current regimen, ***.",
     "*** mo of ***, Bristol type ***, alarm features absent ***. Contributing meds ***. Impaction on DRE ***."
@@ -1565,6 +1619,7 @@
    "title": "Pediatric functional constipation",
    "name": "Functional constipation",
    "setting": "Clinic, pediatric",
+   "kind": "chronic",
    "notes": [
     "Likely functional constipation given _2 or fewer hard, painful stools/wk, withholding / encopresis w/ palpable fecal mass / large stools, blood from fissure.",
     "Age ***, duration ***, stools *** per wk, withholding ***, encopresis ***, impaction on exam ***. Red flags absent: delayed meconium >48 hr, onset <1 mo, failure to thrive, bilious vomiting, abnormal spine or neuro exam, ribbon stools ***."
@@ -1623,6 +1678,7 @@
    "title": "Constipation in pregnancy",
    "name": "Constipation in pregnancy",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "*** on current regimen, ***.",
     "***w***d, *** stools per wk, hemorrhoids ***, iron supplement ***."
@@ -1646,6 +1702,7 @@
    "title": "Refractory or slow-transit constipation",
    "name": "Refractory constipation",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely _dyssynergic defecation given straining, incomplete evacuation, perineal pressure / slow-transit constipation given infrequent BMs, no urge, delayed transit study / normal-transit constipation given difficult evacuation, normal transit study.",
     "Rome IV criteria ***. Failed: fiber ***, psyllium >10 g/day x 4 wk ***, kiwifruit or prunes ***, polyethylene glycol at *** g/day ***, stimulant ***. Alarm features absent: age 45 or older without CRC screening, bleeding, iron deficiency anemia, weight loss, family history of CRC or IBD ***."
@@ -1676,6 +1733,7 @@
    "title": "Long-term opioid therapy with persistent dependence",
    "name": "Long-term opioid therapy with persistent dependence",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "*** on current regimen, ***.",
     "*** MME/day of *** for *** yr. Benefit ***, harms ***. OUD criteria *** not met. Patient goals ***."
@@ -1702,6 +1760,7 @@
    "title": "Long-term benzodiazepine use",
    "name": "Long-term benzodiazepine use",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "*** on current regimen, ***.",
     "*** at diazepam equivalent *** mg/day for *** yr, physiologic dependence ***, sedative use disorder *** not met. Risks ***. Patient goals ***."
@@ -1727,6 +1786,7 @@
    "title": "Potentially inappropriate medications",
    "name": "Potentially inappropriate medications",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "*** on current regimen, ***.",
     "***yo on *** medications. High-risk medications: ***. Falls ***, cognition ***, CrCl ***."
@@ -1747,6 +1807,7 @@
    "title": "New hypertension workup",
    "name": "Hypertension, new diagnosis",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _primary / secondary hypertension given _obesity or family h/o HTN, no secondary features / onset <30 or abrupt rise, resistant BP / hypokalemia or snoring w/ daytime sleepiness.",
     "Office BP *** and ***, home or ambulatory average ***. Secondary cause features ***."
@@ -1769,6 +1830,7 @@
    "title": "Resistant hypertension workup",
    "name": "Resistant hypertension",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Above goal on current regimen, ***.",
     "BP *** on *** at maximal tolerated doses, including a diuretic ***."
@@ -1797,6 +1859,7 @@
    "title": "Hypercalcemia workup",
    "name": "Hypercalcemia",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _primary hyperparathyroidism given mild high Ca, high or normal PTH / malignancy given low PTH, high PTHrP, known cancer / medication related given thiazide, lithium, or vitamin D use.",
     "Calcium *** with albumin ***, corrected or ionized calcium ***. Symptoms ***."
@@ -1825,6 +1888,7 @@
    "title": "Pediatric obesity evaluation",
    "name": "Obesity, pediatric",
    "setting": "Clinic, pediatric",
+   "kind": "chronic",
    "notes": [
     "Age ***, BMI *** at the *** percentile, ***% of the 95th percentile. BP *** at the *** percentile. Acanthosis ***."
    ],
@@ -1852,6 +1916,7 @@
    "title": "Pediatric hypertension workup",
    "name": "Elevated blood pressure, pediatric",
    "setting": "Clinic, pediatric",
+   "kind": "workup",
    "notes": [
     "Age ***, BP *** and ***, *** percentile, category _I / II / III."
    ],
@@ -1877,6 +1942,7 @@
    "title": "Elevated liver tests workup",
    "name": "Elevated liver enzymes",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _MASLD given obesity or DM, mild ALT rise / alcohol-related liver disease given heavy drinking, AST:ALT 2:1 or more / chronic hepatitis C given ALT-predominant rise, + HCV antibody.",
     "ALT ***, AST ***, alk phos ***, bilirubin ***, pattern _hepatocellular / cholestatic / mixed. Alcohol ***, meds and supplements ***."
@@ -1905,6 +1971,7 @@
    "title": "Thrombocytopenia workup",
    "name": "Thrombocytopenia",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _pseudothrombocytopenia given clumping on smear, normal citrate CBC / chronic liver disease given cirrhosis, splenomegaly / drug or alcohol effect given new med or heavy drinking.",
     "Platelets *** from ***, bleeding ***, other cell lines ***."
@@ -1937,6 +2004,7 @@
    "title": "Erythrocytosis workup",
    "name": "Erythrocytosis",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _smoker's erythrocytosis given smoking, high carboxyhemoglobin / testosterone-induced given testosterone therapy / polycythemia vera given low EPO, + JAK2 V617F.",
     "Hgb *** and Hct *** on repeat. Smoking ***, testosterone ***, sleep apnea symptoms ***, SGLT2i ***."
@@ -1960,6 +2028,7 @@
    "title": "Leukocytosis workup",
    "name": "Leukocytosis",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _reactive neutrophilia given infection or inflammation sxs / smoking-related given chronic smoking, mild neutrophilia / steroid-induced given glucocorticoid use, neutrophilia.",
     "WBC *** with differential ***, symptoms ***."
@@ -1976,6 +2045,7 @@
    "title": "Microscopic hematuria workup",
    "name": "Microscopic hematuria",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Microscopic UA with *** RBC/hpf. Smoking *** pack-years, gross hematuria history ***, risk category _low / intermediate / high."
    ],
@@ -1998,6 +2068,7 @@
    "title": "Proteinuria workup",
    "name": "Proteinuria",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely 2/2 _diabetes given long-standing DM, retinopathy / hypertension given long-standing poorly controlled HTN / glomerular disease given hematuria, heavy proteinuria.",
     "UACR *** or UPCR ***, eGFR ***, BP ***, A1c ***."
@@ -2020,6 +2091,7 @@
    "title": "Thyroid nodule workup",
    "name": "Thyroid nodule",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Nodule *** cm, found by ***. Neck radiation ***, family history of thyroid cancer ***, compressive symptoms ***."
    ],
@@ -2039,6 +2111,7 @@
    "title": "Hyperthyroidism workup",
    "name": "Hyperthyroidism",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _Graves disease given diffuse goiter, orbitopathy, + TRAb / toxic nodule given palpable nodule, focal uptake on scan / thyroiditis given tender or painless thyroid, low uptake.",
     "TSH ***, free T4 ***, total T3 ***. Symptoms ***, eye findings ***, recent iodine contrast, amiodarone, or pregnancy ***."
@@ -2064,6 +2137,7 @@
    "title": "Unintentional weight loss workup",
    "name": "Unintentional weight loss",
    "setting": "Clinic",
+   "kind": "workup",
    "lib": "wtloss",
    "notes": [
     "Likely _malignancy given early satiety or change in stool pattern / depression given low mood, poor appetite, + PHQ-9 / nonmalignant GI disease given dysphagia or dental problems.",
@@ -2085,6 +2159,7 @@
    "title": "Fatigue workup",
    "name": "Fatigue",
    "setting": "Clinic",
+   "kind": "workup",
    "lib": "fatigue",
    "notes": [
     "Likely _depression given low mood, + PHQ-9 / sleep apnea given snoring, witnessed apneas, high STOP-BANG / anemia given low Hgb on CBC.",
@@ -2110,6 +2185,7 @@
    "title": "Chronic cough workup",
    "name": "Chronic cough",
    "setting": "Clinic",
+   "kind": "workup",
    "lib": "cough",
    "notes": [
     "Likely _upper airway cough syndrome given postnasal drip, cobblestone pharynx / cough-variant asthma given cough w/o wheeze, + bronchial provocation / GERD given heartburn, normal CXR and spirometry.",
@@ -2140,6 +2216,7 @@
    "title": "Peripheral neuropathy workup",
    "name": "Peripheral neuropathy",
    "setting": "Clinic",
+   "kind": "workup",
    "lib": "numbness",
    "notes": [
     "Likely 2/2 _diabetes given stocking-glove numbness, high A1c / alcohol use given heavy drinking, distal sensory loss / B12 deficiency given distal numbness, low B12 level.",
@@ -2160,6 +2237,7 @@
    "title": "Chronic diarrhea workup",
    "name": "Chronic diarrhea",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _IBS-D given abdominal pain w/ BMs, normal calprotectin / celiac disease given fatty stools, + tTG IgA / medication or diet given new med or sugar alcohols.",
     "Duration ***, stools *** per day, nocturnal ***, blood ***, weight loss ***, travel and abx ***."
@@ -2183,6 +2261,7 @@
    "title": "Dyspepsia workup",
    "name": "Dyspepsia",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _functional dyspepsia given epigastric pain or early satiety, no alarm sxs / H. pylori given epigastric pain, + stool antigen or breath test / NSAID-related given regular NSAID use, epigastric pain.",
     "Age ***, alarm features ***, NSAIDs ***."
@@ -2212,6 +2291,7 @@
    "title": "Secondary amenorrhea workup",
    "name": "Secondary amenorrhea",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _PCOS given long h/o irregular cycles, hirsutism or acne / hypothalamic amenorrhea given low weight, heavy exercise, or stress / hyperprolactinemia given galactorrhea, high prolactin.",
     "No menses for *** mo. Weight change ***, exercise ***, stress ***, galactorrhea ***, hyperandrogenism ***, hot flashes ***."
@@ -2240,6 +2320,7 @@
    "title": "Elevated PSA workup",
    "name": "Elevated PSA",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "PSA *** from ***, age ***, symptoms ***, family history ***."
    ],
@@ -2260,6 +2341,7 @@
    "title": "Incidental lung nodule follow-up",
    "name": "Pulmonary nodule",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Solid nodule *** mm on ***, single or multiple ***. Risk ***, smoking *** pack-years."
    ],
@@ -2282,6 +2364,7 @@
    "title": "Adrenal incidentaloma workup",
    "name": "Adrenal incidentaloma",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Size *** cm, unenhanced CT density *** HU, HTN ***, hypokalemia ***."
    ],
@@ -2304,6 +2387,7 @@
    "title": "Lymphadenopathy workup",
    "name": "Lymphadenopathy",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _reactive LAD given tender cervical nodes after URI / EBV mono given fever, pharyngitis, posterior cervical nodes / malignancy given hard fixed node, B sxs.",
     "Node *** cm at ***, duration ***, tender ***, fixed ***, B symptoms ***, localized or generalized ***."
@@ -2325,6 +2409,7 @@
    "title": "Hypokalemia workup",
    "name": "Hypokalemia",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely 2/2 _diuretic use given thiazide or loop diuretic, high urine K / GI losses given vomiting or diarrhea / primary aldosteronism given HTN with low K.",
     "K *** on ***, BP ***, diuretics ***, GI losses ***."
@@ -2351,6 +2436,7 @@
    "title": "Osteoporosis secondary causes",
    "name": "Osteoporosis, secondary causes",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "DXA T-score ***, fracture history ***, meds ***."
    ],
@@ -2373,6 +2459,7 @@
    "title": "Poor weight gain in children",
    "name": "Poor weight gain",
    "setting": "Clinic, pediatric",
+   "kind": "workup",
    "notes": [
     "Likely _inadequate intake given formula mixing, low volumes, or food insecurity / inadequate absorption given chronic diarrhea despite adequate intake / increased needs given cardiac, lung, or kidney disease.",
     "Age ***, weight *** percentile, z ***, crossed 2 major percentile lines ***, weight for length or BMI *** percentile, z ***.",
@@ -2403,6 +2490,7 @@
    "title": "Stable monomorphic ventricular tachycardia",
    "name": "Monomorphic ventricular tachycardia",
    "setting": "Clinic",
+   "kind": "threat",
    "notes": [
     "Likely VT given _palpitations w/ WCT on ECG / h/o MI or LV dysfunction w/ WCT / lightheadedness or syncope w/ WCT, rate >100.",
     "Wide complex tachycardia, QRS *** ms, rate ***, hemodynamically stable."
@@ -2428,6 +2516,7 @@
    "title": "Asymptomatic bacteriuria",
    "name": "Asymptomatic bacteriuria",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely asymptomatic bacteriuria given _+ urine cx w/o urinary sxs or fever / indwelling catheter w/ + cx, afebrile / older adult w/ + cx, no urinary sxs.",
     "Urine culture with *** without dysuria, frequency, fever, flank pain or systemic signs attributable to the urinary tract."
@@ -2451,6 +2540,7 @@
    "title": "Acute abdominal pain, inpatient",
    "name": "Abdominal pain, acute",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely _cholecystitis given RUQ pain, fever, + Murphy sign / pancreatitis given epigastric pain to back, vomiting / diverticulitis given LLQ pain, fever.",
     "Pain is *** in the ***, onset ***."
@@ -2488,6 +2578,7 @@
    "title": "Acid-base disorder",
    "name": "Acidemia",
    "setting": "Clinic",
+   "kind": "threat",
    "notes": [
     "Likely primary *** with *** compensation, due to _DKA given high AG, hyperglycemia, + ketones / lactic acidosis given sepsis or shock / diarrhea given non-AG acidosis.",
     "Blood gas: pH ***, pCO2 ***, HCO3 ***. Anion gap ***, albumin-corrected ***. Delta-delta ***."
@@ -2507,6 +2598,7 @@
    "title": "Anemia, inpatient",
    "name": "Anemia",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely _acute blood loss given melena or hematochezia, Hgb drop / iron deficiency given microcytosis, low ferritin / anemia of inflammation given normocytic, low retic.",
     "Hgb ***, baseline ***, MCV ***. *** signs of active bleeding, hemodynamically _stable / unstable."
@@ -2537,6 +2629,7 @@
    "title": "Angioedema",
    "name": "Angioedema",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely *** mediated angioedema given _urticaria, pruritus after food, drug or sting / lip or tongue swelling on ACEi, no urticaria / recurrent swelling, abd pain, family h/o.",
     "Swelling of ***, onset ***. Airway ***, stridor ***, voice change ***. *** urticaria."
@@ -2568,6 +2661,7 @@
    "title": "Acute aortic dissection",
    "name": "Acute aortic dissection, type ***",
    "setting": "Clinic",
+   "kind": "threat",
    "notes": [
     "Likely acute aortic dissection given _abrupt tearing chest pain to back / chest pain w/ pulse deficit or arm BP difference >20 / chest pain w/ syncope or neuro deficit.",
     "CT angiography shows ***. Hemodynamically ***."
@@ -2591,6 +2685,7 @@
    "title": "Acute appendicitis",
    "name": "Acute appendicitis",
    "setting": "Clinic",
+   "kind": "threat",
    "notes": [
     "Likely acute appendicitis given _periumbilical pain >> RLQ, anorexia / RLQ tenderness, fever, leukocytosis / RLQ pain w/ appendix >6 mm on CT or US.",
     "Imaging shows ***. WBC ***. *** perforation or abscess."
@@ -2610,6 +2705,7 @@
    "title": "Clostridioides difficile infection",
    "name": "C. difficile infection, *** episode",
    "setting": "Clinic",
+   "kind": "systemic",
    "notes": [
     "Likely C. difficile infection given _diarrhea after recent abx, + stool toxin / new diarrhea in hospital, + C. diff test / diarrhea w/ abd pain, WBC >15k.",
     "3 or more unformed stools in 24 hr, no laxatives in prior 48 hr. C. diff test ***, WBC ***, Cr ***. Severity ***."
@@ -2633,6 +2729,7 @@
    "title": "Complete heart block",
    "name": "Complete heart block",
    "setting": "Clinic",
+   "kind": "threat",
    "notes": [
     "Likely 2/2 _idiopathic fibrosis given no ischemic or drug cause / inferior MI given chest pain, inferior ST elevation / drug toxicity given BB, CCB or digoxin use.",
     "ECG shows AV dissociation with ventricular rate ***, QRS ***. Hemodynamically ***."
@@ -2664,6 +2761,7 @@
    "title": "Acute cholangitis",
    "name": "Acute cholangitis",
    "setting": "Clinic",
+   "kind": "threat",
    "notes": [
     "Likely acute cholangitis given _fever, RUQ pain, jaundice / fever w/ cholestatic LFTs, dilated bile ducts on US / Charcot triad plus confusion and sepsis.",
     "Fever ***, RUQ pain ***, jaundice ***. WBC ***, bilirubin ***, CBD *** mm on imaging. Severity grade ***."
@@ -2682,6 +2780,7 @@
    "title": "Choledocholithiasis",
    "name": "Choledocholithiasis",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely choledocholithiasis given _RUQ or epigastric pain w/ jaundice / biliary colic w/ dilated CBD on US / gallstone pancreatitis w/ cholestatic LFTs.",
     "Bilirubin ***, ALP ***, CBD *** mm, stone *** on imaging. Risk of CBD stone ***."
@@ -2705,6 +2804,7 @@
    "title": "Decompensated cirrhosis",
    "name": "Cirrhosis, ***",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Decompensated with ***, ***.",
     "Etiology ***. MELD-Na ***, Child-Pugh ***."
@@ -2740,6 +2840,7 @@
    "title": "COVID-19, inpatient",
    "name": "COVID-19",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely COVID-19 given _fever, cough, dyspnea, + SARS-CoV-2 test / hypoxemia w/ bilateral opacities on CXR / sore throat, loss of smell or taste, + test.",
     "Positive test ***, symptom onset ***. O2 requirement ***. CXR ***."
@@ -2763,6 +2864,7 @@
    "title": "Acute ischemic stroke",
    "name": "Acute ischemic stroke",
    "setting": "Clinic",
+   "kind": "threat",
    "notes": [
     "Likely acute ischemic stroke given _sudden unilateral weakness or numbness / sudden aphasia or dysarthria / sudden visual field loss or ataxia, DWI lesion on MRI.",
     "Deficits ***. LKW ***. NIHSS ***. CT ***, CTA ***, MRI ***. Thrombolysis *** given at ***. Thrombectomy ***."
@@ -2792,6 +2894,7 @@
    "title": "Debility",
    "name": "Debility",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely 2/2 _hospital-associated deconditioning given prolonged bed rest / acute illness given recent infection or metabolic insult / poor nutrition given low intake, low appetite.",
     "Baseline function ***, current mobility ***."
@@ -2811,6 +2914,7 @@
    "title": "Acute diverticulitis, inpatient",
    "name": "Acute diverticulitis, ***",
    "setting": "Clinic",
+   "kind": "systemic",
    "notes": [
     "Likely acute diverticulitis given _LLQ pain, fever, leukocytosis / LLQ tenderness, colonic wall thickening on CT / abd pain w/ abscess or free air on CT.",
     "CT shows ***. *** abscess, perforation or obstruction. WBC ***."
@@ -2832,6 +2936,7 @@
    "title": "Acute deep vein thrombosis",
    "name": "Acute DVT, *** leg, *** proximal",
    "setting": "Clinic",
+   "kind": "systemic",
    "notes": [
     "Likely acute DVT given _unilateral calf pain and swelling / leg edema, tenderness after surgery or immobility / + compression US, noncompressible vein.",
     "Ultrasound shows ***. *** provoked by ***. Bleeding risk ***."
@@ -2856,6 +2961,7 @@
    "title": "Dysphagia",
    "name": "Dysphagia",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely 2/2 _stroke given cough or choking w/ swallows, + SLP eval / esophageal stricture given progressive solid food dysphagia / Parkinson disease given known PD, cough w/ meals.",
     "SLP evaluation ***, aspiration risk ***."
@@ -2873,6 +2979,7 @@
    "title": "End-stage kidney disease on dialysis",
    "name": "End-stage kidney disease on ***",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "*** on current dialysis regimen, ***.",
     "Dialysis days ***, access ***, dry weight ***, last session ***."
@@ -2892,6 +2999,7 @@
    "title": "Fever, unclear source",
    "name": "Fever",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely _CAUTI given urinary catheter, pyuria, + urine cx / HAP given new cough, new infiltrate on CXR / CLABSI given central line, + blood cx.",
     "Tmax ***. Lines and devices ***."
@@ -2921,6 +3029,7 @@
    "title": "Hepatic encephalopathy",
    "name": "Hepatic encephalopathy, grade ***",
    "setting": "Clinic",
+   "kind": "threat",
    "notes": [
     "Likely hepatic encephalopathy given _confusion and asterixis in cirrhosis / lethargy after GI bleed or infection / day-night sleep reversal, inattention, asterixis.",
     "Confusion ***, asterixis ***. Precipitant ***."
@@ -2940,6 +3049,7 @@
    "title": "HIV",
    "name": "HIV",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "*** on current ART regimen, ***.",
     "CD4 *** on ***, viral load *** on ***. ART: ***."
@@ -2961,6 +3071,7 @@
    "title": "Asymptomatic severe hypertension, inpatient",
    "name": "Severe hypertension without end-organ damage",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely 2/2 _nonadherence given missed or held home antihypertensives / pain or anxiety given acute pain, distress / substance use or withdrawal given alcohol or stimulant use.",
     "BP ***. No chest pain, dyspnea, neuro deficits, AKI or encephalopathy."
@@ -2979,6 +3090,7 @@
    "title": "History of stroke",
    "name": "History of ischemic stroke",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "*** on current regimen, ***.",
     "Stroke on ***, residual deficits ***."
@@ -3002,6 +3114,7 @@
    "title": "Hypercalcemia, inpatient",
    "name": "Hypercalcemia",
    "setting": "Clinic",
+   "kind": "systemic",
    "notes": [
     "Likely 2/2 _primary hyperparathyroidism given high or inappropriately normal PTH / malignancy given known cancer, suppressed PTH / meds given thiazide, lithium or vitamin D use.",
     "Corrected calcium ***, ionized ***. Symptoms ***."
@@ -3026,6 +3139,7 @@
    "title": "Hypoglycemia, inpatient",
    "name": "Hypoglycemia",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely 2/2 _insulin given scheduled insulin w/ reduced PO intake / sulfonylurea given SU use, high C-peptide / critical illness given sepsis, liver or renal failure.",
     "Glucose *** at ***, symptomatic ***."
@@ -3052,6 +3166,7 @@
    "title": "Hypokalemia",
    "name": "Hypokalemia",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely 2/2 _diuretics given loop or thiazide use / GI losses given vomiting or diarrhea / intracellular shift given insulin or beta-agonist use.",
     "K ***, Mg ***, Cr ***."
@@ -3074,6 +3189,7 @@
    "title": "Hypomagnesemia",
    "name": "Hypomagnesemia",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely 2/2 _PPI given long-term PPI use / diuretics given loop or thiazide use / alcohol use disorder given heavy drinking, poor intake.",
     "Mg ***, Cr ***."
@@ -3092,6 +3208,7 @@
    "title": "Myxedema coma",
    "name": "Myxedema coma",
    "setting": "Clinic",
+   "kind": "threat",
    "notes": [
     "Likely myxedema coma given _AMS and hypothermia, h/o hypothyroidism / infection trigger w/ bradycardia, hyponatremia / lethargy, high TSH, low free T4.",
     "Mental status ***, temp ***, HR ***, BP ***, Na ***. TSH ***, free T4 ***."
@@ -3118,6 +3235,7 @@
    "title": "Bacterial meningitis, suspected",
    "name": "Bacterial meningitis, suspected",
    "setting": "Clinic",
+   "kind": "threat",
    "notes": [
     "Likely bacterial meningitis given _fever, neck stiffness, AMS / fever, headache, + Kernig or Brudzinski sign / CSF neutrophils, low glucose, high protein.",
     "Fever ***, headache ***, neck stiffness ***, altered mental status ***. CT head *** if indicated before LP."
@@ -3149,6 +3267,7 @@
    "title": "Jaundice, cholestatic or unclear",
    "name": "Jaundice",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _CBD stone given RUQ pain before jaundice, dilated CBD on US / malignant obstruction given weight loss, dilated ducts / drug cholestasis given new drug, nondilated ducts.",
     "Bilirubin ***, direct ***, ALP ***, AST ***, ALT ***, INR ***. Pattern ***."
@@ -3181,6 +3300,7 @@
    "title": "Acute pulmonary embolism",
    "name": "Acute pulmonary embolism, *** risk",
    "setting": "Clinic",
+   "kind": "threat",
    "notes": [
     "Likely acute pulmonary embolism given _sudden dyspnea, pleuritic chest pain, tachycardia / dyspnea, tachypnea after surgery or immobility / syncope or presyncope w/ tachycardia.",
     "CTPA shows ***. BP ***, HR ***, SpO2 ***. sPESI ***. RV strain ***, troponin ***, BNP ***."
@@ -3208,6 +3328,7 @@
    "title": "Pelvic inflammatory disease, inpatient",
    "name": "Pelvic inflammatory disease",
    "setting": "Clinic",
+   "kind": "systemic",
    "notes": [
     "Likely pelvic inflammatory disease given _lower abd pain w/ cervical motion tenderness / uterine or adnexal tenderness, fever, cervical discharge / pelvic pain w/ adnexal mass, TOA on US.",
     "Cervical motion, uterine or adnexal tenderness ***. Fever ***. Pregnancy test ***. TOA ***."
@@ -3230,6 +3351,7 @@
    "title": "Rhabdomyolysis",
    "name": "Rhabdomyolysis",
    "setting": "Clinic",
+   "kind": "threat",
    "notes": [
     "Likely rhabdomyolysis 2/2 _immobilization given found down, CK >5x ULN / exertion given intense exercise, myalgias, dark urine / statin given statin use, myalgias, high CK.",
     "CK ***, Cr ***, K ***."
@@ -3251,6 +3373,7 @@
    "title": "First seizure",
    "name": "First seizure",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely *** seizure given _witnessed tonic-clonic activity, postictal confusion / lateral tongue bite, urinary incontinence / convulsion w/ low Na or glucose on labs.",
     "Lasting ***, witnessed ***, postictal ***. Back to baseline ***. Provoked ***."
@@ -3276,6 +3399,7 @@
    "title": "Chronic seizure disorder",
    "name": "Epilepsy",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "*** on current regimen, ***.",
     "Seizure type ***, last seizure ***."
@@ -3293,6 +3417,7 @@
    "title": "Sickle cell pain crisis",
    "name": "Sickle cell disease with vaso-occlusive crisis",
    "setting": "Clinic",
+   "kind": "threat",
    "notes": [
     "Likely vaso-occlusive crisis 2/2 _infection given fever, source on exam / dehydration given poor PO intake / cold exposure or stress given recent trigger, typical pain.",
     "Pain ***. Hgb ***, baseline ***, retic ***. Acute chest syndrome ***."
@@ -3323,6 +3448,7 @@
    "title": "Transient ischemic attack",
    "name": "Transient ischemic attack",
    "setting": "Clinic",
+   "kind": "threat",
    "notes": [
     "Likely TIA given _transient unilateral weakness or numbness / transient speech disturbance / transient monocular vision loss, amaurosis.",
     "Symptoms ***, duration ***, resolved. ABCD2 ***. MRI *** infarct."
@@ -3350,6 +3476,7 @@
    "title": "Generalized weakness",
    "name": "Weakness",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _UTI given dysuria or fever, + UA / electrolyte disorder given low Na or K on BMP / medication effect given polypharmacy, new drug.",
     "True weakness vs fatigue ***, pattern ***."
@@ -3372,6 +3499,7 @@
    "title": "Failure to thrive, inpatient",
    "name": "Failure to thrive",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely inadequate intake given _improper formula mixing or low feed volumes / low milk supply or poor transfer at breast / food insecurity or feeding refusal.",
     "*** mo old with weight for length at the *** percentile, z score ***, down *** major percentiles.",
@@ -3401,6 +3529,7 @@
    "title": "Acute abdominal pain",
    "name": "Acute abdominal pain",
    "setting": "Clinic",
+   "kind": "workup",
    "lib": "abdpain",
    "notes": [
     "Likely _cholecystitis given RUQ pain, fever, + Murphy sign / appendicitis given periumbilical pain >> RLQ / diverticulitis given LLQ pain, fever.",
@@ -3433,6 +3562,7 @@
    "title": "Acute hypoxic respiratory failure",
    "name": "Acute hypoxic respiratory failure",
    "setting": "Clinic",
+   "kind": "threat",
    "notes": [
     "Likely _pneumonia given fever, cough, new infiltrate on CXR / pulmonary edema given orthopnea, crackles, high BNP / COPD exacerbation given wheeze, more sputum.",
     "SpO2 ***% on room air, now ***% on *** L by ***."
@@ -3461,6 +3591,7 @@
    "title": "NSTEMI",
    "name": "Non-ST elevation MI",
    "setting": "Clinic",
+   "kind": "threat",
    "notes": [
     "Likely *** NSTEMI given _rest substernal pressure >10 min, + troponin / chest pain w/ new ST depression, + troponin / isolated dyspnea in older or diabetic pt, + troponin.",
     "ECG ***, hs-troponin *** to ***, TIMI ***, GRACE ***.",
@@ -3500,6 +3631,7 @@
    "title": "NSVT and QTc prolongation",
    "name": "Nonsustained ventricular tachycardia",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "#QTc prolongation",
     "Likely _structural heart disease given h/o MI or LV dysfunction / electrolyte disorder given low K or Mg on labs / QT-prolonging drug given new QT drug, QTc >500 ms.",
@@ -3531,6 +3663,7 @@
    "title": "Acute pancreatitis",
    "name": "Acute pancreatitis",
    "setting": "Clinic",
+   "kind": "systemic",
    "notes": [
     "Likely acute pancreatitis 2/2 _gallstones given stones on RUQ US / alcohol given chronic heavy alcohol use / hypertriglyceridemia given TG >1000.",
     "Lipase *** times ULN, pain ***, imaging ***. BISAP ***, SIRS ***, organ failure ***."
@@ -3562,6 +3695,7 @@
    "title": "Acute pericarditis",
    "name": "Acute pericarditis",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely _viral / idiopathic pericarditis given _pleuritic CP relieved leaning forward, friction rub / pleuritic CP w/ widespread STE or PR depression / pleuritic CP, new effusion, high CRP.",
     "Meets *** of 4 criteria. Pleuritic chest pain relieved by leaning forward ***. Friction rub ***.",
@@ -3593,6 +3727,7 @@
    "title": "Hypertensive emergency",
    "name": "Hypertensive emergency",
    "setting": "Clinic",
+   "kind": "threat",
    "notes": [
     "Likely hypertensive emergency given acute end-organ injury: _headache, confusion or focal deficit / chest pain or dyspnea w/ pulmonary edema / AKI w/ hematuria on UA.",
     "BP ***/***. Evidence: ***.",
@@ -3626,6 +3761,7 @@
    "title": "Brown recluse spider bite",
    "name": "Brown recluse spider bite",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely *** loxoscelism given _painful lesion, pale center, red edematous edge / blister, blue-violet center over days / skin lesion plus fever, hemolytic anemia.",
     "Bite on *** on ***, lesion ***, necrosis ***, systemic symptoms ***."
@@ -3656,6 +3792,7 @@
    "title": "Cannabis use",
    "name": "Cannabis use",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Cannabis use, ***.",
     "Uses *** route, *** times per day or week, for ***. Cannabis use disorder criteria *** of 11. Cannabinoid hyperemesis symptoms ***.",
@@ -3679,6 +3816,7 @@
    "title": "Acute diverticulitis",
    "name": "Acute diverticulitis",
    "setting": "Clinic",
+   "kind": "systemic",
    "notes": [
     "Likely diverticulitis given _constant LLQ pain, fever, leukocytosis / LLQ tenderness, no vomiting, CRP >50 / CT w/ colonic wall thickening and fat stranding.",
     "CT with IV contrast: _uncomplicated / complicated diverticulitis, ***. Abscess ***, perforation ***, obstruction ***, fistula ***."
@@ -3707,6 +3845,7 @@
    "title": "Diabetic foot ulcer",
    "name": "Diabetic foot ulcer",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely *** diabetic foot ulcer given _painless plantar ulcer under callus w/ neuropathy / ulcer w/ nonpalpable pulses, arterial insufficiency / ulcer w/ erythema, warmth, purulent drainage.",
     "Ulcer of ***, size *** cm, depth ***, probe to bone ***, infection grade ***. Pulses ***, ABI ***. A1c ***. Photo uploaded to chart ***."
@@ -3733,6 +3872,7 @@
    "title": "Acute encephalopathy",
    "name": "Acute encephalopathy",
    "setting": "Clinic",
+   "kind": "threat",
    "notes": [
     "Likely acute encephalopathy 2/2 *** given _acute inattention, fluctuating course, agitation / lethargy, psychomotor slowing after new sedating meds / acute confusion w/ infection or metabolic derangement."
    ],
@@ -3758,6 +3898,7 @@
    "title": "Headache",
    "name": "Headache",
    "setting": "Clinic",
+   "kind": "workup",
    "lib": "headache",
    "notes": [
     "Likely _tension-type headache given bilateral tightening pain, no nausea / migraine given unilateral throbbing pain, nausea, photophobia / medication overuse headache given HA 15+ days/mo, analgesic overuse >3 mo.",
@@ -3792,6 +3933,7 @@
    "title": "Inpatient nicotine replacement",
    "name": "Tobacco use, inpatient nicotine replacement",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Current smoker, readiness to quit ***.",
     "Smokes *** cigarettes/day, first cigarette *** min after waking."
@@ -3815,6 +3957,7 @@
    "title": "Nausea and vomiting",
    "name": "Nausea and vomiting",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely _viral gastroenteritis given abrupt onset w/ diarrhea, ill contacts / medication adverse effect given onset soon after new drug / pregnancy given insidious onset, worse before breakfast, + hCG.",
     "*** for ***."
@@ -3848,6 +3991,7 @@
    "title": "Malignant gastric outlet obstruction",
    "name": "Malignant gastric outlet obstruction",
    "setting": "Clinic",
+   "kind": "threat",
    "notes": [
     "#Nausea and vomiting",
     "#Anorexia",
@@ -3873,6 +4017,7 @@
    "title": "Pediatric dental preanesthesia assessment",
    "name": "Preanesthesia evaluation before dental procedure",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "***yo *** with *** presenting for preanesthesia evaluation before *** under *** on ***.",
     "ASA class ***. No contraindication to planned anesthesia identified ***.",
@@ -3895,6 +4040,7 @@
    "title": "Pelvic inflammatory disease",
    "name": "Pelvic inflammatory disease",
    "setting": "Clinic",
+   "kind": "systemic",
    "notes": [
     "Likely PID given _lower abd pain w/ cervical motion tenderness / pelvic pain, adnexal tenderness, fever >38.3 / uterine tenderness, mucopurulent cervical discharge, + chlamydia NAAT.",
     "Pelvic or lower abdominal pain with _cervical motion / uterine / adnexal tenderness."
@@ -3931,6 +4077,7 @@
    "title": "Ischemic rest pain",
    "name": "Ischemic rest pain",
    "setting": "Clinic",
+   "kind": "threat",
    "notes": [
     "Ischemic rest pain of the *** limb from ***, definitive pain control requires revascularization."
    ],
@@ -3953,6 +4100,7 @@
    "title": "Cirrhosis perioperative risk",
    "name": "Cirrhosis, perioperative risk",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "#Portal hypertension",
     "#Thrombocytopenia",
@@ -3975,6 +4123,7 @@
    "title": "Refeeding syndrome risk",
    "name": "Refeeding syndrome risk",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "At *** risk for refeeding syndrome given ***."
    ],
@@ -3993,6 +4142,7 @@
    "title": "Dyspnea differential",
    "name": "Dyspnea",
    "setting": "Clinic",
+   "kind": "workup",
    "lib": "dyspnea",
    "notes": [
     "Likely _HF exacerbation given orthopnea, edema, JVD / COPD exacerbation given wheezing, change in sputum / pneumonia given fever, cough, crackles, CXR infiltrate.",
@@ -4023,6 +4173,7 @@
    "title": "Inpatient sleep disturbance",
    "name": "Inpatient sleep disturbance",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Sleep disrupted by ***, delirium risk ***.",
     "Non-pharmacologic sleep measures in place:"
@@ -4044,6 +4195,7 @@
    "title": "Positive TPO antibody, euthyroid",
    "name": "Positive TPO antibody, euthyroid",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Euthyroid with increased risk of progression to hypothyroidism.",
     "TPO antibody ***, TSH *** and free T4 *** normal."
@@ -4063,6 +4215,7 @@
    "title": "Acute gastroenteritis",
    "name": "Acute gastroenteritis",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely viral gastroenteritis given _acute vomiting and nonbloody diarrhea / nausea, cramps, low-grade fever 12-48 hr after exposure / vomiting and diarrhea w/ ill contacts, better in 1-3 days.",
     "Hydration status ***, tolerating PO ***."
@@ -4087,6 +4240,7 @@
    "title": "Nipple discharge",
    "name": "Nipple discharge",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _physiologic discharge given bilateral, multiduct, expressed only / intraductal papilloma given spontaneous unilateral single-duct bloody discharge / galactorrhea given spontaneous bilateral lactation, high prolactin.",
     "Discharge _unilateral / bilateral, _single / multiple duct, _spontaneous / expressed, _bloody / serous / milky / green."
@@ -4115,6 +4269,7 @@
    "title": "Community-acquired pneumonia, outpatient",
    "name": "Community-acquired pneumonia, outpatient",
    "setting": "Clinic",
+   "kind": "systemic",
    "notes": [
     "Likely community-acquired pneumonia given _cough, fever, dyspnea / sputum, chills, tachypnea, abnormal lung exam / child w/ fever, tachypnea, retractions. CXR showing ***.",
     "CURB-65 ***, appropriate for outpatient care ***."
@@ -4147,6 +4302,7 @@
    "title": "Contact dermatitis",
    "name": "Contact dermatitis",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely _allergic / irritant contact dermatitis of *** given _itchy linear vesicles after poison ivy / itchy rash at nickel jewelry or belt site / burning dry cracked hands after soaps or solvents. Suspected trigger ***.",
     "No signs of secondary infection ***."
@@ -4167,6 +4323,7 @@
    "title": "COVID-19, outpatient",
    "name": "COVID-19",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "COVID-19 positive on *** test, _mild / moderate illness, symptom onset *** days ago.",
     "SpO2 ***, high-risk factors ***, pregnant ***."
@@ -4192,6 +4349,7 @@
    "title": "Carpal tunnel syndrome",
    "name": "Carpal tunnel syndrome",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely *** side _mild / moderate / severe carpal tunnel syndrome given _night numbness thumb to middle finger, relieved by shaking / tingling w/ driving or holding phone / median-distribution numbness w/ thumb weakness.",
     "Weakness ***, thenar atrophy ***."
@@ -4211,6 +4369,7 @@
    "title": "Dysgeusia",
    "name": "Dysgeusia",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Taste change x ***, likely _medication effect given onset after new drug / postviral smell loss given recent URI, flavors muted / dental disease given poor oral hygiene or gingivitis."
    ],
@@ -4233,6 +4392,7 @@
    "title": "Dyspareunia",
    "name": "Dyspareunia",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "_Superficial / vaginal / deep pain with intercourse x ***, likely _vulvodynia given entry pain, vestibular tenderness to swab / GSM given postmenopausal dryness, pale thin mucosa / endometriosis given deep pain, dysmenorrhea."
    ],
@@ -4263,6 +4423,7 @@
    "title": "Fibromyalgia",
    "name": "Fibromyalgia",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Fibromyalgia _improving / stable / worsening on current regimen, ***.",
     "Function ***, sleep ***, mood ***."
@@ -4296,6 +4457,7 @@
    "title": "IBS with constipation",
    "name": "Irritable bowel syndrome with constipation",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Meets Rome IV criteria, constipation predominant, *** pain and bloating.",
     "No alarm features: no weight loss, GI bleeding, nocturnal symptoms, anemia, onset after 45, or family history of colon cancer or IBD."
@@ -4322,6 +4484,7 @@
    "title": "IBS with diarrhea",
    "name": "Irritable bowel syndrome with diarrhea",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Meets Rome IV criteria, diarrhea predominant, *** pain and bloating.",
     "No alarm features: no weight loss, GI bleeding, nocturnal symptoms, anemia, onset after 45, or family history of colon cancer or IBD."
@@ -4348,6 +4511,7 @@
    "title": "Onychomycosis",
    "name": "Onychomycosis",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely onychomycosis given _thickened nails, onycholysis, subungual keratosis / great or fifth toenail distal onycholysis, + KOH / white superficial patches or transverse striae. Nails involved ***.",
     "*** confirmed by KOH, PAS or fungal culture."
@@ -4368,6 +4532,7 @@
    "title": "Acute otitis externa",
    "name": "Acute otitis externa",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely acute otitis externa, *** ear, given _canal edema and debris, otalgia, tragal tenderness / canal edema, itching, fullness after swimming / canal edema, otorrhea, pain w/ pinna movement.",
     "TM ***."
@@ -4407,6 +4572,7 @@
    "title": "Peripheral artery disease",
    "name": "Peripheral artery disease",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Symptoms *** on current regimen, ***.",
     "ABI *** right, *** left. Risk factors ***."
@@ -4429,6 +4595,7 @@
    "title": "Female sexual dysfunction",
    "name": "Female sexual dysfunction, _HSDD / interest and arousal disorder / orgasmic disorder / pain or GSM",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely _HSDD given low desire, distress, acquired, generalized / SSRI effect given onset after SSRI, low desire, low arousal / GSM given postmenopausal, dryness, pain with sex.",
     "Duration ***, _lifelong / acquired, _generalized / situational, distress ***. DSDS ***, FSFI ***, PHQ-9 ***.",
@@ -4486,6 +4653,7 @@
    "title": "Herpes zoster",
    "name": "Herpes zoster",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely herpes zoster given _unilateral dermatomal vesicular rash, not crossing midline / pain, itching, or tingling, then rash in that area / dermatomal rash in older or immunocompromised adult. Dermatome ***, onset *** days ago.",
     "Eye involvement ***, immune status ***."
@@ -4508,6 +4676,7 @@
    "title": "Bacterial vaginosis",
    "name": "Bacterial vaginosis",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely bacterial vaginosis given Amsel criteria met, 3 of 4: _thin homogeneous discharge, clue cells, pH >4.5 / fishy odor, thin discharge, clue cells / no sxs, clue cells, pH >4.5, + whiff test.",
     "Amsel criteria: pH >4.5 ***, clue cells ***, thin white discharge ***, positive whiff test ***."
@@ -4529,6 +4698,7 @@
    "title": "Hernia",
    "name": "*** hernia",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely *** hernia given _bulge enlarging over time, worse w/ straining / dull ache or pulling at site w/ lifting / no sxs, impulse on cough found on exam.",
     "*** side, reducible ***, symptoms ***."
@@ -4548,6 +4718,7 @@
    "title": "Herpes labialis",
    "name": "Herpes labialis",
    "setting": "Clinic",
+   "kind": "minor",
    "notes": [
     "Likely herpes labialis given _tingling or burning prodrome, then lip vesicles / clustered vesicles on vermilion border, red base / recurrent lesions after sun, stress, or fever. Episode ***, onset *** hr ago.",
     "*** outbreaks per yr."
@@ -4568,6 +4739,7 @@
    "title": "Bronchiolitis, inpatient",
    "name": "Bronchiolitis, *** RSV",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Day *** of illness on *** respiratory support, oral intake ***.",
     "RR ***, SpO2 ***."
@@ -4598,6 +4770,7 @@
    "title": "Preconception counseling",
    "name": "Preconception counseling",
    "setting": "Clinic",
+   "kind": "none",
    "notes": [
     "Planning pregnancy in ***, contraception ***.",
     "Chronic conditions ***, meds ***, BMI ***, vaccine status ***, prior pregnancy outcomes ***."
@@ -4636,6 +4809,7 @@
    "title": "Natural family planning",
    "name": "Natural family planning",
    "setting": "Clinic",
+   "kind": "none",
    "notes": [
     "Desires to _avoid / achieve / space pregnancy, using _Creighton / Billings ovulation / Marquette / symptothermal / Standard Days / LAM / other.",
     "Cycle length *** days, _regular / irregular cycles. Chart reviewed _yes / no, ***. _Not postpartum / postpartum *** wk, _breastfeeding / not breastfeeding."
@@ -4668,6 +4842,7 @@
    "title": "Palpitations",
    "name": "Palpitations",
    "setting": "Clinic",
+   "kind": "workup",
    "lib": "palpitations",
    "notes": [
     "Likely _anxiety or panic given h/o panic disorder, autonomic sxs / atrial fibrillation given irregularly irregular pulse / SVT given regular rapid pounding in neck.",
@@ -4704,6 +4879,7 @@
    "title": "Edema workup",
    "name": "Edema",
    "setting": "Clinic",
+   "kind": "workup",
    "lib": "edema",
    "notes": [
     "Likely _chronic venous insufficiency given bilateral aching edema, varicosities, stasis changes / medication edema given onset soon after starting amlodipine / DVT given acute unilateral swelling w/ pain, erythema.",
@@ -4745,6 +4921,7 @@
    "title": "Rising creatinine workup",
    "name": "Rising creatinine",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _prerenal AKI given GI losses or volume depletion, FENa <1% / expected dip given recent ACEi, ARB, or SGLT2i start / CKD progression given eGFR decline >5/yr, albuminuria.",
     "Cr *** from baseline *** on ***, eGFR ***, UACR ***, UA ***. Volume status ***."
@@ -4784,6 +4961,7 @@
    "title": "Easy bruising or bleeding workup",
    "name": "Easy bruising",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _medication effect given antiplatelet or anticoagulant use / von Willebrand disease given menorrhagia, epistaxis, family hx / senile purpura given thin skin, dark forearm bruises, older adult.",
     "ISTH-BAT score ***, abnormal if >3 men, >5 women, >2 children. Meds and supplements ***, family history ***."
@@ -4821,6 +4999,7 @@
    "title": "High alkaline phosphatase workup",
    "name": "Elevated alkaline phosphatase",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _hepatic source given high GGT, cholestatic LFT pattern / bone source given normal GGT, older adult, Paget / physiologic given pregnancy or adolescent growth, normal GGT.",
     "Alk phos *** (*** times ULN), GGT ***, AST ***, ALT ***, bilirubin ***."
@@ -4856,6 +5035,7 @@
    "title": "High ferritin workup",
    "name": "Elevated ferritin",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _MASLD given obesity or metabolic syndrome, normal TSAT / alcohol or inflammation given heavy drinking or high CRP / hemochromatosis given high TSAT, C282Y homozygous.",
     "Ferritin ***, TSAT ***, CRP ***, ALT ***, AST ***, alcohol ***, BMI ***."
@@ -4891,6 +5071,7 @@
    "title": "Breast concern",
    "name": "Breast concern",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _fibrocystic change given cyclic bilateral diffuse pain, nodular breasts / fibroadenoma given smooth mobile painless mass / mastitis given focal redness, warmth, tenderness, breastfeeding.",
     "_Lump / pain / skin change, *** o'clock, _cyclic / noncyclic, _focal / diffuse. CBE ***, last mammogram ***, family history ***."
@@ -4932,6 +5113,7 @@
    "title": "Breast lump workup",
    "name": "Breast mass",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _fibroadenoma given smooth mobile painless mass, reproductive age / cyst given fluid-filled mass on ultrasound / breast cancer given stony hard irregular or fixed mass.",
     "*** cm mass at *** o'clock, _mobile / fixed, _soft / rubbery / hard. Age ***, last mammogram ***, family history ***."
@@ -4969,6 +5151,7 @@
    "title": "Hirsutism workup",
    "name": "Hirsutism",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _PCOS given menstrual dysfunction, acne, polycystic ovaries on US / idiopathic hirsutism given normal menses and androgens / nonclassic CAH given high 17-hydroxyprogesterone.",
     "Modified Ferriman-Gallwey score ***. Onset ***, menses ***, virilization ***, Cushing features ***, meds ***."
@@ -5003,6 +5186,7 @@
    "title": "Gynecomastia workup",
    "name": "Gynecomastia",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _pubertal gynecomastia given adolescent, firm tender subareolar tissue / drug-induced given spironolactone, anabolic steroid, or antiandrogen / hypogonadism given low libido, ED, testicular atrophy.",
     "_Bilateral / unilateral, *** cm, _firm subareolar disk / soft fatty tissue, tender ***. Duration ***, meds and substances ***, testicular exam ***."
@@ -5039,6 +5223,7 @@
    "title": "Primary amenorrhea workup",
    "name": "Primary amenorrhea",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _gonadal dysgenesis given no breast development, short stature, high FSH / Mullerian agenesis given normal breasts, absent uterus on US / constitutional delay given delayed growth and puberty.",
     "Age ***, breast development ***, height and BMI trend ***, uterus on exam or ultrasound ***. Hyperandrogenism ***, headaches or vision change ***."
@@ -5074,6 +5259,7 @@
    "title": "Infertility workup",
    "name": "Infertility",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _ovulatory dysfunction given irregular cycles, midluteal progesterone <3 / male factor given abnormal semen analysis / tubal factor given h/o PID, blocked tube on HSG.",
     "Trying *** mo, female partner age ***, cycles *** days, _regular / irregular. Prior pregnancies ***, PID or endometriosis ***, partner history ***."
@@ -5112,6 +5298,7 @@
    "title": "Hyperthyroidism",
    "name": "Hyperthyroidism",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "_Graves disease / toxic nodule / toxic multinodular goiter / subclinical, *** on current regimen.",
     "TSH ***, free T4 ***, total T3 ***. CBC ***, LFTs ***, HR ***, eye findings ***."
@@ -5163,6 +5350,7 @@
    "title": "Bipolar disorder",
    "name": "Bipolar disorder",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Bipolar _I / II, currently _euthymic / depressed / hypomanic / manic / mixed on current regimen, ***.",
     "PHQ-9 ***, item 9 ***. Safety screen ***, firearms access ***. Sleep ***, substance use ***, pregnancy potential ***."
@@ -5201,6 +5389,7 @@
    "title": "PTSD",
    "name": "PTSD",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Severity *** on current regimen, ***.",
     "PCL-5 ***, prior ***. Trauma type ***. PHQ-9 ***, item 9 ***. Safety screen ***, firearms access ***. Nightmares ***, alcohol and substance use ***."
@@ -5230,6 +5419,7 @@
    "title": "Panic disorder",
    "name": "Panic disorder",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely panic disorder given _recurrent unexpected attacks, 1 mo or more of worry / sudden palpitations, dyspnea, chest discomfort, fear of dying / attacks with avoidance of places where panic occurred.",
     "Unexpected panic attacks *** per wk, worry or avoidance for *** mo. GAD-7 ***, PHQ-9 ***, item 9 ***. Caffeine ***, substances ***."
@@ -5261,6 +5451,7 @@
    "title": "Grief and bereavement",
    "name": "Grief",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely _major depression with bereavement / prolonged grief disorder / normal grief given _pervasive low mood, worthlessness, self-loathing / yearning 12 mo or more, impaired function / sadness tied to reminders, function preserved.",
     "Loss of *** on ***, *** mo ago. PHQ-9 ***, item 9 ***. Safety screen ***, firearms access ***. Sleep ***, alcohol and substance use ***."
@@ -5294,6 +5485,7 @@
    "title": "Eating disorder",
    "name": "Eating disorder",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely _anorexia nervosa given restriction, low weight, fear of weight gain / bulimia nervosa given binges with purging, normal weight / binge-eating disorder given binges without purging, obesity.",
     "SCOFF ***/5. Weight ***, % median BMI ***, weight loss *** in *** mo. HR ***, BP ***, orthostatic HR and BP change ***, temp ***. Restricting ***, purging ***, laxatives ***, exercise ***. Safety screen ***."
@@ -5326,6 +5518,7 @@
    "title": "Methamphetamine or stimulant use",
    "name": "Stimulant use disorder",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "_mild / moderate / severe _methamphetamine / cocaine / *** use disorder, ***.",
     "DSM-5 criteria *** of 11, route ***, use *** days/mo, last use ***. Opioid or fentanyl exposure ***, injection ***. BP ***, HR ***, psychosis ***, PHQ-9 ***."
@@ -5358,6 +5551,7 @@
    "title": "Rash, undifferentiated",
    "name": "Rash",
    "setting": "Clinic",
+   "kind": "acute",
    "lib": "rash",
    "notes": [
     "Likely _contact dermatitis given itchy rash where a substance touched skin / morbilliform drug eruption given new drug 3-7 days before / tinea corporis given annular scaly plaque, + KOH.",
@@ -5391,6 +5585,7 @@
    "title": "Plaque psoriasis",
    "name": "Plaque psoriasis",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "_Controlled / not controlled on current regimen, BSA ***%.",
     "Sites ***, scalp ***, nails ***, joint pain or swelling ***."
@@ -5421,6 +5616,7 @@
    "title": "Rosacea",
    "name": "Rosacea",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely _papulopustular / erythematotelangiectatic / ocular rosacea given _central facial papules and pustules, no comedones / persistent facial erythema, flushing, telangiectasias / eye redness, foreign-body sensation, blepharitis.",
     "Triggers ***, eye symptoms ***."
@@ -5455,6 +5651,7 @@
    "title": "Seborrheic dermatitis",
    "name": "Seborrheic dermatitis",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely seborrheic dermatitis given _greasy yellow scale on scalp, brows, nasolabial folds / flaky greasy scalp dandruff with itch / infant thick yellow crusted scalp, cradle cap.",
     "Distribution ***, scalp ***, immune status ***."
@@ -5484,6 +5681,7 @@
    "title": "Tinea corporis, cruris, pedis, or capitis",
    "name": "Tinea _corporis / cruris / pedis / capitis",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely tinea _corporis / cruris / pedis / capitis given _annular scaly plaque with active raised border / itchy macerated scale between toes / patchy scalp hair loss with scale, + KOH.",
     "KOH ***, fungal culture ***, extent ***."
@@ -5518,6 +5716,7 @@
    "title": "Common and plantar warts",
    "name": "Warts",
    "setting": "Clinic",
+   "kind": "minor",
    "notes": [
     "Likely _common / plantar warts given _rough firm papule on fingers or hands / tender sole papule, pinpoint bleeding when pared / fissured warts around nails, nail biter.",
     "Number ***, location ***, prior treatment ***."
@@ -5547,6 +5746,7 @@
    "title": "Scabies",
    "name": "Scabies",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely _classic / crusted scabies given _itch worse at night, burrows in finger webs or wrists / itchy papules at belt line, axillae, genitals, itchy contacts / scaly crusted plaques on hands and feet, immunosuppressed.",
     "Burrows ***, distribution ***, household contacts with itch ***."
@@ -5578,6 +5778,7 @@
    "title": "Impetigo",
    "name": "Impetigo",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely _nonbullous / bullous impetigo given _honey-colored crusts around nose or mouth / vesicles enlarging to bullae, infant trunk / crusted plaques at a break in the skin.",
     "Number of lesions ***, location ***, recurrence ***."
@@ -5610,6 +5811,7 @@
    "title": "Actinic keratosis and skin check",
    "name": "Actinic keratosis",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely actinic keratosis given _rough scaly papules on sun-exposed skin / pink gritty scaly patch on balding scalp or face / lesion felt more than seen, fair-skinned older adult.",
     "Number ***, location ***, history of skin cancer ***, immune status ***."
@@ -5639,6 +5841,7 @@
    "title": "Hidradenitis suppurativa",
    "name": "Hidradenitis suppurativa",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Hurley stage _I / II / III, *** on current regimen.",
     "Sites ***, flares per mo ***, sinus tracts ***, BMI ***, smoking ***."
@@ -5669,6 +5872,7 @@
    "title": "Hair loss",
    "name": "Hair loss",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely _androgenetic alopecia / telogen effluvium / alopecia areata / tinea capitis given _patterned crown or temple thinning / diffuse shedding 3-4 mo after stressor, + pull test / discrete round patches, exclamation point hairs.",
     "Pattern ***, pull test ***, scalp scale ***, scarring ***."
@@ -5706,6 +5910,7 @@
    "title": "Knee pain",
    "name": "Knee pain",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely _knee OA given age 50+, crepitus, stiffness starting movement / patellofemoral pain given anterior pain w/ stairs or sitting / meniscal tear given twisting injury, catching, + Thessaly.",
     "*** side, mechanism ***, effusion ***, Lachman ***, Thessaly ***, able to bear weight 4 steps ***."
@@ -5747,6 +5952,7 @@
    "title": "Ankle pain or sprain",
    "name": "Ankle pain",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely _lateral ankle sprain / *** given _inversion injury, mild swelling, walks w/ minimal pain / inversion injury, ecchymosis, ATFL tenderness / severe swelling, unable to bear weight, + anterior drawer.",
     "*** side, inversion ***, bears weight 4 steps ***, malleolar tenderness ***, 5th metatarsal or navicular tenderness ***, squeeze test ***."
@@ -5781,6 +5987,7 @@
    "title": "Hip pain",
    "name": "Hip pain",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely _hip OA given older adult, gradual anterior pain, decreased ROM / trochanteric pain syndrome given lateral pain, worse lying on it / FAI or labral tear given young, groin clicking, + FADIR.",
     "*** side, location _groin / lateral / buttock, ROM ***, FABER and FADIR ***, trochanteric tenderness ***."
@@ -5817,6 +6024,7 @@
    "title": "Neck pain",
    "name": "Neck pain",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely _mechanical neck pain / cervical radiculopathy given _neck pain after strain, soft tissue tenderness / dermatomal arm pain, + Spurling / arm numbness or weakness.",
     "Radiation ***, Spurling ***, strength ***, reflexes ***, Hoffmann ***, gait ***."
@@ -5855,6 +6063,7 @@
    "title": "Elbow pain",
    "name": "Elbow pain",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely _lateral / medial epicondylitis given _tenderness just distal to epicondyle, pain w/ gripping / pain w/ resisted wrist extension or flexion / repetitive work use, age 30s to 40s.",
     "*** side, dominant arm ***, tenderness at ***, pain with resisted wrist _extension / flexion ***."
@@ -5892,6 +6101,7 @@
    "title": "Wrist or hand pain",
    "name": "Wrist or hand pain",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely _carpal tunnel syndrome given night numbness, shakes hand for relief / de Quervain given radial wrist pain, + Finkelstein / scaphoid fracture given FOOSH, snuffbox tenderness.",
     "*** side, dominant hand ***, snuffbox tenderness ***, Finkelstein ***, Tinel and Phalen ***, triggering ***."
@@ -5929,6 +6139,7 @@
    "title": "Pain in several joints",
    "name": "Polyarthralgia",
    "setting": "Clinic",
+   "kind": "workup",
    "lib": "jointpain",
    "notes": [
     "Likely _inflammatory / noninflammatory polyarthritis given _MCP and PIP swelling, morning stiffness 1 hr or more / stiffness <1 hr, Heberden or Bouchard nodes / fever, rash, rhinitis, + parvovirus B19 IgM.",
@@ -5964,6 +6175,7 @@
    "title": "Rheumatoid or inflammatory arthritis",
    "name": "Rheumatoid arthritis",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "_Remission / low / moderate / high disease activity on current regimen, ***.",
     "Swollen joints ***, tender joints ***, CDAI ***, ESR ***, CRP ***, RF ***, anti-CCP ***."
@@ -5999,6 +6211,7 @@
    "title": "Polymyalgia rheumatica",
    "name": "Polymyalgia rheumatica",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely polymyalgia rheumatica given age ***, bilateral shoulder and hip girdle pain, and _morning stiffness >45 min, high ESR or CRP / trouble rising from chair, raising arms / fever, fatigue, weight loss, high CRP.",
     "Morning stiffness *** min, ESR ***, CRP ***, prednisone *** mg daily, headache or vision change ***."
@@ -6038,6 +6251,7 @@
    "title": "Joint pain or positive ANA workup",
    "name": "Joint pain or positive ANA",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _RA given symmetric small joint synovitis, + anti-CCP / SLE given arthritis, oral ulcers, rash, + ANA / positive ANA without disease given 1:40, no CTD features.",
     "Joints ***, synovitis ***, rash ***, oral ulcers ***, Raynaud ***, ANA 1:*** with *** pattern, ESR ***, CRP ***."
@@ -6073,6 +6287,7 @@
    "title": "Positive developmental or autism screen",
    "name": "Positive _developmental / autism screen",
    "setting": "Clinic, pediatric",
+   "kind": "workup",
    "notes": [
     "Likely _speech-language delay given few words, other ASQ-3 domains normal / ASD given + M-CHAT-R/F, no pointing or response to name / global developmental delay given ASQ-3 below cutoff in several domains.",
     "Age *** mo. ASQ-3 below cutoff in ***. M-CHAT-R/F total ***, follow-up interview score ***. Regression ***, hearing ***, pica ***."
@@ -6114,6 +6329,7 @@
    "title": "Bedwetting",
    "name": "Nocturnal enuresis",
    "setting": "Clinic, pediatric",
+   "kind": "chronic",
    "notes": [
     "Likely _primary / secondary nocturnal enuresis given _never dry 6 mo, normal exam, family h/o enuresis / wetting after 6 mo dry, new family stressor / hard to wake to bladder cues, normal UA.",
     "Age *** yr. Wet nights *** per wk, dry 6 mo or more in the past ***, daytime wetting or urgency ***. Constipation ***, snoring ***. UA ***."
@@ -6151,6 +6367,7 @@
    "title": "Infant colic",
    "name": "Infant colic",
    "setting": "Clinic, pediatric",
+   "kind": "chronic",
    "notes": [
     "Likely infant colic given _crying 3+ hr/day 3+ days/wk, normal exam / unprovoked evening paroxysms, inconsolable crying / crying peaking near 6 wk, otherwise healthy.",
     "Age *** wk. Crying *** hr/day on *** days/wk for *** wk. Feeding ***, weight gain ***. Exam ***."
@@ -6186,6 +6403,7 @@
    "title": "Infant reflux",
    "name": "Infant gastroesophageal reflux",
    "setting": "Clinic, pediatric",
+   "kind": "chronic",
    "notes": [
     "Likely _physiologic reflux / GERD given _frequent spit-up, thriving, normal exam / spit-up w/ fussiness and arching, gaining well / regurgitation w/ feeding refusal, poor weight gain.",
     "Age *** wk. Spit-up ***, feeding *** oz every *** hr, weight gain ***. Red flags ***."
@@ -6220,6 +6438,7 @@
    "title": "Fever in an infant 8 to 60 days",
    "name": "Fever in a well-appearing infant, *** days old",
    "setting": "Clinic, pediatric",
+   "kind": "systemic",
    "notes": [
     "Likely _viral illness given + viral panel, normal UA and markers / UTI given + UA, no other source on exam / bacteremia given abnormal procalcitonin or ANC, no focus.",
     "Tmax *** C rectal, GA *** wk, well appearing. UA ***, procalcitonin ***, ANC ***, CRP ***, CSF ***.",
@@ -6283,6 +6502,7 @@
    "title": "Frailty",
    "name": "Frailty",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "_Prefrail / frail, *** on current plan.",
     "Clinical Frailty Scale *** of 9. FRAIL scale *** of 5. SPPB *** of 12, gait speed *** m/s, grip *** kg, 5x chair stand *** sec.",
@@ -6329,6 +6549,7 @@
    "title": "Hearing loss",
    "name": "Hearing loss",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely *** hearing loss given _gradual bilateral high-frequency loss, older age / occlusive cerumen on otoscopy / unilateral loss within 72 hr, Weber to good ear.",
     "Onset _sudden / gradual, _unilateral / bilateral, *** days ago. Otoscopy ***. Weber lateralizes to ***, Rinne ***. Whispered voice test ***."
@@ -6369,6 +6590,7 @@
    "title": "Travel medicine visit",
    "name": "Travel medicine visit",
    "setting": "Clinic",
+   "kind": "none",
    "notes": [
     "Travel to *** x *** wk, departing ***.",
     "Itinerary urban or rural ***, activities ***, lodging ***. Pregnancy ***, immune compromise ***, chronic disease ***."
@@ -6419,6 +6641,7 @@
    "title": "Tick-borne illness",
    "name": "Tick-borne illness",
    "setting": "Clinic",
+   "kind": "systemic",
    "notes": [
     "Likely _ehrlichiosis given fever, headache, low WBC and plt / RMSF given fever, rash on wrists, forearms, ankles / tularemia given fever, skin ulcer, swollen regional nodes. Tick exposure on ***.",
     "Rash ***, ulcer or eschar ***, lymphadenopathy ***. WBC ***, plt ***, Na ***, AST/ALT ***."
@@ -6460,6 +6683,7 @@
    "title": "Latent TB infection",
    "name": "Latent TB infection",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely latent TB infection given _+ IGRA on screening, no sxs, normal CXR / + TST, born in high TB country, no sxs / + test after close TB contact, no TB disease.",
     "TST *** mm or IGRA ***, CXR ***, symptoms ***. Risk factors ***."
@@ -6503,6 +6727,7 @@
    "title": "Conjunctivitis",
    "name": "Conjunctivitis",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely _viral / bacterial / allergic conjunctivitis given _watery discharge w/ cold or flu sxs / thick purulent discharge, lids matted shut / bilateral intense itching, other allergy sxs.",
     "Discharge ***, itching ***, _unilateral / bilateral, contact lens use ***. Visual acuity ***, photophobia ***, pupils ***."
@@ -6543,6 +6768,7 @@
    "title": "Infectious mononucleosis",
    "name": "Infectious mononucleosis",
    "setting": "Clinic",
+   "kind": "systemic",
    "notes": [
     "Likely infectious mononucleosis given _fever, pharyngitis, lymphadenopathy, fatigue / sore throat, posterior cervical LAD, atypical lymphs >10% / pharyngitis w/ rash after amoxicillin, + heterophile.",
     "Heterophile ***, EBV VCA IgM ***, atypical lymphocytes ***%, AST/ALT ***, splenomegaly ***."
@@ -6577,6 +6803,7 @@
    "title": "Animal or human bite",
    "name": "Animal or human bite",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "_Dog / cat / human / *** bite to *** on ***, presenting *** hr after injury.",
     "Wound ***, depth ***, tendon, joint, or bone involvement ***, signs of infection ***. Last tetanus ***. Animal ***, vaccinated ***, available to observe ***."
@@ -6622,6 +6849,7 @@
    "title": "Head lice",
    "name": "Head lice",
    "setting": "Clinic",
+   "kind": "minor",
    "notes": [
     "Likely head lice given _live lice seen on scalp w/ scalp itching / live lice seen on scalp w/ excoriations behind ears, nape / live lice seen on scalp on louse comb, no itch yet.",
     "Live lice ***, nits ***, prior treatments ***, age ***."
@@ -6655,6 +6883,7 @@
    "title": "Pinworm",
    "name": "Pinworm",
    "setting": "Clinic",
+   "kind": "minor",
    "notes": [
     "Likely pinworm given _perianal itching, worse at night / child w/ restless sleep, perianal itch, infected household member / + tape test or worm seen on perianal skin.",
     "Tape test ***, symptomatic household members ***."
@@ -6686,6 +6915,7 @@
    "title": "Hand, foot, and mouth disease",
    "name": "Hand, foot, and mouth disease",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely hand, foot, and mouth disease given _fever, oral ulcers, and vesicles on palms and soles / child <5 yr w/ painful mouth sores, drinking less / rash on buttocks, legs, arms w/ oral ulcers.",
     "Day *** of illness, hydration status ***, urine output ***."
@@ -6712,6 +6942,7 @@
    "title": "Tremor",
    "name": "Tremor",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _essential / enhanced physiologic / parkinsonian / drug-induced tremor given _bilateral hand action tremor, relieved by alcohol / postural tremor w/ caffeine, anxiety, or new med / unilateral rest tremor w/ bradykinesia, rigidity.",
     "_Rest / postural / kinetic tremor, _unilateral / bilateral, onset ***. Bradykinesia ***, rigidity ***, cerebellar signs ***."
@@ -6753,6 +6984,7 @@
    "title": "Bell's palsy",
    "name": "Bell's palsy",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely Bell's palsy given _acute unilateral facial weakness including forehead, mouth droop / acute unilateral facial weakness including forehead, incomplete eye closure / acute unilateral facial weakness including forehead, otherwise normal neuro exam. Onset *** days ago.",
     "House-Brackmann ***, eye closure ***, other cranial nerves ***, limb weakness ***, hearing ***."
@@ -6791,6 +7023,7 @@
    "title": "Parkinson disease",
    "name": "Parkinson disease",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely Parkinson disease given _bradykinesia with asymmetric rest tremor / bradykinesia with rigidity and shuffling gait / bradykinesia with rigidity, hyposmia, REM sleep disorder.",
     "Onset ***, _asymmetric / symmetric, levodopa response ***. Falls ***, orthostatic BP ***, cognition ***, mood ***."
@@ -6837,6 +7070,7 @@
    "title": "Dysmenorrhea",
    "name": "Dysmenorrhea",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely primary dysmenorrhea given _onset soon after menarche, pain only first days of menses / crampy lower abd pain w/ flow, nausea, back pain / cramps w/ each cycle, missed school or work.",
     "Pain score ***, missed school or work ***, pelvic exam ***, pregnancy test ***."
@@ -6868,6 +7102,7 @@
    "title": "PMS or PMDD",
    "name": "Premenstrual disorder, _PMS / PMDD",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely *** given _bloating, irritability, mood swings before menses, resolve w/ menses / severe luteal mood sxs impairing work, resolve w/ menses / premenstrual sxs on 2-cycle daily chart, resolve w/ menses.",
     "Prospective symptom chart *** cycles, PHQ-9 ***, functional impact ***."
@@ -6902,6 +7137,7 @@
    "title": "Suspected endometriosis",
    "name": "Suspected endometriosis",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely endometriosis, clinical diagnosis, given _dysmenorrhea, deep dyspareunia, chronic pelvic pain / cyclic painful BMs or dysuria, uterosacral tenderness / infertility or ovarian mass w/ pelvic pain.",
     "Dysmenorrhea ***, dyspareunia ***, pain with urination or bowel movements ***, pelvic exam ***, TVUS ***."
@@ -6938,6 +7174,7 @@
    "title": "Vulvovaginal candidiasis",
    "name": "Vulvovaginal candidiasis",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely _uncomplicated / complicated VVC given _vulvar itching, thick curdy discharge, yeast or pseudohyphae on KOH / vulvar soreness, external dysuria, normal pH / recurrent itching, + yeast cx or PCR.",
     "Vaginal pH ***, KOH wet mount ***, episodes in past yr ***, pregnant ***, diabetes or immunosuppression ***."
@@ -6974,6 +7211,7 @@
    "title": "Abnormal Pap follow-up",
    "name": "Abnormal cervical cancer screening",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Cytology _NILM / ASC-US / LSIL / ASC-H / HSIL / AGC, HPV _negative / positive, genotype ***.",
     "Age ***, negative HPV-based screen within 5 yr ***, pregnant ***, immunosuppressed ***."
@@ -7017,6 +7255,7 @@
    "title": "Urinary incontinence",
    "name": "Urinary incontinence",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely _stress / urge / mixed / overflow / functional incontinence given _leakage w/ cough or exertion, + cough stress test / sudden urgency w/ leakage, frequency, nocturia / both exertional and urgency leakage.",
     "UA ***, PVR ***, 3-day bladder diary ***, cough stress test ***, prolapse on exam ***."
@@ -7060,6 +7299,7 @@
    "title": "Prostatitis",
    "name": "Prostatitis",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely _chronic pelvic pain syndrome / acute bacterial prostatitis / chronic bacterial prostatitis given _chronic pelvic pain w/ voiding sxs, negative cx / fever, dysuria, suprapubic pain, tender boggy prostate / recurrent UTI w/ same organism, perineal pain.",
     "Temp ***, prostate exam ***, UA ***, urine cx ***, PVR ***."
@@ -7102,6 +7342,7 @@
    "title": "Epididymitis",
    "name": "Epididymitis",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely acute epididymitis given _unilateral scrotal pain and epididymal tenderness w/ epididymal swelling / unilateral scrotal pain and epididymal tenderness w/ urethritis / unilateral scrotal pain and epididymal tenderness, + LE on UA.",
     "Onset ***, fever ***, first-void UA LE *** or WBC ***/hpf, scrotal Doppler US ***."
@@ -7137,6 +7378,7 @@
    "title": "Low testosterone",
    "name": "Low testosterone",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely testosterone deficiency given _low libido, ED, two low AM total testosterone levels / body hair loss, gynecomastia, two low AM total testosterone levels / hot flashes, small testes, two low AM total testosterone levels.",
     "Total testosterone *** and *** ng/dL, LH ***, FSH ***, prolactin ***, Hct ***, PSA ***."
@@ -7172,6 +7414,7 @@
    "title": "Hemorrhoids",
    "name": "Hemorrhoids",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely _internal / external / thrombosed external hemorrhoids given _painless bright red blood w/ BMs / prolapsing tissue w/ itching or soiling / acute severe perianal pain, thrombosed hemorrhoid on exam.",
     "Grade ***, bleeding ***, DRE ***, anoscopy ***. Last colonoscopy ***."
@@ -7203,6 +7446,7 @@
    "title": "Anal fissure",
    "name": "Anal fissure",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely _acute / chronic anal fissure given _sharp pain and bleeding after BMs / tearing pain w/ BMs, posterior midline tear on exam / fissure >8 wk w/ sentinel tag or exposed sphincter.",
     "Location _posterior midline / anterior midline / lateral, duration *** wk, sentinel tag ***."
@@ -7234,6 +7478,7 @@
    "title": "Diverticulosis",
    "name": "Diverticulosis",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Diverticulosis on _colonoscopy / CT ***, no active diverticulitis.",
     "Symptoms ***, prior diverticulitis ***, prior diverticular bleeding ***."
@@ -7257,6 +7502,7 @@
    "title": "H. pylori",
    "name": "H. pylori infection",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "H. pylori _positive / persistent after treatment by _stool antigen / urea breath test / biopsy, ***.",
     "Indication for testing ***. Prior H. pylori treatment ***, penicillin allergy ***."
@@ -7288,6 +7534,7 @@
    "title": "Inflammatory bowel disease, established",
    "name": "Inflammatory bowel disease",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "_Crohn disease / ulcerative colitis, *** on current regimen, ***.",
     "Diagnosed ***, extent ***, last colonoscopy ***. Current therapy ***, steroid courses in past yr ***, PSC ***."
@@ -7321,6 +7568,7 @@
    "title": "Celiac disease",
    "name": "Celiac disease",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Celiac disease diagnosed *** by serology and duodenal biopsy, *** on gluten-free diet.",
     "Serology: tTG-IgA ***, total IgA ***. Symptoms ***, Hgb ***, ferritin ***, 25-OH vitamin D ***."
@@ -7348,6 +7596,7 @@
    "title": "Vitamin D deficiency",
    "name": "Vitamin D deficiency",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Vitamin D deficiency, _new / on repletion / on maintenance, ***.",
     "25-OH vitamin D *** ng/mL on ***. Indication for testing ***. Calcium ***, creatinine ***."
@@ -7377,6 +7626,7 @@
    "title": "Vitamin B12 deficiency",
    "name": "Vitamin B12 deficiency",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely 2/2 _pernicious anemia given + intrinsic factor antibodies / metformin or PPI effect given long-term use, low B12 / malabsorption given h/o gastric bypass, ileal resection, or Crohn disease.",
     "B12 *** pg/mL, MMA ***, Hgb ***, MCV ***. Neuro symptoms ***. Metformin ***, PPI or H2 blocker ***, diet ***."
@@ -7411,6 +7661,7 @@
    "title": "Hypertriglyceridemia",
    "name": "Hypertriglyceridemia",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "*** on current regimen, ***.",
     "Fasting TG ***, non-HDL ***, apoB ***, LDL ***. A1c ***, TSH ***. Alcohol ***, meds ***."
@@ -7447,6 +7698,7 @@
    "title": "Kidney stone, outpatient",
    "name": "Kidney stone",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely _ureteral / renal stone given _colicky flank pain radiating to groin / flank pain w/ nausea, vomiting, + blood on UA / stone and hydronephrosis on CT or US.",
     "Stone *** mm at ***, hydronephrosis ***. UA ***, creatinine ***, temp ***. First stone or recurrent ***."
@@ -7485,6 +7737,7 @@
    "title": "Type 1 diabetes",
    "name": "Type 1 diabetes",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "_At / above / below goal on current regimen, ***.",
     "A1C ***, CGM TIR ***%, time <70 ***%, time <54 ***%. Hypoglycemia ***. Diagnosed ***."
@@ -7515,6 +7768,7 @@
    "title": "Statin intolerance",
    "name": "Statin intolerance",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely statin-associated muscle symptoms given _symmetric proximal aching within 4-6 wk of statin / sxs resolve off statin, recur on rechallenge / cramps or stiffness w/ normal or mildly high CK.",
     "Statins tried ***, doses ***. Symptoms ***, onset ***. CK ***, TSH ***, 25-OH vitamin D ***."
@@ -7550,6 +7804,7 @@
    "title": "Abdominal aortic aneurysm screening and surveillance",
    "name": "Abdominal aortic aneurysm",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "AAA _screening / surveillance, ***.",
     "Aortic diameter *** cm on *** US, prior *** cm on ***. Smoking ***, family history ***."
@@ -7576,6 +7831,7 @@
    "title": "Suspected elder abuse or neglect",
    "name": "Suspected elder abuse or neglect",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely _physical abuse / emotional abuse / sexual abuse / neglect / financial exploitation / self-neglect given _bruises in unusual sites, unexplained fractures / weight loss, poor hygiene, missing meds / improper use of funds, coerced loss of assets.",
     "Injuries ***, EASI ***, Mini-Cog ***, lives with ***, caregiver ***."
@@ -7618,6 +7874,7 @@
    "title": "Caregiver strain",
    "name": "Caregiver strain",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "_Mild / moderate / severe strain on current supports, ***.",
     "Caring for *** with ***, *** hr/wk. Zarit Burden Interview *** of 88, PHQ-9 ***."
@@ -7646,6 +7903,7 @@
    "title": "Croup",
    "name": "Croup",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely croup given _barky cough, inspiratory stridor and hoarseness after URI / abrupt barky cough worse at night, low-grade fever / barky cough, stridor only when agitated.",
     "SpO2 ***, stridor at rest ***, retractions ***, PO intake ***.",
@@ -7683,6 +7941,7 @@
    "title": "Skin abscess",
    "name": "Skin abscess",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely skin abscess of *** given _fluctuant, tender nodule w/ surrounding erythema, warmth / painful swelling, induration, central fluctuance / unclear fluctuance, fluid collection on bedside US.",
     "Size *** cm, surrounding cellulitis ***, T ***, HR ***, RR ***, WBC ***.",
@@ -7724,6 +7983,7 @@
    "title": "Paronychia",
    "name": "Paronychia",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely _acute / chronic paronychia of *** given _rapid painful red swollen nail fold after nail biting / inflamed nail fold w/ pus, single digit / 6+ wk nail fold swelling, absent cuticle, wet work.",
     "Duration ***, abscess ***, cellulitis ***, digits involved ***.",
@@ -7767,6 +8027,7 @@
    "title": "Molluscum contagiosum",
    "name": "Molluscum contagiosum",
    "setting": "Clinic",
+   "kind": "minor",
    "notes": [
     "Likely molluscum contagiosum given _umbilicated, pearly papules on trunk, limbs of child / umbilicated, pearly papules w/ surrounding eczema / umbilicated, pearly papules on genitals, sexually active adult.",
     "Number ***, location ***, eczema ***, immune status ***."
@@ -7803,6 +8064,7 @@
    "title": "Genital herpes",
    "name": "Genital herpes",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely _first episode genital herpes / recurrent genital herpes given _genital vesicles or ulcers, + lesion NAAT / severe genital ulcers, prolonged illness, new infection / prodrome before recurrent lesions, known HSV-2.",
     "HSV NAAT ***, type ***, recurrences per yr ***, pregnant ***."
@@ -7845,6 +8107,7 @@
    "title": "Fifth disease (parvovirus B19)",
    "name": "Fifth disease",
    "setting": "Clinic",
+   "kind": "minor",
    "notes": [
     "Likely parvovirus B19 infection given _slapped cheek rash then reticular body rash / polyarthralgia and reticular trunk rash in adult / transient aplastic crisis in sickle cell disease.",
     "Lacy body rash ***, arthralgia ***, hemolytic anemia ***, immune status ***, pregnant contacts ***."
@@ -7876,6 +8139,7 @@
    "title": "Roseola",
    "name": "Roseola",
    "setting": "Clinic",
+   "kind": "minor",
    "notes": [
     "Likely roseola given _high fever, then rash as fever resolved / high fever w/ febrile seizure, then rash / fever w/ fussiness, runny nose, diarrhea, then rash. Fever x *** days.",
     "Max temp ***, seizure ***, hydration ***."
@@ -7901,6 +8165,7 @@
    "title": "Influenza, outpatient",
    "name": "Influenza",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely influenza given _abrupt fever, myalgias, headache, dry cough / viral sxs and + rapid molecular flu test / no fever, confusion, poor appetite in older adult.",
     "Onset *** days ago. Rapid molecular flu test ***, COVID-19 test ***. Temp ***, SpO2 ***, RR ***. High-risk factors ***, pregnant ***."
@@ -7964,6 +8229,7 @@
    "title": "Measles, suspected",
    "name": "Measles, suspected",
    "setting": "Clinic",
+   "kind": "systemic",
    "notes": [
     "Likely measles given _fever, cough, coryza, conjunctivitis, then rash / maculopapular rash head to trunk, Koplik spots / fever and rash in unvaccinated traveler.",
     "Temp *** (38.3 C or higher), generalized maculopapular rash day ***, cough ***, coryza ***, conjunctivitis ***, Koplik spots ***. MMR doses ***. Travel or exposure ***."
@@ -8003,6 +8269,7 @@
    "title": "Mumps, suspected",
    "name": "Mumps, suspected",
    "setting": "Clinic",
+   "kind": "systemic",
    "notes": [
     "Likely mumps given _fever, unilateral tender parotid swelling / bilateral parotitis w/ fever / parotitis in fully vaccinated, outbreak setting. Parotitis onset *** days ago.",
     "_Unilateral / bilateral parotid swelling, fever ***. MMR doses ***, exposure ***. Testicular pain ***, headache or neck stiffness ***, hearing change ***."
@@ -8035,6 +8302,7 @@
    "title": "Pertussis",
    "name": "Pertussis",
    "setting": "Clinic",
+   "kind": "systemic",
    "notes": [
     "Likely pertussis given _paroxysmal cough, whoop, posttussive vomiting / URI sxs, low-grade fever, then worsening cough / apnea or cyanosis in infant, minimal cough.",
     "Cough x *** wk, paroxysms ***, posttussive emesis ***, inspiratory whoop ***, apnea or cyanosis ***. DTaP or Tdap status ***, exposure ***."
@@ -8076,6 +8344,7 @@
    "title": "Chickenpox",
    "name": "Varicella",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely varicella given _fever, malaise, then vesicular rash in adult / itchy vesicles in all stages in child / mild maculopapular rash, <50 lesions, vaccinated.",
     "Rash onset *** hr ago, vesicular rash ***, all lesions crusted ***. Fever ***. Varicella vaccine doses ***. Age ***, pregnant ***, immunocompromised ***."
@@ -8118,6 +8387,7 @@
    "title": "Urinary tract infection in a child",
    "name": "Urinary tract infection, _febrile / afebrile",
    "setting": "Clinic, pediatric",
+   "kind": "acute",
    "notes": [
     "Likely _febrile UTI given fever without source, + UA, infant / afebrile cystitis given dysuria, frequency, urgency, + LE / pyelonephritis given fever, flank pain, CVA tenderness.",
     "Age *** mo, Tmax ***, appearance ***. UA WBC *** /hpf, LE ***, nitrite ***. Urine cx by _cath / SPA / clean catch ***, CFU/mL ***. Stooling ***."
@@ -8175,6 +8445,7 @@
    "title": "Insomnia workup",
    "name": "Insomnia workup",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely _chronic insomnia given sxs 3 nights/wk x 3 mo / OSA given snoring, witnessed apneas / mood disorder given + PHQ-9 or GAD-7.",
     "ISI ***, STOP-BANG ***, PHQ-9 ***, GAD-7 ***. Sleep diary: bedtime ***, wake time ***, TST ***, SE ***."
@@ -8212,6 +8483,7 @@
    "title": "Adult constipation workup",
    "name": "Constipation",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _functional constipation given hard stools, straining / medication-induced given opioid or anticholinergic / dyssynergic defecation given digitation, paradoxical contraction.",
     "Duration ***, onset ***. BMs *** per wk, Bristol type ***. Straining ***, digitation ***. Alarm features ***. CRC screening ***. DRE ***."
@@ -8254,6 +8526,7 @@
    "title": "Pediatric constipation workup",
    "name": "Pediatric constipation",
    "setting": "Clinic, pediatric",
+   "kind": "workup",
    "notes": [
     "Likely functional constipation given _withholding, hard painful stools / soiling, large rectal fecal mass / large stools clogging the toilet.",
     "Age ***, onset age ***. BMs *** per wk, Bristol type ***. Meconium by 48 hr ***. Growth ***. Abdomen ***, spine ***, anus ***, neuro ***."
@@ -8302,6 +8575,7 @@
    "title": "Opioid-induced constipation",
    "name": "Opioid-induced constipation",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely opioid-induced constipation given _hard stools after starting an opioid / straining on a stable opioid / worse after an opioid dose increase.",
     "Opioid *** at *** MME/day x ***. SBMs *** per wk, Bristol type ***. Laxatives tried: *** x *** wk."
@@ -8348,6 +8622,7 @@
    "title": "Infant constipation and dyschezia",
    "name": "Infant constipation",
    "setting": "Clinic, pediatric",
+   "kind": "chronic",
    "notes": [
     "Likely _infant dyschezia given straining, then soft stool / functional constipation given hard painful stools / normal breastfed pattern given soft infrequent stools.",
     "Age *** wk, _breastfed / formula fed / mixed. Stools *** per wk, consistency ***, blood ***. Meconium by 48 hr ***. Weight gain ***. Abdomen ***, anus ***, spine ***, tone ***."
@@ -8393,6 +8668,7 @@
    "title": "Retentive fecal incontinence",
    "name": "Retentive fecal incontinence (encopresis)",
    "setting": "Clinic, pediatric",
+   "kind": "chronic",
    "notes": [
     "Likely retentive fecal incontinence given _daily soiling, large rectal fecal mass / withholding, painful stools, soiling / relapse after laxatives stopped early.",
     "Age *** yr. Accidents *** per wk, day or night ***. Toilet BMs *** per wk, Bristol type ***. Withholding ***. Fecal mass on exam ***. Spine and neuro exam ***. Prior cleanouts and meds ***."
@@ -8430,6 +8706,7 @@
    "title": "Constipation in older adults",
    "name": "Constipation in an older adult",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely _medication-induced given opioid, anticholinergic, or iron / fecal impaction given overflow diarrhea / functional constipation given hard stools, straining.",
     "Setting _home / nursing home. Last BM ***, Bristol type ***. Mobility ***, cognition ***. eGFR ***. Constipating meds ***. DRE ***."
@@ -8475,6 +8752,7 @@
    "title": "Skin tear in an older adult",
    "name": "Skin tear",
    "setting": "Clinic",
+   "kind": "minor",
    "notes": [
     "Likely skin tear, type _1 given flap covers wound bed / 2 given partial flap loss / 3 given total flap loss.",
     "Location ***, size *** cm, flap viability ***, bleeding or hematoma ***, surrounding skin ***.",
@@ -8521,6 +8799,7 @@
    "title": "Soft tissue hematoma",
    "name": "Soft tissue hematoma of _shin / thigh / arm",
    "setting": "Clinic",
+   "kind": "minor",
    "notes": [
     "Likely soft tissue hematoma given _fall or bump, then swelling and bruising / tender swelling, overlying ecchymosis / spontaneous swelling on anticoagulant.",
     "Anticoagulant _apixaban / rivaroxaban / warfarin / aspirin or clopidogrel / none, last dose ***.",
@@ -8565,6 +8844,7 @@
    "title": "Tendinopathy",
    "name": "Tendinopathy, _lateral elbow / medial elbow / de Quervain / patellar / Achilles / gluteal / biceps / ***",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely tendinopathy given _insidious onset after increased activity / focal tendon tenderness / pain w/ resisted tendon loading.",
     "*** side, duration *** wk, tender at ***, pain w/ resisted ***, strength ***, recent fluoroquinolone ***."
@@ -8633,6 +8913,7 @@
    "title": "Female sexual dysfunction workup",
    "name": "Female sexual dysfunction",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _HSDD given low desire, distress, acquired, generalized / SSRI effect given onset after SSRI, low desire, low arousal / GSM given postmenopausal, dryness, pain with sex.",
     "Duration ***, _lifelong / acquired, _generalized / situational. Distress ***, DSDS ***, FSFI ***, PHQ-9 ***.",
@@ -8668,6 +8949,7 @@
    "title": "Low libido in men",
    "name": "Low libido",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely _testosterone deficiency given low libido, ED, two low AM levels / depression given low mood, anhedonia, positive PHQ-9 / medication effect given SSRI, opioid, or finasteride start.",
     "Duration ***, distress ***, ED ***. AM total testosterone *** and *** ng/dL, LH ***, prolactin ***, PHQ-9 ***."
@@ -8708,6 +8990,7 @@
    "title": "Male sexual dysfunction workup",
    "name": "Male sexual dysfunction",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _vasculogenic ED given HTN, DM, smoking, poor morning erections / testosterone deficiency given low libido, ED, two low AM levels / lifelong PE given latency about 1 min, poor control, distress.",
     "IIEF-5 ***, AM total testosterone *** and *** ng/dL, A1c ***, LDL ***, 10-yr ASCVD risk ***.",
@@ -8748,6 +9031,7 @@
    "title": "Premature ejaculation",
    "name": "Premature ejaculation",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely _lifelong PE given about 1 min, poor control, distress / acquired PE given new, shorter latency, poor control, distress / PE with ED given rushing, softening erection.",
     "Estimated latency ***, control ***, distress ***, ED ***, IIEF-5 ***."
@@ -8784,6 +9068,7 @@
    "title": "Faltering growth in infants and toddlers, outpatient",
    "name": "Faltering growth",
    "setting": "Clinic, pediatric",
+   "kind": "chronic",
    "notes": [
     "Likely _inadequate intake given formula mixing, low volumes, or food insecurity / inadequate absorption given chronic diarrhea despite adequate intake / increased needs given cardiac, lung, or kidney disease.",
     "Weight-for-age z ***, _weight-for-length / BMI z ***, down *** z since ***, crossed *** major percentiles.",
@@ -8844,6 +9129,7 @@
    "title": "Reflux workup",
    "name": "Reflux symptoms",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _GERD given heartburn, regurgitation, no alarm features / extraesophageal reflux given cough, hoarseness, heartburn / functional heartburn given normal EGD, normal pH study.",
     "Heartburn *** x/wk x *** yr, regurgitation ***, extraesophageal sxs ***. Alarm features ***. PPI trial ***, response ***. BMI ***."
@@ -8888,6 +9174,7 @@
    "title": "Subclinical hypothyroidism",
    "name": "Subclinical hypothyroidism",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely subclinical hypothyroidism given _high TSH, normal free T4 / mild TSH rise, + TPO Ab / older adult, mild TSH rise.",
     "TSH ***, free T4 ***, TPO Ab ***. Age ***, symptoms ***, pregnancy plans ***, goiter ***."
@@ -8928,6 +9215,7 @@
    "title": "Subclinical hyperthyroidism",
    "name": "Subclinical hyperthyroidism",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely subclinical hyperthyroidism given _low TSH, normal free T4 and T3 / low TSH, multinodular goiter / excess levothyroxine dose.",
     "TSH ***, free T4 ***, total T3 ***. Grade _1, TSH 0.1-0.39 / 2, TSH <0.1. Age ***, AF ***, osteoporosis ***, cardiac disease ***."
@@ -8963,6 +9251,7 @@
    "title": "Thyroiditis",
    "name": "Thyroiditis, _subacute / painless / postpartum / drug-induced",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely _subacute thyroiditis given painful tender thyroid, high ESR / painless thyroiditis given no neck pain / postpartum thyroiditis given onset 2-6 mo postpartum.",
     "Neck pain ***, TSH ***, free T4 ***, total T3 ***, ESR or CRP ***, radioiodine uptake ***, TRAb ***. Weeks postpartum ***, meds ***."
@@ -9006,6 +9295,7 @@
    "title": "Abnormal thyroid tests workup",
    "name": "Abnormal thyroid function tests",
    "setting": "Clinic",
+   "kind": "workup",
    "notes": [
     "Likely _subclinical hypothyroidism given high TSH, normal FT4 / subclinical hyperthyroidism given low TSH, normal FT4 / hypothyroidism given high TSH, low FT4.",
     "TSH ***, free T4 ***, total T3 ***. Meds ***, biotin ***, acute illness ***, pregnancy ***, pituitary disease ***."
@@ -9048,6 +9338,7 @@
    "title": "Goiter",
    "name": "Goiter",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely _nontoxic multinodular goiter given normal TSH / diffuse goiter given smooth enlargement, normal TSH / toxic multinodular goiter given low TSH.",
     "TSH ***, free T4 ***. US size *** and nodules ***, substernal ***. Dysphagia ***, dyspnea ***, neck tightness ***, iodine intake ***."
@@ -9084,6 +9375,7 @@
    "title": "Thyroid nodule management",
    "name": "Thyroid nodule",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "*** cm *** lobe nodule, US pattern _TR*** / *** suspicion, FNA _not done / Bethesda ***.",
     "TSH ***, prior US ***, growth ***, neck radiation ***, family history ***."
@@ -9140,6 +9432,7 @@
    "title": "Drug-induced thyroid dysfunction",
    "name": "Drug-induced thyroid dysfunction, _amiodarone / lithium / checkpoint inhibitor",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "_Euthyroid / hypothyroid / thyrotoxic on _amiodarone / lithium / checkpoint inhibitor, ***.",
     "TSH ***, free T4 ***, total T3 ***, TRAb ***, thyroid US with Doppler ***."
@@ -9180,6 +9473,7 @@
    "title": "Thyroid storm",
    "name": "Thyroid storm",
    "setting": "Clinic",
+   "kind": "threat",
    "notes": [
     "Likely thyroid storm given _fever, tachycardia, delirium in thyrotoxic patient / AF with heart failure in thyrotoxicosis / vomiting, diarrhea, jaundice after a precipitant.",
     "BWPS ***. Temp ***, HR ***, rhythm ***, mental status ***, HF ***, LFTs ***. TSH ***, free T4 ***, total T3 ***. Precipitant ***."
@@ -9212,6 +9506,7 @@
    "title": "STEMI",
    "name": "ST elevation MI",
    "setting": "Clinic",
+   "kind": "threat",
    "notes": [
     "Likely *** STEMI given _chest pain, new STE in 2 contiguous leads / ST depression V1-V3, STE V7-V9 / arrest, STE on post-ROSC ECG.",
     "Onset ***, FMC ***. ECG ***. hs-troponin ***. Killip class ***. PCI-capable site _yes / no, est FMC-to-device *** min."
@@ -9267,6 +9562,7 @@
    "title": "Secondary (type 2) MI or myocardial injury",
    "name": "Elevated troponin, _secondary MI / acute myocardial injury / chronic myocardial injury",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely _secondary MI given dynamic hs-trop plus ischemia / acute injury given dynamic hs-trop, no ischemia / chronic injury given stable high hs-trop.",
     "Serial hs-troponin *** to ***, sex-specific 99th percentile ***. ECG ***. Stressor ***: _anemia / hypoxemia / tachyarrhythmia / hypotension / severe HTN. TTE ***."
@@ -9298,6 +9594,7 @@
    "title": "Post-MI follow-up",
    "name": "History of _STEMI / NSTEMI / unstable angina, ***",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "_Stable without angina / angina *** / HF sxs *** on current regimen, ***.",
     "Event ***, _PCI with *** DES to *** / CABG / medical therapy. LVEF ***% on ***. LDL ***, BP ***, A1c ***."
@@ -9367,6 +9664,7 @@
    "title": "Otitis media with effusion",
    "name": "Otitis media with effusion",
    "setting": "Clinic, pediatric",
+   "kind": "acute",
    "notes": [
     "Likely OME given _effusion without bulging TM weeks after AOM / retracted, immobile TM after a cold / muffled hearing, effusion, no otalgia or fever.",
     "_Unilateral / bilateral, effusion since ***. Pneumatic otoscopy ***. Tympanogram type ***. At risk ***."
@@ -9400,6 +9698,7 @@
    "title": "Tympanostomy tube otorrhea",
    "name": "Tympanostomy tube otorrhea",
    "setting": "Clinic, pediatric",
+   "kind": "acute",
    "notes": [
     "Likely acute tube otorrhea given _drainage after a cold / painless drainage, no fever / purulent drainage, tube visible.",
     "*** ear, tubes placed ***, drainage x *** days. Tube patent ***. Postauricular findings ***."
@@ -9427,6 +9726,7 @@
    "title": "Acute mastoiditis",
    "name": "Acute mastoiditis",
    "setting": "Clinic, pediatric",
+   "kind": "systemic",
    "notes": [
     "Likely acute mastoiditis given _AOM with postauricular swelling, auricle pushed forward / fever, mastoid erythema and tenderness / postauricular fluctuance with otorrhea, irritability.",
     "*** side. Postauricular erythema ***, swelling ***, fluctuance ***, auricle protrusion ***. Tmax ***. Facial nerve ***. CT ***."
@@ -9464,6 +9764,7 @@
    "title": "Tympanic membrane perforation",
    "name": "Tympanic membrane perforation",
    "setting": "Clinic",
+   "kind": "acute",
    "notes": [
     "Likely TM perforation given _cotton swab injury, sudden pain, bloody otorrhea / slap, blast, or diving injury, sudden hearing loss / AOM with new purulent otorrhea.",
     "*** ear, perforation size *** of TM. Weber lateralizes to ***. Vertigo ***. Facial weakness ***."
@@ -9494,6 +9795,7 @@
    "title": "Cerumen impaction",
    "name": "Cerumen impaction",
    "setting": "Clinic",
+   "kind": "minor",
    "notes": [
     "Likely cerumen impaction given _muffled hearing, fullness, wax hides TM / wax hides TM in hearing aid user / wax hides TM, nonverbal patient.",
     "_Left / right / bilateral. TM visible ***. Symptoms ***. TM perforation, tubes, or prior ear surgery ***."
@@ -9528,6 +9830,7 @@
    "title": "Sudden sensorineural hearing loss",
    "name": "Sudden sensorineural hearing loss",
    "setting": "Clinic",
+   "kind": "threat",
    "notes": [
     "Likely SSNHL given _one-sided loss over <72 hr, normal TM / one-sided loss with dizziness or vertigo / Weber to good ear, normal otoscopy.",
     "Onset ***, _left / right. Weber lateralizes to ***, Rinne ***. Otoscopy ***. Neuro exam ***."
@@ -9558,6 +9861,7 @@
    "title": "Eustachian tube dysfunction",
    "name": "Eustachian tube dysfunction",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely ETD given _ear fullness, popping after a cold / muffled hearing, allergies, retracted TM / ear pressure with flying or diving.",
     "_Left / right / bilateral, x *** wk. TM ***. Tympanogram ***. Nasal exam ***."
@@ -9590,6 +9894,7 @@
    "title": "Tinnitus",
    "name": "Tinnitus",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely primary tinnitus given _bilateral ringing with age-related hearing loss / ringing after loud noise exposure / constant nonpulsatile ringing, normal ear exam.",
     "_Unilateral / bilateral, _pulsatile / nonpulsatile, x *** mo. Bothersome ***. Hearing change ***. Otoscopy ***. Neuro exam ***."
@@ -9624,6 +9929,7 @@
    "title": "Ear foreign body",
    "name": "Ear foreign body",
    "setting": "Clinic, pediatric",
+   "kind": "minor",
    "notes": [
     "Likely ear foreign body given _bead or toy in child's canal / live insect in canal, ear pain / suspected button battery, pain.",
     "*** ear. Object ***, time since ***. TM ***. Canal injury ***."
@@ -9650,6 +9956,7 @@
    "title": "Frailty workup",
    "name": "Frailty workup",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely frailty given _slow gait, weak grip, low activity / weight loss and exhaustion / 5 or more meds and falls.",
     "CFS *** of 9, FRAIL *** of 5, SPPB *** of 12, gait speed *** m/s, grip *** kg. Weight change ***, MNA-SF *** of 14, medications ***."
@@ -9692,6 +9999,7 @@
    "title": "Sarcopenia",
    "name": "Sarcopenia",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely sarcopenia given _feeling weak, trouble rising from a chair / slow walking and falls / weight loss with muscle wasting.",
     "SARC-F *** of 10. Grip *** kg, 5x chair stand *** sec. ASMI *** kg/m2 by ***. Gait speed *** m/s, SPPB *** of 12."
@@ -9725,6 +10033,7 @@
    "title": "Malnutrition in an older adult",
    "name": "Malnutrition in an older adult",
    "setting": "Clinic",
+   "kind": "chronic",
    "notes": [
     "Likely malnutrition given _weight loss >5% in 6 mo / intake half or less for >1 wk / low BMI with muscle loss.",
     "Weight *** lb, loss ***% over *** mo, BMI ***. MNA-SF *** of 14. Intake ***, dentition ***, swallowing ***, mood ***."
@@ -9765,6 +10074,7 @@
    "title": "Disruptive behavior in a child",
    "name": "Disruptive behavior",
    "setting": "Clinic, pediatric",
+   "kind": "chronic",
    "notes": [
     "Likely _typical behavior for age / reaction to a stressor / ODD / ADHD / anxiety or mood disorder / autism. Supporting features ***.",
     "Age *** yr. PSC-17 *** (positive 15 or more): internalizing *** (5 or more), attention *** (7 or more), externalizing *** (7 or more).",

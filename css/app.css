@@ -233,7 +233,7 @@ select.cx {
 .mini {
     white-space: pre-wrap; font-size: 14px; line-height: 1.45; color: var(--dim); margin: 10px -6px 0; padding: 6px; border-radius: 8px; cursor: pointer;
 }
-.pfoot { display: flex; justify-content: flex-end; margin-top: 12px; }
+.pfoot { display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-top: 12px; }
 .addtile {
     display: block; width: 100%; padding: 14px; background: transparent; border: 1px dashed var(--line2); border-radius: 16px; color: var(--accent);
     font-weight: 600; font-size: 15px;
@@ -352,3 +352,11 @@ select.cx {
 @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* Billing: auto data and the blanks warning; EMR blank style toggle */
+.warn { color: var(--warn); margin: 8px 0 0; }
+.flag { display: inline-flex; align-items: center; gap: 4px; }
+.panelsub { align-items: center; }
+.seg.emr { flex: 0 0 auto; font-size: 12px; }
+.seg.emr .segb { padding: 4px 10px; min-height: 0; }
+.emrrow { display: flex; align-items: center; gap: 10px; margin-top: 12px; }

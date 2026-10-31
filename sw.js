@@ -4,7 +4,7 @@
 // works offline in exam rooms with bad wifi. A changed VERSION (written by `node tools/version-sw.mjs`, a hash of
 // every cached file) installs a fresh copy of everything in one step. Run it after changing ANY cached file.
 
-const VERSION = '0d3187599225';
+const VERSION = 'ead5133a2ca5';
 const CACHE = 'in-clinic-' + VERSION;
 
 const APP_SHELL = [

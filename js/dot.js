@@ -45,14 +45,18 @@ export const Dot = {
     },
 
     /** The problem with the block's lines added to its Notes, DDx (unlabelled group) and Plan; lines it already has are skipped.
-     *  The block's handout goes into the After Visit Summary (p.avs). */
+     *  The block's handout goes into the After Visit Summary (p.avs); its kind (acute, chronic, workup…) drives billing. */
     fill(p, block) {
         if (!block) return p;
         const add = (have, more = []) => [...have, ...more.filter(l => !have.includes(l))];
         const items = (block.ddx || []).filter(d => !p.ddx.some(g => g.items.includes(d)));
         const ddx = !items.length ? p.ddx : p.ddx.some(g => g.label === '')
             ? p.ddx.map(g => (g.label === '' ? { ...g, items: [...g.items, ...items] } : g)) : [...p.ddx, { label: '', items }];
-        return { ...p, notes: add(p.notes, block.notes), ddx, plan: add(p.plan, block.plan), avs: p.avs || block.pi || '' };
+        const notes = add(p.notes, block.notes); const plan = add(p.plan, block.plan);
+        // The lines it brought aren't decisions yet: billing counts them once you tap Done on the problem (p.confirmed)
+        const added = [...notes.slice(p.notes.length), ...plan.slice(p.plan.length)];
+        return { ...p, notes, ddx, plan, avs: p.avs || block.pi || '', ...(block.kind && !p.kind ? { kind: block.kind } : {}),
+            dot: [...(p.dot || []), ...added], confirmed: added.length ? false : p.confirmed };
     },
 };
 

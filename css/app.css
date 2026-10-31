@@ -176,9 +176,9 @@ textarea { resize: vertical; min-height: 3em; }
 .line.branch { background: none; margin-top: 6px; }
 .line.branch .linet { font-weight: 600; color: var(--dim); }
 .linet { cursor: pointer; }
-/* an "_a / b" pick list as a dropdown, inside the line (amber like the line's edge until picked) */
+/* an "_a / b" pick list as a dropdown, inside the line: bold red, like the blanks, until picked */
 select.pick {
-    font: inherit; font-weight: 600; color: var(--warn); background: rgba(232, 163, 61, .12); border: 1px solid rgba(232, 163, 61, .5);
+    font: inherit; font-weight: 800; color: var(--bad); background: rgba(229, 72, 77, .12); border: 1px solid rgba(229, 72, 77, .55);
     border-radius: 8px; padding: 1px 6px; margin: 0 1px; max-width: 100%; vertical-align: baseline; cursor: pointer;
 }
 .picks { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -360,3 +360,6 @@ select.cx {
 .seg.emr { flex: 0 0 auto; font-size: 12px; }
 .seg.emr .segb { padding: 4px 10px; min-height: 0; }
 .emrrow { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
+
+/* a *** blank, shown as one bold red "*" (in the note preview, in the EMR's style) */
+.star { color: var(--bad); font-weight: 800; }

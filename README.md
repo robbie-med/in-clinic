@@ -100,7 +100,7 @@ It's a suggestion. You pick the code.
   - **+ Problem:** type a few letters, then Enter. Then tap the status, DDx chips (hold or right-click one to annotate) and plan chips, or use CONT/START/… to type a med.
   - Follow-up: who with (remembered), an interval and a reason.
   - Copy each section into its EMR section. A section copied and unchanged since shows **Copied ✓**; if it changed, **Copy again**.
-- A chip with `***` drops into the field with the blank selected, so you type over it.
+- Blanks show as one bold red `*` (stored and copied as `***`, or `_` for Cerner), so selecting one is one character. A chip with a blank drops into the field with the blank selected, so you type over it.
 - Plan lines you type become chips for that problem next time. Hold (or right-click) a remembered chip to forget it. Each line has × to delete it; tap the line to edit or move it.
 - **Blanks:** Cerner `_` or Epic `***`, the toggle on the panel (and in a visit's ⋯). Cerner is the default; the choice is remembered on this device.
   It changes only the copied text: `***` blanks print as `_` for Cerner.
@@ -110,7 +110,7 @@ It's a suggestion. You pick the code.
 Adding a problem fills its Notes and Plan from your dotphrase library (`~/Projects/dot`). The block's text lines go into Notes and its `- ` lines go into Plan.
 - Library problems use their mapped block (HTN → `#htn`, T2DM → `#dm2`, Fatigue → `#wufatigue`, Joint pain → `#polyarth`, …).
   The ~250 clinic blocks without a library problem are in the **+ Problem** search by name or `#abbr` (e.g. `#pcos`, `#prep`, `#fibro`).
-- An `_a / b / c` list in a line shows as a dropdown right in the line; picking writes the choice into the line and the note. Lines with a `***` blank or an unpicked list have an amber edge. Tap one to edit it: the next `***` is selected so you can type over it.
+- An `_a / b / c` list in a line shows as a dropdown right in the line; picking writes the choice into the line and the note. Unpicked dropdowns and blanks are bold red, and lines with either have an amber edge. Tap one to edit it: the next `*` is selected so you can type over it.
   Delete what you don't need with ×, then **Done**: billing counts the rest (see Billing).
 - `If DMPA:` branch headers stay in the plan above their lines. × on a header deletes that branch and its lines. A header with no lines left doesn't print, and billing ignores headers.
 - Typing a library problem's `#abbr` (e.g. `#uti`) finds that problem first.
@@ -124,7 +124,7 @@ The library's clinic `$pi` patient instructions (~200) are copied into `dotphras
 - Adding a problem adds its handout to the **After Visit Summary** section: `#htn` → `$pihtn` by name, others through `PAIR` in `tools/import-dot.mjs` (`#dm2` → `$pidm`, `#pharyn` → `$pithroat`, …).
   Removing the problem takes its handout out. A problem's ⋯ has **Leave $pi… out of AVS** / **Add $pi… to AVS**.
 - **+ Handout** adds any other one (search by title or `$pi` name, e.g. preop, `$pibp`). × takes a handout out.
-- Tap a handout to fill it in for this visit: its `***` blanks are selected in turn (**Next \*\*\***), and its `_a / b` lists are dropdowns. Handouts with blanks have an amber edge.
+- Tap a handout to fill it in for this visit: its blanks are selected in turn (**Next \***), and its `_a / b` lists are dropdowns. Handouts with blanks have an amber edge.
   The edited copy stays with this visit; **Reset to library text** undoes it.
 - The AVS has its own Copy button and isn't included in Copy all or Share, which are for the note.
 

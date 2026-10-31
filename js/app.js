@@ -130,11 +130,22 @@ function menu(title, items, foot) {
     return m;
 }
 
+// Blanks: stored and copied as *** (Cerner "_" on copy); on screen a single bold red "*", one character to select and type over.
+const toField = s => s.replaceAll('***', '*');
+const fromField = s => s.replace(/(^|[^*])\*(?!\*)/g, '$1***');
+/** Text with each *** blank as a bold red "*" (or `as`). */
+const stars = (s, as = '*') => s.split('***').flatMap((part, i) => (i ? [h('b', { class: 'star' }, as), part] : [part]));
+/** Selects the next "*" blank in a field at or after `from` (wrapping); the end of the text if there's none. */
+function nextBlank(el, from = 0) {
+    el.focus();
+    let i = el.value.indexOf('*', from);
+    if (i < 0) i = el.value.indexOf('*');
+    if (i >= 0) el.setSelectionRange(i, i + 1); else el.setSelectionRange(el.value.length, el.value.length);
+}
+
 function focusSelect(input, text) {
-    input.value = text;
-    input.focus();
-    const i = text.indexOf('***');
-    if (i >= 0) input.setSelectionRange(i, i + 3); else input.setSelectionRange(text.length, text.length);
+    input.value = toField(text);
+    nextBlank(input);
 }
 
 /** A line with one "_a / b" pick list (from picks()) replaced by the chosen option; capitalized at the start of a line. */
@@ -155,15 +166,18 @@ function pickSelect(pk, onPick) {
 /** A line's text with a dropdown in place of each "_a / b" pick list; onChange gets the line with the choice made. */
 function withDropdowns(s, onChange) {
     const out = []; let pos = 0;
-    for (const pk of picks(s)) { out.push(s.slice(pos, pk.at), pickSelect(pk, o => onChange(choose(s, pk, o)))); pos = pk.at + pk.text.length; }
-    out.push(s.slice(pos));
+    for (const pk of picks(s)) { out.push(...stars(s.slice(pos, pk.at)), pickSelect(pk, o => onChange(choose(s, pk, o)))); pos = pk.at + pk.text.length; }
+    out.push(...stars(s.slice(pos)));
     return out;
 }
 
-/** Dropdowns under a text field for the pick lists in it (edit dialogs). */
+/** Dropdowns under a text field for the pick lists in it (edit dialogs; the field shows blanks as "*"). */
 function pickBox(field, after) {
     const box = h('div', { class: 'picks' });
-    const draw = () => box.replaceChildren(...picks(field.value).map(pk => pickSelect(pk, o => { field.value = choose(field.value, pk, o); draw(); after?.(); })));
+    const draw = () => {
+        const val = fromField(field.value);
+        box.replaceChildren(...picks(val).map(pk => pickSelect(pk, o => { field.value = toField(choose(val, pk, o)); draw(); after?.(); })));
+    };
     field.addEventListener('input', draw);
     draw();
     return box;
@@ -336,13 +350,14 @@ const copyState = s => ((v.copied || {})[s.key] === s.text ? 'done' : (v.copied 
 
 function refresh() {
     const secs = N.sections(v, signature(), blank());
-    R.note.replaceChildren(...secs.map(sectionCard));
+    const shown = Object.fromEntries(N.sections(v, signature()).map(s => [s.key, s.text]));   // *** kept, to mark the blanks
+    R.note.replaceChildren(...secs.map(s => sectionCard(s, shown[s.key])));
     R.copyBar.replaceChildren(...secs.map(s => {
         const st = copyState(s);
         return chip((st === 'done' ? '✓ ' : '') + s.short, () => copySection(s), st,
             { title: `Copy ${s.title}` + (st === 'stale' ? ' (changed since copied)' : ''), 'aria-label': `Copy ${s.title}` });
     }));
-    R.oneLinerText.textContent = N.oneLiner(v);
+    R.oneLinerText.replaceChildren(...stars(N.oneLiner(v)));
     R.title.textContent = [v.slot, v.age + v.sex].filter(s => s.trim()).join(' · ') || 'New visit';
     document.title = R.title.textContent + ' · In-Clinic';
     const b = B.bill(v);
@@ -360,14 +375,14 @@ function refresh() {
     }
 }
 
-function sectionCard(s) {
+function sectionCard(s, shown = s.text) {
     const st = copyState(s);
     return h('section', { class: 'sec' },
         h('div', { class: 'sechd' },
             h('span', { class: 'sectitle grow' }, s.title),
             s.key === 'sign' ? chip(signature() ? 'Edit signature' : 'Set signature', () => editSignature(refresh), 'small link') : null,
             chip(st === 'done' ? 'Copied ✓' : st === 'stale' ? 'Copy again' : 'Copy', () => copySection(s), 'small ' + (st || 'primary'))),
-        h('pre', { class: 'note' }, s.text));
+        h('pre', { class: 'note' }, stars(shown, blank())));
 }
 
 /** HPI chips that billing counts as data (billing.js reads their wording): tap one in, tap again to take it out. */
@@ -556,7 +571,7 @@ function problemCard(id) {
     if (!open) {
         const rest = N.problemLines(p0).slice(1).join('\n').trim();
         card.append(h('div', { class: 'mini' + (rest ? '' : ' faint'), role: 'button', tabIndex: 0, onclick: () => toggleOpen(id),
-            onkeydown: e => { if (e.key === 'Enter') toggleOpen(id); } }, rest || 'Tap to add notes, DDx, plan'));
+            onkeydown: e => { if (e.key === 'Enter') toggleOpen(id); } }, rest ? stars(rest) : 'Tap to add notes, DDx, plan'));
         return card;
     }
     card.append(
@@ -594,18 +609,18 @@ function ddxView(id, lib) {
     const set = (label, items) => { const x = p(); if (x) update(vv => ({ ...vv, problems: vv.problems.map(q => (q.id === id ? N.withDdx(x, label, items) : q)) })); };
     /** Edit an item and add its reasoning: ">Iron deficiency anemia; most likely given ***" (the build spec's DDx form). */
     const annotate = (label, item) => {
-        const t = h('input', { type: 'text', value: item });
+        const t = h('input', { type: 'text', value: toField(item) });
         const why = phrase => {
-            t.value = t.value.replace(/\s*[;(].*$/, '') + phrase;
-            t.focus(); const j = t.value.indexOf('***'); if (j >= 0) t.setSelectionRange(j, j + 3);
+            t.value = t.value.replace(/\s*[;(].*$/, '') + toField(phrase);
+            nextBlank(t);
         };
         const body = h('div', {}, t, pickBox(t, () => t.focus()), h('div', { class: 'flow' },
-            chip('; most likely given ***', () => why('; most likely given ***'), 'small sugg'),
-            chip('; considered but unlikely given ***, will ***', () => why('; considered but unlikely given ***, will ***'), 'small sugg')));
-        modal({ title: 'DDx item', body, onOpen: () => t.focus(), actions: [
+            chip(stars('; most likely given ***'), () => why('; most likely given ***'), 'small sugg'),
+            chip(stars('; considered but unlikely given ***, will ***'), () => why('; considered but unlikely given ***, will ***'), 'small sugg')));
+        modal({ title: 'DDx item', body, onOpen: () => nextBlank(t), actions: [
             { label: 'Remove', cls: 'danger', onClick: () => { set(label, N.ddxItems(p(), label).filter(i => i !== item)); draw(); } },
             { label: 'Save', cls: 'primary', onClick: () => {
-                const s = t.value.trim();
+                const s = fromField(t.value.trim());
                 set(label, N.ddxItems(p(), label).flatMap(i => (i === item ? (s ? [s] : []) : [i]))); draw();
             } },
         ] });
@@ -633,12 +648,12 @@ function ddxView(id, lib) {
             const flow = h('div', { class: 'flow' });
             for (const o of opts) {
                 const m = matchOf(o);
-                const c = pill(m || o, !!m, () => { set(g, m ? chosen.filter(i => i !== m) : [...chosen, o]); draw(); }, 'small sugg');
+                const c = pill(stars(m || o), !!m, () => { set(g, m ? chosen.filter(i => i !== m) : [...chosen, o]); draw(); }, 'small sugg');
                 if (m) onHold(c, () => annotate(g, m));
                 flow.append(c);
             }
             for (const extra of chosen.filter(c => !opts.some(o => c === o || c.startsWith(o + ' (') || c.startsWith(o + ';')))) {
-                flow.append(onHold(pill(extra, true, () => { set(g, chosen.filter(i => i !== extra)); draw(); }, 'small sugg'), () => annotate(g, extra)));
+                flow.append(onHold(pill(stars(extra), true, () => { set(g, chosen.filter(i => i !== extra)); draw(); }, 'small sugg'), () => annotate(g, extra)));
             }
             flow.append(chip('+ other', () => addItems(g), 'small link'));
             box.append(flow);
@@ -715,25 +730,20 @@ function drawAvs() {
         : [h('p', { class: 'empty' }, 'Adding a problem adds its patient handout here. Add others with + Handout.')]));
 }
 
-/** This visit's copy of a handout: *** blanks are selected in turn (Next ***), "_a / b" lists are dropdowns. */
+/** This visit's copy of a handout: blanks ("*") are selected in turn (Next *), "_a / b" lists are dropdowns. */
 function editHandout(x) {
-    const t = h('textarea', { rows: 14, value: x.text });
-    const next = (from = 0) => {
-        t.focus();
-        let j = t.value.indexOf('***', from);
-        if (j < 0) j = t.value.indexOf('***');
-        if (j >= 0) t.setSelectionRange(j, j + 3); else t.setSelectionRange(0, 0);
-    };
+    const t = h('textarea', { rows: 14, value: toField(x.text) });
+    const next = (from = 0) => nextBlank(t, from);
     const save = text => update(y => {
         const edits = { ...(y.avsEdits || {}) };
         if (text === null || text === Dot.handout(x.abbr)?.text) delete edits[x.abbr]; else edits[x.abbr] = text;
         return { ...y, avsEdits: edits };
     });
     const body = h('div', {}, t, pickBox(t, () => next(t.selectionEnd)),
-        h('div', { class: 'flow' }, chip('Next ***', () => next(t.selectionEnd), 'small sugg')));
+        h('div', { class: 'flow' }, chip(['Next ', h('b', { class: 'star' }, '*')], () => next(t.selectionEnd), 'small sugg')));
     modal({ title: x.title, body, onOpen: () => next(), actions: [
         (v.avsEdits || {})[x.abbr] !== undefined ? { label: 'Reset to library text', onClick: () => save(null) } : null,
-        { label: 'Save', cls: 'primary', onClick: () => save(t.value.trim()) },
+        { label: 'Save', cls: 'primary', onClick: () => save(fromField(t.value.trim())) },
     ].filter(Boolean) });
 }
 
@@ -799,11 +809,11 @@ function addProblem() {
 }
 
 function editOneLiner() {
-    const t = h('textarea', { rows: 3, value: N.oneLiner(v) });
-    modal({ title: 'One-liner', body: t, onOpen: () => t.focus(), actions: [
+    const t = h('textarea', { rows: 3, value: toField(N.oneLiner(v)) });
+    modal({ title: 'One-liner', body: t, onOpen: () => nextBlank(t), actions: [
         { label: 'Use generated', onClick: () => update(x => ({ ...x, oneLiner: '' })) },
         { label: 'Save', cls: 'primary', onClick: () => {
-            const s = t.value.trim();
+            const s = fromField(t.value.trim());
             update(x => ({ ...x, oneLiner: s === N.oneLiner({ ...x, oneLiner: '' }) ? '' : s }));
         } },
     ] });
@@ -889,7 +899,7 @@ function billingView() {
             row('Problems', b.problems), row('Data', b.data), row('Risk', b.risk),
             bl.pending.length ? h('p', { class: 'warn small' }, `Not counted yet: ${bl.pending.map(n => '#' + n).join(', ')}. Tap Done on ${bl.pending.length > 1 ? 'each' : 'it'} once its plan is what you did.`) : null,
             bl.stars || bl.picks ? h('p', { class: 'warn small' }, [
-                bl.stars ? `${bl.stars} plan line${bl.stars > 1 ? 's' : ''} still ha${bl.stars > 1 ? 've' : 's'} *** and ${bl.stars > 1 ? 'are' : 'is'} counted as written` : '',
+                bl.stars ? `${bl.stars} plan line${bl.stars > 1 ? 's' : ''} still ha${bl.stars > 1 ? 've' : 's'} * blanks and ${bl.stars > 1 ? 'are' : 'is'} counted as written` : '',
                 bl.picks ? `${bl.picks} unpicked choice${bl.picks > 1 ? 's' : ''} not counted` : ''].filter(Boolean).join('; ') + '. Delete what you didn\'t do.') : null,
             sub('Data'),
             counter('Tests ordered', d.ordered, n => setData(x => ({ ...x, ordered: n })), note('ordered', a.ordered.join(', ')), reset('ordered')),
@@ -933,7 +943,7 @@ function Lines({ get, set, chips, learnKey = () => null, kind = '', placeholder,
     const chipBox = h('div', { class: 'flow suggs' });
     const input = h('input', { type: 'text', placeholder, autocomplete: 'off', enterKeyHint: 'enter', autocapitalize: 'sentences', 'aria-label': placeholder });
     const add = () => {
-        const t = input.value.trim(); if (!t) return;
+        const t = fromField(input.value.trim()); if (!t) return;
         set([...get(), t]);
         const k = learnKey(); if (k) Store.learn(k, kind, t);
         input.value = '';
@@ -945,13 +955,13 @@ function Lines({ get, set, chips, learnKey = () => null, kind = '', placeholder,
     /** Edit a line. A dotphrase "_a / b" list shows as a dropdown; *** blanks are selected to type over. */
     const edit = i => {
         const s = get()[i]; if (s === undefined) return;
-        const t = h('textarea', { rows: 3, value: s });
-        const blank = () => { t.focus(); const j = t.value.indexOf('***'); if (j >= 0) t.setSelectionRange(j, j + 3); };
+        const t = h('textarea', { rows: 3, value: toField(s) });
+        const blank = () => nextBlank(t);
         modal({ title: 'Edit line', body: h('div', {}, t, pickBox(t, blank)), onOpen: blank, actions: [
             i > 0 ? { label: 'Move up', onClick: () => { const l = [...get()]; [l[i - 1], l[i]] = [l[i], l[i - 1]]; set(l); draw(); } } : null,
             { label: 'Delete', cls: 'danger', onClick: () => { set(get().filter((_, j) => j !== i)); draw(); } },
             { label: 'Save', cls: 'primary', onClick: () => {
-                const n = t.value.trim();
+                const n = fromField(t.value.trim());
                 set(n ? get().map((x, j) => (j === i ? n : x)) : get().filter((_, j) => j !== i)); draw();
             } },
         ].filter(Boolean) });
@@ -967,7 +977,7 @@ function Lines({ get, set, chips, learnKey = () => null, kind = '', placeholder,
         rows.replaceChildren(...get().map((s, i) => h('div', { class: 'line' + (B.isBranch(s) ? ' branch' : dash ? ' dash' : '') + (unfilled(s) ? ' tmpl' : '') },
             h('div', { class: 'linet', role: 'button', tabIndex: 0, onclick: () => edit(i),
                 onkeydown: e => { if (e.key === 'Enter' && e.target === e.currentTarget) edit(i); },
-                title: unfilled(s) ? 'Has blanks to fill (not counted for billing until filled)' : 'Edit' },
+                title: unfilled(s) ? 'Has blanks to fill' : 'Edit' },
             withDropdowns(s, n => { set(get().map((x, j) => (j === i ? n : x))); draw(); })),
             h('button', { type: 'button', class: 'linex', onclick: () => remove(i), 'aria-label': B.isBranch(s) ? 'Delete this branch' : 'Delete line',
                 title: B.isBranch(s) ? 'Delete this branch and its lines' : 'Delete' }, '×'))));
@@ -975,7 +985,7 @@ function Lines({ get, set, chips, learnKey = () => null, kind = '', placeholder,
         const learned = key ? Store.learned(key, kind).filter(c => !base.includes(c)) : [];
         chipBox.replaceChildren(...[...new Set([...base, ...learned])].map(c => {
             const blank = c.includes('***'); const on = cur.includes(c);
-            const el = pill(c, on, () => {
+            const el = pill(stars(c), on, () => {
                 if (blank && !on) focusSelect(input, c);
                 else { set(on ? cur.filter(x => x !== c) : [...cur, c]); draw(); }
             }, 'small sugg' + (blank && !on ? ' blank' : '') + (learned.includes(c) ? ' learned' : ''));
@@ -989,7 +999,7 @@ function Lines({ get, set, chips, learnKey = () => null, kind = '', placeholder,
         h('div', { class: 'addrow' }, input, chip('+', add, 'primary sq', { 'aria-label': 'Add line', title: 'Add (Enter)' })),
         prefixes.length ? h('div', { class: 'flow verbs' }, prefixes.map(p => chip(p.trim(), () => {
             const t = input.value; const pre = prefixes.find(x => t.startsWith(x));
-            input.value = p + (pre ? t.slice(pre.length) : t);
+            input.value = p + (pre ? t.slice(pre.length) : t);   // med verbs have no blanks
             input.focus(); input.setSelectionRange(input.value.length, input.value.length);
         }, 'small verb'))) : null,
         chipBox);

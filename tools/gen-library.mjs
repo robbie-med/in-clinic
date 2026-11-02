@@ -44,7 +44,7 @@ ${problems}
 `;
 
 if (process.argv.includes('--check')) {
-    const cur = fs.existsSync(out) ? fs.readFileSync(out, 'utf8') : '';
+    const cur = fs.existsSync(out) ? fs.readFileSync(out, 'utf8').replace(/\r\n/g, '\n') : '';   // a Windows checkout has CRLF
     if (cur !== kt) { console.error('LibraryData.kt is stale. Run: node tools/gen-library.mjs'); process.exit(1); }
     console.log('LibraryData.kt is current');
 } else {

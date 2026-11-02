@@ -16,7 +16,8 @@ const shell = [...sw.matchAll(/^\s*'\.\/([^']*)',$/gm)].map(m => m[1] || 'index.
 const missing = shell.filter(f => !fs.existsSync(path.join(root, f)));
 if (missing.length) { console.error('sw.js caches files that do not exist:', missing.join(', ')); process.exit(1); }
 const hash = crypto.createHash('sha256');
-for (const f of [...new Set(shell)].sort()) hash.update(f).update(fs.readFileSync(path.join(root, f)));
+// CRLF → LF first, so a Windows checkout and a Linux one stamp the same VERSION
+for (const f of [...new Set(shell)].sort()) hash.update(f).update(fs.readFileSync(path.join(root, f), 'latin1').replace(/\r\n/g, '\n'), 'latin1');
 const version = hash.digest('hex').slice(0, 12);
 const current = (sw.match(/const VERSION = '([^']*)'/) || [])[1];
 

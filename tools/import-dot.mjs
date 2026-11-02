@@ -7,6 +7,10 @@
 // of the library (OB, inpatient, the Cerner dump) stays in ~/Projects/dot.
 // The clinic $pi patient-instruction blocks are copied too, as "handouts" for the After Visit Summary. A problem block
 // is paired with its handout by name ($pihtn ↔ #htn) or by PAIR below; adding the problem adds the handout.
+// This repo is public. Clinic and personal phone numbers are listed only in the private library
+// (build/clinic_phones.json); they're written here as {{label}} and the app fills them from Clinic phone numbers on the
+// device. The import fails if any other local number, or IHI / In His Image / Sikora, would be published.
+// The Tulsa counseling lists (.edtulsacounsel, .edtulsafaith) come along as "resources" for the mental health problems.
 //   node tools/import-dot.mjs [path/to/dot]     (default ../dot), then: node tools/version-sw.mjs
 import fs from 'node:fs';
 import path from 'node:path';
@@ -57,6 +61,17 @@ const kindOf = abbr => {
     return k || (/^wu/.test(a) && !['wuobesk', 'wufrail', 'wuinsom'].includes(a) ? 'workup' : 'chronic');
 };
 
+/** Local numbers that are fine to publish (public health, crisis lines, community clinics); toll-free numbers always are. */
+const PUBLIC = new Set(('405-426-8710 770-488-7100 918-744-4800 918-921-3200 918-382-7300 918-392-4008 918-400-0571 918-491-3700 '
+    + '918-492-2554 918-496-9588 918-517-8024 918-587-9471 918-594-8568 918-631-3342 918-745-0095 918-949-4673').split(' '));
+const PHONE = /\(?\b(\d{3})\)?[-. ](\d{3})[-. ](\d{4})\b/g;
+const TOLL_FREE = /^8(00|33|44|55|66|77|88)$/;
+const IDENTIFYING = /\b(IHI|In His Image|Sikora)\b/;
+
+/** Counseling resource lists, and the problems that show them. */
+const RESOURCES = ['.edtulsacounsel', '.edtulsafaith'];
+const RESOURCES_FOR = 'dep anx panic ptsd bipolar grief eatdis'.split(' ');
+
 /** Minimal CSV reader (quoted fields, doubled quotes). */
 function csv(text) {
     const rows = []; let row = []; let f = ''; let q = false;
@@ -73,7 +88,9 @@ function csv(text) {
     return body.map(r => Object.fromEntries(head.map((k, i) => [k, r[i] ?? ''])));
 }
 
-const md = fs.readFileSync(path.join(dot, 'dotphrases.md'), 'utf8');
+const PRIVATE = JSON.parse(fs.readFileSync(path.join(dot, 'build', 'clinic_phones.json'), 'utf8'));   // fails without it: never import unscrubbed
+delete PRIVATE._about;
+const md = Object.entries(PRIVATE).reduce((s, [n, label]) => s.split(n).join(`{{${label}}}`), fs.readFileSync(path.join(dot, 'dotphrases.md'), 'utf8').replace(/\r\n/g, '\n'));
 const index = new Map(csv(fs.readFileSync(path.join(dot, 'dotphrases_index.csv'), 'utf8')).map(r => [r.Abbreviation, r]));
 const byLib = Object.fromEntries(Object.entries(LIB).map(([k, a]) => [a, k]));
 
@@ -144,8 +161,26 @@ if (unknownKind.length) { console.error('KIND names not found as clinic blocks:'
 const missing = Object.values(LIB).filter(a => !phrases.some(p => p.abbr === a));
 if (missing.length) { console.error('Mapped in LIB but not found as clinic blocks:', missing.join(', ')); process.exit(1); }
 
-fs.writeFileSync(path.join(root, 'dotphrases.json'), JSON.stringify({
-    source: 'Projects/dot/dotphrases.md (# problem blocks and $pi handouts, clinic settings)', phrases, handouts,
-}, null, 1) + '\n');
+// Resources: physician-only lists, without their "not for the chart" first line
+const resources = RESOURCES.map(abbr => {
+    const b = [...md.matchAll(/^### (\.\w+) : (.+?)\n\n[\s\S]*?\n```\n([\s\S]*?)\n```/gm)].find(m => m[1] === abbr);
+    if (!b) { console.error('Resource not found:', abbr); process.exit(1); }
+    const text = b[3].replace(/^Physician reference, not for the chart\..*\n+/, '').trim();
+    return { abbr, title: b[2], text: text.startsWith(b[2] + '\n') ? text.slice(b[2].length).trim() : text };   // title is shown above it
+});
+for (const p of phrases) if (RESOURCES_FOR.includes(p.abbr.slice(1))) p.res = RESOURCES;
+const unknownRes = RESOURCES_FOR.filter(a => !phrases.some(p => p.abbr === '#' + a));
+if (unknownRes.length) { console.error('RESOURCES_FOR names not found as clinic blocks:', unknownRes.join(', ')); process.exit(1); }
+
+const body = { source: 'Projects/dot/dotphrases.md (# problem blocks and $pi handouts, clinic settings)', phrases, handouts, resources };
+body.phones = [...new Set(Object.values(PRIVATE))].filter(l => JSON.stringify(body).includes(`{{${l}}}`));
+const out = JSON.stringify(body, null, 1) + '\n';
+const leaks = [...out.matchAll(PHONE)].filter(m => !TOLL_FREE.test(m[1]) && !PUBLIC.has(`${m[1]}-${m[2]}-${m[3]}`)).map(m => m[0]);
+if (leaks.length || IDENTIFYING.test(out)) {
+    console.error('Not written: would publish', [...new Set(leaks)].join(', ') || out.match(IDENTIFYING)[0],
+        '\nAdd clinic numbers to build/clinic_phones.json in the library, public ones to PUBLIC here.');
+    process.exit(1);
+}
+fs.writeFileSync(path.join(root, 'dotphrases.json'), out);
 console.log(`dotphrases.json: ${phrases.length} problem blocks (${phrases.filter(p => p.abbr.startsWith('$')).length} from visit notes), ${phrases.filter(p => p.lib).length} mapped to library problems; `
-    + `${handouts.length} handouts, ${phrases.filter(p => p.pi).length} problems with one`);
+    + `${handouts.length} handouts, ${phrases.filter(p => p.pi).length} problems with one; ${resources.length} resource lists; phone labels: ${body.phones.join(', ') || 'none'}`);

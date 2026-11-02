@@ -363,3 +363,10 @@ select.cx {
 
 /* a *** blank, shown as one bold red "*" (in the note preview, in the EMR's style) */
 .star { color: var(--bad); font-weight: 800; }
+
+/* Clinic phone numbers dialog, and the counseling resource lists (physician-only) */
+.phones { display: flex; flex-direction: column; gap: 8px; }
+.res { max-height: 65vh; overflow-y: auto; }
+.reshd { display: flex; align-items: center; gap: 8px; margin: 14px 0 6px; }
+.reshd:first-child { margin-top: 0; }
+.restext { white-space: pre-wrap; font-size: 15px; line-height: 1.45; color: var(--dim); }

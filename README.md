@@ -116,7 +116,12 @@ Adding a problem fills its Notes and Plan from your dotphrase library (`~/Projec
 - Typing a library problem's `#abbr` (e.g. `#uti`) finds that problem first.
 - A problem added another way (e.g. Paste last note) has **Insert #abbr dotphrase** in its ⋯ menu.
 - Only the clinic `#` problem blocks are copied, into `dotphrases.json`; the rest of the library stays in `~/Projects/dot`.
-  After editing the library: `node tools/import-dot.mjs` then `node tools/version-sw.mjs`. The library-to-block mapping is `LIB` in that script.
+  After editing the library: `node tools/import-dot.mjs [path/to/library]` then `node tools/version-sw.mjs`. The library-to-block mapping is `LIB` in that script.
+- This repo is public, so clinic phone numbers never go in it. The library's private `build/clinic_phones.json` lists them; the import writes each as `{{label}}` (e.g. `{{Central Referral Center}}`)
+  and refuses to write `dotphrases.json` if any other local number, or IHI / In His Image / Sikora, would be published. Public numbers (crisis lines, community clinics) are `PUBLIC` in the script.
+  In the app, ⋯ → **Clinic phone numbers…** fills the labels on this device only; an unset one prints as a blank.
+- Depression, anxiety, panic, PTSD, bipolar, grief and eating disorder problems have a **Counseling** button: the library's Tulsa counseling lists (`.edtulsacounsel`, `.edtulsafaith`),
+  physician-only, for picking a referral. They aren't part of the note or the AVS.
 - Web app only. The Android app doesn't use dotphrases.
 
 ## After Visit Summary

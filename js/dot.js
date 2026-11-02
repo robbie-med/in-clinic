@@ -3,16 +3,28 @@
 // any other name uses a block whose name, title or #abbreviation matches. Blocks with no library problem
 // are offered in the problem picker too.
 // Handouts are the library's $pi patient instructions, for the After Visit Summary. A block's "pi" names its handout.
+// Clinic phone numbers are "{{Central Referral Center}}" in dotphrases.json (the repo is public); load() fills them from
+// the numbers saved on this device (Clinic phone numbers), or leaves a *** blank. Resources are physician-only lists.
 export const Dot = {
     phrases: [],
     handouts: [],
+    resources: [],
+    phoneLabels: [],
 
-    load(data) {
+    load(data, phones = {}) {
+        this.raw = data;
+        this.phoneLabels = data?.phones || [];
+        const num = l => String(phones[l] || '').replace(/[^\d()+. x-]/g, '').trim();
+        data = data && JSON.parse(JSON.stringify(data).replace(/\{\{([^{}"\\]+)\}\}/g, (_, l) => num(l) || '***'));
+        this.resources = data?.resources || [];
         this.phrases = data?.phrases || [];
         this.byLib = new Map(this.phrases.filter(p => p.lib).map(p => [p.lib, p]));
         this.handouts = data?.handouts || [];
         this.byPi = new Map(this.handouts.map(x => [x.abbr, x]));
     },
+
+    /** Resource lists (Tulsa counseling) for a problem's block, [] if none. */
+    resourcesFor(block) { return (block?.res || []).map(a => this.resources.find(r => r.abbr === a)).filter(Boolean); },
 
     /** A handout by abbreviation ("$pihtn"), or null. */
     handout(abbr) { return this.byPi?.get(abbr) || null; },

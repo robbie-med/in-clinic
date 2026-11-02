@@ -285,6 +285,7 @@ function panelMenu() {
     menu('In-Clinic', [
         ['Import schedule…', () => importSchedule('')],
         ['Signature…', () => editSignature()],
+        Dot.phoneLabels.length ? ['Clinic phone numbers…', editPhones] : null,
         ['Copy learned chips (backup)', () => copyText(JSON.stringify(Store.learnedDump()), 'Learned chips copied')],
         ['Restore learned chips…', restoreLearned],
         ['Clear panel (end of clinic)…', () => {
@@ -306,6 +307,26 @@ function editSignature(after) {
     modal({ title: 'Signature', body: h('div', {}, t, h('p', { class: 'faint small' },
         'Printed above the attestation in the Signature section. Stored on this device only.')),
     onOpen: () => t.focus(), actions: [{ label: 'Save', cls: 'primary', onClick: () => { Store.setSetting('signature', t.value.trim()); after?.(); } }] });
+}
+
+/** Numbers for the handouts' clinic phone labels (the public dotphrases.json has none). Stored on this device only. */
+function editPhones() {
+    const cur = Store.setting('phones', {});
+    const fields = Dot.phoneLabels.map(l => [l, lfield(l, cur[l] || '', () => {}, { inputMode: 'tel', placeholder: '918-555-0100' })]);
+    modal({ title: 'Clinic phone numbers', body: h('div', { class: 'phones' }, fields.map(([, f]) => f),
+        h('p', { class: 'faint small' }, 'Filled into handouts wherever the library has that number. Stored on this device only; a blank one prints as * to fill in.')),
+    onOpen: () => fields[0]?.[1].input.focus(),
+    actions: [{ label: 'Save', cls: 'primary', onClick: () => {
+        const p = Object.fromEntries(fields.map(([l, f]) => [l, f.input.value.trim()]).filter(([, x]) => x));
+        Store.setSetting('phones', p); Dot.load(Dot.raw, p); route(); toast('Phone numbers saved');
+    } }] });
+}
+
+/** Physician-only lists (Tulsa counseling) for picking a referral; not part of the note or the AVS. */
+function showResources(list) {
+    modal({ title: 'Counseling resources', cancel: 'Close', body: h('div', { class: 'res' }, list.flatMap(r => [
+        h('div', { class: 'reshd' }, h('strong', {}, r.title), grow(), chip('Copy', () => copyText(r.text, r.title + ' copied'), 'small')),
+        h('div', { class: 'restext' }, r.text)])) });
 }
 
 function restoreLearned() {
@@ -550,12 +571,14 @@ function problemCard(id) {
     const upd = f => { const p = cur(); if (p) update(x => ({ ...x, problems: x.problems.map(q => (q.id === id ? f(p) : q)) })); };
     const open = expanded.has(id);
     const n = v.problems.findIndex(p => p.id === id) + 1;
+    const res = Dot.resourcesFor(Dot.find(p0.lib, p0.name));
 
     const card = h('section', { class: 'card problem' + (open ? ' open' : '') },
         h('div', { class: 'phd' },
             h('span', { class: 'pnum' }, n + '.'),
             h('button', { type: 'button', class: 'pname', onclick: () => problemMenu(id), title: 'Rename, move or remove' }, p0.name),
             grow(),
+            res.length ? chip('Counseling', () => showResources(res), 'small', { title: 'Tulsa counseling lists, for you (not the note)' }) : null,
             chip(open ? 'Done' : 'Edit', () => toggleOpen(id), 'small' + (open ? ' primary' : ''), { 'aria-expanded': String(open) }),
             chip('⋯', () => problemMenu(id), 'small icon', { 'aria-label': 'Problem menu', title: 'Rename, move or remove' })));
     if (!p0.noStatus) card.append(h('div', { class: 'status' },
@@ -1012,7 +1035,7 @@ function Lines({ get, set, chips, learnKey = () => null, kind = '', placeholder,
 async function boot() {
     try {
         Library.load(await (await fetch('library.json')).json());
-        Dot.load(await (await fetch('dotphrases.json')).json().catch(() => null));
+        Dot.load(await (await fetch('dotphrases.json')).json().catch(() => null), Store.setting('phones', {}));
     } catch {
         app.replaceChildren(h('p', { class: 'empty' }, 'Could not load the problem library. Open the app once while online.'));
         return;

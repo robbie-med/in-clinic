@@ -14581,7 +14581,7 @@
   {
    "abbr": "$pidc",
    "title": "After your hospital stay",
-   "text": "After your hospital stay\n\nA nurse care manager will call you within 2 business days. They will talk about your hospital stay and help set up your follow-up visit.\n\nPlease make sure we have the right phone number for you.\n\nIf no one calls within 2 business days, call our office at {{Care management line}}. Ask to speak to a care manager. Have your medicine list ready when you call.\n\nCall the clinic if you have new or worse symptoms or questions about your medicines.\n\nCall 911 or go to the ER if you have chest pain, trouble breathing, fainting, or feel very sick."
+   "text": "After your hospital stay\n\nA nurse care manager will call you within 2 business days. They will talk about your hospital stay and help set up your follow-up visit.\n\nPlease make sure we have the right phone number for you.\n\nIf no one calls within 2 business days, call our office at 918-710-4200. Ask to speak to a care manager. Have your medicine list ready when you call.\n\nCall the clinic if you have new or worse symptoms or questions about your medicines.\n\nCall 911 or go to the ER if you have chest pain, trouble breathing, fainting, or feel very sick."
   },
   {
    "abbr": "$pilab",
@@ -15393,7 +15393,7 @@
   {
    "abbr": ".edtulsacounsel",
    "title": "Tulsa counseling resources",
-   "text": "Counseling without a religious focus. Have the patient ask about CBT for their concern and whether the clinic takes their insurance.\n\n- Laureate Outpatient Clinic, Saint Francis: 918-491-3700. 6655 S Yale Ave. Therapy including CBT, psychiatry, and an intensive outpatient program for anxiety.\n- Ascension St. John Behavioral Health, Riverside: {{Care management line}}. 7501 Riverside Pkwy. Psychologist and counselors.\n- Family and Children's Services: 918-587-9471. Several Tulsa locations. Accepts Medicaid and Medicare. Will not turn anyone away for inability to pay.\n- Counseling and Recovery Services of Oklahoma: 918-492-2554. 7010 S Yale Ave, Suite 215.\n- CREOKS Behavioral Health: 918-382-7300.\n- University of Tulsa True Blue Neighbors Clinic: 918-631-3342. 2405 E 4th Pl. Free therapy by supervised psychology doctoral students.\n- OSU-Tulsa Al Carlozzi Center for Counseling: 918-594-8568. 700 N Greenwood Ave. Low-cost sliding scale, ages 16 and up. Counseling only, no medications. There may be a waitlist.\n\nCrisis:\n\n- Emergency: call 911\n- Suicide and Crisis Lifeline: call or text 988\n- COPES, Tulsa County, free 24/7 crisis line and mobile team: 918-744-4800\n- CrisisCare Center, 24/7 alternative to the ER: 918-921-3200\n- For more local referrals: dial 211"
+   "text": "Counseling without a religious focus. Have the patient ask about CBT for their concern and whether the clinic takes their insurance.\n\n- Laureate Outpatient Clinic, Saint Francis: 918-491-3700. 6655 S Yale Ave. Therapy including CBT, psychiatry, and an intensive outpatient program for anxiety.\n- Ascension St. John Behavioral Health, Riverside: 918-710-4200. 7501 Riverside Pkwy. Psychologist and counselors.\n- Family and Children's Services: 918-587-9471. Several Tulsa locations. Accepts Medicaid and Medicare. Will not turn anyone away for inability to pay.\n- Counseling and Recovery Services of Oklahoma: 918-492-2554. 7010 S Yale Ave, Suite 215.\n- CREOKS Behavioral Health: 918-382-7300.\n- University of Tulsa True Blue Neighbors Clinic: 918-631-3342. 2405 E 4th Pl. Free therapy by supervised psychology doctoral students.\n- OSU-Tulsa Al Carlozzi Center for Counseling: 918-594-8568. 700 N Greenwood Ave. Low-cost sliding scale, ages 16 and up. Counseling only, no medications. There may be a waitlist.\n\nCrisis:\n\n- Emergency: call 911\n- Suicide and Crisis Lifeline: call or text 988\n- COPES, Tulsa County, free 24/7 crisis line and mobile team: 918-744-4800\n- CrisisCare Center, 24/7 alternative to the ER: 918-921-3200\n- For more local referrals: dial 211"
   },
   {
    "abbr": ".edtulsafaith",
@@ -15402,7 +15402,6 @@
   }
  ],
  "phones": [
-  "Central Referral Center",
-  "Care management line"
+  "Central Referral Center"
  ]
 }

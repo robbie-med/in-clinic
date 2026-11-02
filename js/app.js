@@ -1040,6 +1040,12 @@ async function boot() {
         app.replaceChildren(h('p', { class: 'empty' }, 'Could not load the problem library. Open the app once while online.'));
         return;
     }
+    // One-time setup link: #phones=<URI-encoded JSON {label: number}> saves the clinic numbers on this device, then clears itself
+    const setup = /^#phones=(.+)$/.exec(location.hash);
+    if (setup) {
+        try { const p = JSON.parse(decodeURIComponent(setup[1])); Store.setSetting('phones', p); Dot.load(Dot.raw, p); toast('Clinic phone numbers saved'); } catch { toast('Setup link not valid'); }
+        history.replaceState(null, '', location.pathname + location.search);
+    }
     window.addEventListener('hashchange', route);
     window.addEventListener('scroll', () => { if (!spyQueued) { spyQueued = true; requestAnimationFrame(spy); } }, { passive: true });
     window.addEventListener('resize', measureTop);

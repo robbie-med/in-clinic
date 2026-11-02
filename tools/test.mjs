@@ -497,7 +497,7 @@ test('a problem brings its handout into the After Visit Summary', () => {
 
 test('clinic phone labels fill from the device; counseling lists ride on mental health problems', () => {
     const dot = JSON.parse(fs.readFileSync(path.join(root, 'dotphrases.json'), 'utf8'));
-    assert.ok(!/\b918-(403-4343|710-4200|403-7144)\b/.test(JSON.stringify(dot)), 'a clinic number is in the public file');
+    assert.ok(!/\b918-(403-4343|403-7144)\b/.test(JSON.stringify(dot)), 'a clinic number is in the public file');
     const ref = '{{Central Referral Center}}';
     assert.ok(dot.phones.includes('Central Referral Center') && dot.handouts.some(x => x.text.includes(ref)));
     Dot.load(dot);

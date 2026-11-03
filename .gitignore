@@ -6,3 +6,6 @@ local.properties
 !apk/in-clinic.apk
 node_modules/
 .DS_Store
+
+# Private build for this PC only (node tools/import-dot.mjs <library> --private): never commit
+dotphrases.private.json

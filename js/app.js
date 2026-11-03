@@ -238,8 +238,11 @@ function jump(key) {
 
 const newVisit = () => { const v = N.newVisit(); Store.put(v); go('#/v/' + v.id); };
 
+let PRIVATE_BUILD = false;
+const APP_NAME = () => (PRIVATE_BUILD ? 'In-Clinic (private)' : 'In-Clinic');
+
 function showPanel() {
-    document.title = 'In-Clinic';
+    document.title = APP_NAME();
     R.tabs = null;
     const visits = Store.panel();
     const copied = visits.filter(v => v.copiedAt).length;
@@ -248,7 +251,7 @@ function showPanel() {
         h('p', { class: 'dim small' }, 'Start one in the room with New visit, or Import a pasted schedule tonight to pre-chart. Only times, age, sex and visit type are kept.'))];
     app.replaceChildren(h('div', { class: 'panel' },
         h('header', { class: 'top' }, h('div', { class: 'toprow' },
-            h('h1', {}, 'In-Clinic'), grow(),
+            h('h1', {}, APP_NAME()), grow(),
             chip('Import', () => importSchedule('')),
             chip('⋯', panelMenu, 'icon', { 'aria-label': 'Menu', title: 'Menu' }),
             chip('+ New visit', newVisit, 'primary roomy-only'))),
@@ -1035,7 +1038,10 @@ function Lines({ get, set, chips, learnKey = () => null, kind = '', placeholder,
 async function boot() {
     try {
         Library.load(await (await fetch('library.json')).json());
-        Dot.load(await (await fetch('dotphrases.json')).json().catch(() => null), Store.setting('phones', {}));
+        // The private build (unscrubbed, gitignored) exists only in a copy served on your own PC; the public site falls through
+        const priv = await fetch('dotphrases.private.json').then(r => (r.ok ? r.json() : null)).catch(() => null);
+        PRIVATE_BUILD = !!priv;
+        Dot.load(priv || await (await fetch('dotphrases.json')).json().catch(() => null), Store.setting('phones', {}));
     } catch {
         app.replaceChildren(h('p', { class: 'empty' }, 'Could not load the problem library. Open the app once while online.'));
         return;

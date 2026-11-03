@@ -12,12 +12,15 @@
 // device. The import fails if any other local number, or IHI / In His Image / Sikora, would be published.
 // The Tulsa counseling lists (.edtulsacounsel, .edtulsafaith) come along as "resources" for the mental health problems.
 //   node tools/import-dot.mjs [path/to/dot]     (default ../dot), then: node tools/version-sw.mjs
+// --private writes dotphrases.private.json instead: nothing scrubbed, gitignored, for a copy served on your own PC
+// (the app prefers it when it exists; the public site never has it).
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-const dot = path.resolve(root, process.argv[2] || '../dot');
+const PRIV = process.argv.includes('--private');
+const dot = path.resolve(root, process.argv.slice(2).find(a => !a.startsWith('--')) || '../dot');
 
 /** library.json key → dotphrase abbreviation. Library problems without a clinic block are left out. */
 const LIB = {
@@ -88,7 +91,7 @@ function csv(text) {
     return body.map(r => Object.fromEntries(head.map((k, i) => [k, r[i] ?? ''])));
 }
 
-const PRIVATE = JSON.parse(fs.readFileSync(path.join(dot, 'build', 'clinic_phones.json'), 'utf8'));   // fails without it: never import unscrubbed
+const PRIVATE = PRIV ? {} : JSON.parse(fs.readFileSync(path.join(dot, 'build', 'clinic_phones.json'), 'utf8'));   // fails without it: never import unscrubbed
 delete PRIVATE._about;
 const md = Object.entries(PRIVATE).reduce((s, [n, label]) => s.split(n).join(`{{${label}}}`), fs.readFileSync(path.join(dot, 'dotphrases.md'), 'utf8').replace(/\r\n/g, '\n'));
 const index = new Map(csv(fs.readFileSync(path.join(dot, 'dotphrases_index.csv'), 'utf8')).map(r => [r.Abbreviation, r]));
@@ -176,11 +179,12 @@ const body = { source: 'Projects/dot/dotphrases.md (# problem blocks and $pi han
 body.phones = [...new Set(Object.values(PRIVATE))].filter(l => JSON.stringify(body).includes(`{{${l}}}`));
 const out = JSON.stringify(body, null, 1) + '\n';
 const leaks = [...out.matchAll(PHONE)].filter(m => !TOLL_FREE.test(m[1]) && !PUBLIC.has(`${m[1]}-${m[2]}-${m[3]}`)).map(m => m[0]);
-if (leaks.length || IDENTIFYING.test(out)) {
+if (!PRIV && (leaks.length || IDENTIFYING.test(out))) {
     console.error('Not written: would publish', [...new Set(leaks)].join(', ') || out.match(IDENTIFYING)[0],
         '\nAdd clinic numbers to build/clinic_phones.json in the library, public ones to PUBLIC here.');
     process.exit(1);
 }
-fs.writeFileSync(path.join(root, 'dotphrases.json'), out);
-console.log(`dotphrases.json: ${phrases.length} problem blocks (${phrases.filter(p => p.abbr.startsWith('$')).length} from visit notes), ${phrases.filter(p => p.lib).length} mapped to library problems; `
+const file = PRIV ? 'dotphrases.private.json' : 'dotphrases.json';
+fs.writeFileSync(path.join(root, file), out);
+console.log(`${file}: ${phrases.length} problem blocks (${phrases.filter(p => p.abbr.startsWith('$')).length} from visit notes), ${phrases.filter(p => p.lib).length} mapped to library problems; `
     + `${handouts.length} handouts, ${phrases.filter(p => p.pi).length} problems with one; ${resources.length} resource lists; phone labels: ${body.phones.join(', ') || 'none'}`);

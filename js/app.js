@@ -387,11 +387,6 @@ function refresh() {
     const b = B.bill(v);
     R.badge.textContent = b.code;
     R.drawBilling(b);
-    R.sideBill.replaceChildren(
-        h('div', { class: 'bsumtop' }, h('b', {}, b.code), h('span', { class: 'dim' }, `${B.LEVELS[b.mdm]} MDM`), grow(),
-            h('span', { class: 'faint small' }, b.overridden ? 'set by hand' : 'auto')),
-        h('div', { class: 'bsumrow' }, [['Problems', b.problems], ['Data', b.data], ['Risk', b.risk]].map(([n, part]) =>
-            h('span', {}, h('span', { class: 'faint' }, n + ' '), h('b', { class: 'blvl l' + part.lvl }, B.LEVELS[part.lvl])))));
     drawAvs();
     for (const sel of R.problems.querySelectorAll('select.cx')) {
         const p = v.problems.find(x => x.id === sel.dataset.id);
@@ -429,7 +424,6 @@ function showVisit(id) {
     R.copyBar = h('div', { class: 'copybar' });
     R.badge = chip('', () => jump('billing'), 'badge', { title: 'Billing level · jump to Billing' });
     R.problems = h('div', { class: 'problems' });
-    R.sideBill = h('button', { type: 'button', class: 'bsum', onclick: () => jump('billing'), title: 'Jump to Billing' });
     R.avs = h('div', { class: 'rows' });
 
     const lib = Library.data;
@@ -481,7 +475,7 @@ function showVisit(id) {
         h('div', { class: 'blkhd' }, h('h2', { class: 'hd' }, 'Note'), grow(), chip('Share', share, 'small'), chip('Copy all', copyAll, 'small')));
     editor.append(R.noteBlock);
     const sideNote = h('div', { class: 'side-note' });
-    const side = h('aside', { class: 'side', 'aria-label': 'Note' }, R.sideBill, sideNote);
+    const side = h('aside', { class: 'side', 'aria-label': 'Note' }, sideNote);
     const wideQ = matchMedia('(min-width: 900px)');
     const placeNote = () => (wideQ.matches ? sideNote : R.noteBlock).append(R.note);
 

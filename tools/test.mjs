@@ -8,7 +8,8 @@ import { Library } from '../js/library.js';
 import * as Note from '../js/note.js';
 import * as Billing from '../js/billing.js';
 import { extract } from '../js/schedule.js';
-import { Dot, picks, unfilled } from '../js/dot.js';
+import { Dot, picks, unfilled, blankChoices, fillBlank, dropClause } from '../js/dot.js';
+import * as Clin from '../js/clinreminder.js';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 Library.load(JSON.parse(fs.readFileSync(path.join(root, 'library.json'), 'utf8')));
@@ -20,6 +21,7 @@ const test = (name, f) => {
 
 const P = f => Note.newProblem(f);
 const sample = Note.newVisit({
+    tp: 'present',
     age: '52', sex: 'F', cc: 'fatigue',
     hpi: [
         'Complains of fatigue, poor sleep and low mood for several months',
@@ -277,7 +279,8 @@ test('1 stable chronic, plan without Rx -> 99213 with the primary care exception
     const v = V({ problems: [chronic('HTN', 'Stable', ['Home BP log'])] });
     const b = Billing.bill(v);
     assert.deepEqual([b.problems.lvl, b.data.lvl, b.risk.lvl, b.code, b.pce], [2, 1, 2, '99213', true]);
-    assert.equal(Billing.attestation(v), Billing.ATTEST_PCE);
+    assert.equal(Billing.attestation(v), '');   // never inferred from the code
+    assert.equal(Billing.attestation({ ...v, tp: 'pce' }), Billing.ATTEST_PCE);
 });
 test('2 stable chronic + Rx -> 99214; new to clinic -> 99204', () => {
     const ps = [chronic('HTN', 'Stable', ['CONT lisinopril 10 mg']), chronic('HLD')];
@@ -326,11 +329,12 @@ test('risk from the plan', () => {
     assert.equal(r(['Direct admit to hospital']), 4);
     assert.equal(Billing.bill(V({ sdoh: true, problems: [P({ name: 'x', plan: ['labs'] })] })).risk.lvl, 3);
 });
-test('code set by hand picks the attestation', () => {
+test('code set by hand; the attestation stays what was picked', () => {
     const v = { ...sample, code: '99213' };
     const b = Billing.bill(v);
     assert.deepEqual([b.code, b.auto, b.overridden, b.pce], ['99213', '99214', true, true]);
-    assert.equal(text(v).sign, Billing.ATTEST_PCE);
+    assert.equal(text(v).sign, Billing.ATTEST_PRESENT);
+    assert.equal(text({ ...v, tp: '' }).sign, '');
     assert.equal(Billing.bill({ ...sample, code: '99203' }).code, '99214');   // wrong patient kind is ignored
 });
 test('lines with *** count as written; an unpicked "_a / b" list does not', () => {
@@ -356,6 +360,7 @@ test('problem complexity from the dotphrase kind and whether a chronic problem i
     assert.equal(cx({ course: 'Chronic', plan: ['INCREASE lisinopril to 20 mg PO daily'] }), 'chronicx');
     assert.equal(cx({ course: 'Chronic', trend: 'Stable', plan: ['INCREASE lisinopril to 20 mg PO daily'] }), 'stable');   // tapped Stable wins
     assert.equal(cx({ course: 'Chronic', plan: ['CONT lisinopril 20 mg PO daily'] }), 'stable');
+    assert.equal(cx({ course: 'Chronic', plan: ['HOLD amlodipine'] }), 'chronicx');   // held for low BP / syncope = tx side effect
 });
 test('a dotphrase\'s lines count once its problem is Done; conditional lines never do', () => {
     const block = { abbr: '#x', kind: 'chronic', notes: ['BP uncontrolled.'], plan: ['START amlodipine 5 mg PO daily', 'CBC, CMP', 'Admit if hypoxic'] };
@@ -372,6 +377,20 @@ test('a dotphrase\'s lines count once its problem is Done; conditional lines nev
     const edited = V({ problems: [{ ...p, plan: p.plan.map(s => (s === 'CBC, CMP' ? 'CBC, CMP today' : s)) }] });
     assert.deepEqual(Billing.testsOrdered(edited), ['CBC', 'CMP', 'TSH']);   // an edited line is a decision
     assert.equal(Dot.fill({ ...p, confirmed: true }, { ...block, plan: ['Lipid panel'] }).confirmed, false);   // new lines: confirm again
+});
+test('plan ✓: If lines come in off, off lines leave the note and billing, a header switches its group', () => {
+    const block = { abbr: '#x', notes: [], plan: ['UA today', 'If age 60 or older:', 'CT urogram', 'Cystoscopy', 'If smoker:', 'START varenicline 0.5 mg PO daily'] };
+    let p = { ...Dot.fill(P({ name: 'x' }), block), confirmed: true };
+    assert.deepEqual(p.off, ['CT urogram', 'Cystoscopy', 'START varenicline 0.5 mg PO daily']);
+    assert.deepEqual(Note.problemLines(p), ['#x', '- UA today']);   // empty If headers don't print
+    p = Note.togglePlan(p, 2);   // ✓ CT urogram
+    assert.deepEqual(Note.problemLines(p), ['#x', '- UA today', '', 'If age 60 or older:', '', '- CT urogram']);
+    assert.deepEqual(Billing.testsOrdered(V({ problems: [p] })), ['UA', 'CT']);
+    p = Note.togglePlan(p, 1);   // header with one on: all off
+    assert.deepEqual(Note.problemLines(p), ['#x', '- UA today']);
+    p = Note.togglePlan(p, 1);   // all off: all on
+    assert.ok(Note.problemLines(p).includes('- Cystoscopy'));
+    assert.ok(!Note.problemLines(Note.togglePlan(p, 0)).includes('- UA today'));   // a core line switches off too
 });
 test('data from the note\'s text', () => {
     const v = V({ age: '4', hpi: ['Reviewed outside records', 'Reviewed CGM data'], problems: [P({ name: 'x',
@@ -407,6 +426,43 @@ test('plan under "Deferred to future visit" is not counted', () => {
     assert.deepEqual(Billing.testsOrdered(v), []);
     assert.equal(Billing.bill(v).risk.lvl, 1);
     assert.equal(Billing.bill(goldenVisit).code, '99214');   // the clinic example: 2 problems, IDA workup, Rx
+});
+
+// ---- HPI dotphrases ($h)
+test('HPI dotphrases: blanks by tap, untouched lines and unasked red flags stay out of the note', () => {
+    Dot.load(JSON.parse(fs.readFileSync(path.join(root, 'dotphrases.json'), 'utf8')));
+    const cough = Dot.hpi('$hcough');
+    assert.equal(cough.lines[0], 'Cough x *** days.');   // "***F here for" cut: the one-liner says who
+    assert.ok(cough.denies.includes('hemoptysis') && !cough.lines.some(l => l.startsWith('Denies')));
+    assert.ok(!Dot.hpi('$hhtn').lines.some(l => /follow-up\.$/.test(l)));   // nothing left to fill in the opener: dropped
+    assert.ok(Dot.hpis.every(x => x.lines.every(l => !/\bDr\.$/.test(l))), 'split at "Dr. ***"');
+    assert.ok(Dot.find('htn').hpi === '$hhtn' && Dot.find('dm2').hpi === '$hdm');
+    // tap-to-fill answers by context; none / yes only for a "Label ***" ending its clause
+    assert.deepEqual(blankChoices('Cough x *** days.', 0).slice(0, 3), ['1', '2', '3']);
+    assert.ok(blankChoices('Tried *** with *** relief.', 1).includes('partial'));
+    assert.deepEqual(blankChoices('*** ear pain x *** days.', 0), ['left', 'right', 'bilateral']);
+    assert.deepEqual(blankChoices('Orthopnea ***, PND ***.', 1), ['none', 'yes']);
+    assert.deepEqual([blankChoices('Radiating to ***.', 0), blankChoices('Reports ***.', 0), blankChoices('Referred by Dr. ***.', 0)], [[], [], []]);
+    assert.equal(fillBlank('*** ear pain x *** days.', 0, 'left'), 'Left ear pain x *** days.');
+    assert.equal(fillBlank('*** ear pain x *** days.', 1, '3'), '*** ear pain x 3 days.');
+    assert.equal(dropClause('Drainage ***, hearing change ***.', 0), 'Hearing change ***.');
+    assert.equal(dropClause('Drainage ***, hearing change ***.', 1), 'Drainage ***.');
+    assert.equal(dropClause('Pain is ***, *** sided, onset ***.', 1), 'Pain is ***, onset ***.');
+    assert.equal(dropClause('Reports ***. Sick contacts ***.', 1), 'Reports ***.');
+    assert.equal(dropClause('Tried *** with *** relief.', 0), '');
+    // suggestions: the problems' HPIs, then the chief complaint's; pediatric versions under 18
+    assert.deepEqual(Dot.suggestHpis('sore throat', [], '40').map(x => x.abbr), ['$hthroat']);
+    assert.deepEqual(Dot.suggestHpis('cough', [], '5').map(x => x.abbr), ['$hcoughk']);
+    assert.deepEqual(Dot.suggestHpis('dizzy', [Dot.find('htn')], '60').map(x => x.abbr), ['$hhtn', '$hdizzy']);
+    // the note: untouched dotphrase lines and empty headers don't print; red flags only as tapped
+    const v = Note.newVisit({ age: '41', sex: 'F', cc: 'cough', type: 'acute', hpiT: ['$hcough'],
+        hpi: ['Cough x 3 days.', ...cough.lines.slice(1), 'Patient-typed line'], ros: { fever: 'no', hemoptysis: 'no', dyspnea: 'yes' } });
+    assert.deepEqual(Note.hpiLines(v), ['Cough x 3 days.', 'Patient-typed line', 'Reports dyspnea. Denies fever, hemoptysis.']);
+    assert.equal(Note.hpiLines({ ...v, ros: {} }).length, 2);
+    const ftt = Dot.hpi('$hfttk');
+    assert.ok(ftt.lines.includes('Feeding history:'));
+    const kid = Note.newVisit({ hpiT: ['$hfttk'], hpi: ftt.lines.map(l => (l.startsWith('- Breast milk') ? '- Breast milk exclusively' : l)) });
+    assert.deepEqual(Note.hpiLines(kid), ['Feeding history:', '- Breast milk exclusively']);
 });
 
 // ---- dotphrases
@@ -546,6 +602,30 @@ test('search finds aliases', () => {
     assert.equal(Library.search('diab')[0].key, 'dm2');
     assert.equal(Library.match('Hypertension').key, 'htn');
     assert.equal(Library.search('fat')[0].key, 'fatigue');
+});
+
+test('Send to ClinReminder: referrals and payload', () => {
+    const v = Note.newVisit({
+        slot: '0830', age: '41', sex: 'F', fuWhen: '2 wk', fuWhy: ['review labs'],
+        problems: [
+            P({ name: 'Chest pain', plan: ['Referral to cardiology for stress test', 'TSH today', 'Refer to GI if symptoms persist'] }),
+            P({ name: 'Knee pain', plan: ['Ambulatory referral to physical therapy.', 'Refer to ***'] }),
+            P({ name: 'Deferred to future visit', plan: ['Referral to dermatology'] }),
+        ],
+    });
+    assert.deepEqual(Clin.referrals(v), ['Cardiology', 'Physical therapy']);
+    const pl = Clin.payload(v, 7, '2026-11-06');
+    assert.deepEqual([pl.date, pl.slot, pl.labDays, pl.fuWhen, pl.followUp], ['2026-11-06', '0830', 7, '2 wk', 'F/u in 2 wk to review labs']);
+    assert.ok(pl.labs.includes('TSH'));
+    assert.match(pl.code, /^992\d\d$/);
+});
+
+test('Send to ClinReminder: room time text', () => {
+    const at = (h, m) => new Date(2026, 10, 6, h, m).toISOString();
+    assert.equal(Clin.roomText({ rooms: ['2'], start_at: at(10, 42), end_at: at(11, 0), staffed_at: at(10, 55) }),
+        'Rm 2 · 10:42–11:00 · 18 min · staffed 10:55');
+    assert.equal(Clin.roomText({ rooms: ['2', '3'], start_at: at(10, 42), end_at: null, staffed_at: null }, new Date(2026, 10, 6, 10, 54).getTime()),
+        'Rm 2, 3 · in since 10:42 (12 min)');
 });
 
 console.log(`${pass} passed, ${fail} failed`);

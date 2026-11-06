@@ -186,6 +186,15 @@ select.pick {
 .picks select.pick { padding: 8px 10px; }
 @media (pointer: coarse) { select.pick { font-size: 16px; } }   /* iOS zooms into anything smaller */
 .linex { flex: none; width: 40px; background: none; border: 0; border-radius: 0 10px 10px 0; color: var(--faint); font-size: 20px; line-height: 1; }
+/* plan ✓: on lines print; off lines stay listed, dimmed, out of the note and billing */
+.linetog {
+    flex: none; width: 40px; background: none; border: 0; border-radius: 10px 0 0 10px; color: var(--accent);
+    font-size: 18px; font-weight: 800; line-height: 1; cursor: pointer;
+}
+.line.off .linetog { color: var(--faint); }
+.line.off .linetog:empty::before { content: ""; display: inline-block; width: 16px; height: 16px; border: 2px solid var(--line2); border-radius: 4px; vertical-align: middle; }
+.line.off { background: transparent; box-shadow: inset 0 0 0 1px var(--line2); }
+.line.off .linet { color: var(--faint); }
 .addrow { display: flex; gap: 8px; align-items: center; }
 .flow.verbs { gap: 6px; }
 .flow.suggs { gap: 6px; }
@@ -361,3 +370,15 @@ select.cx {
 .reshd { display: flex; align-items: center; gap: 8px; margin: 14px 0 6px; }
 .reshd:first-child { margin-top: 0; }
 .restext { white-space: pre-wrap; font-size: 15px; line-height: 1.45; color: var(--dim); }
+
+/* HPI: a *** blank with an invisible dropdown over it (tap to fill, type, or remove that part) */
+.blanksel {
+    position: relative; display: inline-block; min-width: 1.7em; text-align: center; margin: 0 1px;
+    background: rgba(229, 72, 77, .12); border: 1px solid rgba(229, 72, 77, .55); border-radius: 6px;
+}
+.blanksel select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 16px; }
+/* a dotphrase line not touched yet: not in the note */
+.line.muted { background: transparent; box-shadow: inset 0 0 0 1px var(--line2), inset 3px 0 0 var(--warn); }
+.line.muted .linet { color: var(--dim); }
+.hpit:not(:empty) { margin-bottom: 10px; }
+.chip.pos { background: var(--warn); border-color: var(--warn); color: var(--bg); }

@@ -175,7 +175,45 @@ for (const p of phrases) if (RESOURCES_FOR.includes(p.abbr.slice(1))) p.res = RE
 const unknownRes = RESOURCES_FOR.filter(a => !phrases.some(p => p.abbr === '#' + a));
 if (unknownRes.length) { console.error('RESOURCES_FOR names not found as clinic blocks:', unknownRes.join(', ')); process.exit(1); }
 
-const body = { source: 'Projects/dot/dotphrases.md (# problem blocks and $pi handouts, clinic settings)', phrases, handouts, resources };
+// HPIs: the clinic $h blocks, one sentence (or "- " bullet) per line, for the HPI's line list. The "***F here for" opener
+// is cut (the one-liner says who and why; an opener with nothing left to fill is dropped), and the "Denies a, b, c."
+// red-flag sentence becomes tappable items (denies / reports / not asked) instead of a line.
+const hpis = [];
+for (const [, abbr, title, body] of blocks.filter(m => m[1].startsWith('$h'))) {
+    const row = index.get(abbr);
+    if (row?.['Prefix group'] !== '$h' || !/^Clinic/.test(row.Setting)) continue;
+    const lines = []; const denies = [];
+    for (const raw of body.split('\n').map(s => s.trim()).filter(Boolean)) {
+        for (let s of raw.startsWith('- ') ? [raw] : raw.split(/(?<=(?<!\bDr)\.)\s+(?=[A-Z*_])/)) {
+            if (s === title) continue;   // "$heads" repeats its title as its first line
+            if (/^Denies [^*_]+\.$/.test(s)) { denies.push(...s.slice(7, -1).split(/,\s*/).map(x => x.replace(/^(and|or) /, '').trim()).filter(Boolean)); continue; }
+            if (!lines.length && !hpis.some(x => x.abbr === abbr)) {
+                const o = s.replace(/^\*\*\*\s?(?:yo\s)?(?:\*\*\*|[FM])?\s?(?:yo\s)?here /, '');
+                if (o !== s) {
+                    s = o.startsWith('for ') ? o[4].toUpperCase() + o.slice(5) : 'Here ' + o;
+                    if (!s.includes('***') && !s.includes(' _')) continue;   // "Hypertension follow-up.": the one-liner says it
+                }
+            }
+            lines.push(s);
+        }
+    }
+    hpis.push({ abbr, title: title.replace(/ HPI$/, ''), lines, ...(denies.length ? { denies } : {}) });
+}
+/** Problem block → its HPI, where "#x" ↔ "$hx" doesn't pair them. */
+const HPI_PAIR = {
+    '#dm2': '$hdm', '#hypothy': '$hthy', '#wucough': '$hcough', '#wufatigue': '$hfatigue', '#wuedema': '$hedema', '#uti': '$hdysuria',
+    '#dep': '$hmood', '#anx': '$hmood', '#abdpain': '$habd', '#dyspnea': '$hsob', '#vertigo': '$hdizzy', '#polyarth': '$hjoint',
+    '#wuneuro': '$hnumb', '#wuwtloss': '$hwt', '#osa': '$hsnore', '#pharyn': '$hthroat', '#aom': '$heark',
+};
+const hasHpi = new Set(hpis.map(x => x.abbr));
+const badHpi = Object.entries(HPI_PAIR).filter(([a, x]) => !phrases.some(p => p.abbr === a) || !hasHpi.has(x));
+if (badHpi.length) { console.error('HPI_PAIR entries not found:', badHpi.map(e => e.join(' → ')).join(', ')); process.exit(1); }
+for (const p of phrases) {
+    const x = HPI_PAIR[p.abbr] || (p.abbr.startsWith('#') && hasHpi.has('$h' + p.abbr.slice(1)) ? '$h' + p.abbr.slice(1) : '');
+    if (x) p.hpi = x;
+}
+
+const body = { source: 'Projects/dot/dotphrases.md (# problem blocks, $h HPIs and $pi handouts, clinic settings)', phrases, hpis, handouts, resources };
 body.phones = [...new Set(Object.values(PRIVATE))].filter(l => JSON.stringify(body).includes(`{{${l}}}`));
 const out = JSON.stringify(body, null, 1) + '\n';
 const leaks = [...out.matchAll(PHONE)].filter(m => !TOLL_FREE.test(m[1]) && !PUBLIC.has(`${m[1]}-${m[2]}-${m[3]}`)).map(m => m[0]);
@@ -187,4 +225,4 @@ if (!PRIV && (leaks.length || IDENTIFYING.test(out))) {
 const file = PRIV ? 'dotphrases.private.json' : 'dotphrases.json';
 fs.writeFileSync(path.join(root, file), out);
 console.log(`${file}: ${phrases.length} problem blocks (${phrases.filter(p => p.abbr.startsWith('$')).length} from visit notes), ${phrases.filter(p => p.lib).length} mapped to library problems; `
-    + `${handouts.length} handouts, ${phrases.filter(p => p.pi).length} problems with one; ${resources.length} resource lists; phone labels: ${body.phones.join(', ') || 'none'}`);
+    + `${hpis.length} HPIs, ${phrases.filter(p => p.hpi).length} problems with one; ${handouts.length} handouts, ${phrases.filter(p => p.pi).length} problems with one; ${resources.length} resource lists; phone labels: ${body.phones.join(', ') || 'none'}`);

@@ -94,7 +94,7 @@ It's a suggestion. You pick the code.
   For a known patient, open the visit and use **Paste last note** (in ⋯ on a phone) (the EMR note as is). Its numbered problems come back as Known with the trend cleared, and the plan, notes and DDx are kept.
 - **In the room:**
   - Age, F/M, known/new, visit type and chief complaint build the one-liner. Tap the one-liner to override it.
-  - HPI lines: type or dictate, then press Enter.
+  - HPI: tap a suggested HPI dotphrase (see HPI dotphrases), or type or dictate a line and press Enter.
   - **Exam** (the clinic template's systems and normals): for each system tap nL and/or findings ("+ other" for your own). The web app has no vitals fields, because vitals are already in the EMR.
     nL plus a finding appends it to the normal text. **All untouched → nL** fills the rest (not Abd or URO/GYNE). Only examined systems print.
   - **+ Problem:** type a few letters, then Enter. Then tap the status, DDx chips (hold or right-click one to annotate) and plan chips, or use CONT/START/… to type a med.
@@ -124,6 +124,15 @@ Adding a problem fills its Notes and Plan from your dotphrase library (`~/Projec
   physician-only, for picking a referral. They aren't part of the note or the AVS.
 - Web app only. The Android app doesn't use dotphrases.
 
+## HPI dotphrases
+Your library's clinic `$h` HPIs (~70) are in `dotphrases.json` too, one sentence per line.
+- The HPI suggests the ones for this visit: the problems' (`#htn` → `$hhtn`, others through `HPI_PAIR` in `tools/import-dot.mjs`) and the chief complaint's ("sore throat", "dizzy", "sob"). Under 18 the pediatric (`…k`) version is suggested instead. **+ HPI dotphrase** searches all of them.
+- The `***F here for` opener is cut, because the one-liner already says who and why.
+- **A line you haven't touched isn't printed** (it's dimmed). Fill a blank and that line prints. You only document what you asked.
+- Tap a red `*` for its usual answers (x 3 days, left/right, sudden/gradual, none/yes…), **Type…**, or **Remove this part**, which takes out just that clause.
+- The `Denies a, b, c.` sentence becomes **Red flags** chips: tap once for denies, again for reports, again for not asked. **Denies rest** does the rest. Only tapped ones print, as `Reports … Denies …`.
+- Tapping an added dotphrase (✓) takes it out. Its untouched lines go; lines you filled and red flags you answered stay.
+
 ## After Visit Summary
 The library's clinic `$pi` patient instructions (~200) are copied into `dotphrases.json` as handouts.
 - Adding a problem adds its handout to the **After Visit Summary** section: `#htn` → `$pihtn` by name, others through `PAIR` in `tools/import-dot.mjs` (`#dm2` → `$pidm`, `#pharyn` → `$pithroat`, …).
@@ -132,6 +141,13 @@ The library's clinic `$pi` patient instructions (~200) are copied into `dotphras
 - Tap a handout to fill it in for this visit: its blanks are selected in turn (**Next \***), and its `_a / b` lists are dropdowns. Handouts with blanks have an amber edge.
   The edited copy stays with this visit; **Reset to library text** undoes it.
 - The AVS has its own Copy button and isn't included in Copy all or Share, which are for the note.
+
+## ClinReminder (private build on the clinic PC only)
+When the private build is served on this PC (port 8774), a visit has **→ ClinReminder** (and *Send to ClinReminder…* in ⋯).
+It sends the tests ordered (one lab reminder, due in 1 day / 3 days / 1 week, default 3), referral lines ("Referral to cardiology"),
+the follow-up line (a reminder at that interval) and the E/M code to ClinReminder (`localhost:8471`), which matches the visit to
+today's card by slot time. No note text or names are sent. Sending again doesn't duplicate. Under the one-liner, the Visit section shows the card's room time from Room Logger taps
+("Rm 2 · 10:42–11:00 · 18 min · staffed 10:55"), refreshed every 30 s. Code: `js/clinreminder.js`.
 
 ## Develop
 - `library.json` is the one source of the problem library (~40 primary-care problems). After editing it:

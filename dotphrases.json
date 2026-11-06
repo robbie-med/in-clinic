@@ -1,5 +1,5 @@
 {
- "source": "Projects/dot/dotphrases.md (# problem blocks and $pi handouts, clinic settings)",
+ "source": "Projects/dot/dotphrases.md (# problem blocks, $h HPIs and $pi handouts, clinic settings)",
  "phrases": [
   {
    "abbr": "#htn",
@@ -30,7 +30,8 @@
     "If overweight:",
     "Weight loss goal 5% or more"
    ],
-   "pi": "$pihtn"
+   "pi": "$pihtn",
+   "hpi": "$hhtn"
   },
   {
    "abbr": "#dm2",
@@ -68,7 +69,8 @@
     "CGM if on any insulin, or on non-insulin drugs that can cause hypoglycemia ***",
     "START glucagon 1 mg SQ or IM once PRN severe hypoglycemia, for all on insulin or at high risk"
    ],
-   "pi": "$pidm"
+   "pi": "$pidm",
+   "hpi": "$hdm"
   },
   {
    "abbr": "#prediab",
@@ -202,7 +204,8 @@
    "res": [
     ".edtulsacounsel",
     ".edtulsafaith"
-   ]
+   ],
+   "hpi": "$hmood"
   },
   {
    "abbr": "#anx",
@@ -227,7 +230,8 @@
    "res": [
     ".edtulsacounsel",
     ".edtulsafaith"
-   ]
+   ],
+   "hpi": "$hmood"
   },
   {
    "abbr": "#hypothy",
@@ -265,7 +269,8 @@
     "TSH every 4 wk until midgestation, then near 30 wk",
     "After delivery: DECR. to prepregnancy dose, TSH at 6 wk"
    ],
-   "pi": "$pihypothy"
+   "pi": "$pihypothy",
+   "hpi": "$hthy"
   },
   {
    "abbr": "#asthma",
@@ -286,7 +291,8 @@
     "Spacer and inhaler technique reviewed",
     "Triggers, tobacco, influenza and COVID-19 vaccines ***"
    ],
-   "pi": "$piasthma"
+   "pi": "$piasthma",
+   "hpi": "$hasthma"
   },
   {
    "abbr": "#copd",
@@ -309,7 +315,8 @@
     "If ICS criteria met:",
     "START ICS if exacerbations and eosinophils 300 or higher, or 100 or higher despite LAMA-LABA ***"
    ],
-   "pi": "$picopd"
+   "pi": "$picopd",
+   "hpi": "$hcopd"
   },
   {
    "abbr": "#ckd",
@@ -406,7 +413,8 @@
     "If long-term PPI:",
     "Consider Mg at start and periodically, B12 if deficiency symptoms ***"
    ],
-   "pi": "$pigerd"
+   "pi": "$pigerd",
+   "hpi": "$hgerd"
   },
   {
    "abbr": "#lbp",
@@ -432,7 +440,8 @@
     "If radicular symptoms:",
     "SLR *** and crossed SLR ***; MRI and spine referral if progressive deficit or symptoms persist >6 wk ***"
    ],
-   "pi": "$pilbp"
+   "pi": "$pilbp",
+   "hpi": "$hlbp"
   },
   {
    "abbr": "#oa",
@@ -498,7 +507,8 @@
     "If long-term benzodiazepine or z-drug use:",
     "DECR. dose 25% every 2 wk, then 12.5% every 2 wk near the end, with CBT-I"
    ],
-   "pi": "$piinsom"
+   "pi": "$piinsom",
+   "hpi": "$hinsom"
   },
   {
    "abbr": "#tob",
@@ -562,7 +572,8 @@
     "If age 24 or younger or at increased risk:",
     "GC/CT NAAT ***"
    ],
-   "pi": "$picontra"
+   "pi": "$picontra",
+   "hpi": "$hcontra"
   },
   {
    "abbr": "#hm",
@@ -626,7 +637,8 @@
     "If recurrent, recent antibiotics, or symptoms persist:",
     "Urine culture ***"
    ],
-   "pi": "$piuti"
+   "pi": "$piuti",
+   "hpi": "$hdysuria"
   },
   {
    "abbr": "#uri",
@@ -650,7 +662,8 @@
     "Antibiotics not indicated",
     "Return if symptoms last >10 days, worsen after improving, or dyspnea develops"
    ],
-   "pi": "$piuri"
+   "pi": "$piuri",
+   "hpi": "$huri"
   },
   {
    "abbr": "#sinus",
@@ -679,7 +692,8 @@
     "If adult penicillin allergy:",
     "START doxycycline 100 mg PO BID x 5 to 7 days"
    ],
-   "pi": "$pisinus"
+   "pi": "$pisinus",
+   "hpi": "$hsinus"
   },
   {
    "abbr": "#pharyn",
@@ -710,7 +724,8 @@
     "START azithromycin 12 mg/kg PO once, max 500 mg",
     "Then azithromycin 6 mg/kg PO daily, max 250 mg, x 4 more days"
    ],
-   "pi": "$pithroat"
+   "pi": "$pithroat",
+   "hpi": "$hthroat"
   },
   {
    "abbr": "#aom",
@@ -768,7 +783,8 @@
     "START amoxicillin 875 mg PO BID or 500 mg PO TID x *** days",
     "ENT referral if >2 episodes per yr, or effusion persists >6 wk"
    ],
-   "pi": "$pieark"
+   "pi": "$pieark",
+   "hpi": "$heark"
   },
   {
    "abbr": "#bronch",
@@ -817,7 +833,8 @@
     "If severe symptoms:",
     "START meclizine 12.5 to 25 mg PO q8h PRN, short term"
    ],
-   "pi": "$pivertigo"
+   "pi": "$pivertigo",
+   "hpi": "$hdizzy"
   },
   {
    "abbr": "#migraine",
@@ -973,7 +990,8 @@
     "Drowsy driving counseled",
     "If moderate to severe OSA with obesity:",
     "START tirzepatide ***"
-   ]
+   ],
+   "hpi": "$hsnore"
   },
   {
    "abbr": "#masld",
@@ -1083,7 +1101,8 @@
     "START finerenone ***",
     "If HFrEF and ferritin <100, or 100-300 with TSAT <20%:",
     "START IV iron ***"
-   ]
+   ],
+   "hpi": "$hchf"
   },
   {
    "abbr": "#hcv",
@@ -1267,7 +1286,8 @@
     "If testosterone deficiency confirmed:",
     "PDE5i may work better combined with testosterone therapy ***"
    ],
-   "pi": "$pisexm"
+   "pi": "$pisexm",
+   "hpi": "$hed"
   },
   {
    "abbr": "#menop",
@@ -1412,7 +1432,8 @@
     "If trichomonas:",
     "START metronidazole 500 mg PO BID x 7 days in women, 2 g PO once in men"
    ],
-   "pi": "$pisti"
+   "pi": "$pisti",
+   "hpi": "$hsti"
   },
   {
    "abbr": "#prep",
@@ -1461,7 +1482,8 @@
     "START atomoxetine 0.5 mg/kg/day PO as nonstimulant ***",
     "INCR. atomoxetine to 1.2 mg/kg/day, max 1.4 mg/kg/day or 100 mg/day ***",
     "70 kg or more and adults: START atomoxetine 40 mg/day, INCR. to 80 mg/day, max 100 mg/day"
-   ]
+   ],
+   "hpi": "$hadhd"
   },
   {
    "abbr": "#aud",
@@ -1620,7 +1642,8 @@
     "START polyethylene glycol 17 g PO daily or senna 8.6-17.2 mg PO nightly with the opioid",
     "START naloxegol 25 mg PO every morning if laxative-refractory, 12.5 mg if CrCl <60"
    ],
-   "pi": "$piconst"
+   "pi": "$piconst",
+   "hpi": "$hconst"
   },
   {
    "abbr": "#constk",
@@ -1679,7 +1702,8 @@
     "Avoid sodium phosphate enemas and oral mineral oil",
     "Peds GI referral if <6 mo and needing rectal stimulation"
    ],
-   "pi": "$piconstk"
+   "pi": "$piconstk",
+   "hpi": "$hconstk"
   },
   {
    "abbr": "#constpreg",
@@ -2160,7 +2184,8 @@
     "Further imaging only if directed by findings ***",
     "Negative initial workup: observe 3-6 mo, then follow yearly ***",
     "Recheck weight in *** wk"
-   ]
+   ],
+   "hpi": "$hwt"
   },
   {
    "abbr": "#wufatigue",
@@ -2186,7 +2211,8 @@
     "Graded activity, sleep hygiene, f/u in *** wk",
     "If anemia, neuropathy, metformin, or bariatric surgery:",
     "B12 ***"
-   ]
+   ],
+   "hpi": "$hfatigue"
   },
   {
    "abbr": "#wucough",
@@ -2217,7 +2243,8 @@
     "STOP ACEi",
     "If heartburn:",
     "START PPI ***"
-   ]
+   ],
+   "hpi": "$hcough"
   },
   {
    "abbr": "#wuneuro",
@@ -2238,7 +2265,8 @@
     "Foot care and fall prevention",
     "If asymmetric, motor-predominant, rapidly progressive, or atypical:",
     "EMG and nerve conduction studies"
-   ]
+   ],
+   "hpi": "$hnumb"
   },
   {
    "abbr": "#wudiarrhea",
@@ -3563,7 +3591,8 @@
     "ECG and troponin ***",
     "If cholangitis, cholecystitis, or complicated diverticulitis:",
     "START abx. Ceftriaxone 2 g IV daily plus metronidazole 500 mg IV q8h, or piperacillin-tazobactam 3.375 g IV q6h ***"
-   ]
+   ],
+   "hpi": "$habd"
   },
   {
    "abbr": "#ahrf",
@@ -3934,7 +3963,8 @@
     "If TMJ:",
     "Night guard, soft diet ***"
    ],
-   "pi": "$piha"
+   "pi": "$piha",
+   "hpi": "$hha"
   },
   {
    "abbr": "#tobx",
@@ -4175,7 +4205,8 @@
     "If pneumonia:",
     "Pneumonia ***: CXR",
     "START abx if infiltrate"
-   ]
+   ],
+   "hpi": "$hsob"
   },
   {
    "abbr": "#insomx",
@@ -4888,7 +4919,8 @@
     "If infrequent episodes with syncope:",
     "Cardiology for loop recorder ***"
    ],
-   "pi": "$pipalp"
+   "pi": "$pipalp",
+   "hpi": "$hpalp"
   },
   {
    "abbr": "#wuedema",
@@ -4930,7 +4962,8 @@
     "If lymphedema:",
     "Refer for decongestive therapy and compression ***"
    ],
-   "pi": "$piedema"
+   "pi": "$piedema",
+   "hpi": "$hedema"
   },
   {
    "abbr": "#wucr",
@@ -5122,7 +5155,8 @@
     "If nipple discharge:",
     "Evaluate spontaneous, unilateral, single-duct, or bloody discharge separately ***"
    ],
-   "pi": "$pibreast"
+   "pi": "$pibreast",
+   "hpi": "$hbreast"
   },
   {
    "abbr": "#wubreast",
@@ -5614,7 +5648,8 @@
     "START doxycycline 100 mg PO BID, treat presumptively ***",
     "Peds <45 kg: doxycycline 2.2 mg/kg PO BID, max 100 mg/dose, all ages",
     "Continue doxycycline 3 days after fever resolves, minimum 5-7 days total"
-   ]
+   ],
+   "hpi": "$hrash"
   },
   {
    "abbr": "#psoriasis",
@@ -5981,7 +6016,8 @@
     "Arthrocentesis for cell count, Gram stain, cx, crystals; fever may be absent",
     "Synovial WBC >50,000 suggests septic arthritis, urgent orthopedic referral ***"
    ],
-   "pi": "$piknee"
+   "pi": "$piknee",
+   "hpi": "$hknee"
   },
   {
    "abbr": "#ankle",
@@ -6016,7 +6052,8 @@
     "Recovery may take 4 to 5 mo, MRI if major disability ***",
     "If pain >6 wk:",
     "Weight-bearing x-ray, MRI for osteochondral lesion ***"
-   ]
+   ],
+   "hpi": "$hankle"
   },
   {
    "abbr": "#hip",
@@ -6053,7 +6090,8 @@
     "CBC, ESR, CRP, urgent aspiration ***",
     "If tension-sided femoral neck stress fracture:",
     "Non-weight-bearing and immediate orthopedic consult"
-   ]
+   ],
+   "hpi": "$hhip"
   },
   {
    "abbr": "#neck",
@@ -6092,7 +6130,8 @@
     "If suspected vertebral artery dissection:",
     "Urgent CT angiography and referral"
    ],
-   "pi": "$pineck"
+   "pi": "$pineck",
+   "hpi": "$hneck"
   },
   {
    "abbr": "#elbow",
@@ -6130,7 +6169,8 @@
     "Elbow x-ray, AP and lateral; full extension makes fracture unlikely in adults ***",
     "If distal biceps rupture:",
     "Orthopedic referral within days for distal biceps rupture, repair best in the first 2 to 3 wk"
-   ]
+   ],
+   "hpi": "$helbow"
   },
   {
    "abbr": "#hand",
@@ -6204,7 +6244,8 @@
     "Arthrocentesis for cell count, crystals, Gram stain, and cx ***",
     "If features of lupus or other connective tissue disease:",
     "ANA ***"
-   ]
+   ],
+   "hpi": "$hjoint"
   },
   {
    "abbr": "#ra",
@@ -9160,7 +9201,8 @@
     "K, phos, Mg before feeds, q12h while advancing, then daily",
     "START thiamine 2 mg/kg PO or IV daily before feeds x 5-7 days, max 100 mg/day"
    ],
-   "pi": "$pifttk"
+   "pi": "$pifttk",
+   "hpi": "$hfttk"
   },
   {
    "abbr": "#wugerd",
@@ -9695,7 +9737,8 @@
     "START varenicline 0.5 mg PO daily days 1-3, 0.5 mg PO BID days 4-7, then 1 mg PO BID x 12 wk",
     "START combination long- and short-acting nicotine replacement in place of varenicline ***"
    ],
-   "pi": "$pipostmi"
+   "pi": "$pipostmi",
+   "hpi": "$hpostmi"
   },
   {
    "abbr": "#ome",
@@ -10157,7 +10200,8 @@
     "Report to OKDHS child abuse hotline 1-800-522-3511; 911 if immediate danger",
     "Trauma-informed therapy referral ***"
    ],
-   "pi": "$pibehavek"
+   "pi": "$pibehavek",
+   "hpi": "$hbehavek"
   },
   {
    "abbr": "#kawasaki",
@@ -10766,7 +10810,8 @@
     "If age 50 or older with jaw claudication, scalp tenderness, or vision change:",
     "Same-day ESR, CRP, CBC; treat for GCA without waiting for confirmation ***"
    ],
-   "pi": "$pitmj"
+   "pi": "$pitmj",
+   "hpi": "$htmj"
   },
   {
    "abbr": "#hoarse",
@@ -13608,6 +13653,159 @@
    ]
   },
   {
+   "abbr": "#spasm",
+   "title": "Acute muscle spasm",
+   "name": "Muscle spasm",
+   "setting": "Clinic",
+   "kind": "chronic",
+   "notes": [
+    "Likely acute muscle strain with spasm given _pain after lifting or overuse, tender tight muscle / painful ROM, palpable spasm, no red flags / neck or back stiffness, no neuro deficit.",
+    "Location ***, red flags ***, neuro exam ***."
+   ],
+   "ddx": [
+    "Muscle strain with spasm; most likely given ***, ***",
+    "Radiculopathy; considered but unlikely given neuro exam ***, ***",
+    "***; considered but unlikely given ***, ***"
+   ],
+   "plan": [
+    "Stay active, heat, gentle stretching",
+    "START naproxen 500 mg PO BID with food x *** days",
+    "Relaxant adds little to NSAID alone; short course only if spasm limits sleep or function ***",
+    "No carisoprodol: Schedule IV, misuse risk",
+    "F/u in *** wk if not improving",
+    "If using cyclobenzaprine:",
+    "START cyclobenzaprine 5 mg PO TID PRN spasm x 2 to 3 wk max",
+    "Rx note: sedating, anticholinergic; serotonin syndrome w/ SSRI, SNRI, tramadol; avoid w/ MAOI, arrhythmia, hyperthyroidism",
+    "If using methocarbamol:",
+    "START methocarbamol 1500 mg PO QID x 2 to 3 days, then 1000 mg PO QID",
+    "Rx note: drowsiness, dizziness; urine may turn brown, black, or green",
+    "If using tizanidine:",
+    "START tizanidine 2 mg PO q6-8h PRN, max 3 doses/day",
+    "Rx note: hypotension, sedation, liver injury; never w/ ciprofloxacin or fluvoxamine; taper, rebound HTN if stopped abruptly",
+    "If age 65 or older:",
+    "Avoid muscle relaxants: sedation, falls, anticholinergic effects"
+   ],
+   "pi": "$pispasm"
+  },
+  {
+   "abbr": "#legcramp",
+   "title": "Nocturnal leg cramps",
+   "name": "Nocturnal leg cramps",
+   "setting": "Clinic",
+   "kind": "chronic",
+   "notes": [
+    "Likely idiopathic nocturnal leg cramps given _sudden painful calf tightening at night / cramp relieved by stretching, normal exam / recurrent night cramps, no weakness or numbness.",
+    "Frequency ***, meds ***, pulses ***, sensation ***."
+   ],
+   "ddx": [
+    "Idiopathic nocturnal leg cramps; most likely given ***, ***",
+    "Restless legs syndrome; considered but unlikely given no urge to move, ***",
+    "Claudication or peripheral neuropathy; considered but unlikely given pulses ***, sensation ***",
+    "Myositis; considered but unlikely given no weakness, ***"
+   ],
+   "plan": [
+    "Clinical diagnosis, labs not routinely needed",
+    "Labs only if history suggests a cause ***",
+    "Review meds: IV iron sucrose, conjugated estrogens, raloxifene, naproxen, teriparatide, albuterol ***",
+    "Acute cramp: forceful stretch of the cramping muscle",
+    "Calf stretching before bed, limited evidence",
+    "No quinine: FDA warning, thrombocytopenia",
+    "Magnesium unlikely to help idiopathic cramps",
+    "F/u in *** wk"
+   ]
+  },
+  {
+   "abbr": "#hematuria",
+   "title": "Gross hematuria",
+   "name": "Gross hematuria",
+   "setting": "Clinic",
+   "kind": "chronic",
+   "notes": [
+    "Likely _UTI given dysuria, frequency, + LE or nitrite / kidney stone given colicky flank pain, stone on imaging / prostatic bleeding given large prostate, other causes excluded.",
+    "Episodes ***, clots ***, pack-years ***, anticoagulant ***, UA ***."
+   ],
+   "ddx": [
+    "***; most likely given ***, ***",
+    "Bladder or upper tract urothelial cancer; considered but unlikely given ***, cystoscopy and CT urogram",
+    "Kidney cancer; considered but unlikely given ***, CT urogram",
+    "Glomerular disease; considered but unlikely given no dysmorphic RBCs, casts, or proteinuria ***"
+   ],
+   "plan": [
+    "Gross hematuria is high risk: cystoscopy and upper tract imaging even after one episode",
+    "UA with microscopy and urine cx",
+    "BMP for creatinine before contrast",
+    "Urology referral for cystoscopy ***",
+    "CT urogram, multiphase ***",
+    "Same evaluation if on anticoagulant or antiplatelet therapy",
+    "If CT urogram contraindicated:",
+    "MR urogram ***",
+    "If both contraindicated: retrograde pyelograms with noncontrast CT or renal US",
+    "If UTI on culture:",
+    "Treat UTI, repeat UA with microscopy after treatment",
+    "If dysmorphic RBCs, casts, proteinuria, or rising creatinine:",
+    "Nephrology referral ***",
+    "If prostatic bleeding, other causes excluded:",
+    "START finasteride 5 mg PO daily for refractory bleeding ***",
+    "Finasteride lowers PSA by half",
+    "If smoker:",
+    "Tobacco cessation, smoking raises urothelial cancer risk ***"
+   ]
+  },
+  {
+   "abbr": "#scrotal",
+   "title": "Scrotal mass",
+   "name": "Scrotal mass",
+   "setting": "Clinic",
+   "kind": "chronic",
+   "notes": [
+    "Likely _varicocele given soft cord swelling, larger standing or w/ Valsalva / hydrocele given smooth cystic swelling that transilluminates / spermatocele given cyst in the cord, separate from testis.",
+    "Side ***, intratesticular ***, transilluminates ***, tender ***, cremasteric reflex ***."
+   ],
+   "ddx": [
+    "***; most likely given ***, ***",
+    "Testicular cancer; considered but unlikely given ***, scrotal US and tumor markers",
+    "Testicular torsion; considered but unlikely given no acute pain, cremasteric reflex present ***",
+    "Inguinal hernia or epididymitis; considered but unlikely given ***, ***"
+   ],
+   "plan": [
+    "Scrotal US with Doppler",
+    "Exam standing and w/ Valsalva",
+    "Ask about constitutional sxs, abd pain, dysuria, hematuria ***",
+    "Cancer risk: undescended testis, personal or family hx testicular cancer, HIV ***",
+    "If solid intratesticular mass:",
+    "Urgent urology referral",
+    "AFP, beta-hCG, LDH",
+    "If acute pain, high suspicion of torsion:",
+    "Urgent urology before imaging; surgery within 6 hr for best salvage",
+    "If isolated right-sided varicocele:",
+    "Imaging for retroperitoneal mass ***",
+    "If hydrocele:",
+    "US to exclude pathology the hydrocele hides",
+    "Urology if symptomatic or communicating"
+   ]
+  },
+  {
+   "abbr": "#gim",
+   "title": "Gastric intestinal metaplasia",
+   "name": "Gastric intestinal metaplasia",
+   "setting": "Clinic",
+   "kind": "chronic",
+   "notes": [
+    "Gastric intestinal metaplasia on EGD bx ***, H. pylori _positive / negative / eradicated.",
+    "Extent ***, subtype ***, family hx gastric cancer ***, race, ethnicity, or birthplace ***."
+   ],
+   "ddx": [],
+   "plan": [
+    "Test for and treat H. pylori, then confirm eradication",
+    "No routine surveillance EGD for most; shared decision ***",
+    "Test of cure 4 wk or more after abx, HOLD PPI 2 wk before",
+    "If incomplete or extensive GIM, or family hx gastric cancer:",
+    "Surveillance EGD about every 3 yr, shorter if multiple risk factors ***",
+    "Also consider if racial or ethnic minority or immigrant from high-incidence region ***",
+    "Surveillance EGD: high-definition white light, at least 5 bx from antrum, incisura, and corpus"
+   ]
+  },
+  {
    "abbr": "$wcc",
    "title": "Well child",
    "name": "Well child, *** age",
@@ -14214,6 +14412,1459 @@
     "If pregnant, planning pregnancy, or breastfeeding:",
     "Shared decision on continuing medication; human safety data are limited",
     "Breastfeeding: nurse just before a dose or as long as possible after"
+   ]
+  }
+ ],
+ "hpis": [
+  {
+   "abbr": "$heads",
+   "title": "Adolescent psychosocial screen",
+   "lines": [
+    "Confidentiality and its limits explained, parent stepped out ***.",
+    "- Home: ***",
+    "- Education and employment: ***",
+    "- Activities: ***",
+    "- Drugs: tobacco and vaping ***, alcohol ***, cannabis ***, other ***",
+    "- Sexuality: ***, partners ***, contraception ***, condoms ***, STI testing ***",
+    "- Suicide and depression: PHQ-A ***, item 9 ***, SI ***",
+    "- Safety: seat belt and helmet ***, firearms in home ***, violence or bullying ***, online safety ***",
+    "CRAFFT: ***",
+    "Concerns identified: ***"
+   ]
+  },
+  {
+   "abbr": "$hcough",
+   "title": "Cough",
+   "lines": [
+    "Cough x *** days.",
+    "Cough is *** with *** sputum.",
+    "Reports ***.",
+    "Sick contacts ***.",
+    "Tobacco ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "fever",
+    "dyspnea",
+    "chest pain",
+    "hemoptysis",
+    "wheeze",
+    "weight loss",
+    "night sweats"
+   ]
+  },
+  {
+   "abbr": "$huri",
+   "title": "URI",
+   "lines": [
+    "Congestion, rhinorrhea, and *** x *** days.",
+    "Symptoms are *** since onset.",
+    "Reports ***.",
+    "COVID and flu testing ***, day *** of illness.",
+    "Sick contacts ***.",
+    "Tobacco ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "fever over 3 days",
+    "dyspnea",
+    "chest pain",
+    "severe ear or facial pain",
+    "worsening after initial improvement",
+    "stiff neck"
+   ]
+  },
+  {
+   "abbr": "$hsinus",
+   "title": "Sinusitis",
+   "lines": [
+    "Facial pressure and nasal congestion x *** days.",
+    "Discharge is ***.",
+    "Course ***, worsening after initial improvement ***.",
+    "Max temp ***.",
+    "History of sinusitis ***, allergies ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "periorbital swelling or redness",
+    "vision changes",
+    "severe headache",
+    "stiff neck",
+    "confusion",
+    "dental pain"
+   ]
+  },
+  {
+   "abbr": "$hthroat",
+   "title": "Sore throat",
+   "lines": [
+    "Sore throat x *** days.",
+    "Max temp ***.",
+    "Cough ***.",
+    "Tender neck nodes ***.",
+    "Reports ***.",
+    "Sick contacts ***, strep exposure ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "drooling",
+    "trismus",
+    "muffled voice",
+    "stridor",
+    "inability to swallow",
+    "unilateral throat swelling",
+    "stiff neck",
+    "rash"
+   ]
+  },
+  {
+   "abbr": "$hear",
+   "title": "Ear pain",
+   "lines": [
+    "*** ear pain x *** days.",
+    "Reports ***.",
+    "Drainage ***, hearing change ***.",
+    "Recent swimming or URI ***.",
+    "Diabetes or immunocompromise ***.",
+    "Prior ear surgery, tubes, or perforation ***.",
+    "Cotton swab use ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "fever",
+    "swelling or redness behind the ear",
+    "facial weakness",
+    "vertigo",
+    "severe headache"
+   ]
+  },
+  {
+   "abbr": "$hsob",
+   "title": "Shortness of breath",
+   "lines": [
+    "Shortness of breath x ***.",
+    "Onset ***, *** with exertion, at rest ***.",
+    "Associated with ***.",
+    "Orthopnea ***, PND ***.",
+    "Cardiac or lung history ***.",
+    "Tobacco ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "chest pain",
+    "hemoptysis",
+    "syncope",
+    "unilateral leg swelling",
+    "fever"
+   ]
+  },
+  {
+   "abbr": "$hwheeze",
+   "title": "Wheeze",
+   "lines": [
+    "Wheezing x *** days.",
+    "Triggers ***.",
+    "Rescue inhaler use *** times per week, night waking ***.",
+    "Reports ***.",
+    "Prior ED visits or steroid courses ***, intubation history ***.",
+    "Tobacco ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "inability to speak in full sentences",
+    "chest pain",
+    "fever",
+    "hemoptysis"
+   ]
+  },
+  {
+   "abbr": "$hdysuria",
+   "title": "Dysuria",
+   "lines": [
+    "Dysuria x *** days with frequency ***, urgency ***, hematuria ***.",
+    "LMP ***, pregnancy possible _yes / no.",
+    "New sexual partners ***.",
+    "Prior UTIs ***, last ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "fever",
+    "flank pain",
+    "nausea",
+    "vomiting",
+    "vaginal discharge or itching"
+   ]
+  },
+  {
+   "abbr": "$hvag",
+   "title": "Vaginal discharge",
+   "lines": [
+    "Vaginal discharge x *** days.",
+    "Discharge is ***, odor ***, itching ***.",
+    "LMP ***.",
+    "Sexual partners ***, condom use ***, STI history ***.",
+    "Recent antibiotics ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "pelvic pain",
+    "fever",
+    "dysuria",
+    "abnormal bleeding",
+    "lesions"
+   ]
+  },
+  {
+   "abbr": "$hpelvic",
+   "title": "Pelvic pain",
+   "lines": [
+    "Pelvic pain x ***.",
+    "Pain is ***, *** sided, onset ***, relation to menses ***.",
+    "Associated with ***.",
+    "LMP ***, pregnancy possible _yes / no.",
+    "Sexual partners ***, STI history ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "fever",
+    "heavy bleeding",
+    "syncope",
+    "dizziness",
+    "vomiting",
+    "abnormal discharge",
+    "dyspareunia"
+   ]
+  },
+  {
+   "abbr": "$hcontra",
+   "title": "Contraception",
+   "lines": [
+    "Current method ***, satisfaction ***.",
+    "Interested in ***.",
+    "Future pregnancy plans ***.",
+    "LMP ***, pregnancy possible _yes / no.",
+    "Tobacco ***.",
+    "Sexual partners ***, STI history ***."
+   ],
+   "denies": [
+    "migraine with aura",
+    "VTE history",
+    "breast cancer",
+    "uncontrolled hypertension",
+    "liver disease"
+   ]
+  },
+  {
+   "abbr": "$hmenses",
+   "title": "Abnormal menses",
+   "lines": [
+    "*** menses x ***.",
+    "Cycle every *** days lasting *** days, pads or tampons per day ***, clots ***.",
+    "Intermenstrual or postcoital bleeding ***.",
+    "LMP ***, pregnancy possible _yes / no.",
+    "Contraception ***.",
+    "Bleeding history ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "soaking a pad an hour",
+    "syncope",
+    "dizziness",
+    "postmenopausal bleeding",
+    "pelvic pain"
+   ]
+  },
+  {
+   "abbr": "$hlbp",
+   "title": "Low back pain",
+   "lines": [
+    "Low back pain x ***.",
+    "Onset ***, mechanism ***.",
+    "Pain is ***, radiating to ***.",
+    "Numbness or weakness ***.",
+    "Prior episodes ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "saddle anesthesia",
+    "bowel or bladder dysfunction",
+    "progressive weakness",
+    "fever",
+    "weight loss",
+    "history of cancer",
+    "IV drug use",
+    "significant trauma",
+    "night pain"
+   ]
+  },
+  {
+   "abbr": "$hknee",
+   "title": "Knee pain",
+   "lines": [
+    "*** knee pain x ***.",
+    "Onset ***, mechanism ***.",
+    "Pop at injury ***, swelling ***, locking ***, giving way ***.",
+    "Pain is *** at ***.",
+    "Prior injury or surgery ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "fever",
+    "redness",
+    "warmth",
+    "inability to bear weight",
+    "calf pain"
+   ]
+  },
+  {
+   "abbr": "$hshoulder",
+   "title": "Shoulder pain",
+   "lines": [
+    "*** shoulder pain x ***, dominant hand ***.",
+    "Onset ***, mechanism ***.",
+    "Pain is ***, worse with ***, night pain ***.",
+    "Weakness ***, numbness or tingling ***.",
+    "Prior injury ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "fever",
+    "trauma with deformity",
+    "chest pain",
+    "exertional symptoms"
+   ]
+  },
+  {
+   "abbr": "$hjoint",
+   "title": "Joint pain",
+   "lines": [
+    "*** joint pain x ***.",
+    "Joints involved ***.",
+    "Swelling ***, morning stiffness *** minutes.",
+    "Family history of autoimmune disease ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "fever",
+    "hot swollen joint",
+    "rash",
+    "recent tick bite or STI",
+    "weight loss"
+   ]
+  },
+  {
+   "abbr": "$hneck",
+   "title": "Neck pain",
+   "lines": [
+    "Neck pain x ***.",
+    "Onset ***, mechanism ***.",
+    "Radiation to ***, numbness or weakness ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "trauma",
+    "gait change",
+    "hand clumsiness",
+    "bowel or bladder dysfunction",
+    "fever",
+    "weight loss",
+    "history of cancer",
+    "severe headache"
+   ]
+  },
+  {
+   "abbr": "$hha",
+   "title": "Headache",
+   "lines": [
+    "Headache x ***.",
+    "Pain is ***, location ***, onset ***, frequency ***.",
+    "Associated with ***.",
+    "Prior headaches ***.",
+    "Analgesic use *** days per month.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "thunderclap onset",
+    "worst headache of life",
+    "fever",
+    "stiff neck",
+    "focal weakness or numbness",
+    "vision loss",
+    "jaw claudication",
+    "onset with exertion or positional change",
+    "new pattern after age 50",
+    "pregnancy",
+    "immunosuppression",
+    "history of cancer"
+   ]
+  },
+  {
+   "abbr": "$hdizzy",
+   "title": "Dizziness",
+   "lines": [
+    "Dizziness x ***, described as ***.",
+    "Episodes last ***, triggered by ***.",
+    "Hearing loss ***, tinnitus ***.",
+    "New meds ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "double vision",
+    "slurred speech",
+    "trouble swallowing",
+    "facial droop",
+    "focal weakness or numbness",
+    "trouble walking",
+    "new severe headache",
+    "chest pain",
+    "palpitations",
+    "syncope"
+   ]
+  },
+  {
+   "abbr": "$hmood",
+   "title": "Mood",
+   "lines": [
+    "*** mood x ***.",
+    "Reports ***.",
+    "Sleep ***, appetite ***, energy ***, concentration ***.",
+    "PHQ-9 ***, item 9 ***.",
+    "GAD-7 ***.",
+    "Prior episodes and treatment ***.",
+    "Alcohol and substances ***.",
+    "Stressors ***.",
+    "Supports ***.",
+    "Firearms access ***."
+   ],
+   "denies": [
+    "suicidal ideation",
+    "homicidal ideation",
+    "history of mania",
+    "hallucinations"
+   ]
+  },
+  {
+   "abbr": "$hinsom",
+   "title": "Insomnia",
+   "lines": [
+    "Trouble sleeping x ***, *** nights/wk.",
+    "Trouble _falling asleep / staying asleep / waking too early.",
+    "Bedtime ***, wake time ***, sleep latency ***, awakenings ***, total sleep ***.",
+    "Free-day sleep times ***, naps ***, shift work ***.",
+    "Daytime impairment ***, ISI ***.",
+    "Nocturia ***, pain ***, hot flashes ***.",
+    "Mood ***, PHQ-9 ***.",
+    "Caffeine ***, alcohol ***, nicotine ***, cannabis ***, screens ***.",
+    "Sleep-disrupting meds ***.",
+    "Tried *** including OTC sleep aids or melatonin, with *** relief."
+   ],
+   "denies": [
+    "loud snoring",
+    "witnessed apneas",
+    "urge to move legs at night",
+    "drowsy driving"
+   ]
+  },
+  {
+   "abbr": "$habd",
+   "title": "Abdominal pain",
+   "lines": [
+    "Abdominal pain x ***.",
+    "Pain is ***, location ***, onset ***, relation to meals ***.",
+    "Associated with ***.",
+    "LMP ***, pregnancy possible _yes / no.",
+    "Prior abdominal surgery ***.",
+    "NSAID and alcohol use ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "fever",
+    "vomiting",
+    "hematemesis",
+    "melena or hematochezia",
+    "jaundice",
+    "weight loss",
+    "inability to pass stool or gas"
+   ]
+  },
+  {
+   "abbr": "$hdiarrhea",
+   "title": "Diarrhea",
+   "lines": [
+    "Diarrhea x *** days, *** stools per day, ***.",
+    "Associated with ***.",
+    "Recent travel ***, antibiotics ***, sick contacts ***, food exposures ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "blood in stool",
+    "fever",
+    "severe abdominal pain",
+    "signs of dehydration",
+    "nocturnal stools",
+    "weight loss"
+   ]
+  },
+  {
+   "abbr": "$hgerd",
+   "title": "Reflux",
+   "lines": [
+    "Heartburn x ***, *** times per week, worse with ***.",
+    "Regurgitation ***.",
+    "Nocturnal sxs ***, meals within 3 hr of bed ***.",
+    "Cough, hoarseness, throat clearing ***.",
+    "Belching ***.",
+    "NSAID use ***, alcohol ***, tobacco ***.",
+    "Weight change ***, known anemia ***.",
+    "Tried *** with *** relief.",
+    "PPI ***, dose ***, taken *** min before ***, response ***.",
+    "Prior EGD ***.",
+    "Weekly sxs for 5 yr or more ***.",
+    "FHx Barrett's or esophageal cancer ***."
+   ],
+   "denies": [
+    "dysphagia",
+    "odynophagia",
+    "vomiting",
+    "hematemesis",
+    "melena",
+    "weight loss",
+    "exertional chest pain"
+   ]
+  },
+  {
+   "abbr": "$hconst",
+   "title": "Constipation",
+   "lines": [
+    "Constipation x ***, onset ***.",
+    "BMs *** per wk, Bristol type ***.",
+    "In more than 1/4 of BMs: straining ***, incomplete evacuation ***, blockage ***, digitation or splinting ***.",
+    "Loose stools without laxatives ***.",
+    "Abdominal pain or bloating relieved by BM ***.",
+    "Last colonoscopy or stool test ***.",
+    "Meds: opioids, anticholinergics, iron, calcium, CCB, diuretics ***.",
+    "Diet, fluid, and activity ***.",
+    "Tried *** at *** dose with *** relief."
+   ],
+   "denies": [
+    "blood in stool",
+    "melena",
+    "change in stool caliber",
+    "weight loss",
+    "vomiting",
+    "abdominal distension",
+    "family history of colon cancer"
+   ]
+  },
+  {
+   "abbr": "$hfatigue",
+   "title": "Fatigue",
+   "lines": [
+    "Fatigue x ***.",
+    "Reports ***.",
+    "Sleep ***, snoring ***.",
+    "Mood ***.",
+    "Post-exertional malaise ***, unrefreshing sleep ***, cognitive problems ***, orthostatic intolerance ***.",
+    "Diet ***, heavy menses ***.",
+    "Meds ***.",
+    "Alcohol and substances ***."
+   ],
+   "denies": [
+    "weight loss",
+    "fever",
+    "night sweats",
+    "bleeding",
+    "dyspnea",
+    "chest pain"
+   ]
+  },
+  {
+   "abbr": "$hwt",
+   "title": "Weight change",
+   "lines": [
+    "Weight *** of *** lb over ***, *** intentional.",
+    "Appetite ***.",
+    "Diet ***, activity ***.",
+    "Mood ***.",
+    "Meds ***.",
+    "Last cancer screenings ***."
+   ],
+   "denies": [
+    "fever",
+    "night sweats",
+    "dysphagia",
+    "abdominal pain",
+    "change in bowel habits",
+    "bleeding",
+    "cough"
+   ]
+  },
+  {
+   "abbr": "$hedema",
+   "title": "Edema",
+   "lines": [
+    "*** leg swelling x ***.",
+    "Swelling is *** and *** with elevation.",
+    "Pain ***, redness ***.",
+    "History of heart, kidney, or liver disease ***, VTE ***.",
+    "New meds ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "dyspnea",
+    "orthopnea",
+    "chest pain",
+    "hemoptysis",
+    "unilateral calf pain"
+   ]
+  },
+  {
+   "abbr": "$hrash",
+   "title": "Rash",
+   "lines": [
+    "Rash x *** days, located ***, started ***.",
+    "Rash is ***, itching ***, pain ***.",
+    "New meds, products, or exposures ***.",
+    "Sick contacts ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "fever",
+    "mouth or eye involvement",
+    "blistering",
+    "skin peeling",
+    "rapid spread",
+    "facial or throat swelling"
+   ]
+  },
+  {
+   "abbr": "$hcp",
+   "title": "Chest pain",
+   "lines": [
+    "Chest pain x ***.",
+    "Pain is ***, location ***, onset ***, *** with exertion, radiating to ***, lasting ***.",
+    "Associated with ***.",
+    "Cardiac history ***.",
+    "Risk factors ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "pain at rest now",
+    "dyspnea",
+    "diaphoresis",
+    "syncope",
+    "palpitations",
+    "hemoptysis",
+    "unilateral leg swelling"
+   ]
+  },
+  {
+   "abbr": "$hpalp",
+   "title": "Palpitations",
+   "lines": [
+    "Palpitations x ***.",
+    "Episodes feel ***, last ***, frequency ***, triggers ***.",
+    "Caffeine ***, alcohol ***, stimulants ***.",
+    "Thyroid history ***."
+   ],
+   "denies": [
+    "syncope",
+    "chest pain",
+    "dyspnea",
+    "exertional onset",
+    "family history of sudden death"
+   ]
+  },
+  {
+   "abbr": "$hhtn",
+   "title": "Hypertension follow-up",
+   "lines": [
+    "Home readings ***.",
+    "Taking *** as prescribed, adherence ***.",
+    "Side effects ***.",
+    "Sodium intake ***, activity ***, alcohol ***."
+   ],
+   "denies": [
+    "headache",
+    "chest pain",
+    "dyspnea",
+    "vision changes",
+    "edema"
+   ]
+  },
+  {
+   "abbr": "$hdm",
+   "title": "Diabetes follow-up",
+   "lines": [
+    "Glucose log: fasting ***, postprandial ***.",
+    "Taking ***, adherence ***.",
+    "Hypoglycemia ***.",
+    "Diet ***, activity ***.",
+    "Last eye exam ***."
+   ],
+   "denies": [
+    "polyuria",
+    "polydipsia",
+    "foot numbness",
+    "foot wounds",
+    "vision changes"
+   ]
+  },
+  {
+   "abbr": "$hthy",
+   "title": "Thyroid follow-up",
+   "lines": [
+    "Taking levothyroxine *** mcg daily, brand or maker ***, timing relative to food ***, adherence and missed doses ***.",
+    "Calcium, iron, PPI, or antacid timing ***.",
+    "Biotin ***.",
+    "New meds incl. estrogen ***.",
+    "Pregnancy plans ***.",
+    "Reports ***.",
+    "Last TSH ***."
+   ],
+   "denies": [
+    "palpitations",
+    "tremor",
+    "heat or cold intolerance",
+    "weight change",
+    "fatigue",
+    "constipation",
+    "neck swelling or pain",
+    "dysphagia"
+   ]
+  },
+  {
+   "abbr": "$hcopd",
+   "title": "COPD follow-up",
+   "lines": [
+    "Exacerbations since last visit ***, steroid or antibiotic courses ***, hospitalizations ***.",
+    "Rescue inhaler use ***.",
+    "Maintenance inhalers ***, adherence and technique ***.",
+    "Dyspnea mMRC ***.",
+    "Tobacco ***.",
+    "O2 ***."
+   ],
+   "denies": [
+    "fever",
+    "hemoptysis",
+    "weight loss",
+    "chest pain"
+   ]
+  },
+  {
+   "abbr": "$hasthma",
+   "title": "Asthma follow-up",
+   "lines": [
+    "In the past 4 weeks: daytime symptoms more than twice a week ***.",
+    "Night waking ***.",
+    "Reliever use more than twice a week ***.",
+    "Activity limitation ***.",
+    "Exacerbations or steroid courses since last visit ***.",
+    "Controller ***, adherence and technique ***.",
+    "Triggers ***.",
+    "Tobacco ***."
+   ]
+  },
+  {
+   "abbr": "$hfeverk",
+   "title": "Pediatric fever",
+   "lines": [
+    "Here with *** for fever x *** days, max temp *** by ***.",
+    "Vaccines ***.",
+    "Intake ***, wet diapers or urine output *** in past 24 hours.",
+    "Associated with ***.",
+    "Sick contacts ***, daycare ***.",
+    "Last antipyretic *** at ***."
+   ],
+   "denies": [
+    "lethargy",
+    "inconsolability",
+    "difficulty breathing",
+    "petechial rash",
+    "stiff neck",
+    "seizure",
+    "decreased urine output"
+   ]
+  },
+  {
+   "abbr": "$hcoughk",
+   "title": "Pediatric cough",
+   "lines": [
+    "Here with *** for cough x *** days.",
+    "Cough is ***, worse ***.",
+    "Fever ***.",
+    "Intake ***, urine output ***.",
+    "Wheeze history ***.",
+    "Vaccines ***.",
+    "Sick contacts ***, smoke exposure ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "difficulty breathing",
+    "retractions",
+    "apnea",
+    "color change",
+    "choking episode",
+    "inspiratory whoop",
+    "post-cough vomiting"
+   ]
+  },
+  {
+   "abbr": "$hvomitk",
+   "title": "Pediatric vomiting",
+   "lines": [
+    "Here with *** for vomiting x ***, *** episodes.",
+    "Diarrhea ***.",
+    "Fever ***.",
+    "Intake ***, last void ***, wet diapers ***, tears ***.",
+    "Sick contacts ***.",
+    "Tried *** with *** tolerance."
+   ],
+   "denies": [
+    "bilious or bloody emesis",
+    "projectile vomiting",
+    "severe abdominal pain",
+    "lethargy",
+    "head injury",
+    "headache"
+   ]
+  },
+  {
+   "abbr": "$hrashk",
+   "title": "Pediatric rash",
+   "lines": [
+    "Here with *** for rash x *** days, located ***, started ***.",
+    "Rash is ***, itching ***.",
+    "Fever ***.",
+    "New exposures ***.",
+    "Vaccines ***.",
+    "Sick contacts ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "petechiae or purpura",
+    "mouth or eye involvement",
+    "lip or tongue swelling",
+    "limp",
+    "lethargy"
+   ]
+  },
+  {
+   "abbr": "$heark",
+   "title": "Pediatric ear pain",
+   "lines": [
+    "Here with *** for *** ear pain x *** days.",
+    "Fever ***, ear pulling ***, drainage ***.",
+    "Recent URI ***.",
+    "Prior ear infections ***, last antibiotic ***.",
+    "Ear tubes ***.",
+    "Eye drainage ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "swelling or redness behind the ear",
+    "facial weakness",
+    "lethargy",
+    "stiff neck"
+   ]
+  },
+  {
+   "abbr": "$hhip",
+   "title": "Hip pain",
+   "lines": [
+    "*** hip pain x ***.",
+    "Location _groin / lateral / buttock.",
+    "Onset ***, mechanism ***.",
+    "Worse with ***.",
+    "Clicking or catching ***.",
+    "Back pain ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "fever",
+    "night pain",
+    "weight loss",
+    "inability to bear weight",
+    "history of cancer",
+    "chronic steroid use",
+    "trauma"
+   ]
+  },
+  {
+   "abbr": "$hankle",
+   "title": "Ankle pain",
+   "lines": [
+    "*** ankle pain x ***.",
+    "Mechanism ***, inversion ***.",
+    "Able to bear weight right after injury ***, now ***.",
+    "Swelling ***, bruising ***.",
+    "Prior sprains ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "numbness",
+    "cold or pale foot",
+    "obvious deformity",
+    "calf pain"
+   ]
+  },
+  {
+   "abbr": "$hwrist",
+   "title": "Wrist and hand pain",
+   "lines": [
+    "_wrist / hand pain x ***, dominant hand ***.",
+    "Mechanism ***, fall on outstretched hand ***.",
+    "Repetitive use ***.",
+    "Numbness or tingling in ***, worse at night ***.",
+    "Weakness or dropping things ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "deformity",
+    "fever",
+    "redness",
+    "rapidly spreading swelling"
+   ]
+  },
+  {
+   "abbr": "$helbow",
+   "title": "Elbow pain",
+   "lines": [
+    "*** elbow pain x ***, _lateral / medial.",
+    "Repetitive activity ***, dominant arm ***.",
+    "Worse with gripping or lifting ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "trauma",
+    "joint swelling",
+    "numbness in the ring and small fingers",
+    "fever",
+    "redness"
+   ]
+  },
+  {
+   "abbr": "$hfoot",
+   "title": "Foot pain",
+   "lines": [
+    "*** foot pain x ***, location ***.",
+    "First-step pain in the morning ***.",
+    "Footwear and activity changes ***.",
+    "Diabetes ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "trauma",
+    "numbness",
+    "color change",
+    "open wounds",
+    "fever",
+    "calf pain"
+   ]
+  },
+  {
+   "abbr": "$hbreast",
+   "title": "Breast concern",
+   "lines": [
+    "_breast lump / pain / discharge x ***, location *** o'clock.",
+    "Relation to menstrual cycle ***.",
+    "Last mammogram ***.",
+    "Family history of breast or ovarian cancer ***.",
+    "LMP ***, pregnancy or breastfeeding ***."
+   ],
+   "denies": [
+    "skin dimpling or redness",
+    "nipple inversion",
+    "bloody or spontaneous discharge",
+    "axillary lump",
+    "fever"
+   ]
+  },
+  {
+   "abbr": "$hed",
+   "title": "Erectile dysfunction",
+   "lines": [
+    "Erectile dysfunction x ***, onset _gradual / sudden.",
+    "Morning erections ***, libido ***, ejaculation timing and control ***.",
+    "Occurs _in all settings / only with partner.",
+    "Cardiovascular risk factors ***.",
+    "Meds ***, nitrates ***, alpha blockers ***.",
+    "Tried *** at *** mg, timing ***, response ***.",
+    "Exercise tolerance ***.",
+    "Tobacco ***, alcohol ***, mood ***, relationship ***."
+   ],
+   "denies": [
+    "exertional chest pain",
+    "penile curvature or pain",
+    "urinary symptoms"
+   ]
+  },
+  {
+   "abbr": "$hmeno",
+   "title": "Menopause symptoms",
+   "lines": [
+    "Hot flashes x ***, *** per day, night sweats ***.",
+    "LMP ***.",
+    "Sleep ***, mood ***, vaginal dryness ***, pain with sex ***.",
+    "Tobacco ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "postmenopausal bleeding",
+    "history of breast cancer",
+    "VTE",
+    "stroke",
+    "liver disease"
+   ]
+  },
+  {
+   "abbr": "$hurinary",
+   "title": "Urinary symptoms",
+   "lines": [
+    "Urinary symptoms x ***: frequency ***, urgency ***, nocturia *** times, weak stream ***, hesitancy ***, incontinence with cough or urge ***.",
+    "Fluid and caffeine intake ***.",
+    "Meds ***."
+   ],
+   "denies": [
+    "hematuria",
+    "dysuria",
+    "fever",
+    "flank pain",
+    "inability to void",
+    "back pain with leg weakness or saddle numbness"
+   ]
+  },
+  {
+   "abbr": "$heye",
+   "title": "Red eye",
+   "lines": [
+    "*** red eye x *** days.",
+    "Discharge ***, itching ***, contact lens use ***.",
+    "Sick contacts ***.",
+    "Tried *** with *** relief."
+   ],
+   "denies": [
+    "vision loss",
+    "severe pain",
+    "light sensitivity",
+    "halos",
+    "trauma",
+    "foreign body sensation",
+    "headache with nausea"
+   ]
+  },
+  {
+   "abbr": "$hnumb",
+   "title": "Numbness and tingling",
+   "lines": [
+    "Numbness or tingling in *** x ***.",
+    "Distribution ***, _constant / intermittent, worse at night ***.",
+    "Weakness ***.",
+    "Diabetes ***, alcohol ***, metformin or B12 risk ***, repetitive activity ***."
+   ],
+   "denies": [
+    "sudden onset",
+    "facial droop",
+    "speech change",
+    "bowel or bladder changes",
+    "saddle numbness",
+    "rapidly ascending weakness"
+   ]
+  },
+  {
+   "abbr": "$hmemory",
+   "title": "Memory concern",
+   "lines": [
+    "Memory concerns x ***, with ***.",
+    "Examples ***.",
+    "Function: medications ***, finances ***, driving ***, getting lost ***.",
+    "Mood ***, sleep ***, hearing ***.",
+    "Alcohol ***, sedating meds ***.",
+    "Family history of dementia ***."
+   ],
+   "denies": [
+    "sudden onset",
+    "head injury",
+    "focal weakness",
+    "hallucinations",
+    "falls"
+   ]
+  },
+  {
+   "abbr": "$hsti",
+   "title": "STI concern",
+   "lines": [
+    "STI testing after *** exposure on ***.",
+    "Discharge ***, dysuria ***, sores ***, rash ***.",
+    "Sites of exposure ***.",
+    "Partners in past 60 days ***, condom use ***, partner diagnosis ***.",
+    "Last testing ***.",
+    "LMP ***, pregnancy possible _yes / no.",
+    "PrEP ***."
+   ],
+   "denies": [
+    "fever",
+    "pelvic pain",
+    "testicular pain",
+    "joint pain"
+   ]
+  },
+  {
+   "abbr": "$hsnore",
+   "title": "Snoring",
+   "lines": [
+    "Snoring x ***.",
+    "Witnessed apneas ***, gasping ***, morning headaches ***, nocturia ***, daytime sleepiness with Epworth ***.",
+    "BMI ***, neck circumference ***, HTN ***, alcohol and sedatives ***."
+   ],
+   "denies": [
+    "drowsy driving",
+    "falling asleep at work"
+   ]
+  },
+  {
+   "abbr": "$hadhd",
+   "title": "ADHD concern",
+   "lines": [
+    "Here with *** for inattention or hyperactivity x ***.",
+    "Symptoms in *** settings, onset before age 12 ***.",
+    "School or work impact ***.",
+    "Vanderbilt or ASRS ***.",
+    "Sleep ***, mood ***, anxiety ***, learning concerns ***, substance use ***.",
+    "ASRS Part A ***/6, positive if 4 or more in the shaded range.",
+    "Prior treatment ***."
+   ],
+   "denies": [
+    "chest pain or fainting with exercise",
+    "family history of sudden death"
+   ]
+  },
+  {
+   "abbr": "$hsubst",
+   "title": "Substance use",
+   "lines": [
+    "Discussion of *** use.",
+    "Route ***, amount and frequency ***, last use ***, age at first use ***.",
+    "Withdrawal symptoms ***, overdoses ***, cravings ***.",
+    "Consequences ***.",
+    "Prior treatment ***.",
+    "Injection use ***, needle sharing ***.",
+    "Readiness to change ***.",
+    "Naloxone at home ***."
+   ],
+   "denies": [
+    "suicidal ideation",
+    "chest pain",
+    "fever"
+   ]
+  },
+  {
+   "abbr": "$hpreg",
+   "title": "Positive pregnancy test",
+   "lines": [
+    "Positive home pregnancy test on ***.",
+    "LMP ***, certain ***, cycles ***.",
+    "Pregnancy *** planned, feelings about pregnancy ***, options counseling desired ***.",
+    "Prior ectopic, tubal surgery, or IUD in place ***.",
+    "Meds ***, folic acid ***, alcohol and tobacco ***."
+   ],
+   "denies": [
+    "vaginal bleeding",
+    "severe one-sided pain",
+    "shoulder pain",
+    "dizziness"
+   ]
+  },
+  {
+   "abbr": "$hfttk",
+   "title": "Failure to thrive history",
+   "lines": [
+    "Feeding history:",
+    "- Breast milk ***, formula ***, mixed as *** scoops in *** oz water, *** kcal/oz",
+    "- Volume *** per feed, every *** hours, overnight feeds ***",
+    "- Solids ***, milk *** oz/day, juice *** oz/day, grazing or snacking ***",
+    "- Estimated intake *** kcal/kg/day",
+    "- Weight gain *** g/day",
+    "Social history:",
+    "- Primary feeder ***",
+    "- Household members ***",
+    "- Food or formula insecurity, WIC or SNAP ***",
+    "- Caregiver attachment and feeding interaction ***",
+    "Medical history:",
+    "- Prematurity, IUGR, or SGA ***",
+    "- Reflux, vomiting, or diarrhea ***",
+    "- Choking, pain, or fatigue with feeds ***",
+    "- Development, autism screen if 18 mo or older ***",
+    "- Food allergy ***",
+    "- Recurrent infections ***",
+    "- Kidney or heart disease ***",
+    "- Surgeries ***",
+    "Family history:",
+    "- Parental heights ***, short stature or constitutional growth delay ***",
+    "- GI disease ***",
+    "- Genetic conditions ***",
+    "- Mental illness or substance use ***"
+   ]
+  },
+  {
+   "abbr": "$hiih",
+   "title": "Idiopathic intracranial hypertension",
+   "lines": [
+    "- Headache: ***, daily or near daily ***, worse lying down or with straining ***",
+    "- Vision: transient visual obscurations ***, blurred vision ***, diplopia ***, vision loss ***",
+    "- Pulsatile tinnitus: ***",
+    "- Retrobulbar or eye movement pain: ***",
+    "- Neck or back pain: ***",
+    "- Recent weight gain: *** lb over ***, BMI ***",
+    "- Medications: combined hormonal contraception ***, tetracyclines including minocycline or doxycycline ***, vitamin A or isotretinoin ***, lithium ***, growth hormone ***, recent steroid withdrawal ***",
+    "- Pregnancy status: ***",
+    "- Last eye exam with fundoscopy: ***"
+   ]
+  },
+  {
+   "abbr": "$hpreopk",
+   "title": "Pediatric preop",
+   "lines": [
+    "Preop evaluation before *** under general anesthesia on ***, referred by Dr. ***.",
+    "Weight *** kg.",
+    "Currently at baseline, fever, cough, congestion, or wheeze in past 2 weeks ***.",
+    "- Birth history: ***",
+    "- Prior anesthesia and complications: ***",
+    "- Airway and respiratory: asthma ***, snoring or OSA ***",
+    "- Cardiac: murmur or heart disease ***",
+    "- Neuro: seizures ***, development ***",
+    "- Bleeding history: easy bruising, prolonged bleeding, family bleeding disorder ***",
+    "- Family history of malignant hyperthermia or pseudocholinesterase deficiency: ***",
+    "- Meds: ***",
+    "- Allergies, including latex, chlorhexidine, iodine: ***",
+    "- NPO and perioperative instructions reviewed: ***"
+   ]
+  },
+  {
+   "abbr": "$hadhdfu",
+   "title": "Monthly stimulant follow-up",
+   "lines": [
+    "Monthly ADHD follow-up on *** *** mg PO every morning.",
+    "Established patient.",
+    "Visit frequency follows clinic protocol requiring monthly in-person evaluation for controlled-substance prescribing when the PCP is a resident; monthly visits are not otherwise required on clinical grounds.",
+    "- Symptom control: ***, benefit in attention, task completion, work or school ***",
+    "- Efficacy change or dose escalation requests: ***",
+    "- Adherence: taken as prescribed ***, missed doses or running out early ***",
+    "- Side effects: appetite loss, insomnia, weight loss, palpitations, chest pain, exertional dyspnea, syncope, headache, anxiety, mood change, tics ***",
+    "- Misuse screen: non-medical use, non-prescribed stimulants, other sources, loss or theft ***",
+    "- Storage: secured, not shared ***",
+    "- Substance use: alcohol, tobacco, cannabis, other ***"
+   ]
+  },
+  {
+   "abbr": "$hchf",
+   "title": "Heart failure follow-up",
+   "lines": [
+    "EF *** on echo ***.",
+    "NYHA class ***.",
+    "Current regimen ***, tolerating ***.",
+    "Home weights ***, dry weight ***.",
+    "Reports ***.",
+    "Sodium and fluid intake ***.",
+    "Tobacco, alcohol, other substances ***.",
+    "Recent ED visits or admissions ***.",
+    "Cardiology ***."
+   ],
+   "denies": [
+    "dyspnea",
+    "orthopnea",
+    "PND",
+    "edema",
+    "chest pain",
+    "palpitations",
+    "presyncope"
+   ]
+  },
+  {
+   "abbr": "$hsexf",
+   "title": "Female sexual concern",
+   "lines": [
+    "Sexual concern of ***.",
+    "Onset ***, duration ***, _lifelong / acquired, _generalized / situational.",
+    "Distress ***.",
+    "Phase affected: interest ***, arousal ***, lubrication ***, orgasm ***, pain with intercourse ***.",
+    "Vaginal dryness ***.",
+    "Relationship with partner ***, partner health and sexual function ***, sexual orientation ***.",
+    "Feels safe with partner ***.",
+    "Life changes in past year ***.",
+    "Trauma history ***.",
+    "Menopause status ***, pregnancy, postpartum or breastfeeding ***.",
+    "Contraception ***.",
+    "Mood ***, sleep and fatigue ***, stress ***.",
+    "Medical history ***, surgical history ***.",
+    "Medications ***.",
+    "Substance use ***.",
+    "Family background ***."
+   ]
+  },
+  {
+   "abbr": "$htmj",
+   "title": "Jaw pain",
+   "lines": [
+    "Jaw pain x ***, _left / right / bilateral.",
+    "Pain is *** with chewing ***.",
+    "Joint clicking or popping ***, locking or limited opening ***.",
+    "Associated headache ***, ear pain ***, neck pain ***.",
+    "Clenching or grinding ***.",
+    "Recent dental work or trauma ***.",
+    "Mood and stress ***.",
+    "Tried *** with *** relief."
+   ]
+  },
+  {
+   "abbr": "$hanticoag",
+   "title": "Anticoagulation follow-up",
+   "lines": [
+    "On *** mg PO *** for *** since ***.",
+    "Adherence ***, missed doses ***.",
+    "Falls ***.",
+    "Interacting meds including NSAIDs, aspirin, antibiotics or supplements ***.",
+    "Last INR *** on ***, goal ***.",
+    "Last creatinine ***, weight ***, dose appropriate ***."
+   ],
+   "denies": [
+    "bleeding",
+    "bruising",
+    "nosebleeds",
+    "gum bleeding",
+    "blood in urine or stool",
+    "black stools",
+    "heavy menses",
+    "new leg swelling",
+    "chest pain",
+    "dyspnea",
+    "stroke symptoms"
+   ]
+  },
+  {
+   "abbr": "$hafib",
+   "title": "Atrial fibrillation follow-up",
+   "lines": [
+    "Diagnosed ***, _paroxysmal / persistent / permanent.",
+    "Current symptoms ***, frequency ***.",
+    "Strategy _rate / rhythm control with ***.",
+    "Ablation ***.",
+    "Anticoagulation ***, adherence ***, bleeding ***.",
+    "CHA2DS2-VASc ***.",
+    "Stimulants, alcohol and sleep apnea ***.",
+    "Comorbidities ***.",
+    "Cardiology Dr. ***."
+   ]
+  },
+  {
+   "abbr": "$hconstk",
+   "title": "Pediatric constipation",
+   "lines": [
+    "Constipation x ***, onset age ***, history from ***.",
+    "Stools *** per wk, Bristol type ***, large or toilet-clogging stools ***.",
+    "Withholding or retentive posturing ***.",
+    "Soiling or accidents *** per wk.",
+    "Pain with BMs ***, abdominal pain ***, blood on stool or paper ***.",
+    "Meconium passed within 48 hr of birth ***.",
+    "Toilet trained ***, at age ***.",
+    "Diet ***, milk *** oz/day, water and juice ***.",
+    "Prior cleanouts ***, current meds and doses ***.",
+    "Denies vomiting, poor weight gain, abdominal distension, leg weakness, or new urinary symptoms ***."
+   ]
+  },
+  {
+   "abbr": "$hpostmi",
+   "title": "Post-MI follow-up",
+   "lines": [
+    "_STEMI / NSTEMI on *** at ***, treated with _PCI, *** stent(s) to *** / CABG / medical therapy.",
+    "LVEF ***% on ***.",
+    "Since d/c, chest pain ***, nitroglycerin use ***, dyspnea ***, orthopnea or edema ***, palpitations ***, syncope ***.",
+    "Bleeding, bruising, or dark stools ***.",
+    "Taking aspirin, *** (P2Y12 inhibitor), statin, ***, missed doses ***, side effects ***.",
+    "Cardiac rehab ***.",
+    "Activity ***, return to work ***, driving ***, sexual activity ***.",
+    "Tobacco ***.",
+    "Mood ***, PHQ-2 ***.",
+    "Cardiology f/u ***."
+   ]
+  },
+  {
+   "abbr": "$hbehavek",
+   "title": "Child behavior concern",
+   "lines": [
+    "Here with *** for behavior concerns x ***, onset age ***.",
+    "Main behaviors _tantrums / hitting, biting, or kicking / defiance and arguing / lying or stealing / school behavior problems / breaking things.",
+    "Frequency *** per _day / wk, lasting *** min.",
+    "Settings _home only / school or daycare only / home and school / home, school, and with peers.",
+    "Triggers _limits or being told no / transitions / hunger or tiredness / sibling conflict / screen time ending / unclear.",
+    "Strategies tried ***, response ***.",
+    "Discipline used at home _time-out / loss of privileges / rewards / yelling / physical discipline / mixed.",
+    "Caregivers consistent with each other _yes / no.",
+    "Sleep *** hr, snoring _yes / no.",
+    "Screen time *** hr/day, screens in bedroom _yes / no.",
+    "Diet ***, caffeine or energy drinks _yes / no.",
+    "Development and language _on track / speech delay / other delay.",
+    "Hearing and vision concerns ***.",
+    "Lead level ***.",
+    "School grade ***, grades ***, suspensions ***, IEP or 504 _none / in place / requested.",
+    "Family stressors _none / move / separation or divorce / new sibling / death or loss / money or housing.",
+    "ACEs and trauma history ***.",
+    "Family history of ADHD, mood, anxiety, or learning problems ***.",
+    "Caregiver mood and stress ***.",
+    "Harm to self _denied / reported.",
+    "Harm to others or animals _denied / reported.",
+    "Firearms in home _no / yes, locked and unloaded / yes, not locked."
+   ]
+  },
+  {
+   "abbr": "$htendonue",
+   "title": "Upper extremity tendon pain",
+   "lines": [
+    "*** arm pain x *** wk, dominant hand ***.",
+    "- Site: _lateral shoulder / anterior shoulder, bicipital groove / lateral elbow / medial elbow / anterior elbow / radial wrist, thumb side ***",
+    "- Onset: _gradual, no injury / after new or increased activity / after a single strain or lift ***",
+    "- Activity change: _new job task or tool / more reps or hours / new sport or more training / none identified ***",
+    "- Work and sport: ***",
+    "- Pain pattern: _only w/ use, eases w/ rest / at start of activity, eases, then worse after / constant, now w/ daily tasks",
+    "- Worse with: _overhead reaching / gripping, wrist extension / wrist flexion, pronation / elbow flexion, supination / thumb and wrist motion ***",
+    "- Night pain: _none / wakes from sleep / cannot lie on that side",
+    "- Weakness: _none / weak from pain / true weakness, cannot lift arm or hold objects ***",
+    "- Stiffness: _none / morning stiffness *** min / loss of motion ***",
+    "- Neck pain or radiating arm pain: _none / yes, ***",
+    "- Numbness or tingling: _none / ***",
+    "- Sudden pop, bruising, or change in muscle shape: _none / yes, ***",
+    "- Swelling, redness, warmth, or fever: _none / yes, ***",
+    "- Fluoroquinolone use: _none recent / yes, ***",
+    "- Corticosteroids: _none / prior injection at this site x ***, last *** / systemic steroids ***",
+    "- Risk factors: _none / diabetes / hyperlipidemia / thyroid or other endocrine disorder / inflammatory arthritis, psoriasis, or gout ***",
+    "- Prior episodes: ***",
+    "- Tried: _relative rest / ice / NSAID / brace or strap / home exercise or PT / injection *** with *** relief",
+    "- Goal: ***"
+   ]
+  },
+  {
+   "abbr": "$htendonle",
+   "title": "Lower extremity tendon pain",
+   "lines": [
+    "*** leg pain x *** wk.",
+    "- Site: _lateral hip / below kneecap / Achilles, 2-6 cm above heel / Achilles insertion / behind medial malleolus / behind lateral malleolus ***",
+    "- Onset: _gradual, no injury / after new or increased activity / after twisting the foot or stepping off a curb ***",
+    "- Training change: _more miles or time / hills, speed, or jumping / new surface / new shoes / none identified ***",
+    "- Activity, weekly volume, and footwear: ***",
+    "- Pain pattern: _at start and end of activity / throughout activity / now w/ daily walking or stairs",
+    "- First steps in AM or after sitting: _no pain or stiffness / stiff and painful x *** min",
+    "- Worse with: _side-lying, sitting w/ legs crossed / jumping, squatting / running, push-off / standing, walking ***",
+    "- Arch or ankle changes: _none / arch flattening on that side / ankle feels unstable or pops ***",
+    "- Sudden pop at back of heel, cannot push off: _no / yes, ***",
+    "- Back pain or pain radiating below the knee: _none / yes, ***",
+    "- Numbness or tingling: _none / ***",
+    "- Swelling, redness, warmth, or fever: _none / yes, ***",
+    "- Fluoroquinolone use: _none recent / yes, ***",
+    "- Corticosteroids: _none / prior injection at this site x ***, last *** / systemic steroids ***",
+    "- Risk factors: _none / diabetes / hyperlipidemia / obesity / thyroid or other endocrine disorder / inflammatory arthritis, psoriasis, or gout ***",
+    "- Prior episodes: ***",
+    "- Tried: _relative rest / ice / NSAID / heel lift, insert, or strap / home exercise or PT / injection *** with *** relief",
+    "- Goal: ***"
    ]
   }
  ],
@@ -15387,6 +17038,11 @@
    "abbr": "$picsom",
    "title": "Long-lasting ear drainage",
    "text": "Long-lasting ear drainage\n\nYou have a hole in your eardrum that keeps draining. This is a long-lasting middle ear infection. Ear drops and keeping the ear dry help it settle down.\n\nYour ear drops:\n\n- Put *** drops in the *** ear, twice a day, for *** days.\n- Hold the bottle in your hand for 1 to 2 minutes first. Cold drops can make you dizzy.\n- Lie down with the draining ear facing up.\n- Put in the drops, then push on the small flap in front of the ear 4 times.\n- Stay lying down for 5 minutes.\n- Do not use any other ear drops unless we tell you to.\n\nKeep your ear dry:\n\n- Put a cotton ball coated with petroleum jelly in your ear when you shower.\n- Do not swim until an ear doctor says it is OK.\n- Do not put cotton swabs or anything else in your ear.\n- Wipe drainage from the outer ear with a clean tissue.\n\nNext steps:\n\n- We will check your ear again in *** weeks.\n- A hearing test is planned ***.\n- An ear doctor may fix the hole with surgery.\n\nCall the clinic if:\n\n- Drainage is not better after you finish the drops\n- Drainage comes back\n- Your hearing gets worse\n\nGo to the ER if:\n\n- You feel dizzy or the room spins\n- Your face feels weak or droops\n- You have a bad headache, stiff neck, or fever"
+  },
+  {
+   "abbr": "$pispasm",
+   "title": "Muscle spasm",
+   "text": "Muscle spasm\n\nA muscle spasm is a muscle that tightens and will not relax. Most get better with time and home care.\n\nAt home:\n\n- Keep moving. Bed rest can make it worse.\n- Use a heating pad on low.\n- Stretch the muscle gently a few times a day.\n- Take your pain medicine as directed: ***\n\nIf you were given a muscle relaxer:\n\n- It can make you sleepy or dizzy.\n- Do not drive or drink alcohol while taking it.\n- Use it only for a short time.\n\nCall the clinic if:\n\n- The pain is not getting better in 2 weeks.\n- You have new numbness, tingling, or weakness.\n\nGo to the ER if:\n\n- You cannot control your bladder or bowels.\n- You have a fever with back pain."
   }
  ],
  "resources": [

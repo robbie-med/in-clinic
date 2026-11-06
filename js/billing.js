@@ -47,10 +47,13 @@ export const ATTEST_PRESENT = "By the addition of their electronic signature, th
 const PICK = /(^|[\s:(])_[^\s_][^_]*? \/ /;
 /** A conditional or criteria line ("Admit if …", "Labs only if …"): not a decision made today. */
 const COND = /\b(if|unless|consider|when)\b/i;
+/** A problem's plan lines that are switched on (✓); off lines stay on screen but out of the note and billing. */
+export const onPlan = p => (p.off?.length ? p.plan.filter(s => !p.off.includes(s)) : p.plan);
+
 /** A problem's lines that count: all once confirmed (Done), else the ones that didn't come from its dotphrase as is. */
 const live = (p, lines) => (lines || []).filter(s => p.confirmed || !(p.dot || []).includes(s));
 /** Changing treatment of a chronic problem means it isn't at goal. OTC lines don't count. */
-const CHANGE = /^(START|INCREASE|INCR|DECREASE|DECR|SWITCH|ADD)\b/;
+const CHANGE = /^(START|INCREASE|INCR|DECREASE|DECR|SWITCH|ADD|HOLD|STOP|DISCONTINUE|D\/C|TAPER)\b/;   // holding/stopping a med is a change too
 const OTC = /\b(OTC|over[- ]the[- ]counter)\b/i;
 const NOT_AT_GOAL = /\b(uncontrolled|not (at|to) goal|above goal|not controlled|poorly controlled|suboptimal(ly)? controlled|worsening|worsened|exacerbation|flares?|progressi(on|ng)|side effects?|intoleran\w*|adverse (effects?|reactions?))\b/i;
 const NEGATED = /\b(no|not|without|denies|denied|resolved|free of)\s+(\S+\s+){0,2}$/i;
@@ -62,7 +65,7 @@ export function notAtGoal(p) {
         const m = NOT_AT_GOAL.exec(s);
         if (m && !NEGATED.test(s.slice(0, m.index))) return m[0];
     }
-    const ch = live(p, p.plan).find(s => CHANGE.test(s.trim()) && !PICK.test(s) && !OTC.test(s) && !COND.test(s));
+    const ch = live(p, onPlan(p)).find(s => CHANGE.test(s.trim()) && !PICK.test(s) && !OTC.test(s) && !COND.test(s));
     return ch ? ch.trim().split(/\s+/).slice(0, 3).join(' ') : '';
 }
 
@@ -133,7 +136,7 @@ export const isBranch = s => /^If\b.*:$/.test(s.trim());
 const NOT_ORDER = /\b(review(ed)?|result(s|ed)?|showed|shows|was|were|normal|unremarkable|declin|defer|consider|ordered? (previously|last))/i;
 
 /** Plan lines that can count: not under "#Deferred to future visit" (those aren't done today), no branch headers. */
-const planned = v => v.problems.filter(p => !/^#?deferred\b/i.test(p.name.trim())).flatMap(p => live(p, p.plan)).filter(s => !isBranch(s));
+export const planned = v => v.problems.filter(p => !/^#?deferred\b/i.test(p.name.trim())).flatMap(p => live(p, onPlan(p))).filter(s => !isBranch(s));
 
 /** Unique tests whose patterns match any of the lines; "x-ray" inside "chest x-ray" counts once. */
 function testsIn(lines, table) {
@@ -254,7 +257,7 @@ export const isNew = v => v.relation === 'new to clinic';
 /** For the Billing warnings: counted plan lines still holding ***, unpicked lists, and problems with dotphrase lines not yet confirmed. */
 export function blanks(v) {
     const lines = planned(v);
-    const pending = v.problems.filter(p => !p.confirmed && !p.noStatus && (p.dot || []).some(s => p.plan.includes(s) || p.notes.includes(s))).map(p => p.name);
+    const pending = v.problems.filter(p => !p.confirmed && !p.noStatus && (p.dot || []).some(s => onPlan(p).includes(s) || p.notes.includes(s))).map(p => p.name);
     return { stars: lines.filter(s => s.includes('***')).length, picks: lines.filter(s => PICK.test(s)).length, pending };
 }
 
@@ -269,5 +272,8 @@ export function bill(v) {
     return { problems, data, risk, mdm, kind, auto, code, overridden: code !== auto, pce: PCE_CODES.includes(code) };
 }
 
-/** Teaching-physician attestation for the code being billed. */
-export const attestation = v => (bill(v).pce ? ATTEST_PCE : ATTEST_PRESENT);
+/**
+ * Teaching-physician attestation: what actually happened, picked by hand in Billing (v.tp 'present' | 'pce').
+ * Never inferred from the code: nothing is printed until it's picked. (b.pce only says the code fits the exception.)
+ */
+export const attestation = v => ({ present: ATTEST_PRESENT, pce: ATTEST_PCE }[v.tp] || '');

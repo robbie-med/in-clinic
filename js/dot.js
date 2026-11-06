@@ -5,9 +5,12 @@
 // Handouts are the library's $pi patient instructions, for the After Visit Summary. A block's "pi" names its handout.
 // Clinic phone numbers are "{{Central Referral Center}}" in dotphrases.json (the repo is public); load() fills them from
 // the numbers saved on this device (Clinic phone numbers), or leaves a *** blank. Resources are physician-only lists.
+import { isBranch } from './billing.js';
+
 export const Dot = {
     phrases: [],
     handouts: [],
+    hpis: [],
     resources: [],
     phoneLabels: [],
 
@@ -20,6 +23,7 @@ export const Dot = {
         this.phrases = data?.phrases || [];
         this.byLib = new Map(this.phrases.filter(p => p.lib).map(p => [p.lib, p]));
         this.handouts = data?.handouts || [];
+        this.hpis = data?.hpis || [];
         this.byPi = new Map(this.handouts.map(x => [x.abbr, x]));
     },
 
@@ -34,6 +38,31 @@ export const Dot = {
         const words = q.trim().toLowerCase().replace(/^[#$]/, '').split(/[\s,]+/).filter(Boolean);
         const hay = x => (x.title + ' | ' + x.abbr.slice(1) + ' | ' + x.abbr.slice(3)).toLowerCase();
         return this.handouts.filter(x => words.every(w => hay(x).includes(w))).sort((a, b) => a.title.localeCompare(b.title));
+    },
+
+    /** An HPI dotphrase by abbreviation ("$hcough"), or null. */
+    hpi(abbr) { return this.hpis.find(x => x.abbr === abbr) || null; },
+
+    /** HPIs whose title or abbreviation contains every word of the query; all of them for an empty query. */
+    searchHpis(q) {
+        const words = q.trim().toLowerCase().replace(/^\$h?/, '').split(/[\s,]+/).filter(Boolean);
+        const hay = x => (x.title + ' | ' + x.abbr.slice(2)).toLowerCase();
+        return this.hpis.filter(x => words.every(w => hay(x).includes(w))).sort((a, b) => a.title.localeCompare(b.title));
+    },
+
+    /**
+     * HPIs to offer for a visit: the problems' (their block's "hpi"), then ones the chief complaint names
+     * ("sore throat" → Sore throat, "dizzy" → Dizziness, "sob" → $hsob). Pediatric ($h…k) ones under 18 only, and
+     * under 18 they replace their adult version.
+     */
+    suggestHpis(cc = '', blocks = [], age = '') {
+        const kid = String(age).trim() !== '' && +age < 18;
+        const fits = x => (x.abbr.endsWith('k') ? kid : !(kid && this.hpi(x.abbr + 'k')));
+        const words = s => s.toLowerCase().split(/[^a-z0-9]+/).filter(w => w.length >= 3 && !HPI_STOP.has(w));
+        const same = (a, b) => (a.length >= 4 && b.length >= 4 ? a.slice(0, 4) === b.slice(0, 4) : a === b);
+        const ws = words(cc);
+        const named = this.hpis.filter(x => ws.some(w => w === x.abbr.slice(2).replace(/k$/, '') || words(x.title).some(t => same(w, t))));
+        return [...new Set([...blocks.map(b => this.hpi(b?.hpi)).filter(Boolean), ...named])].filter(fits);
     },
 
     /** The block for a library key, else an exact name / title / abbreviation match. */
@@ -67,11 +96,18 @@ export const Dot = {
         const notes = add(p.notes, block.notes); const plan = add(p.plan, block.plan);
         // The lines it brought aren't decisions yet: billing counts them once you tap Done on the problem (p.confirmed)
         const added = [...notes.slice(p.notes.length), ...plan.slice(p.plan.length)];
+        // Core lines come in on; lines under an "If ...:" header come in off (✓ the ones that apply)
+        let inIf = false;
+        const off = (block.plan || []).filter(s => {
+            if (isBranch(s)) { inIf = true; return false; }
+            return inIf && !p.plan.includes(s);
+        });
         return { ...p, notes, ddx, plan, avs: p.avs || block.pi || '', ...(block.kind && !p.kind ? { kind: block.kind } : {}),
-            dot: [...(p.dot || []), ...added], confirmed: added.length ? false : p.confirmed };
+            off: [...(p.off || []), ...off], dot: [...(p.dot || []), ...added], confirmed: added.length ? false : p.confirmed };
     },
 };
 
+const HPI_STOP = new Set(['pain', 'follow', 'hpi', 'pediatric', 'concern', 'concerns', 'symptoms', 'change', 'and', 'the', 'for', 'with', 'visit', 'acute']);
 const LINKING = new Set(['on', 'given', 'with', 'for', 'of', 'x', 'since', 'in', 'at', 'to', 'from', 'per', 'after', 'before', 'while']);
 const words = s => s.trim().split(/\s+/);
 
@@ -134,3 +170,73 @@ export function picks(line) {
 
 /** Still a template: has a *** blank or an unpicked "_a / b" list. */
 export const unfilled = line => line.includes('***') || picks(line).length > 0;
+
+// ------------------------------------------------------------ HPI dotphrases ($h): blanks you fill with a tap
+
+/** Common answers for a *** blank, by the words around it; [] when there's no safe guess (you type it). */
+const BLANK_CHOICES = [
+    [/\bx$/, /^ days\b/, ['1', '2', '3', '4', '5', '7', '10', '14']],
+    [/\bx$/, /^ wk\b/, ['1', '2', '3', '4', '6', '8', '12']],
+    [/\bx$/, null, ['1 day', '2 days', '3 days', '5 days', '1 week', '2 weeks', '1 month', '3 months', '6 months', '1 year', 'years']],
+    [/\btried$/, null, ['OTC analgesics', 'OTC cold medicine', 'rest and ice', 'home remedies']],
+    [/\bwith$/, /^ relief\b/, ['no', 'minimal', 'partial', 'good', 'complete']],
+    [/\bonset$/, null, ['sudden', 'gradual']],
+    [/\bpain is$/, null, ['sharp', 'dull', 'aching', 'burning', 'throbbing', 'cramping', 'pressure-like']],
+    [/\bcough is$/, null, ['dry', 'productive']],
+    [/^$/, /^ (sided|ear|knee|shoulder|hip|ankle|elbow|foot|leg|arm|wrist|hand|red eye|eye|jaw)\b/, ['left', 'right', 'bilateral']],
+    [/\b(tobacco|nicotine|tobacco and vaping)$/, null, ['none', 'former', 'current']],
+    [/\b(alcohol|cannabis|caffeine)$/, null, ['none', 'occasional', 'daily']],
+    [/\bsick contacts$/, null, ['none', 'at home', 'at school', 'at work']],
+    [/\b(course|symptoms are)$/, null, ['improving', 'stable', 'worsening']],
+    [/\bmax temp$/, null, ['not measured', '100.4 F', '101 F', '102 F', '103 F', '104 F']],
+    [/\badherence( and technique)?$/, null, ['good', 'missed doses', 'poor']],
+    [/\b(sleep|appetite|energy|mood|concentration|intake)$/, null, ['normal', 'decreased', 'increased']],
+];
+/** Words a blank's label can't end with for the generic none / yes answer ("Reports ***" yes, "radiating to ***" no). */
+const NOT_LABEL = /(^|\s)(is|are|to|of|for|in|with|by|on|at|as|and|or|every|lasting|last|x|before|after|from|since|about|than|located|started|described as|interested in|associated with|triggered by|worse with|reports|dr\.)$/;
+
+/** Start of the *** blank number n (0-based) in a line, or -1. */
+export function blankAt(line, n) {
+    let at = -1;
+    for (let i = 0; i <= n; i++) { at = line.indexOf('***', at + (i ? 3 : 0)); if (at < 0) return -1; }
+    return at;
+}
+
+/** Separators between clauses: ", " "; " ". " (not "Dr. ***"). */
+const SEP = /(?<!\bDr)[,;.](?=\s|$)/g;
+
+/** Tap-to-fill answers for blank n: [] when there's no safe guess. */
+export function blankChoices(line, n) {
+    const at = blankAt(line, n); if (at < 0) return [];
+    const before = line.slice(0, at);
+    const clause = before.slice(Math.max(...[...before.matchAll(SEP)].map(m => m.index + 1), before.lastIndexOf(':') + 1, 0))
+        .trim().replace(/^- /, '').toLowerCase();
+    const after = line.slice(at + 3);
+    const hit = BLANK_CHOICES.find(([b, a]) => b.test(clause) && (!a || a.test(after)));
+    if (hit) return hit[2];
+    // "Orthopnea ***," / "Prior episodes ***.": a label then the blank, ending its clause
+    return clause && /^\s*([,;.]|$)/.test(after) && !NOT_LABEL.test(clause) ? ['none', 'yes'] : [];
+}
+
+/** The line with blank n filled; capitalized at the start of a sentence. */
+export function fillBlank(line, n, text) {
+    const at = blankAt(line, n); if (at < 0) return line;
+    const start = /(^|[.:]\s+|^- )$/.test(line.slice(0, at));
+    return line.slice(0, at) + (start ? text[0].toUpperCase() + text.slice(1) : text) + line.slice(at + 3);
+}
+
+/** The line without the clause holding blank n ("Drainage ***, hearing change ***." → "Hearing change ***."); '' if nothing is left. */
+export function dropClause(line, n) {
+    const at = blankAt(line, n); if (at < 0) return line;
+    const seps = [...line.matchAll(SEP)].map(m => m.index);
+    const a = seps.filter(i => i < at).at(-1) ?? -1;
+    const b = seps.find(i => i > at) ?? line.length;
+    let out;
+    if (a >= 0 && /[,;]/.test(line[a])) out = line.slice(0, a) + line.slice(b);          // "A, [B], C." → "A, C."; "A, [B]." → "A."
+    else if (/[,;]/.test(line[b] || '')) {                                             // "[A], B." → "B." (capitalized)
+        const rest = line.slice(b + 1).replace(/^\s+/, '');
+        out = line.slice(0, a + 1) + (a >= 0 ? ' ' : '') + rest.charAt(0).toUpperCase() + rest.slice(1);
+    } else out = line.slice(0, a + 1) + line.slice(b + 1);                               // the whole sentence
+    out = out.replace(/\s{2,}/g, ' ').trim();
+    return /^-?\s*$/.test(out) ? '' : out;
+}

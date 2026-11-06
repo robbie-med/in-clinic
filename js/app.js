@@ -5,7 +5,8 @@ import { Store } from './store.js';
 import { extract } from './schedule.js';
 import * as N from './note.js';
 import * as B from './billing.js';
-import { Dot, picks, unfilled } from './dot.js';
+import { Dot, picks, unfilled, blankChoices, fillBlank, dropClause } from './dot.js';
+import * as C from './clinreminder.js';
 
 const app = document.getElementById('app');
 
@@ -163,12 +164,43 @@ function pickSelect(pk, onPick) {
     return sel;
 }
 
-/** A line's text with a dropdown in place of each "_a / b" pick list; onChange gets the line with the choice made. */
-function withDropdowns(s, onChange) {
+/**
+ * A line's text with a dropdown in place of each "_a / b" pick list; onChange gets the line with the choice made.
+ * With onBlank, each *** blank is a dropdown too (blankSelect): onBlank(n, value) for blank number n.
+ */
+function withDropdowns(s, onChange, onBlank) {
     const out = []; let pos = 0;
-    for (const pk of picks(s)) { out.push(...stars(s.slice(pos, pk.at)), pickSelect(pk, o => onChange(choose(s, pk, o)))); pos = pk.at + pk.text.length; }
-    out.push(...stars(s.slice(pos)));
+    const text = (from, to) => (onBlank ? blankSelects(s, from, to, onBlank) : stars(s.slice(from, to)));
+    for (const pk of picks(s)) { out.push(...text(pos, pk.at), pickSelect(pk, o => onChange(choose(s, pk, o)))); pos = pk.at + pk.text.length; }
+    out.push(...text(pos, s.length));
     return out;
+}
+
+/** s.slice(from, to) with each *** blank as a blankSelect. */
+function blankSelects(s, from, to, onBlank) {
+    const out = []; let pos = from;
+    for (let at = s.indexOf('***', from); at >= 0 && at < to; at = s.indexOf('***', at + 3)) {
+        const n = s.slice(0, at).split('***').length - 1;
+        out.push(s.slice(pos, at), blankSelect(blankChoices(s, n), val => onBlank(n, val)));
+        pos = at + 3;
+    }
+    out.push(s.slice(pos, to));
+    return out;
+}
+
+/**
+ * A blank as the red "*" with an invisible native dropdown over it (one tap opens it, iPad included):
+ * the usual answers ("=3", "=none"...), "type" to type it, "drop" to remove the part of the sentence it's in.
+ */
+function blankSelect(choices, f) {
+    const sel = h('select', { 'aria-label': 'Fill the blank' },
+        h('option', { value: '', disabled: true, selected: true }, '*'),
+        choices.map(c => h('option', { value: '=' + c }, c)),
+        h('option', { value: 'type' }, '✎ Type…'),
+        h('option', { value: 'drop' }, '✕ Remove this part'));
+    for (const ev of ['click', 'pointerdown', 'keydown']) sel.addEventListener(ev, e => e.stopPropagation());
+    sel.addEventListener('change', () => f(sel.value));
+    return h('span', { class: 'blanksel' }, h('b', { class: 'star' }, '*'), sel);
 }
 
 /** Dropdowns under a text field for the pick lists in it (edit dialogs; the field shows blanks as "*"). */
@@ -388,6 +420,7 @@ function refresh() {
     R.badge.textContent = b.code;
     R.drawBilling(b);
     drawAvs();
+    R.hpiDot.draw();
     for (const sel of R.problems.querySelectorAll('select.cx')) {
         const p = v.problems.find(x => x.id === sel.dataset.id);
         if (p) sel.options[0].text = 'Auto · ' + B.cx(B.autoCx(p)).label;
@@ -423,6 +456,7 @@ function showVisit(id) {
     R.note = h('div', { class: 'secs' });
     R.copyBar = h('div', { class: 'copybar' });
     R.badge = chip('', () => jump('billing'), 'badge', { title: 'Billing level · jump to Billing' });
+    R.room = h('div', { class: 'faint small' });
     R.problems = h('div', { class: 'problems' });
     R.avs = h('div', { class: 'rows' });
 
@@ -431,7 +465,9 @@ function showVisit(id) {
         get: () => v.hpi, set: l => update(x => ({ ...x, hpi: l })),
         chips: () => [...lib.hpiGeneric, ...libs().flatMap(l => l.hpi || []), ...DATA_CHIPS],
         placeholder: 'Complains of… (type or dictate, Enter adds)',
+        blanks: true, muted: s => N.hpiUntouched(v, s),
     });
+    R.hpiDot = hpiDotView();
     R.fu = Lines({
         get: () => v.fuWhy, set: l => update(x => ({ ...x, fuWhy: l })),
         chips: () => [...lib.fuGeneric, ...libs().flatMap(l => l.fu || [])],
@@ -447,9 +483,10 @@ function showVisit(id) {
                 seg(N.RELATIONS.map(r => [r, r]), () => v.relation, s => update(x => ({ ...x, relation: s })), 'rel', 'Relation')),
             choice(N.TYPES.map(t => [t.key, t.label]), () => v.type, s => update(x => ({ ...x, type: s })), 'flow types'),
             lfield('Chief complaint', v.cc, s => update(x => ({ ...x, cc: s })), { autocapitalize: 'none', placeholder: 'e.g. fatigue' }, 'wide'),
-            R.oneLiner),
+            R.oneLiner,
+            R.room),
 
-        block('hpi', 'HPI', null, R.hpi.el),
+        block('hpi', 'HPI', chip('+ HPI dotphrase', addHpi, 'primary small'), R.hpiDot.top, R.hpi.el, R.hpiDot.ros),
 
         block('exam', 'Exam', null, examView()),
 
@@ -490,6 +527,7 @@ function showVisit(id) {
                 R.title, R.badge,
                 chip('Paste last note', pasteLast, 'roomy-only'),
                 chip('Share', share, 'roomy-only'),
+                PRIVATE_BUILD ? chip('→ ClinReminder', sendToClin, 'roomy-only', { title: 'Send labs, referrals, follow-up and E/M code to ClinReminder' }) : null,
                 chip('⋯', visitActions, 'icon', { 'aria-label': 'Visit menu', title: 'More' })),
             R.tabs),
         h('div', { class: 'layout' }, editor, side),
@@ -499,7 +537,42 @@ function showVisit(id) {
 
     drawProblems();
     refresh();
+    loadRoom();
     window.scrollTo(0, 0);
+}
+
+/** Private build: room time from ClinReminder under the one-liner, refreshed every 30 s while the visit is open. */
+async function loadRoom() {
+    if (!PRIVATE_BUILD || !R.room?.isConnected) return;
+    const r = await C.room(v);
+    if (R.room.isConnected) R.room.textContent = r ? '🚪 ' + C.roomText(r) : '';
+}
+setInterval(loadRoom, 30_000);
+
+/** Private build: hands this visit's labs (reminder in 1d/3d/1w), referrals, follow-up and E/M code to ClinReminder. */
+function sendToClin() {
+    let days = 3;
+    const pl = C.payload(v);
+    const row = (label, val) => h('p', {}, h('b', {}, label + ': '), val || h('span', { class: 'faint' }, 'none'));
+    const body = h('div', {},
+        row('Card', pl.slot ? `${pl.slot} · ${pl.age}${pl.sex}` : ''),
+        row('Labs to follow up', pl.labs.join(', ')),
+        pl.labs.length ? h('div', {}, h('div', { class: 'glabel' }, 'Lab reminder in'),
+            choice([[1, '1 day'], [3, '3 days'], [7, '1 week']], () => days, d => { days = d || 3; }, 'flow tight')) : null,
+        row('Referrals', pl.referrals.join(', ')),
+        row('Follow-up', pl.followUp),
+        row('E/M', pl.code),
+        h('p', { class: 'faint small' }, "Matched to today's ClinReminder card by time. Sending again won't add duplicates."));
+    modal({
+        title: 'Send to ClinReminder', body,
+        actions: [{
+            label: 'Send', cls: 'primary', onClick: () => {
+                C.send(C.payload(v, days)).then(
+                    r => toast(`Sent to ${r.visit.name}: ${r.added.reminders} reminder${r.added.reminders === 1 ? '' : 's'}, ${r.added.referrals} referral${r.added.referrals === 1 ? '' : 's'}`),
+                    e => alert(e.message));
+            },
+        }],
+    });
 }
 
 function visitActions() {
@@ -508,6 +581,7 @@ function visitActions() {
         ['Paste last note…', pasteLast],
         ['Share note…', share],
         ['Copy whole note', copyAll],
+        PRIVATE_BUILD ? ['Send to ClinReminder…', sendToClin] : null,
         ['Signature…', () => editSignature(refresh)],
         ['Delete visit…', () => { if (confirm('Delete this visit?')) { Store.remove(v.id); go('#/'); } }, 'danger'],
     ], foot);
@@ -602,9 +676,10 @@ function problemCard(id) {
         sub('Plan'),
         Lines({ get: () => cur()?.plan || [], set: l => upd(p => ({ ...p, plan: l })), chips: () => lib?.plan || [],
             learnKey: () => (cur() ? N.learnKey(cur()) : null), kind: 'plan', placeholder: 'Order / action (Enter adds)',
-            prefixes: Library.data.medVerbs, dash: true }).el,
+            prefixes: Library.data.medVerbs, dash: true,
+            isOff: s => (cur()?.off || []).includes(s), toggle: i => upd(p => N.togglePlan(p, i)) }).el,
         h('div', { class: 'pfoot' },
-            !p0.confirmed && (p0.dot || []).length ? h('span', { class: 'faint small grow' }, 'Delete what you didn\'t do. Done counts the rest for billing.') : null,
+            !p0.confirmed && (p0.dot || []).length ? h('span', { class: 'faint small grow' }, '✓ what you did; If lines start off. Done counts the ✓ lines for billing.') : null,
             chip('Done', () => toggleOpen(id), 'small primary')));
     return card;
 }
@@ -730,6 +805,73 @@ function avsToggle(p, after) {
         update(x => ({ ...x, problems: x.problems.map(q => (q.id === p.id ? { ...q, avs: p.avs ? '' : pi } : q)) }));
         after();
     });
+}
+
+// ================================================================ HPI dotphrases ($h)
+
+/**
+ * Above the HPI lines: the HPI dotphrases added (tap to take out) and the ones this visit suggests (its problems',
+ * the chief complaint's). Below: the red flags to ask. Tap one once for "denies", again for "reports", again to clear.
+ * Only the tapped ones print; Denies rest marks every untapped one denied.
+ */
+function hpiDotView() {
+    const top = h('div', { class: 'flow suggs hpit' });
+    const ros = h('div', { class: 'ros' });
+    const next = s => (s === 'no' ? 'yes' : s === 'yes' ? '' : 'no');
+    const setRos = f => update(x => { const r = f({ ...(x.ros || {}) }); for (const k in r) if (!r[k]) delete r[k]; return { ...x, ros: r }; });
+    function draw() {
+        const added = (v.hpiT || []).map(a => Dot.hpi(a)).filter(Boolean);
+        const sugg = Dot.suggestHpis(v.cc, v.problems.map(p => Dot.find(p.lib, p.name)), v.age).filter(x => !added.includes(x));
+        top.replaceChildren(
+            ...added.map(x => pill('✓ ' + x.title, true, () => removeHpi(x.abbr), 'small', { title: `Take out ${x.abbr} (lines you filled stay)` })),
+            ...sugg.map(x => chip('+ ' + x.title, () => addHpiDot(x.abbr), 'small sugg', { title: 'Add ' + x.abbr })));
+        const items = N.rosItems(v); const r = v.ros || {};
+        const label = i => (r[i] === 'no' ? 'no ' + i : r[i] === 'yes' ? '+ ' + i : i);
+        ros.replaceChildren(...(items.length ? [
+            h('div', { class: 'glabel' }, 'Red flags', h('span', { class: 'faint' }, ' · tap: denies → reports → not asked')),
+            h('div', { class: 'flow suggs' },
+                items.map(i => chip(label(i), () => setRos(o => ({ ...o, [i]: next(o[i]) })), 'small ' + (r[i] === 'no' ? 'sugg on' : r[i] === 'yes' ? 'pos' : 'sugg'),
+                    { 'aria-label': `${i}: ${r[i] === 'no' ? 'denies' : r[i] === 'yes' ? 'reports' : 'not asked'}` })),
+                items.some(i => !r[i]) ? chip('Denies rest', () => setRos(o => Object.fromEntries(items.map(i => [i, o[i] || 'no']))), 'small primary') : null,
+                Object.keys(r).length ? chip('Clear', () => setRos(() => ({})), 'small link') : null),
+        ] : []));
+    }
+    return { top, ros, draw };
+}
+
+/** Adds an HPI dotphrase: its lines (the ones not already there) and its red flags. */
+function addHpiDot(abbr) {
+    const x = Dot.hpi(abbr); if (!x) return;
+    update(y => ({ ...y, hpiT: [...new Set([...(y.hpiT || []), abbr])], hpi: [...y.hpi, ...x.lines.filter(l => !y.hpi.includes(l))] }));
+    R.hpi.draw();
+}
+
+/** Takes an HPI dotphrase out: its lines you haven't changed go (unless another one added has them); filled lines and answered red flags stay. */
+function removeHpi(abbr) {
+    update(y => {
+        const hpiT = (y.hpiT || []).filter(a => a !== abbr);
+        const keep = new Set(hpiT.flatMap(a => Dot.hpi(a)?.lines || []));
+        const mine = new Set(Dot.hpi(abbr)?.lines || []);
+        return { ...y, hpiT, hpi: y.hpi.filter(l => !mine.has(l) || keep.has(l)) };
+    });
+    R.hpi.draw();
+}
+
+function addHpi() {
+    const q = h('input', { type: 'text', placeholder: 'Search HPIs, e.g. cough, knee, $hdm', autocomplete: 'off', enterKeyHint: 'done' });
+    const results = h('div', { class: 'results', role: 'listbox' });
+    let first = null;
+    const pick = x => { dlg.close(); addHpiDot(x.abbr); };
+    const draw = () => {
+        const list = Dot.searchHpis(q.value).filter(x => !(v.hpiT || []).includes(x.abbr));
+        first = list[0] ? () => pick(list[0]) : null;
+        results.replaceChildren(...list.map((x, i) => h('button', { type: 'button', class: 'result' + (i === 0 && q.value.trim() ? ' first' : ''), onclick: () => pick(x) },
+            x.title, h('span', { class: 'faint' }, '  ·  ' + x.abbr))));
+    };
+    q.addEventListener('input', draw);
+    q.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); first?.(); } });
+    draw();
+    const dlg = modal({ title: 'Add HPI dotphrase', body: h('div', {}, q, results), onOpen: () => q.focus() });
 }
 
 // ================================================================ After Visit Summary
@@ -915,7 +1057,12 @@ function billingView() {
         box.replaceChildren(
             h('div', { class: 'bcode' }, h('b', {}, b.code), h('span', {}, `${B.LEVELS[b.mdm]} MDM · ${b.kind === 'new' ? 'new' : 'established'} patient`
                 + (b.overridden ? ` · set by hand (calc ${b.auto})` : '')),
-            h('span', { class: 'faint small' }, b.pce ? 'Attestation: primary care exception' : 'Attestation: teaching physician present')),
+),
+            h('div', { class: 'flow' }, h('span', { class: 'dim small' }, 'Attestation'),
+                pill('Attending saw patient', v.tp === 'present', () => update(x => ({ ...x, tp: x.tp === 'present' ? '' : 'present' })), 'small'),
+                pill('Primary care exception', v.tp === 'pce', () => update(x => ({ ...x, tp: x.tp === 'pce' ? '' : 'pce' })), 'small')),
+            !v.tp ? h('p', { class: 'warn small' }, 'Pick the attestation: none is printed in the note until you do.') : null,
+            v.tp === 'pce' && !b.pce ? h('p', { class: 'warn small' }, `Primary care exception covers 99213 / 99203 or lower, not ${b.code}.`) : null,
             row('Problems', b.problems), row('Data', b.data), row('Risk', b.risk),
             bl.pending.length ? h('p', { class: 'warn small' }, `Not counted yet: ${bl.pending.map(n => '#' + n).join(', ')}. Tap Done on ${bl.pending.length > 1 ? 'each' : 'it'} once its plan is what you did.`) : null,
             bl.stars || bl.picks ? h('p', { class: 'warn small' }, [
@@ -958,7 +1105,7 @@ async function share() {
  * Prefix chips (med verbs) start the field. Enter adds what's typed and keeps the keyboard up for the next line.
  * With a learnKey, typed lines are remembered and come back as chips (hold or right-click one to forget it).
  */
-function Lines({ get, set, chips, learnKey = () => null, kind = '', placeholder, prefixes = [], dash = false }) {
+function Lines({ get, set, chips, learnKey = () => null, kind = '', placeholder, prefixes = [], dash = false, blanks = false, muted = () => false, isOff = null, toggle = null }) {
     const rows = h('div', { class: 'rows' });
     const chipBox = h('div', { class: 'flow suggs' });
     const input = h('input', { type: 'text', placeholder, autocomplete: 'off', enterKeyHint: 'enter', autocapitalize: 'sentences', 'aria-label': placeholder });
@@ -973,11 +1120,12 @@ function Lines({ get, set, chips, learnKey = () => null, kind = '', placeholder,
     input.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); add(); } });
 
     /** Edit a line. A dotphrase "_a / b" list shows as a dropdown; *** blanks are selected to type over. */
-    const edit = i => {
+    const edit = (i, n = 0) => {
         const s = get()[i]; if (s === undefined) return;
         const t = h('textarea', { rows: 3, value: toField(s) });
         const blank = () => nextBlank(t);
-        modal({ title: 'Edit line', body: h('div', {}, t, pickBox(t, blank)), onOpen: blank, actions: [
+        let at = -1; for (let k = 0; k <= n; k++) at = t.value.indexOf('*', at + 1);   // blank n
+        modal({ title: 'Edit line', body: h('div', {}, t, pickBox(t, blank)), onOpen: () => nextBlank(t, Math.max(at, 0)), actions: [
             i > 0 ? { label: 'Move up', onClick: () => { const l = [...get()]; [l[i - 1], l[i]] = [l[i], l[i - 1]]; set(l); draw(); } } : null,
             { label: 'Delete', cls: 'danger', onClick: () => { set(get().filter((_, j) => j !== i)); draw(); } },
             { label: 'Save', cls: 'primary', onClick: () => {
@@ -993,12 +1141,26 @@ function Lines({ get, set, chips, learnKey = () => null, kind = '', placeholder,
         set(l.filter((_, k) => k < i || k >= j)); draw();
     };
 
+    const put = (i, n) => { set(n ? get().map((x, j) => (j === i ? n : x)) : get().filter((_, j) => j !== i)); draw(); };
+    /** A blank's dropdown: fill it, type it, or remove the part of the sentence it's in. */
+    const onBlank = i => (n, val) => {
+        const s = get()[i];
+        if (val === 'type') edit(i, n);
+        else put(i, val === 'drop' ? dropClause(s, n) : fillBlank(s, n, val.slice(1)));
+    };
+
     function draw() {
-        rows.replaceChildren(...get().map((s, i) => h('div', { class: 'line' + (B.isBranch(s) ? ' branch' : dash ? ' dash' : '') + (unfilled(s) ? ' tmpl' : '') },
+        // With toggle, each row has a ✓: off rows stay listed but leave the note; an "If ...:" header is off when all its lines are
+        const l = get();
+        const under = i => { let j = i + 1; while (j < l.length && !B.isBranch(l[j])) j++; return l.slice(i + 1, j); };
+        const offAt = i => !!isOff && (B.isBranch(l[i]) ? under(i).every(isOff) : isOff(l[i]));
+        rows.replaceChildren(...l.map((s, i) => h('div', { class: 'line' + (B.isBranch(s) ? ' branch' : dash ? ' dash' : '') + (unfilled(s) ? ' tmpl' : '') + (muted(s) ? ' muted' : '') + (offAt(i) ? ' off' : '') },
+            toggle ? h('button', { type: 'button', class: 'linetog', onclick: () => { toggle(i); draw(); }, 'aria-pressed': String(!offAt(i)),
+                'aria-label': offAt(i) ? 'Switch on' : 'Switch off', title: offAt(i) ? 'Off: not in the note. Tap to switch on' : 'In the note. Tap to switch off' }, offAt(i) ? '' : '✓') : null,
             h('div', { class: 'linet', role: 'button', tabIndex: 0, onclick: () => edit(i),
                 onkeydown: e => { if (e.key === 'Enter' && e.target === e.currentTarget) edit(i); },
-                title: unfilled(s) ? 'Has blanks to fill' : 'Edit' },
-            withDropdowns(s, n => { set(get().map((x, j) => (j === i ? n : x))); draw(); })),
+                title: muted(s) ? 'Not in the note until you fill a blank' : unfilled(s) ? 'Has blanks to fill' : 'Edit' },
+            withDropdowns(s, n => put(i, n), blanks ? onBlank(i) : null)),
             h('button', { type: 'button', class: 'linex', onclick: () => remove(i), 'aria-label': B.isBranch(s) ? 'Delete this branch' : 'Delete line',
                 title: B.isBranch(s) ? 'Delete this branch and its lines' : 'Delete' }, '×'))));
         const cur = get(); const base = chips(); const key = learnKey();

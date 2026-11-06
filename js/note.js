@@ -19,8 +19,8 @@
 //
 // Each problem's status pills (not printed) drive the billing level (billing.js).
 import { Library } from './library.js';
-import { attestation, emptyData, isBranch } from './billing.js';
-import { Dot } from './dot.js';
+import { attestation, emptyData, isBranch, onPlan } from './billing.js';
+import { Dot, unfilled } from './dot.js';
 
 export const NOVELTY = ['New', 'Known'];
 export const COURSE = ['Acute', 'Subacute', 'Chronic'];
@@ -48,7 +48,7 @@ export const uid = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().t
 export function newVisit(fields = {}) {
     return {
         id: uid(), created: Date.now(), slot: '', age: '', sex: '', relation: 'known to me', type: 'follow-up', cc: '',
-        oneLiner: '', hpi: [], vitals: {}, exam: {}, problems: [], fuWith: '', fuWhen: '', fuWhy: [],
+        oneLiner: '', hpi: [], hpiT: [], ros: {}, vitals: {}, exam: {}, problems: [], fuWith: '', fuWhen: '', fuWhy: [],
         data: emptyData(), risk: '', sdoh: null, code: '', copied: {}, copiedAt: 0, avs: [], avsEdits: {}, ...fields,
     };
 }
@@ -115,10 +115,24 @@ export function problemLines(p) {
     const clean = l => l.map(s => s.trim()).filter(Boolean);
     const ddx = clean(p.ddx.flatMap(g => g.items));
     // An "If DMPA:" branch header prints on its own between blank lines, and only while it still has lines under it.
-    const plan = clean(p.plan).filter((s, i, l) => !isBranch(s) || (l[i + 1] !== undefined && !isBranch(l[i + 1])));
+    const plan = clean(onPlan(p)).filter((s, i, l) => !isBranch(s) || (l[i + 1] !== undefined && !isBranch(l[i + 1])));
     const planOut = plan.flatMap((s, i) => (isBranch(s) ? [...(i ? [''] : []), s, ''] : ['- ' + s]));
     const blocks = [clean(p.notes), ddx.length ? ['DDx:', ...ddx.map(s => '>' + s)] : [], planOut].filter(b => b.length);
     return ['#' + p.name.trim().replace(/^#+/, ''), ...blocks.flatMap((b, i) => (i ? ['', ...b] : b))];
+}
+
+/**
+ * ✓ on plan line i: switches it on or off. On an "If ...:" header it switches the lines under it:
+ * all off if any is on, else all on. The header itself prints only while a line under it is on.
+ */
+export function togglePlan(p, i) {
+    const l = p.plan; const off = new Set(p.off || []);
+    let j = i + 1;
+    if (isBranch(l[i])) while (j < l.length && !isBranch(l[j])) j++;
+    const group = isBranch(l[i]) ? l.slice(i + 1, j) : [l[i]];
+    const turnOff = group.some(s => !off.has(s));
+    group.forEach(s => (turnOff ? off.add(s) : off.delete(s)));
+    return { ...p, off: [...off] };
 }
 
 // A typed reason that already starts with its own connector ("after OSU visit") doesn't get "to" in front.
@@ -165,7 +179,7 @@ export const EMRS = [{ key: 'cerner', label: 'Cerner', blank: '_' }, { key: 'epi
 export function sections(v, signature = '', blank = '***') {
     const text = {};
     if (v.cc.trim()) text.cc = v.cc.trim().replace(/\.+$/, '');
-    text.hpi = [oneLiner(v), ...(v.relation === 'new to me' ? [RECORDS] : []), ...v.hpi.map(s => s.trim()).filter(Boolean)].join('\n');
+    text.hpi = [oneLiner(v), ...(v.relation === 'new to me' ? [RECORDS] : []), ...hpiLines(v)].join('\n');
     const vit = vitalsText(v); const exam = examLines(v);
     if (vit || exam.length) text.exam = [...(vit ? ['Vitals: ' + vit] : []), ...exam].join('\n');
     const fu = followUp(v);
@@ -175,6 +189,31 @@ export function sections(v, signature = '', blank = '***') {
     if (avs) text.avs = avs;
     text.sign = [signature.trim(), attestation(v)].filter(Boolean).join('\n\n');
     return SECTIONS.filter(s => text[s.key] !== undefined).map(s => ({ ...s, text: plain(text[s.key]).replaceAll('***', blank) }));
+}
+
+// ------------------------------------------------------------ HPI dotphrases ($h)
+// v.hpiT: the HPI dotphrases added (their lines went into v.hpi). v.ros: red-flag answers, { item: 'no' | 'yes' }.
+
+/** A line an HPI dotphrase put in that you haven't touched yet: still has a blank or an unpicked list. Not printed. */
+export const hpiUntouched = (v, line) => unfilled(line) && (v.hpiT || []).some(a => Dot.hpi(a)?.lines.includes(line));
+
+/** The red flags to ask, from the HPI dotphrases added, then any answered ones no longer offered. */
+export const rosItems = v => [...new Set([...(v.hpiT || []).flatMap(a => Dot.hpi(a)?.denies || []), ...Object.keys(v.ros || {})])];
+
+/** "Reports chest pain. Denies fever, dyspnea." from the tapped red flags; '' if none. */
+export function rosText(v) {
+    const by = s => rosItems(v).filter(i => (v.ros || {})[i] === s);
+    return [by('yes').length ? 'Reports ' + by('yes').join(', ') + '.' : '', by('no').length ? 'Denies ' + by('no').join(', ') + '.' : '']
+        .filter(Boolean).join(' ');
+}
+
+/** The HPI as printed: lines, minus untouched dotphrase lines and headers ("Feeding history:") with nothing under them, then the red flags. */
+export function hpiLines(v) {
+    const kept = v.hpi.map(s => s.trim()).filter(s => s && !hpiUntouched(v, s));
+    const head = s => /:$/.test(s) && (v.hpiT || []).some(a => Dot.hpi(a)?.lines.includes(s));
+    const out = kept.filter((s, i) => !head(s) || (kept[i + 1] !== undefined && !head(kept[i + 1])));
+    const ros = rosText(v);
+    return ros ? [...out, ros] : out;
 }
 
 /** The whole note with section titles (for Share). The After Visit Summary is for the patient, so it's left out. */
